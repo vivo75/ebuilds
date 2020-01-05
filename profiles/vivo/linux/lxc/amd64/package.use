@@ -1,0 +1,5 @@
+# sligtly faster build and it's cached in lxc-base
+sys-devel/gcc lto pgo
+
+# reasonable defaults, may also use {elasticsearch,mysql}
+app-admin/rsyslog -gnutls curl elasticsearch openssl rfc3195 rfc5424hmac ssl usertools uuid

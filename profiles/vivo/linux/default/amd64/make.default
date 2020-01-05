@@ -1,0 +1,3 @@
+
+USE="${USE} -doc -gpm -perl -policykit -systemd lto"
+

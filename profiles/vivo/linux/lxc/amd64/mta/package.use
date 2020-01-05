@@ -1,0 +1,13 @@
+app-antivirus/clamav clamdtop
+mail-filter/amavisd-new clamav dkim mysql razor spamassassin
+mail-filter/opendmarc spf
+mail-filter/rspamd pcre2
+mail-filter/spamassassin mysql
+mail-mta/postfix mysql dovecot-sasl
+# USE "textcat" make lucene fail for dovecot
+net-mail/dovecot lucene lz4 managesieve mysql
+
+# mysql server is kept separate, but we go for uniformity
+virtual/mysql -server
+dev-db/mariadb -client-libs innodb-lz4 profiling rocksdb oqgraph
+dev-db/mysql -server

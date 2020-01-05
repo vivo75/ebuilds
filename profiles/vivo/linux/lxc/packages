@@ -1,0 +1,6 @@
+app-portage/cpuid2cpuflags
+app-portage/eix
+app-portage/gentoolkit
+dev-util/debugedit
+net-misc/lxc-fake-net
+sys-process/procps

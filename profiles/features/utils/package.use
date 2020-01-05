@@ -1,0 +1,12 @@
+# it's a dep of ansible
+# [cli] bring in ipython which at this time is unwanted
+dev-python/netaddr -cli
+
+# gdb has useful additions written in python
+sys-devel/gdb python
+
+# only a minimal browser is required
+www-client/elinks -X -bzip2 -gpm -mouse ipv6 nls ssl unicode xml zlib
+
+# reduce disk/dep usage
+dev-vcs/git -perl -webdav curl

@@ -1,0 +1,8 @@
+app-emulation/lxc cgmanager python
+
+# compile with static use require to abandon snappy support
+# vde and rbd deps require python2
+app-emulation/qemu -iscsi -rbd -snappy -vde numa sdl sdl2 smartcard spice ssh static-user usb usbredir virgl virtfs ncurses
+
+# required by USE=sdl qemu
+media-libs/libsdl2 X

@@ -1,0 +1,65 @@
+ABI_X86="-32 64"
+CHOST="x86_64-pc-linux-gnu"
+CFLAGS="-O3 -pipe -march=skylake -mtune=skylake -frecord-gcc-switches -fdiagnostics-color=never"
+CXXFLAGS="-O3 -pipe -march=skylake -mtune=skylake -frecord-gcc-switches -fdiagnostics-color=never"
+FCFLAGS="-O3 -pipe -march=skylake -mtune=skylake"
+FFLAGS="-O3 -pipe -march=skylake -mtune=skylake"
+CPU_FLAGS_X86="aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3"
+CMAKE_MAKEFILE_GENERATOR="ninja"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} systemd udev"
+
+# Define the default portage feature set.
+FEATURES="distlocks parallel-fetch collision-protect sign test-fail-continue userpriv usersandbox"
+FEATURES="${FEATURES} compress-build-logs ebuild-locks fail-clean multilib-strict"
+FEATURES="${FEATURES} split-elog split-log splitdebug compressdebug"
+FEATURES="${FEATURES} unknown-features-warn unmerge-logs noinfo usersync xattr"
+FEATURES="${FEATURES} -merge-sync"
+
+# Log eqawarn messages
+PORTAGE_ELOG_CLASSES="warn error log qa"
+# use xz compression for docs instead of bzip2
+PORTAGE_COMPRESS="xz"
+EMERGE_DEFAULT_OPTS="--autounmask=y --ask-enter-invalid"
+
+# allow unstable
+ACCEPT_KEYWORDS="~amd64"
+
+# Allow installation of any packages, regardless of LICENSE setting.
+ACCEPT_LICENSE="*"
+
+USE="${USE} -gpm -kdepim -handbook -oldwallet -bindist -qt4"
+USE="${USE} a52 aac acpi activities alsa bluetooth branding cairo cdda cdr clang consolekit"
+USE="${USE} cpudetection cups dbus declarative dri dts dvd dvdr egl emboss encode exif fam"
+USE="${USE} ffmpeg firefox flac gif glamor gles2 gpu gtk jpeg kde kipi kwallet lcms ldap"
+USE="${USE} libnotify lz4 mad metric mmx mng mp3 mp4 mpeg ogg opengl pango pdf pgo phonon"
+USE="${USE} plasma png ppds pulseaudio qml qt3support qt5 sdl semantic-desktop spell sse"
+USE="${USE} sse2 startup-notification svg systemd threads tiff truetype udev udisks unicode"
+USE="${USE} upower usb vaapi vorbis vulkan wayland widgets wxwidgets X x264 xcb xcomposite"
+USE="${USE} xinerama xml xv xvid zstd"
+
+# This sets the language of build output to English.
+# Please keep this setting intact when reporting bugs.
+LC_MESSAGES=C
+L10N="en it"
+LINGUAS="en it"
+
+# don't config protect /etc/mtab
+CONFIG_PROTECT_MASK="/etc/mtab"
+
+# python targets to build
+PYTHON_SINGLE_TARGET="-* python3_7"
+PYTHON_TARGETS="python2_7 python3_7"
+
+LLVM_TARGETS="AArch64 AMDGPU ARM BPF NVPTX WebAssembly X86"
+VIDEO_CARDS="-* intel i965 nouveau radeon radeonsi amdgpu qxl modesetting virgl"
+INPUT_DEVICES="-* evdev wacom libinput synaptics"
+SANE_BACKENDS="-* hp hp3500 hp3900 hp4200 hp5400 hp5590 hpljm1005"
+RUBY_TARGETS="-* ruby26"
+QEMU_SOFTMMU_TARGETS="x86_64 aarch64 arm"
+PHP_TARGETS="php7-3"
+APACHE2_MODULES="${APACHE2_MODULES} macro proxy proxy_ajp proxy_balancer proxy_connect proxy_fcgi"
+APACHE2_MODULES="${APACHE2_MODULES} proxy_html proxy_http proxy_http2 proxy_wstunnel ratelimit"
+APACHE2_MODULES="${APACHE2_MODULES} remoteip slotmem_shm substitute xml2enc"
+
+# vim: setlocal filetype=gentoo-make-conf :

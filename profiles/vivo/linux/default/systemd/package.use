@@ -1,0 +1,41 @@
+# require py 2.7
+app-arch/unzip -natspec
+
+# We opt to maintain sysv/openrc as an alternative
+sys-apps/systemd -cryptsetup -sysv-utils apparmor audit curl dns-over-tls elfutils gnuefi http idn importd libidn2 qrcode
+
+# Not all packages need python
+dev-lang/python        threads
+dev-libs/libxml2       -python
+dev-libs/libnl         -python
+media-libs/alsa-lib    -python
+sys-process/audit      -python
+sys-apps/file          -python
+sys-libs/cracklib      -python
+sys-apps/kmod          -python
+app-misc/pax-utils     -python
+app-editors/vim        -python
+app-crypt/gpgme        -python
+net-dns/unbound        -python
+sys-apps/util-linux    -python
+sys-apps/pcsc-lite     -python
+sys-fs/zfs             -python
+app-admin/syslog-ng    -python
+
+# varie
+sys-devel/gcc          -gcj -go fortran lto nptl openmp pch pgo sanitize ssp vtv
+dev-db/mariadb         cracklib perl
+sys-apps/usbutils      python
+dev-python/netaddr     cli
+net-dns/dnsmasq        script
+dev-libs/libpcre2      pcre16
+x11-libs/libxkbcommon  X
+x11-libs/cairo         X
+x11-libs/libxcb        xkb
+app-text/xmlto         text
+dev-libs/glib          dbus
+sys-apps/openrc        bash
+
+# prepare for eBPF
+sys-apps/iproute2 elf
+

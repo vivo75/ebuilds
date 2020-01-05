@@ -1,0 +1,8 @@
+# Our little (really) toolbox
+app-admin/smalltools
+
+# goes without say 
+app-arch/gzip
+
+# mail-client/mailx and net-mail/email replacement, does SMTP
+mail-client/s-nail

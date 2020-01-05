@@ -1,0 +1,6 @@
+# this create a "python2" executable whch fool autoconf
+# in case python:2.7 is not installed
+dev-lang/python-exec -python_targets_python2_7
+dev-lang/python-exec -python_targets_jython2_7
+dev-lang/python-exec -python_targets_pypy
+

@@ -1,0 +1,6 @@
+# REVERT
+# Matthias Maier <tamiko@gentoo.org> (22 Jan 2017)
+# sys-fs/zfs isn't going to be marked stable anytime soon
+# - tested enough here
+app-emulation/libvirt -zfs
+

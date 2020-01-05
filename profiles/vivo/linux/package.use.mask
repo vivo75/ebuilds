@@ -1,0 +1,22 @@
+# test require python:2.7 - https://bugs.gentoo.org/648940
+sys-devel/automake test
+
+# Georgy Yakovlev <gyakovlev@gentoo.org> (2019-04-17)
+# Mask jre useflags for use as system java-vm until it's proven to work
+dev-java/openjdk-jre-bin:8 -gentoo-vm
+dev-java/openjdk-jre-bin:11 -gentoo-vm
+
+# Georgy Yakovlev <gyakovlev@gentoo.org> (2019-01-17)
+# Mask openjdk:8 for use as system java-vm until it's proven to work
+dev-java/openjdk:8 -gentoo-vm
+dev-java/openjdk-bin:8 -gentoo-vm
+
+# James Le Cuirot <chewi@gentoo.org> (2017-12-17)
+# Java 9+ is not yet fully supported on Gentoo. Having a masked
+# gentoo-vm flag allows us to provide it without it breaking Gentoo
+# packages. Those who wish to experiment with it as a fully recognised
+# Gentoo JVM can unmask the flag.
+dev-java/oracle-jdk-bin:11 -gentoo-vm
+dev-java/openjdk-bin:11 -gentoo-vm
+dev-java/openjdk:11 -gentoo-vm
+

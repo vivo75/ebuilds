@@ -1,0 +1,3 @@
+# crash too often
+dev-lang/ekopath
+
