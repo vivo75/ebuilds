@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>blueness@gentoo.org</email>
+		<name>Anthony G. Basile</name>
+	</maintainer>
+	<use>
+		<flag name="alt-svc">Enable alt-svc support</flag>
+		<flag name="brotli">Enable brotli compression support</flag>
+		<flag name="http2">Enable HTTP/2.0 support</flag>
+		<flag name="nghttp3">Enable HTTP/3.0 support using <pkg>net-libs/nghttp3</pkg> and <pkg>net-libs/ngtcp2</pkg></flag>
+		<flag name="quiche">Enable HTTP/3.0 support using <pkg>net-libs/quiche</pkg></flag>
+		<flag name="ssh">Enable SSH urls in curl using libssh2</flag>
+		<flag name="metalink">Enable metalink support</flag>
+		<flag name="progress-meter">Enable the progress meter</flag>
+		<flag name="ssl">Enable crypto engine support (via openssl if USE='-gnutls -nss')</flag>
+		<flag name="rtmp">Enable RTMP Streaming Media support</flag>
+	</use>
+	<upstream>
+		<remote-id type="cpe">cpe:/a:curl:curl</remote-id>
+		<remote-id type="cpe">cpe:/a:curl:libcurl</remote-id>
+		<remote-id type="cpe">cpe:/a:haxx:curl</remote-id>
+		<remote-id type="cpe">cpe:/a:haxx:libcurl</remote-id>
+	</upstream>
+</pkgmetadata>
