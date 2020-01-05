@@ -2926,7 +2926,6 @@ for cat in NODELETE_DIRS:
           os.path.join(EBUILDS_REPO_PATH, cat),
           delete=False, )
 
-
 # Commit to the local ebuild repo
 ret = subprocess.run(['git', 'add', '.',], capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
 cmd = ['git',
