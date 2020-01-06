@@ -2,6 +2,8 @@
 /distfiles/
 /eclass/*.5
 /local/
+/metadata/glsa/
+/metadata/md5-cache/
 /packages/
 /profiles/use.local.desc
 

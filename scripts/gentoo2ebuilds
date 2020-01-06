@@ -4,8 +4,10 @@ import os
 import sys
 import subprocess
 
-UPSTREAM_REPO_PATH = "/srv/gentoo/repos/gentoo"
-EBUILDS_REPO_PATH = "/srv/raid0/gentoo-repos/ebuilds"
+REPOS_DIR = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '..', '..'))
+# git clone --shallow-since=2019-01-01 --no-single-branch --branch=stable  https://anongit.gentoo.org/git/repo/sync/gentoo.git
+UPSTREAM_REPO_PATH = os.path.join(REPOS_DIR, 'gentoo')
+EBUILDS_REPO_PATH = os.path.join(REPOS_DIR, 'ebuilds')
 
 ADDITIONAL_DIRS = (
     'eclass',
@@ -20,6 +22,12 @@ ADDITIONAL_DIRS = (
     'profiles/releases',
     'profiles/targets',
     'profiles/updates',
+    'metadata/dtd',
+    'metadata/glsa',
+    'metadata/install-qa-check.d',
+    'metadata/md5-cache',
+    'metadata/news',
+    'metadata/xml-schema',
     )
 
 NODELETE_DIRS = ('profiles', 'scripts', )
