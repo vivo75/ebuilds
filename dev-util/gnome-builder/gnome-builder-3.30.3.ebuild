@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python3_6 )
+PYTHON_COMPAT=( python{3_8,3_7} )
 VALA_MIN_API_VERSION="0.36"
 DISABLE_AUTOFORMATTING=1
 FORCE_PRINT_ELOG=1

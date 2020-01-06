@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python{2_7,3_6} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 
 inherit autotools bash-completion-r1 eapi7-ver eutils linux-info perl-functions python-single-r1 xdg-utils
 

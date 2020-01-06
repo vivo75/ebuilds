@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 QTMIN=5.12.3
 inherit cmake kde.org python-any-r1
 

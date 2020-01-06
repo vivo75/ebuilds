@@ -5,7 +5,7 @@ EAPI=7
 
 KDE_TEST="forceoptional"
 KMNAME="kdev-python"
-PYTHON_COMPAT=( python3_{6,7} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 inherit kde5 python-single-r1
 
 if [[ ${KDE_BUILD_TYPE} = release ]]; then

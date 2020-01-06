@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{2_7,3_6} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 inherit cmake-utils llvm llvm.org multiprocessing python-single-r1 \
 	toolchain-funcs
 

@@ -4,7 +4,7 @@
 EAPI=6
 
 GENTOO_DEPEND_ON_PERL=no
-PYTHON_COMPAT=( python{2_7,3_{6,7}} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 
 inherit autotools flag-o-matic gnome2 toolchain-funcs multilib perl-module python-single-r1 xdg-utils
 

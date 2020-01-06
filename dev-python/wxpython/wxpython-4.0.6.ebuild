@@ -5,7 +5,7 @@ EAPI=6
 
 # wxPython 4 supports python 2.7, but because it's going EOL soon and to ease
 # transition from wxPython 3.x, we make this package py3-only.
-PYTHON_COMPAT=( python3_{6,7} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 WX_GTK_VER="3.0-gtk3"
 
 inherit distutils-r1 multiprocessing virtualx wxwidgets

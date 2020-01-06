@@ -3,7 +3,7 @@
 
 EAPI="6"
 
-PYTHON_COMPAT=( python{2_7,3_6} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 PYTHON_REQ_USE="threads(+)"
 
 USE_PHP="php7-1 php7-2 php7-3"

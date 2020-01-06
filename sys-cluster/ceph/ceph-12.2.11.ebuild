@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python{2_7,3_6} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 DISTUTILS_OPTIONAL=1
 
 inherit check-reqs cmake-utils distutils-r1 flag-o-matic multiprocessing \

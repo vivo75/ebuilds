@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python3_6 )
+PYTHON_COMPAT=( python{3_8,3_7} )
 DISTUTILS_OPTIONAL=1
 
 inherit autotools bash-completion-r1 distutils-r1 linux-info versionator flag-o-matic systemd readme.gentoo-r1

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python3_6 )
+PYTHON_COMPAT=( python{3_8,3_7} )
 VALA_USE_DEPEND=vapigen
 
 inherit gnome2 multilib-minimal python-any-r1 vala virtualx

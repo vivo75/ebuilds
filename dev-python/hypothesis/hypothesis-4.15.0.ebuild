@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python2_7 python3_{6,7} pypy3 )
+PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
 PYTHON_REQ_USE="threads(+),sqlite"
 
 inherit distutils-r1 eutils

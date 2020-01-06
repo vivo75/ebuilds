@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python2_7 python3_{6,7} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 
 inherit java-pkg-opt-2 java-ant-2 python-r1 toolchain-funcs cmake-multilib
 

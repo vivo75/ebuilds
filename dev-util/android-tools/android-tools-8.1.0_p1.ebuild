@@ -3,7 +3,7 @@
 
 EAPI="6"
 
-PYTHON_COMPAT=( python2_7 python3_6 )
+PYTHON_COMPAT=( python{3_8,3_7} )
 CMAKE_MAKEFILE_GENERATOR="ninja"
 
 inherit flag-o-matic bash-completion-r1 ninja-utils toolchain-funcs cmake-utils python-r1

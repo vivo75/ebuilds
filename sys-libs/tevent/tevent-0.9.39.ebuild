@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python3_{6,7} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 PYTHON_REQ_USE="threads(+)"
 
 inherit waf-utils multilib-minimal python-single-r1

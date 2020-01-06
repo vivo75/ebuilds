@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_6 )
+PYTHON_COMPAT=( python{3_8,3_7} )
 inherit flag-o-matic python-single-r1
 
 DESCRIPTION="Run executables under a new DBus session for testing"

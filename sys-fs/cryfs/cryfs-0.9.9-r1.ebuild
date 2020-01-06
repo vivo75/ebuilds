@@ -3,7 +3,7 @@
 
 EAPI=6
 CMAKE_MAKEFILE_GENERATOR=emake
-PYTHON_COMPAT=( python{2_7,3_6} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 
 inherit cmake-utils python-any-r1 flag-o-matic
 

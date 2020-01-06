@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_SINGLE_IMPL="true"
-PYTHON_COMPAT=( python3_{6,7} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 inherit cmake kde.org distutils-r1
 
 DESCRIPTION="Framework for building KDE API documentation in a standard format and style"

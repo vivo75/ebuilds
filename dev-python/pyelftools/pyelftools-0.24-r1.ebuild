@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python2_7 python3_{6,7} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 inherit distutils-r1
 
 DESCRIPTION="pure-Python library for analyzing ELF files and DWARF debugging information"
