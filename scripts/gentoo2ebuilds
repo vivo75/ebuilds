@@ -2900,21 +2900,23 @@ def rsync(src, dst, delete=True, capture_output=False, check=True):
 
 
 def update_python_compat(cat, pkg, ebuild):
+    if pkg in ('certifi', 'setuptools'):
+        return
     new_python_compat = []
     ret = subprocess.run(['grep', '-qm', '1', '^PYTHON_COMPAT=.*)', ebuild], check=False)
     if ret.returncode == 0:
-        cmd = ['env',
-               '-i',
+        cmd = ['env', '-i',
                'bash',
-               '-c',
-               '''function inherit() { :; }  ; source '%s' 2> /dev/null; echo -n ${PYTHON_COMPAT[@]}''' % ebuild, ]
-        print(os.path.join(cat,pkg), end=' : ')
+               '-c', '''function inherit() { :; }  ; source '%s' 2> /dev/null; echo -n ${PYTHON_COMPAT[@]}''' % ebuild, ]
         ret = subprocess.run(cmd,
                     capture_output=True,
                     timeout=5,
                     check=False)
-        expanded_compat = ret.stdout.decode('ascii')
+        expanded_compat = ret.stdout.decode('ascii').strip()
+        if expanded_compat in ('python3_8 python3_7', 'python3_8 python3_7 pypy3', 'python2_7'):
+            return
 
+        print(os.path.join(cat,pkg), end=' : ')
         # if ebuild support at least one version of py3 than we suppose it support all
         if expanded_compat.find('python3_') >= 0:
             new_python_compat.append('python{3_8,3_7}')
