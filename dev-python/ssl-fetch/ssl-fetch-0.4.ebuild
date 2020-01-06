@@ -20,13 +20,7 @@ KEYWORDS="alpha amd64 arm arm64 hppa ia64 m68k ~mips ppc ppc64 s390 sh sparc x86
 DEPEND=""
 
 RDEPEND="${DEPEND}
-	>=dev-python/requests-1.2.1[${PYTHON_USEDEP}]
-	python_targets_python2_7? (
-		dev-python/ndg-httpsclient[python_targets_python2_7]
-		dev-python/pyasn1[python_targets_python2_7]
-		>=dev-python/pyopenssl-0.13[python_targets_python2_7]
-		)
-	"
+	>=dev-python/requests-1.2.1[${PYTHON_USEDEP}]"
 
 pkg_postinst() {
 	echo
