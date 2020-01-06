@@ -2944,7 +2944,7 @@ cmd = ['git',
 ret = subprocess.run(cmd, capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
 
 # +default remote
-ret = subprocess.run(['git', 'push', ], capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
+#ret = subprocess.run(['git', 'push', ], capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
 
 # kate: encoding utf-8; eol unix
 # kate: indent-width 4; mixedindent off; replace-tabs on; remove-trailing-spaces modified; space-indent on
