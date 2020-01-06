@@ -3,6 +3,7 @@
 import os
 import sys
 import subprocess
+import json
 
 REPOS_DIR = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '..', '..'))
 # git clone --shallow-since=2019-01-01 --no-single-branch --branch=stable  https://anongit.gentoo.org/git/repo/sync/gentoo.git
@@ -2930,6 +2931,10 @@ for cat in NODELETE_DIRS:
           delete=False, )
 
 # add some metadata for later use
+with open(os.path.join(EBUILDS_REPO_PATH, 'metadata', 'gentoo2ebuilds.json'), 'wt') as f:
+    json.dump({
+        'upstream_head' : newGitHead,
+        }, f)
 
 # Commit to the local ebuild repo
 ret = subprocess.run(['git', 'add', '.',], capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
