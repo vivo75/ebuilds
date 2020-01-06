@@ -277,9 +277,9 @@ sys-process/lsof
 sys-process/nmon
 sys-process/parallel
 virtual/mpi
-www-client/elinks
 www-client/firefox
 www-client/google-chrome
+www-client/w3m
 www-plugins/chrome-binary-plugins
 www-servers/gunicorn
 www-servers/nginx

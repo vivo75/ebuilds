@@ -22,4 +22,4 @@ sys-devel/gdb
 sys-process/cronie
 sys-process/lsof
 sys-process/time
-www-client/elinks
+www-client/w3m

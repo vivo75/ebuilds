@@ -2724,6 +2724,7 @@ EBUILDS_KEEP_ALL = (
     'www-client/w3m',
     'www-client/falkon',
     'www-client/elinks',
+    'www-client/lynx',
     'www-client/chromium',
     'www-client/google-chrome',
     'www-client/firefox',
