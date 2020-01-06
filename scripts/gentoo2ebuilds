@@ -2899,6 +2899,40 @@ def rsync(src, dst, delete=True, capture_output=False, check=True):
                           check=check)
 
 
+def update_python_compat(cat, pkg, ebuild):
+    new_python_compat = []
+    ret = subprocess.run(['grep', '-qm', '1', '^PYTHON_COMPAT=.*)', ebuild], check=False)
+    if ret.returncode == 0:
+        cmd = ['env',
+               '-i',
+               'bash',
+               '-c',
+               '''function inherit() { :; }  ; source '%s' 2> /dev/null; echo -n ${PYTHON_COMPAT[@]}''' % ebuild, ]
+        print(os.path.join(cat,pkg), end=' : ')
+        ret = subprocess.run(cmd,
+                    capture_output=True,
+                    timeout=5,
+                    check=False)
+        expanded_compat = ret.stdout.decode('ascii')
+
+        # if ebuild support at least one version of py3 than we suppose it support all
+        if expanded_compat.find('python3_') >= 0:
+            new_python_compat.append('python{3_8,3_7}')
+        # pypy3 is different enough to trust gentoo upstream
+        if expanded_compat.find('pypy3') >= 0:
+            new_python_compat.append('pypy3')
+
+        # if there is no py3 support but py2 exist, then use it
+        if not new_python_compat and expanded_compat.find('python2_') >= 0:
+            new_python_compat = [ 'python2_7', ]
+        print('PYTHON_COMPAT=%s' % ' '.join(new_python_compat))
+
+        cmd = ['sed',
+               '-e', 's/^PYTHON_COMPAT=.*)/PYTHON_COMPAT=( %s )/' % ' '.join(new_python_compat),
+               '-i', ebuild, ]
+        subprocess.run(cmd, check=True)
+
+
 # update gentoo repo
 ret = subprocess.run(['git', 'rev-parse', '--verify', 'HEAD'], capture_output=True, cwd=UPSTREAM_REPO_PATH, check=True)
 oldGitHead = ret.stdout.strip().decode('ascii')
@@ -2935,6 +2969,16 @@ with open(os.path.join(EBUILDS_REPO_PATH, 'metadata', 'gentoo2ebuilds.json'), 'w
     json.dump({
         'upstream_head' : newGitHead,
         }, f)
+
+# Walk the tree for ebuild updates
+with os.scandir(EBUILDS_REPO_PATH) as categories:
+    for cat in [x for x in categories if x.is_dir() and (str(x.name).find('-') > 1 or x.name == 'virtual')]:
+        with os.scandir(cat.path) as packages:
+            for pkg in [x for x in packages if x.is_dir()]:
+                with os.scandir(pkg.path) as ebuilds:
+                    for ebuild in [x for x in ebuilds if x.is_file() and x.name.endswith('.ebuild')]:
+                        update_python_compat(cat.name, pkg.name, ebuild.path)
+
 
 # Commit to the local ebuild repo
 ret = subprocess.run(['git', 'add', '.',], capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
