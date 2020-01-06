@@ -22,12 +22,7 @@ ADDITIONAL_DIRS = (
     'profiles/releases',
     'profiles/targets',
     'profiles/updates',
-    'metadata/dtd',
-    'metadata/glsa',
-    'metadata/install-qa-check.d',
-    'metadata/md5-cache',
-    'metadata/news',
-    'metadata/xml-schema',
+    'metadata',
     )
 
 NODELETE_DIRS = ('profiles', 'scripts', )
@@ -2934,6 +2929,8 @@ for cat in NODELETE_DIRS:
           os.path.join(EBUILDS_REPO_PATH, cat),
           delete=False, )
 
+# add some metadata for later use
+
 # Commit to the local ebuild repo
 ret = subprocess.run(['git', 'add', '.',], capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
 cmd = ['git',
@@ -2944,7 +2941,7 @@ cmd = ['git',
 ret = subprocess.run(cmd, capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
 
 # +default remote
-#ret = subprocess.run(['git', 'push', ], capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
+ret = subprocess.run(['git', 'push', ], capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
 
 # kate: encoding utf-8; eol unix
 # kate: indent-width 4; mixedindent off; replace-tabs on; remove-trailing-spaces modified; space-indent on
