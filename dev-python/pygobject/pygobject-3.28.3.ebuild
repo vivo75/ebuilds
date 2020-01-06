@@ -40,8 +40,7 @@ DEPEND="${COMMON_DEPEND}
 		x11-libs/cairo[glib]
 		x11-libs/gdk-pixbuf:2[introspection,jpeg]
 		x11-libs/gtk+:3[introspection]
-		x11-libs/pango[introspection]
-		python_targets_python2_7? ( dev-python/pyflakes[$(python_gen_usedep python2_7)] ) )
+		x11-libs/pango[introspection] )
 "
 # autoconf-archive required by eautoreconf
 
