@@ -33,7 +33,7 @@ DEPEND="
 		${RDEPEND}
 		dev-python/mock[${PYTHON_USEDEP}]
 		dev-python/pytest[${PYTHON_USEDEP}]
-		>=www-servers/tornado-4.2.1[$(python_gen_usedep python{2_7,3_{5,6,7}})]
+		>=www-servers/tornado-4.2.1[$(python_gen_usedep 'python*')]
 	)
 "
 

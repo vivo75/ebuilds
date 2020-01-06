@@ -98,7 +98,6 @@ RDEPEND="
 	>=dev-python/ovsdbapp-0.9.1[${PYTHON_USEDEP}]
 	>=dev-python/psutil-3.2.2[${PYTHON_USEDEP}]
 	>=dev-python/pyroute2-0.4.21[${PYTHON_USEDEP}]
-	>=dev-python/weakrefmethod-1.0.2[$(python_gen_usedep 'python2_7')]
 	>=dev-python/python-novaclient-9.1.0[${PYTHON_USEDEP}]
 	>=dev-python/python-designateclient-2.7.0[${PYTHON_USEDEP}]
 	>=dev-python/os-xenapi-0.3.1[${PYTHON_USEDEP}]
