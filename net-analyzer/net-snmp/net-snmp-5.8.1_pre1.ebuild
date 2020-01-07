@@ -2,14 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python2_7 )
 DISTUTILS_SINGLE_IMPL=yesplz
 DISTUTILS_OPTIONAL=yesplz
 WANT_AUTOMAKE=none
 PATCHSET=3
 GENTOO_DEPEND_ON_PERL=no
 
-inherit autotools distutils-r1 perl-module systemd
+inherit autotools perl-module systemd
 
 DESCRIPTION="Software for generating and retrieving SNMP data"
 HOMEPAGE="http://www.net-snmp.org/"
@@ -23,13 +22,12 @@ S=${WORKDIR}/${P/_/.}
 # GPL-2 for the init scripts
 LICENSE="HPND BSD GPL-2"
 SLOT="0/35"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86"
+KEYWORDS="~alpha amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86"
 IUSE="
 	X bzip2 doc elf kmem ipv6 libressl lm-sensors mfd-rewrites minimal mysql
-	netlink pcap pci perl python rpm selinux smux ssl tcpd ucd-compat zlib
+	netlink pcap pci perl rpm selinux smux ssl tcpd ucd-compat zlib
 "
 REQUIRED_USE="
-	python? ( ${PYTHON_REQUIRED_USE} )
 	rpm? ( bzip2 zlib )
 "
 
@@ -42,10 +40,6 @@ COMMON_DEPEND="
 	pcap? ( net-libs/libpcap )
 	pci? ( sys-apps/pciutils )
 	perl? ( dev-lang/perl:= )
-	python? (
-		dev-python/setuptools[${PYTHON_USEDEP}]
-		${PYTHON_DEPS}
-	)
 	rpm? (
 		app-arch/rpm
 		dev-libs/popt
@@ -78,10 +72,6 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-5.8-tinfo.patch
 	"${FILESDIR}"/${PN}-5.8.1-pkg-config.patch
 )
-
-pkg_setup() {
-	use python && python-single-r1_pkg_setup
-}
 
 src_prepare() {
 	# snmpconf generates config files with proper selinux context
@@ -119,7 +109,6 @@ src_configure() {
 		$(use_with pcap) \
 		$(use_with pci) \
 		$(use_with perl perl-modules INSTALLDIRS=vendor) \
-		$(use_with python python-modules) \
 		$(use_with rpm) \
 		$(use_with ssl openssl) \
 		$(use_with tcpd libwrap) \
@@ -146,8 +135,6 @@ src_compile() {
 src_install () {
 	# bug #317965
 	emake -j1 DESTDIR="${D}" install
-
-	use python && python_optimize
 
 	if use perl ; then
 		perl_delete_localpod
