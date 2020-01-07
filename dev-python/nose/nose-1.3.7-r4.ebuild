@@ -22,7 +22,7 @@ KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~s
 IUSE="coverage examples test"
 RESTRICT="!test? ( test )"
 
-COVERAGE_IMPLS=( -2 python3_{5,6,7} pypy3 )
+COVERAGE_IMPLS=( python3_{7,8} pypy3 )
 REQUIRED_USE="
 	coverage? ( || ( $(python_gen_useflags "${COVERAGE_IMPLS[@]}") ) )"
 
