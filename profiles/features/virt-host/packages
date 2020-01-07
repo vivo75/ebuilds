@@ -1,4 +1,5 @@
 app-emulation/lxc
+dev-python/python3-lxc
 app-emulation/lxd
 app-emulation/qemu
 sys-fs/lxcfs

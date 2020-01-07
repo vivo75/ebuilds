@@ -24,4 +24,5 @@ net-misc/ntp
 net-misc/radvd
 net-misc/socat
 net-misc/usbip
+net-misc/whois
 net-vpn/openvpn

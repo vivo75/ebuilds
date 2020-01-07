@@ -1,5 +1,6 @@
 # we use default cron script
 app-backup/zfs-auto-snapshot -minimal
+sys-fs/zfs python
 
 app-emulation/libvirt fuse libssh lxc numa pcap virt-network zfs
 app-misc/ca-certificates -cacert
