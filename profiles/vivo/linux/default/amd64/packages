@@ -7,7 +7,7 @@ net-analyzer/zabbix
 # essentials
 net-ftp/vsftpd
 net-vpn/openvpn
-net-vpn/wireguard
+net-vpn/wireguard-tools
 sys-kernel/linux-firmware
 
 # needed to use debian lxc images
