@@ -11,7 +11,6 @@ dev-util/strace
 sys-apps/dstat
 sys-apps/ethtool
 sys-apps/lshw
-sys-apps/tuned
 sys-process/acct
 sys-process/htop
 sys-process/iotop
