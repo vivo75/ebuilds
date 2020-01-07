@@ -1,4 +1,5 @@
 sys-apps/lm-sensors sensord
+sys-apps/smartmontools -caps -daemon
 sys-apps/usbutils -python
 sys-boot/grub -truetype libzfs mount
 sys-kernel/dracut crypt mdraid syslog
