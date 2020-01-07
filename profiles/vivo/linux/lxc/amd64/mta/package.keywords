@@ -5,3 +5,23 @@
 # stable does not build anymore (2017-12-06)
 ~mail-filter/opendmarc-1.3.2 amd64
 ~app-arch/pax-20160306 amd64
+
+<app-arch/bzip2-9999 amd64
+<app-arch/gzip-9999 amd64
+<acct-group/dovecot-9999 amd64
+<acct-group/dovenull-9999 amd64
+<acct-group/postfix-9999 amd64
+<acct-group/postdrop-9999 amd64
+<acct-user/dovecot-9999 amd64
+<acct-user/dovenull-9999 amd64
+<acct-user/postfix-9999 amd64
+<app-arch/xz-utils-9999 amd64
+<app-arch/zstd-9999 amd64
+<mail-mta/postfix-9999 amd64
+<net-mail/dovecot-9999 amd64
+<mail-filter/amavisd-new-9999 amd64
+<app-admin/ansible-9999 amd64
+<mail-filter/spamassassin-9999 amd64
+
+~dev-perl/LWP-UserAgent-Determined-1.70.0 amd64
+
