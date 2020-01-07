@@ -7,7 +7,7 @@ inherit cmake-utils flag-o-matic toolchain-funcs xdg-utils
 
 inherit git-r3
 EGIT_REPO_URI="https://github.com/vivo75/poppler.git"
-EGIT_BRANCH="svg-0.81.0"
+#EGIT_BRANCH="svg-0.81.0"
 EGIT_TAG="0.81.1-svg"
 SLOT="0/9999"
 KEYWORDS="~alpha amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
@@ -42,8 +42,6 @@ DOCS=( AUTHORS NEWS README.md README-XPDF )
 
 PATCHES=(
 	"${FILESDIR}/${MY_PN}-0.28.1-fix-multilib-configuration.patch"
-	"${FILESDIR}/${MY_PN}-0.78.0-respect-cflags.patch"
-	"${FILESDIR}/${MY_PN}-0.61.0-respect-cflags.patch"
 	"${FILESDIR}/${MY_PN}-0.57.0-disable-internal-jpx.patch"
 )
 
