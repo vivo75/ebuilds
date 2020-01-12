@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python{3_8,3_7} )
 # this ebuild currently only supports installing ruby bindings for a single ruby version
 # so USE_RUBY must contain only a single value (the latest stable) as the ebuild calls
 # /usr/bin/${USE_RUBY} directly
-USE_RUBY="ruby27"
+USE_RUBY="ruby26"
 inherit python-single-r1 qmake-utils ruby-single toolchain-funcs
 
 DESCRIPTION="Open source multimedia framework for television broadcasting"
@@ -100,7 +100,7 @@ src_prepare() {
 
 	# respect CFLAGS LDFLAGS when building shared libraries. Bug #308873
 	for x in python lua; do
-		sed -i "/mlt.so/s: -lmlt++ :& ${CFLAGS} ${LDFLAGS} :" src/swig/$x/build || die
+		sed -i "/mlt.so/s/ -lmlt++ /& ${CFLAGS} ${LDFLAGS} /" src/swig/$x/build || die
 	done
 
 	sed -i -e "s/env ruby/${USE_RUBY}/" src/swig/ruby/* || die
