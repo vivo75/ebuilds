@@ -3,7 +3,7 @@
 
 EAPI=5
 
-USE_RUBY="ruby27"
+USE_RUBY="ruby27 ruby26"
 
 RUBY_FAKEGEM_RECIPE_DOC="rdoc"
 RUBY_FAKEGEM_TASK_DOC="docs"

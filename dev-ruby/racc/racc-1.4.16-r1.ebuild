@@ -3,7 +3,7 @@
 
 EAPI=7
 
-USE_RUBY="ruby27"
+USE_RUBY="ruby27 ruby26"
 
 RUBY_FAKEGEM_TASK_DOC="docs"
 RUBY_FAKEGEM_EXTRADOC="README.rdoc README.ja.rdoc TODO ChangeLog"

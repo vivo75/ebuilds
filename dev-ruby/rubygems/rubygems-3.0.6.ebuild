@@ -3,7 +3,7 @@
 
 EAPI=7
 
-USE_RUBY="ruby27"
+USE_RUBY="ruby27 ruby26"
 
 inherit ruby-ng prefix
 
