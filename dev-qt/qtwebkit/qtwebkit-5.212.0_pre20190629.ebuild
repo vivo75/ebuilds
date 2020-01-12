@@ -4,7 +4,7 @@
 EAPI=7
 
 PYTHON_COMPAT=( python2_7 )
-USE_RUBY="ruby24 ruby25 ruby26"
+USE_RUBY="ruby27"
 MY_P="${PN}-${PV/_pre20190629/-alpha3}" # present as upgrade over previous snapshot
 inherit check-reqs cmake flag-o-matic python-any-r1 qmake-utils ruby-single toolchain-funcs
 

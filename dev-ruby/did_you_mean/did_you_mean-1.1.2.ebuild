@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=5
-USE_RUBY="ruby24"
+USE_RUBY="ruby27"
 
 RUBY_FAKEGEM_RECIPE_DOC=""
 RUBY_FAKEGEM_EXTRADOC="CHANGELOG.md README.md"

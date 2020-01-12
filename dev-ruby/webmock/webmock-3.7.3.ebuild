@@ -3,7 +3,7 @@
 
 EAPI=7
 
-USE_RUBY="ruby24 ruby25 ruby26"
+USE_RUBY="ruby27"
 
 RUBY_FAKEGEM_TASK_TEST="test spec NO_CONNECTION=true"
 

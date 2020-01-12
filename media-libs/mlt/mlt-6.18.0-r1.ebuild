@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python{3_8,3_7} )
 # this ebuild currently only supports installing ruby bindings for a single ruby version
 # so USE_RUBY must contain only a single value (the latest stable) as the ebuild calls
 # /usr/bin/${USE_RUBY} directly
-USE_RUBY="ruby26"
+USE_RUBY="ruby27"
 inherit python-single-r1 qmake-utils ruby-single toolchain-funcs
 
 DESCRIPTION="Open source multimedia framework for television broadcasting"
