@@ -3,7 +3,8 @@
 
 EAPI=6
 
-inherit toolchain-funcs udev
+PYTHON_COMPAT=( python{2_7,3_6,3_7} )
+inherit toolchain-funcs python-any-r1 udev
 
 DESCRIPTION="Central Regulatory Domain Agent for wireless networks"
 HOMEPAGE="https://wireless.wiki.kernel.org/en/developers/regulatory/crda"
@@ -23,13 +24,20 @@ RDEPEND="!gcrypt? (
 	dev-libs/libnl:3
 	net-wireless/wireless-regdb"
 DEPEND="${RDEPEND}
+	${PYTHON_DEPS}
+	$(python_gen_any_dep 'dev-python/m2crypto[${PYTHON_USEDEP}]')
 	virtual/pkgconfig"
+
+python_check_deps() {
+	has_version --host-root "dev-python/m2crypto[${PYTHON_USEDEP}]"
+}
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-3.18-no-ldconfig.patch
 	"${FILESDIR}"/${PN}-3.18-no-werror.patch
 	"${FILESDIR}"/${PN}-3.18-cflags.patch
 	"${FILESDIR}"/${PN}-3.18-libreg-link.patch #542436
+	"${FILESDIR}"/${PN}-3.18-python-3.patch
 	"${FILESDIR}"/${PN}-3.18-openssl-1.1.0-compatibility.patch #652428
 	"${FILESDIR}"/${PN}-3.18-libressl.patch
 	"${FILESDIR}"/${PN}-3.18-ldflags.patch
