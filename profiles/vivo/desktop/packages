@@ -95,7 +95,6 @@ dev-util/squashmerge
 dev-util/strace
 dev-util/valgrind
 dev-vcs/tig
-gnome-base/libgnome
 kde-apps/akonadi-import-wizard
 kde-apps/akonadiconsole
 kde-apps/dolphin-plugins-git
