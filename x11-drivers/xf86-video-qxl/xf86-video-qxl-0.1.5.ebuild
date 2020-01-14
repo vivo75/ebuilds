@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=5
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python{3_8,3_7} )
 inherit python-single-r1 xorg-2
 
 DESCRIPTION="QEMU QXL paravirt video driver"
@@ -24,6 +24,7 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	python_fix_shebang scripts
+	2to3 -w scripts/Xspice || die "cannot fix python2 only scripts"
 	xorg-2_src_prepare
 }
 
