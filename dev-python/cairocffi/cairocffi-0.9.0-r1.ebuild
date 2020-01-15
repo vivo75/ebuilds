@@ -23,7 +23,7 @@ RESTRICT="!test? ( test )"
 RDEPEND="
 	$(python_gen_cond_dep '>=dev-python/cffi-1.1.0:=[${PYTHON_USEDEP}]' 'python*')
 	>=dev-python/xcffib-0.3.2[${PYTHON_USEDEP}]
-	x11-libs/cairo:0=[xcb]
+	x11-libs/cairo:0=[X,xcb(+)]
 	x11-libs/gdk-pixbuf[jpeg]"
 
 DEPEND="
