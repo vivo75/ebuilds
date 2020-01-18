@@ -21,12 +21,6 @@ KEYWORDS="~amd64 ~x86"
 RDEPEND="
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	dev-python/toml[${PYTHON_USEDEP}]"
-BDEPEND="${RDEPEND}
-	test? (
-		$(python_gen_cond_dep '
-			dev-python/backports-tempfile[${PYTHON_USEDEP}]
-			dev-python/mock[${PYTHON_USEDEP}]
-		' -2)
-	)"
+BDEPEND="${RDEPEND}"
 
 distutils_enable_tests pytest
