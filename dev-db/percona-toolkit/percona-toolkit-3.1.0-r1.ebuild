@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="7"
@@ -11,7 +11,7 @@ SRC_URI="https://www.percona.com/downloads/${PN}/${PV}/source/tarball/${P}.tar.g
 
 LICENSE="|| ( GPL-2 Artistic )"
 SLOT="0"
-KEYWORDS="amd64 ~x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
 # Package warrants IUSE doc
 IUSE=""
 
@@ -40,6 +40,7 @@ DEPEND="${COMMON_DEPEND}
 PATCHES=(
 	"${FILESDIR}"/${PN}-3.0.7-no-versioncheck.patch
 	"${FILESDIR}"/${PN}-3.0.10-slave-delay-fix.patch
+	"${FILESDIR}"/${PN}-3.1.0-drop-swap-gentoo-mariadb-fix.patch
 )
 
 src_prepare() {
