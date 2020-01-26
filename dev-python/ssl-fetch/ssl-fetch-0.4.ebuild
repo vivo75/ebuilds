@@ -15,12 +15,18 @@ LICENSE="GPL-2"
 SLOT="0"
 IUSE=""
 
-KEYWORDS="alpha amd64 arm arm64 hppa ia64 m68k ~mips ppc ppc64 s390 sh sparc x86 ~x64-cygwin ~amd64-linux ~x86-linux ~x64-macos ~x86-macos"
+KEYWORDS="~alpha amd64 arm arm64 hppa ia64 m68k ~mips ppc ppc64 s390 sh sparc x86 ~x64-cygwin ~amd64-linux ~x86-linux ~x64-macos ~x86-macos"
 
 DEPEND=""
 
 RDEPEND="${DEPEND}
-	>=dev-python/requests-1.2.1[${PYTHON_USEDEP}]"
+	>=dev-python/requests-1.2.1[${PYTHON_USEDEP}]
+	python_targets_python2_7? (
+		dev-python/ndg-httpsclient[python_targets_python2_7]
+		dev-python/pyasn1[python_targets_python2_7]
+		>=dev-python/pyopenssl-0.13[python_targets_python2_7]
+		)
+	"
 
 pkg_postinst() {
 	echo
