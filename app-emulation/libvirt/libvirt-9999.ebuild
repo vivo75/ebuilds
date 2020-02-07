@@ -5,17 +5,17 @@ EAPI=7
 
 PYTHON_COMPAT=( python3_{6,7} )
 
-inherit autotools bash-completion-r1 eutils linux-info python-any-r1 readme.gentoo-r1 systemd
+inherit autotools out-of-source bash-completion-r1 eutils linux-info python-any-r1 readme.gentoo-r1 systemd
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://libvirt.org/git/libvirt.git"
 	SRC_URI=""
-	KEYWORDS="amd64 x86"
+	KEYWORDS=""
 	SLOT="0"
 else
 	SRC_URI="https://libvirt.org/sources/${P}.tar.xz"
-	KEYWORDS="amd64 ~arm64 x86"
+	KEYWORDS="~amd64 ~arm64 ~ppc64 ~x86"
 	SLOT="0/${PV}"
 fi
 
@@ -23,10 +23,10 @@ DESCRIPTION="C toolkit to manipulate virtual machines"
 HOMEPAGE="http://www.libvirt.org/"
 LICENSE="LGPL-2.1"
 IUSE="
-	apparmor audit +caps +dbus firewalld fuse glusterfs iscsi iscsi-direct
-	+libvirtd lvm libssh lxc +macvtap nfs nls numa openvz parted pcap phyp
-	policykit +qemu rbd sasl selinux +udev +vepa virtualbox virt-network
-	wireshark-plugins xen zeroconf zfs
+	apparmor audit +caps +dbus dtrace firewalld fuse glusterfs iscsi
+	iscsi-direct +libvirtd lvm libssh lxc +macvtap nfs nls numa openvz
+	parted pcap policykit +qemu rbd sasl selinux +udev +vepa
+	virtualbox virt-network wireshark-plugins xen zfs
 "
 
 REQUIRED_USE="
@@ -50,6 +50,7 @@ RDEPEND="
 	acct-user/qemu
 	policykit? ( acct-group/libvirt )
 	app-misc/scrub
+	>=dev-libs/glib-2.48.0
 	dev-libs/libgcrypt:0
 	dev-libs/libnl:3
 	>=dev-libs/libxml2-2.7.6
@@ -60,7 +61,6 @@ RDEPEND="
 	net-libs/rpcsvc-proto
 	>=net-misc/curl-7.18.0
 	sys-apps/dmidecode
-	!sys-apps/systemd[-cgroup-hybrid(+)]
 	>=sys-apps/util-linux-2.17
 	sys-devel/gettext
 	sys-libs/ncurses:0=
@@ -69,6 +69,7 @@ RDEPEND="
 	audit? ( sys-process/audit )
 	caps? ( sys-libs/libcap-ng )
 	dbus? ( sys-apps/dbus )
+	dtrace? ( dev-util/systemtap )
 	firewalld? ( >=net-firewall/firewalld-0.6.3 )
 	fuse? ( >=sys-fs/fuse-2.8.6:= )
 	glusterfs? ( >=sys-cluster/glusterfs-3.4.1 )
@@ -76,6 +77,7 @@ RDEPEND="
 	iscsi-direct? ( >=net-libs/libiscsi-1.18.0 )
 	libssh? ( net-libs/libssh )
 	lvm? ( >=sys-fs/lvm2-2.02.48-r2[-device-mapper-only(-)] )
+	lxc? ( !sys-apps/systemd[-cgroup-hybrid(+)] )
 	nfs? ( net-fs/nfs-utils )
 	numa? (
 		>sys-process/numactl-2.0.2
@@ -111,7 +113,6 @@ RDEPEND="
 		virtual/udev
 		>=x11-libs/libpciaccess-0.10.9
 	)
-	zeroconf? ( >=net-dns/avahi-0.6[dbus] )
 	zfs? ( sys-fs/zfs )"
 
 DEPEND="${RDEPEND}
@@ -120,13 +121,12 @@ DEPEND="${RDEPEND}
 	dev-lang/perl
 	dev-libs/libxslt
 	dev-perl/XML-XPath
+	dev-python/docutils
 	virtual/pkgconfig"
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-5.2.0-do-not-use-sysconf.patch
-	"${FILESDIR}"/${PN}-1.2.16-fix_paths_in_libvirt-guests_sh.patch
-	"${FILESDIR}"/${PN}-5.2.0-fix-paths-for-apparmor.patch
-	"${FILESDIR}"/${PN}-5.2.0-md-clear.patch
+	"${FILESDIR}"/${PN}-6.0.0-do-not-use-sysconf.patch
+	"${FILESDIR}"/${PN}-6.0.0-fix_paths_in_libvirt-guests_sh.patch
 )
 
 pkg_setup() {
@@ -232,23 +232,21 @@ src_prepare() {
 	fi
 
 	# Tweak the init script:
-	cp "${FILESDIR}/libvirtd.init-r17" "${S}/libvirtd.init" || die
+	cp "${FILESDIR}/libvirtd.init-r18" "${S}/libvirtd.init" || die
 	sed -e "s/USE_FLAG_FIREWALLD/$(usex firewalld 'need firewalld' '')/" \
-		-e "s/USE_FLAG_AVAHI/$(usex zeroconf 'use avahi-daemon' '')/" \
-		-e "s/USE_FLAG_ISCSI/$(usex iscsi 'use iscsid' '')/" \
-		-e "s/USE_FLAG_RBD/$(usex rbd 'use ceph' '')/" \
 		-i "${S}/libvirtd.init" || die "sed failed"
 
 	eautoreconf
 }
 
-src_configure() {
+my_src_configure() {
 	local myeconfargs=(
 		$(use_with apparmor)
 		$(use_with apparmor apparmor-profiles)
 		$(use_with audit)
 		$(use_with caps capng)
 		$(use_with dbus)
+		$(use_with dtrace)
 		$(use_with firewalld)
 		$(use_with fuse)
 		$(use_with glusterfs)
@@ -267,7 +265,6 @@ src_configure() {
 		$(use_with openvz)
 		$(use_with parted storage-disk)
 		$(use_with pcap libpcap)
-		$(use_with phyp)
 		$(use_with policykit polkit)
 		$(use_with qemu)
 		$(use_with qemu yajl)
@@ -279,7 +276,6 @@ src_configure() {
 		$(use_with virt-network network)
 		$(use_with wireshark-plugins wireshark-dissector)
 		$(use_with xen libxl)
-		$(use_with zeroconf avahi)
 		$(use_with zfs storage-zfs)
 
 		--without-hal
@@ -297,8 +293,8 @@ src_configure() {
 		--disable-static
 		--disable-werror
 
-		--with-html-subdir=${PF}/html
 		--localstatedir=/var
+		--enable-dependency-tracking
 	)
 
 	if use virtualbox && has_version app-emulation/virtualbox-ose; then
@@ -312,13 +308,11 @@ src_configure() {
 	if [[ ${PV} = *9999* ]]; then
 		# Restore gnulib's config.sub and config.guess
 		# bug #377279
-		(cd .gnulib && git reset --hard > /dev/null)
+		(cd "${S}"/.gnulib && git reset --hard > /dev/null)
 	fi
 }
 
-src_test() {
-	cd "${BUILD_DIR}"
-
+my_src_test() {
 	# remove problematic tests, bug #591416, bug #591418
 	sed -i -e 's#commandtest$(EXEEXT) # #' \
 		-e 's#virfirewalltest$(EXEEXT) # #' \
@@ -330,7 +324,7 @@ src_test() {
 	HOME="${T}" emake check
 }
 
-src_install() {
+my_src_install() {
 	emake DESTDIR="${D}" \
 		SYSTEMD_UNIT_DIR="$(systemd_get_systemunitdir)" install
 
@@ -353,7 +347,7 @@ src_install() {
 	systemd_newtmpfilesd "${FILESDIR}"/libvirtd.tmpfiles.conf libvirtd.conf
 
 	newinitd "${S}/libvirtd.init" libvirtd
-	newinitd "${FILESDIR}/libvirt-guests.init-r3" libvirt-guests
+	newinitd "${FILESDIR}/libvirt-guests.init-r4" libvirt-guests
 	newinitd "${FILESDIR}/virtlockd.init-r1" virtlockd
 	newinitd "${FILESDIR}/virtlogd.init-r1" virtlogd
 
