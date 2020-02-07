@@ -2949,7 +2949,7 @@ def rsync(src, dst, delete=True, capture_output=False, check=True):
 
 
 def update_python_compat(cat, pkg, ebuild):
-    if pkg in ('certifi', 'setuptools'):
+    if pkg in ('certifi', 'setuptools', 'gemato'):
         return
     new_python_compat = []
     ret = subprocess.run(['grep', '-qm', '1', '^PYTHON_COMPAT=.*)', ebuild], check=False)
