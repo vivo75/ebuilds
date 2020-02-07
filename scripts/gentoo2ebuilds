@@ -2157,6 +2157,7 @@ EBUILDS_KEEP_ALL = (
     'media-libs/opus',
     'media-libs/phonon',
     'media-libs/phonon-vlc',
+    'media-libs/pulseaudio-qt',
     'media-libs/qhull',
     'media-libs/raptor',
     'media-libs/rlottie',
