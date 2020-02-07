@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python{2_7,3_{6,7}} )
 inherit cmake-utils llvm llvm.org multiprocessing python-single-r1 \
 	toolchain-funcs
 
@@ -70,8 +70,7 @@ src_configure() {
 	use test && mycmakeargs+=(
 		-DLLVM_BUILD_TESTS=$(usex test)
 		# compilers for lit tests
-		-DLLDB_TEST_C_COMPILER="$(type -P clang)"
-		-DLLDB_TEST_CXX_COMPILER="$(type -P clang++)"
+		-DLLDB_TEST_COMPILER="$(type -P clang)"
 
 		-DLLVM_MAIN_SRC_DIR="${WORKDIR}/llvm"
 		-DLLVM_EXTERNAL_LIT="${EPREFIX}/usr/bin/lit"

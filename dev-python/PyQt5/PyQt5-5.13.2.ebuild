@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python2_7 python3_{6,7,8} )
 inherit multibuild python-r1 qmake-utils
 
 DESCRIPTION="Python bindings for the Qt framework"
@@ -18,7 +18,7 @@ fi
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 ~arm ~arm64 ~ppc ~ppc64 x86"
+KEYWORDS="amd64 arm ~arm64 ~ppc ~ppc64 x86"
 
 # TODO: QtNfc, QtRemoteObjects (Qt >= 5.12)
 IUSE="bluetooth dbus debug declarative designer examples gles2 gui help location multimedia

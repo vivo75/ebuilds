@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7} )
 inherit distutils-r1
 
 DESCRIPTION="Powerful, accurate, and easy-to-use Python library for colorspace conversions"

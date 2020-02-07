@@ -3,7 +3,7 @@
 
 EAPI="7"
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python{2_7,3_6,3_7} )
 PYTHON_REQ_USE="ncurses,readline"
 
 PLOCALES="bg de_DE fr_FR hu it tr zh_CN"
@@ -24,7 +24,7 @@ if [[ ${PV} = *9999* ]]; then
 	SRC_URI=""
 else
 	SRC_URI="http://wiki.qemu-project.org/download/${P}.tar.xz"
-	KEYWORDS="~amd64 ~arm64 ~ppc ~ppc64 ~x86"
+	KEYWORDS="amd64 ~arm64 ~ppc ~ppc64 x86"
 fi
 
 DESCRIPTION="QEMU + Kernel-based Virtual Machine userland tools"

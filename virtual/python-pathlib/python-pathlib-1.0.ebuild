@@ -3,13 +3,13 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
+PYTHON_COMPAT=( python2_7 python3_{6,7,8} pypy3 )
 
 inherit python-r1
 
 DESCRIPTION="A virtual for Python pathlib module"
 SLOT="0"
-KEYWORDS="amd64 ~arm arm64 ~hppa ia64 ~ppc ppc64 ~sparc x86"
+KEYWORDS="amd64 ~arm arm64 ~hppa ia64 ppc ppc64 ~sparc x86"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 RDEPEND="${PYTHON_DEPS}

@@ -3,7 +3,7 @@
 
 EAPI=5
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python2_7 python3_6 )
 
 inherit distutils-r1
 
@@ -17,7 +17,7 @@ KEYWORDS="amd64 arm arm64 hppa ppc ppc64 sparc x86"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-RDEPEND=">=app-text/enchant-${PV%.*}"
+RDEPEND=">=app-text/enchant-${PV%.*}:0"
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 	test? ( ${RDEPEND} )"
 

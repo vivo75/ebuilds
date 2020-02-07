@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
+PYTHON_COMPAT=( python2_7 python3_{6,7,8} pypy3 )
 
 inherit distutils-r1
 
@@ -13,7 +13,7 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="amd64 ~arm arm64 ~ia64 ~ppc ~ppc64 ~x86"
+KEYWORDS="amd64 ~arm arm64 ia64 ppc ppc64 x86"
 IUSE="test"
 
 # requires.txt inc. mccabe however that creates a circular dep

@@ -1,9 +1,9 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 VALA_USE_DEPEND="vapigen"
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 GNOME2_EAUTORECONF="yes"
 
 inherit gnome2 python-any-r1 vala virtualx
@@ -18,7 +18,7 @@ IUSE="debug gtk +introspection +vala"
 RESTRICT="!test? ( test )"
 REQUIRED_USE="vala? ( introspection )"
 
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-linux ~x86-linux ~sparc-solaris ~x86-solaris"
+KEYWORDS="~alpha amd64 ~arm ~arm64 ~hppa ia64 ~mips ppc ppc64 ~sh sparc x86 ~amd64-linux ~x86-linux ~sparc-solaris ~x86-solaris"
 
 COMMON_DEPEND="
 	>=app-crypt/p11-kit-0.19
