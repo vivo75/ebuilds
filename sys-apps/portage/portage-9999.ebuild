@@ -1,7 +1,7 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 
 DISTUTILS_USE_SETUPTOOLS=no
 PYTHON_COMPAT=(
@@ -11,26 +11,26 @@ PYTHON_COMPAT=(
 )
 PYTHON_REQ_USE='bzip2(+),threads(+)'
 
-inherit distutils-r1 linux-info systemd prefix
+inherit distutils-r1 git-r3 linux-info systemd prefix
 
 DESCRIPTION="Portage is the package management and distribution system for Gentoo"
 HOMEPAGE="https://wiki.gentoo.org/wiki/Project:Portage"
 
 LICENSE="GPL-2"
-KEYWORDS="~alpha amd64 arm ~arm64 hppa ia64 ~m68k ~mips ppc ppc64 ~riscv ~s390 ~sh sparc x86"
+KEYWORDS=""
 SLOT="0"
-IUSE="build doc epydoc gentoo-dev +ipc +native-extensions +rsync-verify selinux xattr"
+IUSE="apidoc build doc gentoo-dev +ipc +native-extensions +rsync-verify selinux xattr"
 
 DEPEND="!build? ( $(python_gen_impl_dep 'ssl(+)') )
 	>=app-arch/tar-1.27
 	dev-lang/python-exec:2
 	>=sys-apps/sed-4.0.5 sys-devel/patch
 	doc? ( app-text/xmlto ~app-text/docbook-xml-dtd-4.4 )
-	epydoc? (
-		$(python_gen_cond_dep '
-			>=dev-python/epydoc-2.0[${PYTHON_USEDEP}]
-		' 'python2*')
+	apidoc? (
+		dev-python/sphinx
+		dev-python/sphinx-epytext
 	)"
+
 # Require sandbox-2.2 for bug #288863.
 # For xattr, we can spawn getfattr and setfattr from sys-apps/attr, but that's
 # quite slow, so it's not considered in the dependencies as an alternative to
@@ -67,9 +67,7 @@ RDEPEND="
 		$(python_gen_cond_dep 'dev-python/pyxattr[${PYTHON_USEDEP}]' \
 			python2_7 pypy)
 	) )
-	!<app-admin/logrotate-3.8.0
-	!<app-portage/gentoolkit-0.4.6
-	!<app-portage/repoman-2.3.10"
+	!<app-admin/logrotate-3.8.0"
 PDEPEND="
 	!build? (
 		>=net-misc/rsync-2.6.4
@@ -78,9 +76,7 @@ PDEPEND="
 # coreutils-6.4 rdep is for date format in emerge-webrsync #164532
 # NOTE: FEATURES=installsources requires debugedit and rsync
 
-REQUIRED_USE="epydoc? ( $(python_gen_useflags 'python2*') )"
-
-SRC_ARCHIVES="https://dev.gentoo.org/~zmedico/portage/archives"
+SRC_ARCHIVES="https://dev.gentoo.org/~dolsen/releases/portage"
 
 prefix_src_archives() {
 	local x y
@@ -91,9 +87,8 @@ prefix_src_archives() {
 	done
 }
 
-TARBALL_PV=${PV}
-SRC_URI="mirror://gentoo/${PN}-${TARBALL_PV}.tar.bz2
-	$(prefix_src_archives ${PN}-${TARBALL_PV}.tar.bz2)"
+EGIT_REPO_URI="https://anongit.gentoo.org/git/proj/portage.git
+	https://github.com/gentoo/portage.git"
 
 pkg_pretend() {
 	local CONFIG_CHECK="~IPC_NS ~PID_NS ~NET_NS"
@@ -101,15 +96,8 @@ pkg_pretend() {
 	check_extra_config
 }
 
-pkg_setup() {
-	use epydoc && DISTUTILS_ALL_SUBPHASE_IMPLS=( python2.7 )
-}
-
 python_prepare_all() {
 	distutils-r1_python_prepare_all
-
-	# Apply 605ae9eb6dae230d8bb967edbdd719c61a2b14b8 for bug 704256.
-	sed -e 's|^		rsync ${rsync_opts} . "${repo_location%%/}"$|\t\tchmod 755 .\n\0|' -i bin/emerge-webrsync || die
 
 	if use gentoo-dev; then
 		einfo "Disabling --dynamic-deps by default for gentoo-dev..."
@@ -118,7 +106,7 @@ python_prepare_all() {
 			die "failed to patch create_depgraph_params.py"
 
 		einfo "Enabling additional FEATURES for gentoo-dev..."
-		echo 'FEATURES="${FEATURES} strict-keepdir"' \
+		echo 'FEATURES="${FEATURES} ipc-sandbox network-sandbox strict-keepdir"' \
 			>> cnf/make.globals || die
 	fi
 
@@ -142,7 +130,6 @@ python_prepare_all() {
 
 	if use build || ! use rsync-verify; then
 		sed -e '/^sync-rsync-verify-metamanifest/s|yes|no|' \
-			-e '/^sync-webrsync-verify-signature/s|yes|no|' \
 			-i cnf/repos.conf || die "sed failed"
 	fi
 
@@ -163,7 +150,7 @@ python_prepare_all() {
 		einfo "Adjusting make.globals, repos.conf and etc-update ..."
 		hprefixify cnf/{make.globals,repos.conf} bin/etc-update
 
-		if use prefix-guest ; then
+		if prefix-guest ; then
 			sed -e "s|^\(main-repo = \).*|\\1gentoo_prefix|" \
 				-e "s|^\\[gentoo\\]|[gentoo_prefix]|" \
 				-e "s|^\(sync-uri = \).*|\\1rsync://rsync.prefix.bitzolder.nl/gentoo-portage-prefix|" \
@@ -190,7 +177,7 @@ python_prepare_all() {
 python_compile_all() {
 	local targets=()
 	use doc && targets+=( docbook )
-	use epydoc && targets+=( epydoc )
+	use apidoc && targets+=( apidoc )
 
 	if [[ ${targets[@]} ]]; then
 		esetup.py "${targets[@]}"
@@ -223,8 +210,8 @@ python_install_all() {
 		install_docbook
 		--htmldir="${EPREFIX}/usr/share/doc/${PF}/html"
 	)
-	use epydoc && targets+=(
-		install_epydoc
+	use apidoc && targets+=(
+		install_apidoc
 		--htmldir="${EPREFIX}/usr/share/doc/${PF}/html"
 	)
 
@@ -236,7 +223,7 @@ python_install_all() {
 	systemd_dotmpfilesd "${FILESDIR}"/portage-ccache.conf
 
 	# Due to distutils/python-exec limitations
-	# these must be installed to /usr/bin.
+	# they must be installed to /usr/bin.
 	local sbin_relocations='archive-conf dispatch-conf emaint env-update etc-update fixpackages regenworld'
 	einfo "Moving admin scripts to the correct directory"
 	dodir /usr/sbin
@@ -265,15 +252,5 @@ pkg_preinst() {
 	# This is allowed to fail if the user/group are invalid for prefix users.
 	if chown portage:portage "${ED}"var/log/portage{,/elog} 2>/dev/null ; then
 		chmod g+s,ug+rwx "${ED}"var/log/portage{,/elog}
-	fi
-
-	if has_version "<${CATEGORY}/${PN}-2.3.77"; then
-		elog "The emerge --autounmask option is now disabled by default, except for"
-		elog "portions of behavior which are controlled by the --autounmask-use and"
-		elog "--autounmask-license options. For backward compatibility, previous"
-		elog "behavior of --autounmask=y and --autounmask=n is entirely preserved."
-		elog "Users can get the old behavior simply by adding --autounmask to the"
-		elog "make.conf EMERGE_DEFAULT_OPTS variable. For the rationale for this"
-		elog "change, see https://bugs.gentoo.org/658648."
 	fi
 }
