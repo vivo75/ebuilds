@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python{3_6,3_7} )
 inherit distutils-r1
 
 DESCRIPTION="Python bindings for the CUPS API"
@@ -22,15 +22,6 @@ DEPEND="
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	${RDEPEND}
 "
-
-# epydoc kinda sucks and supports python2 only (it's dead too),
-# and since we're dealing with a binary module we need exact version
-# match. therefore, docbuilding *requires* any python2 being enabled.
-
-python_compile() {
-	python_is_python3 || local -x CFLAGS="${CFLAGS} -fno-strict-aliasing"
-	distutils-r1_python_compile
-}
 
 python_install_all() {
 	if use examples; then

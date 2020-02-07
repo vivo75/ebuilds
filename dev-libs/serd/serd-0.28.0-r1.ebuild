@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python{2_7,3_6} )
 PYTHON_REQ_USE='threads(+)'
 inherit python-any-r1 waf-utils multilib-build multilib-minimal
 
