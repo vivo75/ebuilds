@@ -3006,7 +3006,7 @@ for pkg in EBUILDS_KEEP_ALL:
         rsync(os.path.join(UPSTREAM_REPO_PATH, pkg),
               os.path.join(EBUILDS_REPO_PATH, pkg))
     else:
-        print "WARNING: package %s not found in upstram repo" % pkg
+        print("WARNING: package %s not found in upstram repo" % pkg)
 
 # There are also other kind of important directories
 for cat in ADDITIONAL_DIRS:
