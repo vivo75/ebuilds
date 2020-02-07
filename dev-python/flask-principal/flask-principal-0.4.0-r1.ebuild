@@ -4,7 +4,6 @@
 EAPI=6
 
 PYTHON_COMPAT=( python{3_8,3_7} )
-
 inherit distutils-r1
 
 DESCRIPTION="Identity management for flask"

@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_USE_SETUPTOOLS=rdepend
-PYTHON_COMPAT=( python2_7 python3_{6,7,8} pypy3 )
+PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
 PYTHON_REQ_USE="threads(+),sqlite"
 
 inherit distutils-r1 eutils
@@ -15,7 +15,7 @@ SRC_URI="https://github.com/HypothesisWorks/${PN}/archive/${PN}-python-${PV}.tar
 
 LICENSE="MPL-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64 ~sparc ~x86"
+KEYWORDS="amd64 ~arm ~arm64 ~sparc ~x86"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
