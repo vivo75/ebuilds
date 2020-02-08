@@ -3,7 +3,7 @@
 
 EAPI=7
 
-USE_RUBY="ruby27"
+USE_RUBY="ruby24 ruby25 ruby26"
 RUBY_FAKEGEM_TASK_DOC=""
 RUBY_FAKEGEM_EXTRADOC="README.md"
 RUBY_FAKEGEM_GEMSPEC="${PN}.gemspec"
@@ -11,7 +11,7 @@ RUBY_FAKEGEM_GEMSPEC="${PN}.gemspec"
 inherit ruby-fakegem
 
 DESCRIPTION="A pure ruby implementation of Remi Coulom's Whole-History Rating algorithm"
-HOMEPAGE="https://github.com/goshrine/${PN}"
+HOMEPAGE="https://github.com/goshrine/whole_history_rating"
 
 LICENSE="MIT"
 SLOT="0"
