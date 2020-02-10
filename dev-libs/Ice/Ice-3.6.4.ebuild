@@ -6,7 +6,7 @@ EAPI=6
 PYTHON_COMPAT=( python{3_8,3_7} )
 
 RUBY_OPTIONAL="yes"
-USE_RUBY="ruby27"
+USE_RUBY="ruby24"
 
 PHP_EXT_NAME="IcePHP"
 PHP_EXT_INI="yes"
