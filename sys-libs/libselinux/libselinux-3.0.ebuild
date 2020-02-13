@@ -3,7 +3,7 @@
 
 EAPI="6"
 PYTHON_COMPAT=( python{3_8,3_7} )
-USE_RUBY="ruby27"
+USE_RUBY="ruby24 ruby25 ruby26"
 
 # No, I am not calling ruby-ng
 inherit multilib python-r1 toolchain-funcs multilib-minimal
@@ -21,7 +21,7 @@ if [[ ${PV} == 9999 ]] ; then
 	S="${WORKDIR}/${MY_P}/${PN}"
 else
 	SRC_URI="https://github.com/SELinuxProject/selinux/releases/download/${MY_RELEASEDATE}/${MY_P}.tar.gz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~mips ~x86"
+	KEYWORDS="amd64 ~arm ~arm64 ~mips x86"
 	S="${WORKDIR}/${MY_P}"
 fi
 
