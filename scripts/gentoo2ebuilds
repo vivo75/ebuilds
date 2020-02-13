@@ -2266,6 +2266,7 @@ EBUILDS_KEEP_ALL = (
     'net-dns/ldns-utils',
     'net-dns/libidn',
     'net-dns/libidn2',
+    'net-dns/openresolv',
     'net-dns/pdns',
     'net-dns/pdns-recursor',
     'net-dns/unbound',
