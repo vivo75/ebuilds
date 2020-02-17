@@ -114,6 +114,7 @@ EBUILDS_KEEP_ALL = (
     'app-admin/apache-tools',
     'app-admin/apachetop',
     'app-admin/augeas',
+    'app-admin/chrpath',
     'app-admin/eselect',
     'app-admin/gam-server',
     'app-admin/gamin',
