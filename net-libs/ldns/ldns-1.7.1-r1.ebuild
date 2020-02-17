@@ -3,7 +3,7 @@
 
 EAPI=6
 PYTHON_COMPAT=( python{3_8,3_7} )
-inherit eutils multilib-minimal python-single-r1
+inherit eutils ltprune multilib-minimal python-single-r1
 
 DESCRIPTION="a library with the aim to simplify DNS programming in C"
 HOMEPAGE="http://www.nlnetlabs.nl/projects/ldns/"

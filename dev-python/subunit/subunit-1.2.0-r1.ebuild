@@ -5,7 +5,7 @@ EAPI=5
 
 PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
 
-inherit distutils-r1 eutils multilib-minimal versionator
+inherit distutils-r1 eutils ltprune multilib-minimal versionator
 
 DESCRIPTION="A streaming protocol for test results"
 HOMEPAGE="https://launchpad.net/subunit https://pypi.org/project/python-subunit/"

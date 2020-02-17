@@ -13,3 +13,4 @@ app-arch/unshield
 app-arch/zip
 app-arch/zpaq
 app-arch/zstd
+dev-python/zstandard

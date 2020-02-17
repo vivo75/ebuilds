@@ -81,6 +81,7 @@ dev-python/python-xlib
 dev-python/pyudev
 dev-python/texttable
 dev-python/virtualenv
+dev-python/zstandard
 dev-tcltk/expect-lite
 dev-util/bcc
 dev-util/cgdb
@@ -145,7 +146,9 @@ media-fonts/takao-fonts
 media-gfx/argyllcms
 media-gfx/dcraw
 media-gfx/gmic
+media-gfx/imagemagick
 media-gfx/pdf2svg
+media-gfx/rawtherapee
 media-gfx/xsane
 media-libs/elles_icc_profiles
 media-libs/exempi
@@ -222,6 +225,8 @@ sys-apps/cpuid
 sys-apps/ed
 sys-apps/ethtool
 sys-apps/fakeroot
+sys-apps/flatpak
+sys-apps/gptfdisk
 sys-apps/hdparm
 sys-apps/ipmiutil
 sys-apps/lm-sensors

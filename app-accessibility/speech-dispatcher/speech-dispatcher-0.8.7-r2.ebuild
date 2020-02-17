@@ -5,7 +5,7 @@ EAPI=6
 
 PYTHON_COMPAT=( python{3_8,3_7} )
 
-inherit eutils python-r1
+inherit eutils ltprune python-r1
 
 DESCRIPTION="Speech synthesis interface"
 HOMEPAGE="http://www.freebsoft.org/speechd"

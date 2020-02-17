@@ -5,7 +5,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python{3_8,3_7} )
 
-inherit flag-o-matic python-single-r1
+inherit flag-o-matic python-single-r1 toolchain-funcs
 
 MY_P="unit-${PV}"
 DESCRIPTION="Dynamic web and application server"

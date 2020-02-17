@@ -44,6 +44,7 @@ RDEPEND="
 		>=dev-python/idna-0.6[${PYTHON_USEDEP}]
 	)
 	serial? ( >=dev-python/pyserial-3.0[${PYTHON_USEDEP}] )
+	soap? ( $(python_gen_cond_dep 'dev-python/soappy[${PYTHON_USEDEP}]' python2_7) )
 	http2? (
 		>=dev-python/hyper-h2-3.0.0[${PYTHON_USEDEP}]
 		<dev-python/hyper-h2-4.0.0[${PYTHON_USEDEP}]
@@ -126,7 +127,7 @@ python_test() {
 python_install() {
 	distutils-r1_python_install
 
-	cd "${D%}$(python_get_sitedir)" || die
+	cd "${D}$(python_get_sitedir)" || die
 
 	# own the dropin.cache so we don't leave orphans
 	touch twisted/plugins/dropin.cache || die
@@ -161,7 +162,7 @@ pkg_postinst() {
 }
 
 python_postrm() {
-	rm -f "${ROOT%}$(python_get_sitedir)/twisted/plugins/dropin.cache" || die
+	rm -f "${ROOT}$(python_get_sitedir)/twisted/plugins/dropin.cache" || die
 }
 
 pkg_postrm(){

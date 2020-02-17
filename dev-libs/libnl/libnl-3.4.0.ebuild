@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_8,3_7} )
 DISTUTILS_OPTIONAL=1
-inherit distutils-r1 eutils libtool multilib multilib-minimal
+inherit distutils-r1 eutils libtool ltprune multilib multilib-minimal
 
 LIBNL_P=${P/_/-}
 LIBNL_DIR=${PV/_/}
