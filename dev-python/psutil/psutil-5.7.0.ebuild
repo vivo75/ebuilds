@@ -2,7 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-
 PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
 
 inherit distutils-r1
@@ -15,18 +14,36 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
 IUSE="test"
+RESTRICT="!test? ( test )"
 
 DEPEND="
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	test? (
-		dev-python/mock[${PYTHON_USEDEP}]
-		dev-python/ipaddress[${PYTHON_USEDEP}]
+		$(python_gen_cond_dep '
+			dev-python/mock[${PYTHON_USEDEP}]
+			dev-python/ipaddress[${PYTHON_USEDEP}]
+		' -2)
 	)
 "
 
-# Many tests fail, even on a regular tox run on a upstream clone
-RESTRICT="test"
+PATCHES=(
+	"${FILESDIR}/psutil-5.7.0-tests.patch"
+)
 
 python_test() {
-	${PYTHON} psutil/tests/__main__.py || die
+	if [[ ${EPYTHON} == pypy* ]]; then
+		ewarn "Not running tests on ${EPYTHON} since they are broken"
+		return 0
+	fi
+
+	# since we are running in an environment a bit similar to CI,
+	# let's skip the tests that are disable for CI
+	TRAVIS=1 APPVEYOR=1 "${EPYTHON}" psutil/tests/runner.py ||
+		die "tests failed with ${EPYTHON}"
+}
+
+python_compile() {
+	# force -j1 to avoid .o linking race conditions
+	local MAKEOPTS=-j1
+	distutils-r1_python_compile
 }
