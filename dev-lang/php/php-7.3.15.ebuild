@@ -7,8 +7,8 @@ inherit flag-o-matic systemd autotools
 
 MY_PV=${PV/_rc/RC}
 DESCRIPTION="The PHP language runtime engine"
-HOMEPAGE="https://php.net/"
-SRC_URI="https://php.net/distributions/${P}.tar.xz"
+HOMEPAGE="https://www.php.net/"
+SRC_URI="https://www.php.net/distributions/${P}.tar.xz"
 
 LICENSE="PHP-3.01
 	BSD
@@ -19,7 +19,7 @@ LICENSE="PHP-3.01
 	unicode? ( BSD-2 LGPL-2.1 )"
 
 SLOT="$(ver_cut 1-2)"
-KEYWORDS="~alpha amd64 arm arm64 hppa ia64 ~mips ppc ppc64 ~s390 ~sh sparc x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos"
 
 S="${WORKDIR}/${PN}-${MY_PV}"
 
@@ -74,7 +74,7 @@ COMMON_DEPEND="
 	kerberos? ( virtual/krb5 )
 	ldap? ( >=net-nds/openldap-1.2.11 )
 	ldap-sasl? ( dev-libs/cyrus-sasl >=net-nds/openldap-1.2.11 )
-	libedit? ( || ( sys-freebsd/freebsd-lib dev-libs/libedit ) )
+	libedit? ( dev-libs/libedit )
 	lmdb? ( dev-db/lmdb:= )
 	mssql? ( dev-db/freetds[mssql] )
 	nls? ( sys-devel/gettext )
