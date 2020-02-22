@@ -1,9 +1,9 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="5"
 
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=(python2_7)
 PYTHON_REQ_USE="threads(+),xml(+)"
 
 inherit distutils-r1 eutils
@@ -33,7 +33,7 @@ PATCHES=(
 	"${FILESDIR}/${P}-missing-attribute.patch" #bug 323179
 )
 
-src_compile(){
+src_compile() {
 	# Compile localizations if necessary
 	if use nls ; then
 		cd scripts

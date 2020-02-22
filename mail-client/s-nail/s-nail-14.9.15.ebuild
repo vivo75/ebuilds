@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -11,7 +11,7 @@ LICENSE="BSD BSD-4 ISC RSA"
 
 SRC_URI="https://ftp.sdaoden.eu/${P}.tar.xz"
 SLOT="0"
-KEYWORDS="amd64 ~x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
 IUSE="idn kerberos libressl net ssl"
 
 RDEPEND="
@@ -66,7 +66,7 @@ src_compile() {
 	emake build
 }
 
-src_install () {
+src_install() {
 	# Use /usr/sbin/sendmail by default and provide an example
 	cat <<- EOSMTP >> nail.rc
 
