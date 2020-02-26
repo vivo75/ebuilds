@@ -21,11 +21,6 @@ DEPEND=""
 
 RDEPEND="${DEPEND}
 	>=dev-python/requests-1.2.1[${PYTHON_USEDEP}]
-	python_targets_python2_7? (
-		dev-python/ndg-httpsclient[python_targets_python2_7]
-		dev-python/pyasn1[python_targets_python2_7]
-		>=dev-python/pyopenssl-0.13[python_targets_python2_7]
-		)
 	"
 
 pkg_postinst() {
