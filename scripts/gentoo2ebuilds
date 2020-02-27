@@ -1585,6 +1585,7 @@ EBUILDS_KEEP_ALL = (
     'dev-vcs/repo',
     'dev-vcs/subversion',
     'dev-vcs/tig',
+    'games-board/stockfish',
     'games-server/bedrock-server',
     'games-server/minecraft-server',
     'games-server/steamcmd',
