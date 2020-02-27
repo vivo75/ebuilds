@@ -92,6 +92,7 @@ ebuilds_overlay = (
     'dev-python/marshmallow-sqlalchemy',
     'dev-python/clientcookie',
     'dev-python/jonpy',
+    'dev-python/photohash',
     'dev-python/relatorio',
     'dev-util/flatpak-builder',
     'games-board/python-chess',
