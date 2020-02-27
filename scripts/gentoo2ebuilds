@@ -94,6 +94,7 @@ ebuilds_overlay = (
     'dev-python/jonpy',
     'dev-python/relatorio',
     'dev-util/flatpak-builder',
+    'games-board/python-chess',
     'kde-apps/kcontacts',
     'net-libs/libgmail',
     'net-misc/lxc-fake-net',
