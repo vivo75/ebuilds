@@ -11,7 +11,7 @@ DESCRIPTION="Extra modules and scripts for CMake"
 HOMEPAGE="https://cgit.kde.org/extra-cmake-modules.git"
 
 LICENSE="BSD"
-KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~x86"
+KEYWORDS="amd64 ~arm arm64 ~hppa ~ppc ~ppc64 x86"
 IUSE="doc test"
 
 BDEPEND="
@@ -66,7 +66,9 @@ src_configure() {
 src_test() {
 	# ECMToolchainAndroidTest passes but then breaks src_install
 	# ECMPoQmToolsTest is broken, bug #627806
+	# possible race condition with multiple jobs, bug #701854
 	local myctestargs=(
+		-j1
 		-E "(ECMToolchainAndroidTest|ECMPoQmToolsTest)"
 	)
 
