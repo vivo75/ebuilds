@@ -2453,6 +2453,7 @@ EBUILDS_KEEP_ALL = (
     'sci-libs/hdf5',
     'sci-libs/lapack',
     'sci-libs/lapack-reference',
+    'sci-libs/metis',
     'sci-libs/qrupdate',
     'sci-libs/scipy',
     'sci-libs/suitesparseconfig',
