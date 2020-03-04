@@ -9,7 +9,7 @@ if [[ ${PV} == 9999* ]]; then
 	inherit git-r3
 else
 	SRC_URI="https://github.com/${PN}/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="amd64 ~arm ~arm64 ~ppc64 x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 fi
 S=${WORKDIR}/${P}/${PN}
 
@@ -38,14 +38,12 @@ RDEPEND="
 	dev-python/pytz[${PYTHON_USEDEP}]
 	dev-python/zope-component[${PYTHON_USEDEP}]
 	dev-python/zope-interface[${PYTHON_USEDEP}]"
-DEPEND="
-	${CDEPEND}
-	test? (
-		dev-python/pytest[${PYTHON_USEDEP}]
-	)"
+DEPEND="${CDEPEND}"
 
-python_test() {
-	# acme is not installed, removing it here is fine, the dir just confuses tests
-	rm -R ../acme
-	pytest -vv ${PN} || die
+distutils_enable_tests pytest
+
+python_prepare_all() {
+	# required as deps of deps can trigger this too...
+	echo '    ignore:.*collections\.abc:DeprecationWarning' >> ../pytest.ini
+	distutils-r1_python_prepare_all
 }
