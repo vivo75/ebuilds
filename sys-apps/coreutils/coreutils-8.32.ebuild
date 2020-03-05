@@ -1,7 +1,7 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="6"
+EAPI=7
 
 PYTHON_COMPAT=( python{3_8,3_7} )
 
@@ -27,15 +27,19 @@ LIB_DEPEND="acl? ( sys-apps/acl[static-libs] )
 RDEPEND="!static? ( ${LIB_DEPEND//\[static-libs]} )
 	selinux? ( sys-libs/libselinux )
 	nls? ( virtual/libintl )"
-DEPEND="${RDEPEND}
+DEPEND="
+	${RDEPEND}
 	static? ( ${LIB_DEPEND} )
+"
+BDEPEND="
 	app-arch/xz-utils
 	test? (
 		dev-lang/perl
 		dev-perl/Expect
 		dev-util/strace
 		${PYTHON_DEPS}
-	)"
+	)
+"
 RDEPEND+="
 	hostname? ( !sys-apps/net-tools[hostname] )
 	kill? (
@@ -154,7 +158,7 @@ src_install() {
 	newins src/dircolors.hin DIR_COLORS
 
 	if use split-usr ; then
-		cd "${ED%/}"/usr/bin || die
+		cd "${ED}"/usr/bin || die
 		dodir /bin
 		# move critical binaries into /bin (required by FHS)
 		local fhs="cat chgrp chmod chown cp date dd df echo false ln ls
