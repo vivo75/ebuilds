@@ -2690,6 +2690,7 @@ EBUILDS_KEEP_ALL = (
     'sys-fs/fuse-overlayfs',
     'sys-fs/fuseiso',
     'sys-fs/inotify-tools',
+    'sys-fs/lsscsi',
     'sys-fs/lvm2',
     'sys-fs/lxcfs',
     'sys-fs/mdadm',
