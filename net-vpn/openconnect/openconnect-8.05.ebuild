@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_6,3_7} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 PYTHON_REQ_USE="xml"
 
 inherit eutils linux-info python-any-r1 readme.gentoo-r1
