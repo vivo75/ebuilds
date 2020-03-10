@@ -884,6 +884,7 @@ EBUILDS_KEEP_ALL = (
     'dev-perl/NetAddr-IP',
     'dev-perl/PDF-API2',
     'dev-perl/Pango',
+    'dev-perl/Parse-Yapp',
     'dev-perl/Path-Tiny',
     'dev-perl/PlRPC',
     'dev-perl/Probe-Perl',
