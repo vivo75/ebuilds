@@ -2142,6 +2142,7 @@ EBUILDS_KEEP_ALL = (
     'media-libs/libepoxy',
     'media-libs/libexif',
     'media-libs/libfreehand',
+    'media-libs/libglvnd',
     'media-libs/libgphoto2',
     'media-libs/libid3tag',
     'media-libs/libiptcdata',
