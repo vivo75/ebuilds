@@ -16,15 +16,7 @@ KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~s390 ~sparc ~x86 ~a
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-DEPEND="
-	dev-python/setuptools[${PYTHON_USEDEP}]
-	test? (
-		$(python_gen_cond_dep '
-			dev-python/mock[${PYTHON_USEDEP}]
-			dev-python/ipaddress[${PYTHON_USEDEP}]
-		' -2)
-	)
-"
+DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 
 PATCHES=(
 	"${FILESDIR}/psutil-5.7.0-tests.patch"
