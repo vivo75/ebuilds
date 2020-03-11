@@ -2837,6 +2837,7 @@ EBUILDS_KEEP_ALL = (
     'sys-libs/libsemanage',
     'sys-libs/libsepol',
     'sys-libs/libunwind',
+    'sys-libs/liburing',
     'sys-libs/libutempter',
     'sys-libs/libxcrypt',
     'sys-libs/mtdev',
