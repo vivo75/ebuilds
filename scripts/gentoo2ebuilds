@@ -2415,6 +2415,7 @@ EBUILDS_KEEP_ALL = (
     'net-misc/radvd',
     'net-misc/rclone',
     'net-misc/rdesktop',
+    'net-misc/remmina',
     'net-misc/rsync',
     'net-misc/sipp',
     'net-misc/socat',
