@@ -290,7 +290,6 @@ EBUILDS_KEEP_ALL = (
     'app-emulation/lxc',
     'app-emulation/lxc-templates',
     'app-emulation/lxd',
-    'app-emulation/metadata.xml',
     'app-emulation/nemu',
     'app-emulation/open-vm-tools',
     'app-emulation/pcem',
