@@ -2300,6 +2300,7 @@ EBUILDS_KEEP_ALL = (
     'media-libs/vulkan-loader',
     'media-libs/waffle',
     'media-libs/webrtc-audio-processing',
+    'media-libs/woff2',
     'media-libs/x264',
     'media-libs/x265',
     'media-libs/xvid',
