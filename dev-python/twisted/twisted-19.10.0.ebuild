@@ -18,11 +18,11 @@ SRC_URI="https://twistedmatrix.com/Releases/${TWISTED_PN}"
 SRC_URI="${SRC_URI}/${TWISTED_RELEASE}/${TWISTED_P}.tar.bz2
 	https://dev.gentoo.org/~mgorny/dist/twisted-regen-cache.gz"
 
-KEYWORDS="~alpha amd64 ~arm arm64 ~mips ~s390 ~sh sparc ~amd64-linux ~x86-linux"
+KEYWORDS="~alpha amd64 arm arm64 ~mips ~s390 ~sh sparc ~amd64-linux ~x86-linux"
 
 LICENSE="MIT"
 SLOT="0"
-IUSE="conch crypt http2 serial soap test"
+IUSE="conch crypt http2 serial +soap test"
 RESTRICT="!test? ( test )"
 
 RDEPEND="
@@ -44,6 +44,7 @@ RDEPEND="
 		>=dev-python/idna-0.6[${PYTHON_USEDEP}]
 	)
 	serial? ( >=dev-python/pyserial-3.0[${PYTHON_USEDEP}] )
+	soap? ( $(python_gen_cond_dep 'dev-python/soappy[${PYTHON_USEDEP}]' python2_7) )
 	http2? (
 		>=dev-python/hyper-h2-3.0.0[${PYTHON_USEDEP}]
 		<dev-python/hyper-h2-4.0.0[${PYTHON_USEDEP}]
