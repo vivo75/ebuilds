@@ -147,6 +147,7 @@ EBUILDS_KEEP_ALL = (
     'app-arch/advancecomp',
     'app-arch/arc',
     'app-arch/arj',
+    'app-arch/brotli',
     'app-arch/bzip2',
     'app-arch/cabextract',
     'app-arch/cpio',
