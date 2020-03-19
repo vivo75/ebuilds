@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -15,7 +15,7 @@ DESCRIPTION="Interface for doing mathematics and scientific computing"
 HOMEPAGE="https://kde.org/applications/education/cantor https://edu.kde.org/cantor/"
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="5"
-KEYWORDS="amd64 arm64 x86"
+KEYWORDS="arm64"
 IUSE="+analitza julia lua markdown postscript python qalculate R"
 
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"

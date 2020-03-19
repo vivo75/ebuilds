@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -15,7 +15,7 @@ HOMEPAGE="https://kde.org/applications/games/kjumpingcube/
 https://games.kde.org/game.php?game=kjumpingcube"
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="5"
-KEYWORDS="amd64 arm64 x86"
+KEYWORDS="arm64"
 IUSE=""
 
 DEPEND="

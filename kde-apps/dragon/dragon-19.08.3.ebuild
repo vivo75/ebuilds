@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -13,7 +13,7 @@ HOMEPAGE="https://kde.org/applications/multimedia/dragonplayer"
 
 LICENSE="GPL-2+ || ( GPL-2 GPL-3 ) handbook? ( FDL-1.2 )"
 SLOT="5"
-KEYWORDS="amd64 arm64 x86"
+KEYWORDS="arm64"
 IUSE=""
 
 BDEPEND="

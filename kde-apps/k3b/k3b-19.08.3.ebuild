@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -15,7 +15,7 @@ HOMEPAGE="https://userbase.kde.org/K3b"
 
 LICENSE="GPL-2 FDL-1.2"
 SLOT="5"
-KEYWORDS="amd64 arm64 x86"
+KEYWORDS="arm64"
 IUSE="dvd emovix encode ffmpeg flac libav mad mp3 musepack sndfile sox taglib vcd vorbis webkit"
 
 REQUIRED_USE="

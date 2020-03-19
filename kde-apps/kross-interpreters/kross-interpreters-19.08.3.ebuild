@@ -1,10 +1,10 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
 PYTHON_COMPAT=( python2_7 )
-USE_RUBY="ruby27"
+USE_RUBY="ruby25"
 KFMIN=5.60.0
 QTMIN=5.12.3
 inherit ecm kde.org python-single-r1 ruby-single
@@ -12,7 +12,7 @@ inherit ecm kde.org python-single-r1 ruby-single
 DESCRIPTION="Kross interpreter plugins for programming languages"
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="5"
-KEYWORDS="amd64 arm64 x86"
+KEYWORDS="arm64"
 IUSE="+python ruby"
 
 REQUIRED_USE="|| ( python ruby ) python? ( ${PYTHON_REQUIRED_USE} )"
