@@ -3,6 +3,9 @@
 
 EAPI=7
 
+PYTHON_COMPAT=( python{3_8,3_7} )
+inherit python-any-r1
+
 DESCRIPTION="X keyboard configuration database"
 HOMEPAGE="https://www.freedesktop.org/wiki/Software/XKeyboardConfig https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config"
 
@@ -21,6 +24,7 @@ SLOT="0"
 IUSE=""
 
 BDEPEND="
+	${PYTHON_DEPS}
 	dev-util/intltool
 	sys-devel/gettext
 	virtual/pkgconfig
@@ -31,6 +35,10 @@ DEPEND="${LIVE_DEPEND}"
 PATCHES=(
 	"${FILESDIR}"/${P}-fix-python3-support.patch
 )
+
+pkg_setup() {
+	python-any-r1_pkg_setup
+}
 
 src_prepare() {
 	default
