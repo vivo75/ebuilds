@@ -18,13 +18,14 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
-IUSE="coverage examples test"
+KEYWORDS="~alpha amd64 arm ~arm64 ~hppa ~ia64 ~m68k ~mips ppc ppc64 s390 ~sh sparc x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
+IUSE="coverage doc examples test"
 RESTRICT="!test? ( test )"
 
-COVERAGE_IMPLS=( python3_{7,8} pypy3 )
+COVERAGE_IMPLS=( -2 python3_{5,6,7} pypy3 )
 REQUIRED_USE="
-	coverage? ( || ( $(python_gen_useflags "${COVERAGE_IMPLS[@]}") ) )"
+	coverage? ( || ( $(python_gen_useflags "${COVERAGE_IMPLS[@]}") ) )
+	doc? ( || ( $(python_gen_useflags 'python2*') ) )"
 
 RDEPEND="
 	coverage? (
@@ -32,6 +33,7 @@ RDEPEND="
 			"${COVERAGE_IMPLS[@]}")
 	)"
 DEPEND="${RDEPEND}
+	doc? ( >=dev-python/sphinx-0.6[$(python_gen_usedep 'python2*')] )
 	test? (
 		$(python_gen_cond_dep 'dev-python/coverage[${PYTHON_USEDEP}]' \
 			"${COVERAGE_IMPLS[@]}")
@@ -47,6 +49,10 @@ PATCHES=(
 
 	"${FILESDIR}"/${P}-python-3.6-test.patch
 )
+
+pkg_setup() {
+	use doc && DISTUTILS_ALL_SUBPHASE_IMPLS=( 'python2*' )
+}
 
 python_prepare_all() {
 	# Tests need to be converted, and they don't respect BUILD_DIR.
@@ -80,6 +86,10 @@ python_compile() {
 	distutils-r1_python_compile ${add_targets[@]}
 }
 
+python_compile_all() {
+	use doc && emake -C doc html
+}
+
 python_test() {
 	"${EPYTHON}" selftest.py -v || die "Tests fail with ${EPYTHON}"
 }
@@ -90,5 +100,6 @@ python_install() {
 
 python_install_all() {
 	use examples && dodoc -r examples
+	use doc && HTML_DOCS=( doc/.build/html/. )
 	distutils-r1_python_install_all
 }

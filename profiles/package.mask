@@ -32,6 +32,69 @@
 
 #--- END OF EXAMPLES ---
 
+# Michał Górny <mgorny@gentoo.org> (2020-03-26)
+# dev-python/aiohttp-cors is dead upstream and does not support
+# Python 3.7 and newer.
+#
+# net-misc/gns3-* are effectively unmaintained and stuck with py3.6.
+# gns3-server is the only revdep of aiohttp-cors, as well as the only
+# blocker for removal of old dev-python/{aiohttp,async_timeout}
+# (bug #714840).  Some of those issues might be fixed by a version bump
+# that's pending for a long time (bug #688016) but not aiohttp-cors dep.
+#
+# Removal in 30 days.  Bug #712964.
+dev-python/aiohttp-cors
+net-misc/gns3-converter
+net-misc/gns3-gui
+net-misc/gns3-server
+
+# Matt Turner <mattst88@gentoo.org> (2020-03-25)
+# No releases in two years. No commits in upstream git in last six months.
+# Many open security bugs. Masked for removal in 30 days.
+media-video/libav
+media-libs/libpostproc
+
+# Michał Górny <mgorny@gentoo.org> (2020-03-25)
+# Unmaintained.  Python 2 only.  Last commit in 2013.
+# Removal in 30 days.  Bug #714632.
+net-irc/redirbot
+
+# Michał Górny <mgorny@gentoo.org> (2020-03-25)
+# Unmaintained.  Python 3 support requires a version bump.  Bad quality
+# ebuild.
+# Removal in 30 days.  Bug #710240.
+media-video/syncplay
+
+# Michał Górny <mgorny@gentoo.org> (2020-03-25)
+# Unmaintained.  Python 2 only.  Last release in 2009, homepage
+# archived.  Last user of dev-python/nevow.
+# Removal in 30 days.  Bug #714626.
+net-im/pyicq-t
+dev-python/nevow
+
+# Andreas Sturmlechner <asturm@gentoo.org> (2020-03-22)
+# Unmaintained revdep on dev-python/pygtk blocking its removal, py2-only
+# Possible alternative: media-video/simplescreenrecorder
+# Bug #710172, masked for removal in 30 days.
+media-video/gtk-recordmydesktop
+
+# Andreas Sturmlechner <asturm@gentoo.org> (2020-03-22)
+# Unmaintained revdep on dev-python/pygtk blocking its removal, py2-only
+# Bug #708164, masked for removal in 30 days.
+media-video/pymp
+
+# Andreas Sturmlechner <asturm@gentoo.org> (2020-03-22)
+# Unmaintained revdep on dev-python/pygtk blocking its removal, py2-only
+# No signs of porting work, bug #708076, masked for removal in 30 days.
+x11-misc/xplanetFX
+
+# Jonas Stein <jstein@gentoo.org> (2020-03-21)
+# Package masked for removal. Broken SRC_URI,
+# upstream is dead.
+# Bug #458662
+# Removal after 2020-05-01
+games-misc/OilWar
+
 # David Seifert <soap@gentoo.org> (2020-03-20)
 # Last release in 2014, unsupported, EOL.
 # Include the last remaining revdep, which was last updated in 2004.
@@ -112,11 +175,6 @@ mail-filter/spambayes
 # Matthew Thode <prometheanfire@gentoo.org> (2020-03-13)
 # masked for removal in 14 days. Bug #712310
 dev-python/cliff-tablib
-
-# Ulrich Müller <ulm@gentoo.org> (2020-03-11)
-# No license. HOMEPAGE is gone.
-# Masked for removal in 14 days. Bug #450454.
-games-misc/fortune-mod-humorixfortunes
 
 # Matt Turner <mattst88@gentoo.org> (2020-03-11)
 # Masked for testing due to removal of libnm-glib (bug #665338)
@@ -224,7 +282,6 @@ dev-python/flask-socketio
 dev-python/flask-uploads
 dev-python/flipflop
 dev-python/formencode
-dev-python/fudge
 dev-python/geoalchemy2
 dev-python/geopy
 dev-python/gevent-socketio
@@ -283,8 +340,6 @@ dev-python/pymtp
 dev-python/pynzb
 dev-python/pyopencl
 dev-python/pyshark
-dev-python/pysnmp-apps
-dev-python/pysnmp-mibs
 dev-python/pysolr
 dev-python/pystache
 dev-python/pytest-arraydiff
@@ -331,7 +386,6 @@ dev-python/uncompyle6
 dev-python/venusian
 dev-python/versiontools
 dev-python/vulture
-dev-python/weasyprint
 dev-python/wsgiintercept
 dev-python/wtf-peewee
 dev-python/xdis
@@ -370,9 +424,7 @@ dev-go/ed25519
 dev-libs/rocm-opencl-driver
 
 # Andreas Sturmlechner <asturm@gentoo.org> (2020-02-29)
-# Breaks at least app-text/texlive-core and app-office/libreoffice right now,
-# bugs 711096, 711102.
-~app-text/poppler-0.86.0
+# Breaks app-office/libreoffice right now, bug #711102.
 ~app-text/poppler-0.86.1
 
 # Miroslav Šulc <fordfrog@gentoo.org> (2020-02-27)
@@ -423,21 +475,6 @@ sci-misc/pythoncad
 # Last release in 2013, bug #710164, masked for removal in 30 days.
 sci-electronics/gresistor
 
-# Marek Szuba <marecki@gentoo.org> (2020-02-24)
-# Deprecated upstream in Q1'2018 in favour of dev-libs/intel-neo and
-# while it officially remains the recommended solution for "legacy HW
-# platforms" not supported by NEO (i.e. Sandy Bridge, Ivy Bridge and
-# Haswell GPUs), there has been no repository activity since August 2018.
-# Only really suitable for code development due to poor performance, some
-# OpenCL-aware software (e.g. media-gfx/darktable) explicitly
-# blacklists Beignet devices.
-# Upstream does not support LLVM versions newer than 7, third-party patches
-# exist for 8 and 9 but Beignet built against those versions fails some
-# unit tests.
-#
-# Removal in 30 days. Bug #710640.
-dev-libs/beignet
-
 # Michał Górny <mgorny@gentoo.org> (2020-02-24)
 # app-admin/packagekit-base is Python 2 only and behind upstream.
 # The Portage backend is unmaintained.  Other packages are its reverse
@@ -470,36 +507,10 @@ sys-apps/entropy-server
 # Masked for removal in 30 days.
 games-strategy/boswars
 
-# Andreas Sturmlechner <asturm@gentoo.org> (2020-02-22)
-# Last release in 2009, py2-only, blocks dev-python/pygtk removal, bug #708100
-# Use media-gfx/mcomix instead. Masked for removal in 30 days.
-media-gfx/comix
-
-# Mart Raudsepp <leio@gentoo.org> (2020-02-21)
-# Does not compile against new gupnp-1.2 API. No consumers, dead project.
-# Removal in 30 days. Bug #710436.
-net-libs/gupnp-ui
-
-# Mikle Kolyada <zlogene#gentoo.org> (2020-02-21)
-# Tiny package with semi-dead upstream. Unlikely useful.
-# Blocks pygtk removal.
-# Removal in 30 days.
-media-gfx/cropgui
-
 # Andreas Sturmlechner <asturm@gentoo.org> (2020-02-19)
 # No maintainer, py2-only, blocks dev-python/pygtk removal, needs version bump
 # See bugs #546024, #706486, pending PR #14720. Masked for removal in 40 days.
 gnome-extra/nautilus-dropbox
-
-# Michał Górny <mgorny@gentoo.org> (2020-02-18)
-# Dead and unmaintained.  Last release in 2015.  Broken with newer
-# versions of Python 3.  No reverse dependencies left.
-# Removal in 30 days.  Bug #691044.
-dev-python/tlslite
-
-# Rich Freeman <rich0@gentoo.org> (2020-02-16)
-# Dead upstream, obsolete deps.
-app-misc/sleepyhead
 
 # Mart Raudsepp <leio@gentoo.org> (2020-02-16)
 # Fails to automatically launch pipewire for me. Help welcome figuring it out.
@@ -575,13 +586,6 @@ www-plugins/passff
 # Snapshots from Git and pretest versions, masked for testing.
 =app-editors/emacs-27.0.50_pre*
 ~app-editors/emacs-27.0.90
-
-# Jonas Stein <jstein@gentoo.org> (2019-12-30)
-# Package masked for removal. Broken SRC_URI,
-# last upstream activity was ~16 years ago.
-# Bug #704316.
-# Removal after 2020-03-01
-app-backup/tob
 
 # David Seifert <soap@gentoo.org> (2019-12-08)
 # Unmaintained, build hangs, tons of other build failures, missing

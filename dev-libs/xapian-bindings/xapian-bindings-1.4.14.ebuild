@@ -12,7 +12,7 @@ PHP_EXT_NAME="xapian"
 PHP_EXT_INI="yes"
 PHP_EXT_OPTIONAL_USE="php"
 
-USE_RUBY="ruby27"
+USE_RUBY="ruby24 ruby25 ruby26"
 RUBY_OPTIONAL="yes"
 
 inherit java-pkg-opt-2 mono-env multibuild php-ext-source-r3 python-r1 ruby-ng toolchain-funcs
@@ -23,7 +23,7 @@ SRC_URI="https://oligarchy.co.uk/xapian/${PV}/${P}.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha amd64 ~arm ~ia64 ~mips ~ppc ~ppc64 ~sparc x86"
 IUSE="java lua mono perl php python ruby tcl"
 REQUIRED_USE="|| ( java lua mono perl php python ruby tcl )
 	python? ( ${PYTHON_REQUIRED_USE} )
