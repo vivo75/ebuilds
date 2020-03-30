@@ -14,7 +14,7 @@ SLOT="2"
 IUSE="dbus debug elibc_glibc fam gtk-doc kernel_linux +mime selinux static-libs systemtap test utils xattr"
 RESTRICT="!test? ( test )"
 
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sh ~sparc ~x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux"
 
 # * libelf isn't strictly necessary, but makes gresource tool more useful, and
 # the check is automagic in gio/meson.build. gresource is not a multilib tool
@@ -262,6 +262,13 @@ pkg_postinst() {
 		ewarn "your final image for performance reasons and re-run it when packages"
 		ewarn "installing GIO modules get upgraded or added to the image."
 	fi
+
+	for v in ${REPLACING_VERSIONS}; do
+		if ver_test "$v" "-lt" "2.63.6"; then
+			ewarn "glib no longer installs the gio-launch-desktop binary. You may need"
+			ewarn "to restart your session for \"Open With\" dialogs to work."
+		fi
+	done
 }
 
 pkg_postrm() {

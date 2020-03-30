@@ -3,6 +3,7 @@
 
 EAPI=7
 
+DISTUTILS_USE_SETUPTOOLS=rdepend
 PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
 
 inherit distutils-r1
@@ -25,7 +26,6 @@ RDEPEND="
 "
 
 BDEPEND="
-	dev-python/setuptools[${PYTHON_USEDEP}]
 	dev-python/setuptools_scm[${PYTHON_USEDEP}]
 	test? (
 		${RDEPEND}

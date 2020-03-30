@@ -12,7 +12,7 @@ SRC_URI="https://github.com/docker/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64 ~x86"
+KEYWORDS="amd64 ~arm64 x86"
 IUSE="doc test"
 RESTRICT="!test? ( test )"
 
@@ -38,6 +38,14 @@ PATCHES=(
 distutils_enable_sphinx docs \
 	'dev-python/recommonmark' \
 	'>=dev-python/sphinx-1.4.6'
+
+src_prepare() {
+	# localhost has a better chance of being in /etc/hosts
+	sed -e 's:socket[.]gethostname():"localhost":' \
+		-i tests/unit/api_test.py || die
+
+	distutils-r1_src_prepare
+}
 
 python_test() {
 	pytest -vv tests/unit/ || die "tests failed under ${EPYTHON}"

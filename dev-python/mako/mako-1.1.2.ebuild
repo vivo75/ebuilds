@@ -16,10 +16,15 @@ S="${WORKDIR}/${MY_P}"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-linux ~x86-linux ~x64-macos ~x86-macos"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~x64-macos ~x86-macos"
 IUSE="doc"
 
 RDEPEND=">=dev-python/markupsafe-0.9.2[${PYTHON_USEDEP}]"
+BDEPEND="
+	test? (
+		$(python_gen_cond_dep 'dev-python/mock[${PYTHON_USEDEP}]' -2)
+	)
+"
 
 PATCHES=(
 	"${FILESDIR}"/mako-1.1.1-pypy3-test.patch
