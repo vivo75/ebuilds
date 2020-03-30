@@ -77,7 +77,6 @@ net-mail/ripole
 net-misc/memcached
 net-misc/mosh
 net-misc/netkit-telnetd
-net-proxy/http-replicator
 sci-libs/geos
 sci-visualization/gnuplot
 sys-apps/makedev
