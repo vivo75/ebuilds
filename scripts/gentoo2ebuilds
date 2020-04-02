@@ -995,6 +995,7 @@ EBUILDS_KEEP_ALL = (
     'dev-perl/Package-Stash-XS',
     'dev-perl/Pango',
     'dev-perl/PAR',
+    'dev-perl/PAR-Dist',
     'dev-perl/Parse-RecDescent',
     'dev-perl/Parse-Yapp',
     'dev-perl/Path-Tiny',
