@@ -4,7 +4,6 @@ app-forensics/aide
 app-forensics/chkrootkit
 app-forensics/lynis
 app-forensics/unhide
-dev-util/fatrace
 dev-util/ltrace
 dev-util/lttng-tools
 dev-util/strace
