@@ -5,16 +5,19 @@ metadata_regen() {
     local d m e mtimed mtimee
     for d in $(find ${REPODIR} -mindepth 2 -maxdepth 2 -type d ) ; do
         m=${d}/Manifest
-        e=$( /bin/ls -1rt ${d}/*.ebuild | grep -v -e 9999 | head -n1 )
+	if [[ -r ${m} ]] ; then
+	    mtimem=$( stat --printf=%Y ${m} )
+	else
+	    mtimem=0
+	fi
+		e=$( /bin/ls -1rt ${d}/*.ebuild 2>/dev/null | grep -v -e 9999 | head -n1 )
         [[ -z ${e} ]] && continue
         echo -n ${e##*/}
-        mtimem=$( stat --printf=%Y ${m} )
         mtimee=$( stat --printf=%Y ${e} )
         if [[ ${mtimem} -lt ${mtimee} ]] ; then
             echo
-            echo "=====> ${e}"
-            ebuild ${e} manifest
-	    touch ${m}
+            echo "=====> ${e##*/}"
+            ebuild ${e} manifest && [[ -e ${m} ]] && touch  ${m}
         fi
     done
 }
