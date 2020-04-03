@@ -6,8 +6,7 @@ metadata_regen() {
     for d in $(find ${REPODIR} -mindepth 2 -maxdepth 2 -type d ) ; do
         m=${d}/Manifest
         e=$( /bin/ls -1rt ${d}/*.ebuild | grep -v -e 9999 | head -n1 )
-        [[ -z ${m} || -z ${e} ]] && continue
-        [[ -z ${m} || -z ${e} ]] && echo WRONG $e $m
+        [[ -z ${e} ]] && continue
         echo -n ${e##*/}
         mtimem=$( stat --printf=%Y ${m} )
         mtimee=$( stat --printf=%Y ${e} )
@@ -15,6 +14,7 @@ metadata_regen() {
             echo
             echo "=====> ${e}"
             ebuild ${e} manifest
+	    touch ${m}
         fi
     done
 }
