@@ -1,0 +1,23 @@
+#! /bin/bash
+
+metadata_regen() {
+    local REPODIR=${1}
+    local d m e mtimed mtimee
+    for d in $(find ${REPODIR} -mindepth 2 -maxdepth 2 -type d ) ; do
+        m=${d}/Manifest
+        e=$( /bin/ls -1rt ${d}/*.ebuild | grep -v -e 9999 | head -n1 )
+        [[ -z ${m} || -z ${e} ]] && continue
+        [[ -z ${m} || -z ${e} ]] && echo WRONG $e $m
+        echo -n ${e##*/}
+        mtimem=$( stat --printf=%Y ${m} )
+        mtimee=$( stat --printf=%Y ${e} )
+        if [[ ${mtimem} -lt ${mtimee} ]] ; then
+            echo
+            echo "=====> ${e}"
+            ebuild ${e} manifest
+        fi
+    done
+}
+
+metadata_regen /var/db/repos/ebuilds
+
