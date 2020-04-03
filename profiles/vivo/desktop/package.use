@@ -253,7 +253,6 @@ sys-fs/lvm2 -thin
 sys-fs/squashfs-tools -lzma xattr xz lz4 lzo
 sys-fs/udev gudev
 sys-fs/zfs kernel-builtin
-sys-libs/compiler-rt -clang
 sys-libs/db tcl
 sys-libs/glibc audit caps nscd
 >=sys-libs/libcap-ng-0.7.8 static-libs
