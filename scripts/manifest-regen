@@ -8,11 +8,13 @@ metadata_regen() {
 	if [[ -r ${m} ]] ; then
 	    mtimem=$( stat --printf=%Y ${m} )
 	else
+	    # if Manifest isn't there probably ebuild has no download
+	    continue
 	    mtimem=0
 	fi
 		e=$( /bin/ls -1rt ${d}/*.ebuild 2>/dev/null | grep -v -e 9999 | head -n1 )
         [[ -z ${e} ]] && continue
-        echo -n ${e##*/}
+        echo -n .
         mtimee=$( stat --printf=%Y ${e} )
         if [[ ${mtimem} -lt ${mtimee} ]] ; then
             echo
