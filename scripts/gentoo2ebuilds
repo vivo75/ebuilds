@@ -102,6 +102,9 @@ ebuilds_overlay = (
     'sys-apps/flatpak',
     'sys-apps/xdg-desktop-portal-gtk',
     'sys-fs/libostree',
+    'dev-python/psutil',
+    'dev-python/twisted',
+    'dev-python/pathlib2',
     )
 
 EBUILDS_KEEP_ALL = (
@@ -1321,7 +1324,6 @@ EBUILDS_KEEP_ALL = (
     'dev-python/passlib',
     'dev-python/pastedeploy',
     'dev-python/pathlib',
-    'dev-python/pathlib2',
     'dev-python/path-py',
     'dev-python/pbr',
     'dev-python/pecan',
@@ -1339,7 +1341,6 @@ EBUILDS_KEEP_ALL = (
     'dev-python/priority',
     'dev-python/prompt_toolkit',
     'dev-python/protobuf-python',
-    'dev-python/psutil',
     'dev-python/psycopg',
     'dev-python/ptyprocess',
     'dev-python/py',
@@ -1477,7 +1478,6 @@ EBUILDS_KEEP_ALL = (
     'dev-python/transitions',
     'dev-python/translationstring',
     'dev-python/ttystatus',
-    'dev-python/twisted',
     'dev-python/typed-ast',
     'dev-python/typing',
     'dev-python/u-msgpack',
