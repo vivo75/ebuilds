@@ -24,5 +24,17 @@ metadata_regen() {
     done
 }
 
+metadata_regen_all() {
+    local REPODIR=${1}
+    local m e
+    for m in $(find ${REPODIR} -mindepth 3 -maxdepth 3 -name Manifest \( -mtime +1 -or -ctime +1 \) ) ; do
+        e=$( /bin/ls -1rt ${m%Manifest}*.ebuild 2>/dev/null | grep -v -e 9999 | head -n1 )
+        [[ -z ${e} ]] && continue
+        ebuild ${e} manifest && touch ${m}
+    done
+}
+
+
 metadata_regen /var/db/repos/ebuilds
+metadata_regen_all /var/db/repos/ebuilds
 
