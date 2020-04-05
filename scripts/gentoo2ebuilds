@@ -105,6 +105,7 @@ ebuilds_overlay = (
     'dev-python/psutil',
     'dev-python/twisted',
     'dev-python/pathlib2',
+    'dev-python/nose',
     )
 
 EBUILDS_KEEP_ALL = (
@@ -1310,7 +1311,6 @@ EBUILDS_KEEP_ALL = (
     'dev-python/ndg-httpsclient',
     'dev-python/netaddr',
     'dev-python/netifaces',
-    'dev-python/nose',
     'dev-python/notify2',
     'dev-python/numpy',
     'dev-python/oauth2client',
