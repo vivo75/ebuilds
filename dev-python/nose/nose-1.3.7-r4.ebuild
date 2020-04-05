@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_USE_SETUPTOOLS=rdepend
-PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
+PYTHON_COMPAT=( python{2_7,3_8,3_7} pypy3 )
 PYTHON_REQ_USE="threads(+)"
 
 inherit distutils-r1
