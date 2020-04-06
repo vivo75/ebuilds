@@ -12,14 +12,12 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
-IUSE=""
+KEYWORDS="~amd64"
+RESTRICT="test" # upstream does not include tests in the package tarball!
 
-RDEPEND=">=dev-python/websocket-client-0.35[${PYTHON_USEDEP}]
-	<dev-python/websocket-client-1[${PYTHON_USEDEP}]
-	>=dev-python/requests-2.11[${PYTHON_USEDEP}]
-	<dev-python/requests-3[${PYTHON_USEDEP}]
-	>=dev-python/six-1.10[${PYTHON_USEDEP}]
-	<dev-python/six-2[${PYTHON_USEDEP}]"
+RDEPEND="
+	>dev-python/aiohttp-3.5.2[${PYTHON_USEDEP}]
+	>dev-python/aiodns-1.0.0[${PYTHON_USEDEP}]
+	"
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 	${RDEPEND}"

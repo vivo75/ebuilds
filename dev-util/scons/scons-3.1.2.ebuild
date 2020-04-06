@@ -3,7 +3,8 @@
 
 EAPI=7
 
-DISTUTILS_USE_SETUPTOOLS=no
+# False positive due to commented code in setup.py
+DISTUTILS_USE_SETUPTOOLS=manual
 PYTHON_COMPAT=( python{3_8,3_7} )
 PYTHON_REQ_USE="threads(+)"
 
