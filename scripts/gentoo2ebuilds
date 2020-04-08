@@ -107,6 +107,7 @@ ebuilds_overlay = (
     'dev-python/pathlib2',
     'dev-python/nose',
     'dev-python/mako',
+    'dev-python/gst-python',
     )
 
 EBUILDS_KEEP_ALL = (
@@ -1235,7 +1236,6 @@ EBUILDS_KEEP_ALL = (
     'dev-python/gitdb2',
     'dev-python/google-apitools',
     'dev-python/greenlet',
-    'dev-python/gst-python',
     'dev-python/hgdistver',
     'dev-python/hpack',
     'dev-python/html5lib',
