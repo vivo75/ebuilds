@@ -106,6 +106,7 @@ ebuilds_overlay = (
     'dev-python/twisted',
     'dev-python/pathlib2',
     'dev-python/nose',
+    'dev-python/mako',
     )
 
 EBUILDS_KEEP_ALL = (
@@ -1287,7 +1288,6 @@ EBUILDS_KEEP_ALL = (
     'dev-python/lz4',
     'dev-python/m2crypto',
     'dev-python/m2r',
-    'dev-python/mako',
     'dev-python/markdown',
     'dev-python/markups',
     'dev-python/markupsafe',
