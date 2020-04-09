@@ -2480,6 +2480,7 @@ EBUILDS_KEEP_ALL = (
     'net-mail/mailutils',
     'net-mail/ripole',
     'net-mail/tnef',
+    'net-misc/anydesk',
     'net-misc/bridge-utils',
     'net-misc/chrony',
     'net-misc/curl',
