@@ -108,6 +108,7 @@ ebuilds_overlay = (
     'dev-python/nose',
     'dev-python/mako',
     'dev-python/gst-python',
+    'x11-wm/xpra',
     )
 
 EBUILDS_KEEP_ALL = (
@@ -3063,7 +3064,6 @@ EBUILDS_KEEP_ALL = (
     'x11-themes/papirus-icon-theme',
     'x11-themes/sound-theme-freedesktop',
     'x11-wm/openbox',
-    'x11-wm/xpra',
 )
 
 def rsync(src, dst, delete=True, capture_output=False, check=True):
