@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_USE_SETUPTOOLS=rdepend
-PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
+PYTHON_COMPAT=( python2_7 python3_{6,7,8} pypy3 )
 PYTHON_REQ_USE="threads(+)"
 
 inherit distutils-r1
@@ -19,17 +19,21 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~m68k ~mips ppc ppc64 s390 sparc x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
-IUSE="coverage examples test"
+IUSE="coverage doc examples test"
 RESTRICT="!test? ( test )"
+
+REQUIRED_USE="
+	doc? ( || ( $(python_gen_useflags 'python2*') ) )"
 
 RDEPEND="
 	coverage? ( dev-python/coverage[${PYTHON_USEDEP}] )"
 DEPEND="${RDEPEND}
+	doc? ( >=dev-python/sphinx-0.6[$(python_gen_usedep 'python2*')] )
 	test? (
 		dev-python/coverage[${PYTHON_USEDEP}]
 		$(python_gen_cond_dep '
 			dev-python/twisted[${PYTHON_USEDEP}]
-		' python3_{6,7})
+		' python2_7 python3_{6,7})
 	)"
 
 PATCHES=(
@@ -41,6 +45,10 @@ PATCHES=(
 
 	"${FILESDIR}"/${P}-python-3.6-test.patch
 )
+
+pkg_setup() {
+	use doc && DISTUTILS_ALL_SUBPHASE_IMPLS=( 'python2*' )
+}
 
 python_prepare_all() {
 	# Tests need to be converted, and they don't respect BUILD_DIR.

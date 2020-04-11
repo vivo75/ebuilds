@@ -46,7 +46,13 @@ REPOS_DIR = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '..', '..
 UPSTREAM_REPO_PATH = os.path.join(REPOS_DIR, 'gentoo')
 EBUILDS_REPO_PATH = os.path.join(REPOS_DIR, 'ebuilds')
 
-KEEP_PYTHON_VER = ('certifi', 'setuptools', 'gemato')
+KEEP_PYTHON_VER = (
+    'certifi',
+    'gst-python',
+    'nose',
+    'setuptools',
+    'gemato',
+    )
 
 ADDITIONAL_DIRS = (
     'eclass',
