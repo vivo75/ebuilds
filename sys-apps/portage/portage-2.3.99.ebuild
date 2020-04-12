@@ -27,10 +27,6 @@ DEPEND="!build? ( $(python_gen_impl_dep 'ssl(+)') )
 		dev-python/sphinx-epytext
 	)"
 # Require sandbox-2.2 for bug #288863.
-# For xattr, we can spawn getfattr and setfattr from sys-apps/attr, but that's
-# quite slow, so it's not considered in the dependencies as an alternative to
-# to python-3.3 / pyxattr. Also, xattr support is only tested with Linux, so
-# for now, don't pull in xattr deps for other kernels.
 # For whirlpool hash, require python[ssl] (bug #425046).
 # For compgen, require bash[readline] (bug #445576).
 # app-portage/gemato goes without PYTHON_USEDEP since we're calling
@@ -42,8 +38,6 @@ RDEPEND="
 		>=sys-apps/sed-4.0.5
 		app-shells/bash:0[readline]
 		>=app-admin/eselect-1.2
-		$(python_gen_cond_dep 'dev-python/pyblake2[${PYTHON_USEDEP}]' \
-			python{2_7,3_5} pypy)
 		rsync-verify? (
 			>=app-portage/gemato-14[${PYTHON_USEDEP}]
 			>=app-crypt/openpgp-keys-gentoo-release-20180706
@@ -59,8 +53,6 @@ RDEPEND="
 	selinux? ( >=sys-libs/libselinux-2.0.94[python,${PYTHON_USEDEP}] )
 	xattr? ( kernel_linux? (
 		>=sys-apps/install-xattr-0.3
-		$(python_gen_cond_dep 'dev-python/pyxattr[${PYTHON_USEDEP}]' \
-			python2_7 pypy)
 	) )
 	!<app-admin/logrotate-3.8.0
 	!<app-portage/gentoolkit-0.4.6
@@ -96,9 +88,6 @@ pkg_pretend() {
 
 python_prepare_all() {
 	distutils-r1_python_prepare_all
-
-	# Apply 2b3fc2be07ad
-	sed -e '422s/return True/return (True, None)/' -i lib/portage/locks.py || die
 
 	sed -e "s:^VERSION = \"HEAD\"$:VERSION = \"${PV}\":" -i lib/portage/__init__.py || die
 
