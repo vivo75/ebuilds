@@ -52,6 +52,7 @@ KEEP_PYTHON_VER = (
     'nose',
     'setuptools',
     'gemato',
+    'pexpect',
     )
 
 ADDITIONAL_DIRS = (
