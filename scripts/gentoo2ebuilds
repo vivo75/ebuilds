@@ -53,6 +53,7 @@ KEEP_PYTHON_VER = (
     'setuptools',
     'gemato',
     'pexpect',
+    'mako',
     )
 
 ADDITIONAL_DIRS = (
