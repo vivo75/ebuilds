@@ -3,6 +3,7 @@
 
 EAPI=7
 PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
+DISTUTILS_USE_SETUPTOOLS=rdepend
 
 inherit distutils-r1
 
@@ -18,7 +19,6 @@ SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~sparc ~x86"
 
 RDEPEND="
-	dev-python/setuptools[${PYTHON_USEDEP}]
 	dev-python/pipfile[${PYTHON_USEDEP}]
 	$(python_gen_cond_dep '
 		dev-python/backports-functools-lru-cache[${PYTHON_USEDEP}]

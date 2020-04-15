@@ -13,6 +13,7 @@ else
 fi
 
 PYTHON_COMPAT=( python{3_8,3_7} )
+DISTUTILS_USE_SETUPTOOLS=no
 
 inherit distutils-r1 ${SRC_ECLASS}
 

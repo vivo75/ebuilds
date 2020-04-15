@@ -5,6 +5,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python{3_8,3_7} )
 PYTHON_REQ_USE="threads(+)"
+DISTUTILS_USE_SETUPTOOLS=rdepend
 
 FORTRAN_NEEDED=lapack
 
@@ -33,7 +34,6 @@ RDEPEND="
 	)"
 DEPEND="${RDEPEND}"
 BDEPEND="app-arch/unzip
-	dev-python/setuptools[${PYTHON_USEDEP}]
 	lapack? ( virtual/pkgconfig )
 	test? (
 		dev-python/pytest[${PYTHON_USEDEP}]

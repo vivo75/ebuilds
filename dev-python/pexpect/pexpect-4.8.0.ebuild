@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
+PYTHON_COMPAT=( python2_7 python3_{6,7,8} pypy3 )
 PYTHON_REQ_USE="threads(+)"
 
 inherit distutils-r1
@@ -31,6 +31,14 @@ python_compile_all() {
 	use doc && emake -C doc html
 }
 
+python_install() {
+	distutils-r1_python_install
+	if ! python_is_python3; then
+		# https://bugs.gentoo.org/703100
+		rm "${D}$(python_get_sitedir)/pexpect/_async.py" || die
+	fi
+}
+
 python_install_all() {
 	use doc && local HTML_DOCS=( doc/_build/html/. )
 	if use examples; then
@@ -38,8 +46,4 @@ python_install_all() {
 		docompress -x /usr/share/doc/${PF}/examples
 	fi
 	distutils-r1_python_install_all
-
-	# Address byte-compile QA warning, see https://bugs.gentoo.org/703100
-	python_setup -2
-	rm "${D}$(python_get_sitedir)"/pexpect/_async.py || die
 }
