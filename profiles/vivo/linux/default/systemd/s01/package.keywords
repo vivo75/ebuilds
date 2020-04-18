@@ -36,4 +36,4 @@
 <sys-apps/findutils-5 amd64
 
 # backup
-<app-backup/zfs-auto-snapshot-9999 amd64
+<sys-fs/zfs-auto-snapshot-9999 amd64

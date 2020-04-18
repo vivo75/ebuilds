@@ -1,4 +1,4 @@
-app-backup/zfs-auto-snapshot
+sys-fs/zfs-auto-snapshot
 app-crypt/certbot-apache
 app-emulation/libvirt
 dev-db/mariadb
