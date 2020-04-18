@@ -13,7 +13,7 @@ RDEPEND="
 	zfs? ( sys-apps/util-linux
 			dev-db/sqlite
 			sys-fs/zfs
-			app-backup/zfs-auto-snapshot )"
+			sys-fs/zfs-auto-snapshot )"
 
 if [[ ${PV} == 9999 ]] ; then
 	inherit distutils-r1 git-r3
