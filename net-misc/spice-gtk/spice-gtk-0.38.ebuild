@@ -1,54 +1,47 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
-GCONF_DEBUG="no"
+EAPI=7
+
 VALA_MIN_API_VERSION="0.14"
 VALA_USE_DEPEND="vapigen"
 
-inherit autotools eutils ltprune xdg-utils vala readme.gentoo-r1
+inherit desktop eutils meson readme.gentoo-r1 vala xdg-utils
 
 DESCRIPTION="Set of GObject and Gtk objects for connecting to Spice servers and a client GUI"
 HOMEPAGE="https://www.spice-space.org https://cgit.freedesktop.org/spice/spice-gtk/"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-SRC_URI="https://www.spice-space.org/download/gtk/${P}.tar.bz2"
-KEYWORDS="~alpha amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc x86"
-IUSE="dbus gstaudio gstvideo +gtk3 +introspection lz4 mjpeg policykit pulseaudio sasl smartcard static-libs usbredir vala webdav libressl"
-
-REQUIRED_USE="?? ( pulseaudio gstaudio )"
+SRC_URI="https://www.spice-space.org/download/gtk/${P}.tar.xz"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE="+gtk3 +introspection lz4 mjpeg policykit pulseaudio sasl smartcard usbredir vala webdav libressl"
 
 # TODO:
 # * check if sys-freebsd/freebsd-lib (from virtual/acl) provides acl/libacl.h
 # * use external pnp.ids as soon as that means not pulling in gnome-desktop
 RDEPEND="
+	>=dev-libs/glib-2.46:2
+	dev-libs/json-glib:0=
+	media-libs/gst-plugins-base:1.0
+	media-libs/gst-plugins-good:1.0
+	media-libs/gstreamer:1.0[introspection?]
+	media-libs/opus
+	sys-libs/zlib
+	virtual/jpeg:0=
+	>=x11-libs/cairo-1.2
+	>=x11-libs/pixman-0.17.7
+	gtk3? ( x11-libs/gtk+:3[introspection?] )
+	introspection? ( dev-libs/gobject-introspection )
 	!libressl? ( dev-libs/openssl:0= )
 	libressl? ( dev-libs/libressl:0= )
-	pulseaudio? ( media-sound/pulseaudio[glib] )
-	gstvideo? (
-		media-libs/gstreamer:1.0
-		media-libs/gst-plugins-base:1.0
-		media-libs/gst-plugins-good:1.0
-		)
-	gstaudio? (
-		media-libs/gstreamer:1.0
-		media-libs/gst-plugins-base:1.0
-		media-libs/gst-plugins-good:1.0
-		)
-	>=x11-libs/pixman-0.17.7
-	media-libs/opus
-	gtk3? ( x11-libs/gtk+:3[introspection?] )
-	>=dev-libs/glib-2.46:2
-	>=x11-libs/cairo-1.2
-	virtual/jpeg:0=
-	sys-libs/zlib
-	introspection? ( dev-libs/gobject-introspection )
 	lz4? ( app-arch/lz4 )
+	pulseaudio? (
+		media-plugins/gst-plugins-pulse:1.0
+	)
 	sasl? ( dev-libs/cyrus-sasl )
 	smartcard? ( app-emulation/qemu[smartcard] )
 	usbredir? (
-		dev-libs/libgudev:=
 		sys-apps/hwids
 		>=sys-apps/usbredir-0.4.2
 		virtual/libusb:1
@@ -61,8 +54,17 @@ RDEPEND="
 		net-libs/phodav:2.0
 		>=net-libs/libsoup-2.49.91 )
 "
+# TODO: spice-gtk has an automagic dependency on x11-libs/libva without a
+# configure knob. The package is relatively lightweight so we just depend
+# on it unconditionally for now. It would be cleaner to transform this into
+# a USE="vaapi" conditional and patch the buildsystem...
+RDEPEND="${RDEPEND}
+	amd64? ( x11-libs/libva:= )
+	arm64? ( x11-libs/libva:= )
+	x86? ( x11-libs/libva:= )
+"
 DEPEND="${RDEPEND}
-	>=app-emulation/spice-protocol-0.12.14
+	>=app-emulation/spice-protocol-0.14.1
 	dev-perl/Text-CSV
 	dev-util/glib-utils
 	>=dev-util/gtk-doc-am-1.14
@@ -72,17 +74,11 @@ DEPEND="${RDEPEND}
 	vala? ( $(vala_depend) )
 "
 
-PATCHES=(
-	"${FILESDIR}"/${PN}-0.34-openssl11.patch
-)
-
 src_prepare() {
 	# bug 558558
 	export GIT_CEILING_DIRECTORIES="${WORKDIR}"
 
 	default
-
-	eautoreconf
 
 	use vala && vala_src_prepare
 }
@@ -96,31 +92,22 @@ src_configure() {
 	# Clean up environment, bug #586642
 	xdg_environment_reset
 
-	local myconf
-	myconf="
-		$(use_enable static-libs static)
-		$(use_enable introspection)
-		$(use_with sasl)
-		$(use_enable smartcard)
-		$(use_enable usbredir)
-		$(use_with usbredir usb-ids-path /usr/share/misc/usb.ids)
-		$(use_with usbredir usb-acl-helper-dir /usr/libexec)
-		$(use_with gtk3 gtk 3.0)
-		$(use_enable policykit polkit)
-		$(use_enable pulseaudio pulse)
-		$(use_enable gstaudio)
-		$(use_enable gstvideo)
-		$(use_enable mjpeg builtin-mjpeg)
-		$(use_enable vala)
-		$(use_enable webdav)
-		$(use_enable dbus)
-		--disable-celt051
-		--disable-gtk-doc
-		--disable-maintainer-mode
-		--disable-werror
-		--enable-pie"
+	local emesonargs=(
+		$(meson_feature gtk3 gtk)
+		$(meson_feature introspection)
+		$(meson_use mjpeg builtin-mjpeg)
+		$(meson_feature policykit polkit)
+		$(meson_feature pulseaudio pulse)
+		$(meson_feature sasl)
+		$(meson_feature smartcard)
+		$(meson_feature usbredir)
+		$(usex usbredir -Dusb-acl-helper-dir=/usr/libexec)
+		$(usex usbredir -Dusb-ids-path=/usr/share/misc/usb.ids)
+		$(meson_feature vala vapi)
+		$(meson_feature webdav)
+	)
 
-	econf ${myconf}
+	meson_src_configure
 }
 
 src_compile() {
@@ -129,16 +116,11 @@ src_compile() {
 	# https://bugzilla.gnome.org/show_bug.cgi?id=744135
 	addpredict /dev
 
-	default
+	meson_src_compile
 }
 
 src_install() {
-	default
-
-	dodoc AUTHORS ChangeLog NEWS README THANKS TODO
-
-	# Remove .la files if they're not needed
-	use static-libs || prune_libtool_files
+	meson_src_install
 
 	make_desktop_entry spicy Spicy "utilities-terminal" "Network;RemoteAccess;"
 	readme.gentoo_create_doc
