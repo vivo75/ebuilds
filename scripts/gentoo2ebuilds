@@ -2537,6 +2537,7 @@ EBUILDS_KEEP_ALL = (
     'net-print/gutenprint',
     'net-print/hplip',
     'net-print/hplip-plugin',
+    'net-vpn/networkmanager-openconnect',
     'net-vpn/networkmanager-openvpn',
     'net-vpn/networkmanager-wireguard',
     'net-vpn/openconnect',
