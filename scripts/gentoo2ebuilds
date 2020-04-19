@@ -2547,6 +2547,7 @@ EBUILDS_KEEP_ALL = (
     'net-wireless/b43-fwcutter',
     'net-wireless/bluez',
     'net-wireless/crda',
+    'net-wireless/iw',
     'net-wireless/iwd',
     'net-wireless/nanovna-saver',
     'net-wireless/srslte',
