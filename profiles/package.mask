@@ -32,6 +32,71 @@
 
 #--- END OF EXAMPLES ---
 
+# Michael Orlitzky <mjo@gentoo.org> (2020-04-19)
+# Stuck on Python 3.6, support for which already required
+# backporting patches to a release from 2014. Upstream's git
+# HEAD works fine, but they can't be bothered to make a new
+# release. Bug 718326. Removal whenever it becomes an issue.
+mail-filter/pyzor
+
+# Michał Górny <mgorny@gentoo.org> (2020-04-19)
+# Unmaintained.  Stuck on Python 3.6.
+# Removal in 30 days.  Bug #718548.
+x11-terms/roxterm
+
+# Michał Górny <mgorny@gentoo.org> (2020-04-19)
+# Unmaintained.  Stuck on Python 3.6.
+# Removal in 30 days.  Bug #718530.
+sys-boot/raspberrypi-mkimage
+
+# Michał Górny <mgorny@gentoo.org> (2020-04-19)
+# Unmaintained.  Stuck on Python 3.6.  Some releases behind.
+# Removal in 30 days.  Bug #718498.
+sci-libs/Fiona
+
+# Michał Górny <mgorny@gentoo.org> (2020-04-19)
+# Unmaintained.  Stuck on Python 3.6.
+# Removal in 30 days.  Bug #718488.
+sci-geosciences/seawater
+
+# Michał Górny <mgorny@gentoo.org> (2020-04-19)
+# Unmaintained.  Stuck on Python 3.6.  Numerous releases behind.
+# Removal in 30 days.  Bug #718486.
+sci-geosciences/gpxpy
+
+# Michał Górny <mgorny@gentoo.org> (2020-04-19)
+# Unmaintained.  Stuck on Python 3.6.  Needs version bump.
+# Removal in 30 days.  Bug #718458.
+net-proxy/mitmproxy
+
+# Michał Górny <mgorny@gentoo.org> (2020-04-19)
+# Unmaintained.  Stuck on Python 3.6.
+# Removal in 30 days.  Bug #718452.
+net-misc/trackma
+
+# Michał Górny <mgorny@gentoo.org> (2020-04-19)
+# Unmaintained.  Stuck on Python 3.6.  In need of bump since 2016.
+# Removal in 30 days.  Bug #718426.
+net-analyzer/ripe-atlas-tools
+net-libs/ripe-atlas-sagan
+www-client/ripe-atlas-cousteau
+
+# Michał Górny <mgorny@gentoo.org> (2020-04-19)
+# Unmaintained.  Stuck on Python 3.6.  Last release in 2016.
+# Removal in 30 days.  Bug #718410.
+media-video/subliminal
+
+# Michał Górny <mgorny@gentoo.org> (2020-04-19)
+# Unmaintained.  Stuck on Python 3.6.  Last release in 2014.
+# Removal in 30 days.  Bug #718402.
+media-sound/lyvi
+
+# Michał Górny <mgorny@gentoo.org> (2020-04-19)
+# Unmaintained.  Stuck on Python 3.6.  Has a few bugs reported,
+# including indication of poor ebuild state.
+# Removal in 30 days.  Bug #718398.
+media-sound/beets
+
 # Michał Górny <mgorny@gentoo.org> (2020-04-19)
 # Unmaintained.  Stuck on Python 3.6.  No revdeps.  Last release
 # in 2016.
@@ -155,11 +220,6 @@ app-i18n/man-pages-de
 # Use app-i18n/man-pages-l10n[l10n_fr] as replacement.
 # Masked for removal in 30 days (bug #717744).
 app-i18n/man-pages-fr
-
-# Jeroen Roovers <jer@gentoo.org> (2020-04-16)
-# Breaks API, see https://bugs.gentoo.org/717728
-=dev-libs/libuv-1.36.0
-
 
 # Michał Górny <mgorny@gentoo.org> (2020-04-16)
 # Both packages have been last bumped mid-2018.  They depend
