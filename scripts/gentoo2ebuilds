@@ -847,6 +847,7 @@ EBUILDS_KEEP_ALL = (
     'dev-libs/protobuf',
     'dev-libs/protobuf-c',
     'dev-libs/pugixml',
+    'dev-libs/qcustomplot',
     'dev-libs/qtkeychain',
     'dev-libs/quazip',
     'dev-libs/rasqal',
