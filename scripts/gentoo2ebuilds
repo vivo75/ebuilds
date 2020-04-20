@@ -551,6 +551,7 @@ EBUILDS_KEEP_ALL = (
     'dev-db/postgresql',
     'dev-db/redis',
     'dev-db/sqlite',
+    'dev-db/sqlitebrowser',
     'dev-db/tokyocabinet',
     'dev-db/unixODBC',
     'dev-embedded/xa',
