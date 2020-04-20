@@ -1728,6 +1728,7 @@ EBUILDS_KEEP_ALL = (
     'gnome-extra/yelp',
     'gnome-extra/yelp-xsl',
     'gnome-extra/zenity',
+    'gui-apps/nm-tray',
     'java-virtuals/interceptor-api',
     'java-virtuals/servlet-api',
     'kde-apps/akonadi',
