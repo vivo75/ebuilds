@@ -27,7 +27,7 @@ DEPEND="
 "
 
 PATCHES=(
-	"${FILESDIR}/psutil-5.7.0-tests.patch"
+	"${FILESDIR}/psutil-5.6.7-tests.patch"
 )
 
 python_test() {
@@ -38,7 +38,7 @@ python_test() {
 
 	# since we are running in an environment a bit similar to CI,
 	# let's skip the tests that are disable for CI
-	TRAVIS=1 APPVEYOR=1 "${EPYTHON}" psutil/tests/runner.py ||
+	TRAVIS=1 APPVEYOR=1 "${EPYTHON}" psutil/tests/__main__.py ||
 		die "tests failed with ${EPYTHON}"
 }
 

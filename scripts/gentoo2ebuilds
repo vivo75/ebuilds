@@ -54,6 +54,7 @@ KEEP_PYTHON_VER = (
     'gemato',
     'pexpect',
     'mako',
+    'psutil',
     )
 
 ADDITIONAL_DIRS = (
@@ -110,7 +111,6 @@ ebuilds_overlay = (
     'sys-apps/flatpak',
     'sys-apps/xdg-desktop-portal-gtk',
     'sys-fs/libostree',
-    'dev-python/psutil',
     'dev-python/twisted',
     'dev-python/pathlib2',
     'dev-python/nose',
@@ -1350,6 +1350,7 @@ EBUILDS_KEEP_ALL = (
     'dev-python/priority',
     'dev-python/prompt_toolkit',
     'dev-python/protobuf-python',
+    'dev-python/psutil',
     'dev-python/psycopg',
     'dev-python/ptyprocess',
     'dev-python/py',
