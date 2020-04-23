@@ -32,11 +32,22 @@
 
 #--- END OF EXAMPLES ---
 
+# Michał Górny <mgorny@gentoo.org> (2020-04-22)
+# Unmaintained.  Stuck at Python 3.6.  The only revdep last rited.
+# Removal in 30 days.  Bug #718896.
+dev-python/cligj
+
 # Ulrich Müller <ulm@gentoo.org> (2020-04-22)
 # Package is no longer being updated upstream.
 # Replaced by app-i18n/man-pages-l10n[l10n_pl].
 # Masked for removal in 30 days. Bug #717744.
 app-i18n/man-pages-pl
+
+# Michał Górny <mgorny@gentoo.org> (2020-04-22)
+# Unmaintained.  Stuck at Python 3.6.  The only revdep was last rited
+# already.
+# Removal in 30 days.  Bug #718854.
+dev-python/URLObject
 
 # Michał Górny <mgorny@gentoo.org> (2020-04-22)
 # Effectively unmaintained and stuck on Python 3.6.
@@ -93,7 +104,7 @@ dev-python/demjson
 
 # Louis Sautier <sbraz@gentoo.org> (2020-04-20)
 # No revdeps, no release in 3 years, doesn't support Bootstrap 4.
-# Removal in 30 days.
+# Removal in 30 days. Bug #718832
 dev-python/flask-bootstrap
 
 # Michał Górny <mgorny@gentoo.org> (2020-04-20)
@@ -554,7 +565,9 @@ net-dns/dnsimple-dyndns
 
 # Georgy Yakovlev <gyakovlev@gentoo.org> (2020-03-27)
 # Vulnerable old version of icedtea-web #711392
-# new version uses maven + rust
+# new version is not packaged yet
+# package is not going away anytime soon, just masked
+# for security. unmask as needed.
 dev-java/icedtea-web
 
 # Michał Górny <mgorny@gentoo.org> (2020-03-27)
@@ -624,22 +637,6 @@ media-video/syncplay
 # Removal in 30 days.  Bug #714626.
 net-im/pyicq-t
 dev-python/nevow
-
-# Andreas Sturmlechner <asturm@gentoo.org> (2020-03-22)
-# Unmaintained revdep on dev-python/pygtk blocking its removal, py2-only
-# Possible alternative: media-video/simplescreenrecorder
-# Bug #710172, masked for removal in 30 days.
-media-video/gtk-recordmydesktop
-
-# Andreas Sturmlechner <asturm@gentoo.org> (2020-03-22)
-# Unmaintained revdep on dev-python/pygtk blocking its removal, py2-only
-# Bug #708164, masked for removal in 30 days.
-media-video/pymp
-
-# Andreas Sturmlechner <asturm@gentoo.org> (2020-03-22)
-# Unmaintained revdep on dev-python/pygtk blocking its removal, py2-only
-# No signs of porting work, bug #708076, masked for removal in 30 days.
-x11-misc/xplanetFX
 
 # Jonas Stein <jstein@gentoo.org> (2020-03-21)
 # Package masked for removal. Broken SRC_URI,

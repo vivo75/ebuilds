@@ -12,8 +12,7 @@ inherit check-reqs chromium-2 desktop flag-o-matic multilib ninja-utils pax-util
 
 DESCRIPTION="Open-source version of Google Chrome web browser"
 HOMEPAGE="https://chromium.org/"
-SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${P}.tar.xz
-	https://files.pythonhosted.org/packages/ed/7b/bbf89ca71e722b7f9464ebffe4b5ee20a9e5c9a555a56e2d3914bb9119a6/setuptools-44.1.0.zip"
+SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${P}.tar.xz"
 
 LICENSE="BSD"
 SLOT="0"
@@ -90,9 +89,8 @@ DEPEND="${COMMON_DEPEND}
 BDEPEND="
 	${PYTHON_DEPS}
 	>=app-arch/gzip-1.7
-	app-arch/unzip
 	dev-lang/perl
-	>=dev-util/gn-0.1726
+	dev-util/gn
 	dev-vcs/git
 	>=dev-util/gperf-3.0.3
 	>=dev-util/ninja-1.7.2
@@ -111,7 +109,7 @@ BDEPEND="
 : ${CHROMIUM_FORCE_CLANG=no}
 
 if [[ ${CHROMIUM_FORCE_CLANG} == yes ]]; then
-	BDEPEND+=" >=sys-devel/clang-9"
+	BDEPEND+=" >=sys-devel/clang-7"
 fi
 
 if ! has chromium_pkg_die ${EBUILD_DEATH_HOOKS}; then
@@ -148,22 +146,15 @@ in /etc/chromium/default.
 "
 
 PATCHES=(
-	"${FILESDIR}/chromium-compiler-r12.patch"
+	"${FILESDIR}/chromium-compiler-r11.patch"
 	"${FILESDIR}/chromium-fix-char_traits.patch"
-	"${FILESDIR}/chromium-blink-style_format.patch"
 	"${FILESDIR}/chromium-78-protobuf-export.patch"
 	"${FILESDIR}/chromium-79-gcc-alignas.patch"
 	"${FILESDIR}/chromium-80-gcc-quiche.patch"
-	"${FILESDIR}/chromium-82-gcc-constexpr.patch"
-	"${FILESDIR}/chromium-82-gcc-noexcept.patch"
-	"${FILESDIR}/chromium-82-gcc-incomplete-type.patch"
-	"${FILESDIR}/chromium-82-gcc-template.patch"
-	"${FILESDIR}/chromium-82-gcc-iterator.patch"
-	"${FILESDIR}/chromium-83-gcc-template.patch"
-	"${FILESDIR}/chromium-83-gcc-include.patch"
-	"${FILESDIR}/chromium-83-gcc-permissive.patch"
-	"${FILESDIR}/chromium-83-gcc-iterator.patch"
-	"${FILESDIR}/chromium-83-gcc-10.patch"
+	"${FILESDIR}/chromium-80-gcc-blink.patch"
+	"${FILESDIR}/chromium-81-gcc-noexcept.patch"
+	"${FILESDIR}/chromium-81-gcc-constexpr.patch"
+	"${FILESDIR}/chromium-81-gcc-10.patch"
 )
 
 pre_build_checks() {
@@ -187,9 +178,7 @@ pre_build_checks() {
 	CHECKREQS_MEMORY="3G"
 	CHECKREQS_DISK_BUILD="7G"
 	if ( shopt -s extglob; is-flagq '-g?(gdb)?([1-9])' ); then
-		if use custom-cflags || use component-build; then
-			CHECKREQS_DISK_BUILD="25G"
-		fi
+		CHECKREQS_DISK_BUILD="25G"
 		if ! use component-build; then
 			CHECKREQS_MEMORY="16G"
 		fi
@@ -288,7 +277,6 @@ src_prepare() {
 		third_party/devscripts
 		third_party/devtools-frontend
 		third_party/devtools-frontend/src/front_end/third_party/fabricjs
-		third_party/devtools-frontend/src/front_end/third_party/lighthouse
 		third_party/devtools-frontend/src/front_end/third_party/wasmparser
 		third_party/devtools-frontend/src/third_party
 		third_party/dom_distiller_js
@@ -301,7 +289,6 @@ src_prepare() {
 		third_party/google_input_tools/third_party/closure_library
 		third_party/google_input_tools/third_party/closure_library/third_party/closure
 		third_party/googletest
-		third_party/harfbuzz-ng/utils
 		third_party/hunspell
 		third_party/iccjpeg
 		third_party/inspector_protocol
@@ -327,7 +314,6 @@ src_prepare() {
 		third_party/llvm
 		third_party/lss
 		third_party/lzma_sdk
-		third_party/mako
 		third_party/markupsafe
 		third_party/mesa
 		third_party/metrics_proto
@@ -360,7 +346,6 @@ src_prepare() {
 		third_party/qcms
 		third_party/rnnoise
 		third_party/s2cellid
-		third_party/schema_org
 		third_party/simplejson
 		third_party/skia
 		third_party/skia/include/third_party/skcms
@@ -372,7 +357,6 @@ src_prepare() {
 		third_party/SPIRV-Tools
 		third_party/sqlite
 		third_party/swiftshader
-		third_party/swiftshader/third_party/astc-encoder
 		third_party/swiftshader/third_party/llvm-7.0
 		third_party/swiftshader/third_party/llvm-subzero
 		third_party/swiftshader/third_party/marl
@@ -568,9 +552,8 @@ src_configure() {
 		replace-flags "-Os" "-O2"
 		strip-flags
 
-		# Debug info section overflows without component build
 		# Prevent linker from running out of address space, bug #471810 .
-		if ! use component-build || use x86; then
+		if use x86; then
 			filter-flags "-g*"
 		fi
 
@@ -655,9 +638,6 @@ src_compile() {
 
 	# Calling this here supports resumption via FEATURES=keepwork
 	python_setup
-
-	# https://bugs.gentoo.org/717456
-	local -x PYTHONPATH="${WORKDIR}/setuptools-44.1.0${PYTHONPATH+:}${PYTHONPATH}"
 
 	#"${EPYTHON}" tools/clang/scripts/update.py --force-local-build --gcc-toolchain /usr --skip-checkout --use-system-cmake --without-android || die
 
