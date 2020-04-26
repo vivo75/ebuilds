@@ -49,5 +49,5 @@ BDEPEND="
 S="${WORKDIR}/${MY_P}"
 
 python_test() {
-	run_in_build_dir virtx pytest -v "${S}"/tests
+	run_in_build_dir virtx pytest -vv "${S}"/tests
 }
