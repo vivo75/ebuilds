@@ -32,8 +32,5 @@ python_prepare_all() {
 
 python_test() {
 	export TINYCSS_SKIP_SPEEDUPS_TESTS=1
-	local test
-	for test in ${PN}/tests/test_*.py; do
-		py.test $test || die
-	done
+	pytest -vv ${PN}/tests/test_*.py || die
 }
