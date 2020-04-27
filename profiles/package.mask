@@ -32,6 +32,30 @@
 
 #--- END OF EXAMPLES ---
 
+# Zac Medico <zmedico@gentoo.org> (2020-04-26)
+# Stuck on py3.6.  No revdeps.
+# Removal in 30 days.  Bug #719540.
+dev-python/riak-python-client
+
+# Zac Medico <zmedico@gentoo.org> (2020-04-26)
+# Stuck on py3.6.  No revdeps.
+# Removal in 30 days.  Bug #718904.
+dev-python/flower
+
+# Sam James <sam@cmpct.info> (2020-04-24)
+# Out of date with security bugs.
+# Please use www-client/seamonkey instead.
+# Removal in 30 days. Bug #718738.
+www-client/seamonkey-bin
+
+# Zac Medico <zmedico@gentoo.org> (2020-04-26)
+# Mask obsolete and vulnerable dev-go/go-crypto, along with obsolete
+# reverse dependencies. Removal in 30 days.  Bug #710142.
+dev-go/go-crypto
+dev-go/go-net
+dev-go/go-sys
+=dev-embedded/arduino-builder-1.4.1
+
 # Michał Górny <mgorny@gentoo.org> (2020-04-26)
 # Unmaintained.  Stuck on py3.6.  Missing tests (but having an unused
 # test flag!).  The only revdep is app-admin/ara that is masked
@@ -101,6 +125,7 @@ dev-python/pyodbc
 # Causes multilib glib failure.
 # https://bugs.gentoo.org/719382
 =dev-util/meson-0.54.0
+=dev-util/meson-0.54.1
 
 # Michał Górny <mgorny@gentoo.org> (2020-04-25)
 # Unmaintained.  Stuck on Python 3.6.  Missing tests.  The only revdep
@@ -184,6 +209,11 @@ dev-python/rackspace-novaclient
 dev-python/nose-testconfig
 dev-python/positional
 dev-python/posix_ipc
+dev-python/repoze-who
+dev-python/tablib
+dev-python/rackspace-auth-openstack
+dev-python/rax-default-network-flags-python-novaclient-ext
+dev-python/rax-scheduled-images-python-novaclient-ext
 
 # Michał Górny <mgorny@gentoo.org> (2020-04-23)
 # Unmaintained.  Stuck on Python 3.6.  No revdeps.
@@ -846,12 +876,6 @@ www-servers/tomcat:9
 # Mart Raudsepp <leio@gentoo.org> (2020-02-16)
 # Fails to automatically launch pipewire for me. Help welcome figuring it out.
 net-misc/gnome-remote-desktop
-
-# Stephan Hartmann <stha09@googlemail.com> (2020-02-16)
-# Dev channel releases are only for people who
-# are developers or want more experimental features
-# and accept a more unstable release.
->=www-client/chromium-82
 
 # Stefan Strogin <steils@gentoo.org> (2020-02-12)
 # Mask for testing revdeps.
