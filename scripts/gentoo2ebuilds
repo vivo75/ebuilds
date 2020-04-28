@@ -2449,6 +2449,7 @@ EBUILDS_KEEP_ALL = (
     'net-libs/libnfnetlink',
     'net-libs/libnftnl',
     'net-libs/libnice',
+    'net-libs/libnma',
     'net-libs/libnsl',
     'net-libs/libpcap',
     'net-libs/libproxy',
