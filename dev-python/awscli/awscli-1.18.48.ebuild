@@ -14,14 +14,14 @@ SRC_URI="https://github.com/aws/aws-cli/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS="~amd64"
 IUSE="test"
 
 # requires network access
 RESTRICT="test"
 
 RDEPEND="
-	>=dev-python/botocore-1.15.32[${PYTHON_USEDEP}]
+	>=dev-python/botocore-1.15.48[${PYTHON_USEDEP}]
 	<dev-python/colorama-0.4.4[${PYTHON_USEDEP}]
 	dev-python/docutils[${PYTHON_USEDEP}]
 	<dev-python/rsa-3.5.0.0[${PYTHON_USEDEP}]

@@ -521,6 +521,7 @@ EBUILDS_KEEP_ALL = (
     'app-vim/udev-syntax',
     'app-vim/vimpython',
     'app-vim/vim-tmux',
+    'dev-cpp/abseil-cpp',
     'dev-cpp/antlr-cpp',
     'dev-cpp/atkmm',
     'dev-cpp/cairomm',

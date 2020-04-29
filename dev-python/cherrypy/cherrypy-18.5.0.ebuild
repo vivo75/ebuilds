@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 DISTUTILS_USE_SETUPTOOLS=rdepend
 inherit distutils-r1
 
@@ -16,7 +16,7 @@ S="${WORKDIR}/${MY_P}"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~arm64 ~ppc64"
 IUSE="ssl test"
 
 RDEPEND=">=dev-python/cheroot-8.2.1[${PYTHON_USEDEP}]
@@ -53,9 +53,9 @@ python_prepare_all() {
 	sed -r -e '/(pytest-sugar|pytest-cov)/ d' \
 		-i setup.py || die
 
-	sed -r -e 's:--cov-report[[:space:]]+[[:graph:]]+::' \
-		-e 's:--cov[[:graph:]]+::' \
-		-e 's:--doctest[[:graph:]]+::' \
+	sed -r -e 's:--cov-report[[:space:]]+[[:graph:]]+::g' \
+		-e 's:--cov[[:graph:]]+::g' \
+		-e 's:--doctest[[:graph:]]+::g' \
 		-i pytest.ini || die
 
 	distutils-r1_python_prepare_all
