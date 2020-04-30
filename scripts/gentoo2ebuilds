@@ -1217,6 +1217,7 @@ EBUILDS_KEEP_ALL = (
     'dev-python/fasteners',
     'dev-python/faulthandler',
     'dev-python/feedparser',
+    'dev-python/filelock',
     'dev-python/fixtures',
     'dev-python/flake8',
     'dev-python/flaky',
