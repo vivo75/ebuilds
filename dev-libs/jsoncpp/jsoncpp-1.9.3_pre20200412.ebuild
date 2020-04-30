@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit meson python-any-r1
 
@@ -17,7 +17,7 @@ S=${WORKDIR}/${PN}-${EGIT_COMMIT}
 
 LICENSE="|| ( public-domain MIT )"
 SLOT="0/23"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86"
+KEYWORDS="~alpha amd64 arm ~arm64 ~hppa ~ia64 ~mips ppc ~ppc64 s390 sparc x86"
 IUSE="doc test"
 RESTRICT="!test? ( test )"
 
