@@ -532,6 +532,7 @@ EBUILDS_KEEP_ALL = (
     'dev-cpp/gtkmm',
     'dev-cpp/libcmis',
     'dev-cpp/libxmlpp',
+    'dev-cpp/mm-common',
     'dev-cpp/muParser',
     'dev-cpp/pangomm',
     'dev-cpp/rttr',
