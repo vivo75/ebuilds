@@ -13,14 +13,15 @@ LLVM_COMPONENTS=( clang clang-tools-extra )
 LLVM_TEST_COMPONENTS=(
 	llvm/lib/Testing/Support
 	llvm/utils/{lit,llvm-lit,unittest}
+	llvm/utils/{UpdateTestChecks,update_cc_test_checks.py}
 )
 llvm.org_set_globals
 # We need extra level of indirection for CLANG_RESOURCE_DIR
 S=${WORKDIR}/x/y/clang
 
 # Keep in sync with sys-devel/llvm
-ALL_LLVM_EXPERIMENTAL_TARGETS=( ARC AVR VE )
-ALL_LLVM_TARGETS=( AArch64 AMDGPU ARM BPF Hexagon Lanai Mips MSP430
+ALL_LLVM_EXPERIMENTAL_TARGETS=( ARC VE )
+ALL_LLVM_TARGETS=( AArch64 AMDGPU ARM AVR BPF Hexagon Lanai Mips MSP430
 	NVPTX PowerPC RISCV Sparc SystemZ WebAssembly X86 XCore
 	"${ALL_LLVM_EXPERIMENTAL_TARGETS[@]}" )
 ALL_LLVM_TARGETS=( "${ALL_LLVM_TARGETS[@]/#/llvm_targets_}" )
@@ -180,6 +181,7 @@ get_distribution_components() {
 			clang-query
 			clang-reorder-fields
 			clang-tidy
+			clang-tidy-headers
 			clangd
 			find-all-symbols
 			modularize

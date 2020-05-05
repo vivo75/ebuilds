@@ -19,7 +19,7 @@ if [[ ${PV} == 9999* ]]; then
 	EGIT_REPO_URI="https://sourceware.org/git/glibc.git"
 	inherit git-r3
 else
-	KEYWORDS="~alpha amd64 arm ~arm64 ~hppa ~ia64 ~m68k ~mips ppc ppc64 ~riscv s390 sparc x86"
+	KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~m68k ~mips ppc ppc64 ~riscv s390 sparc x86"
 	SRC_URI="mirror://gnu/glibc/${P}.tar.xz"
 fi
 
@@ -147,6 +147,19 @@ XFAIL_TEST_LIST=(
 	tst-locale-locpath
 	# 9) Failures of unknown origin
 	tst-latepthread
+
+	# buggy test, fixed in glibc-2.31 in 70ba28f7ab29
+	tst-pkey
+
+	# buggy test, assumes /dev/ and /dev/null on a single filesystem
+	# 'mount --bind /dev/null /chroot/dev/null' breaks it.
+	# https://sourceware.org/PR25909
+	tst-support_descriptors
+
+	# Flaky test, known to fail occasionally:
+	# https://sourceware.org/PR19329
+	# https://bugs.gentoo.org/719674#c12
+	tst-stack4
 )
 
 #

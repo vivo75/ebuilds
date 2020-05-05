@@ -21,11 +21,13 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+distutils_enable_tests pytest
+
 src_prepare() {
 	export SETUPTOOLS_SCM_PRETEND_VERSION="${PV}"
 	distutils-r1_src_prepare
 }
 
 python_test() {
-	esetup.py test
+	pytest tests.py || die
 }
