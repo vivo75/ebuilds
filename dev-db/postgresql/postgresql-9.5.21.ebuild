@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7} )
 
 PLOCALES="af cs de en es fa fr hr hu it ko nb pl pt_BR ro ru sk sl sv tr zh_CN
 		  zh_TW"
@@ -11,7 +11,7 @@ PLOCALES="af cs de en es fa fr hr hu it ko nb pl pt_BR ro ru sk sl sv tr zh_CN
 inherit flag-o-matic l10n linux-info multilib pam prefix python-single-r1 \
 		systemd user
 
-KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~mips ppc ppc64 ~s390 sparc x86 ~ppc-macos ~x86-solaris"
+KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~mips ppc ppc64 ~s390 sparc x86 ~ppc-macos ~x86-solaris"
 
 SLOT=$(ver_cut 1-2)
 
