@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 DISTUTILS_USE_SETUPTOOLS=bdepend
 inherit distutils-r1
 
@@ -34,7 +34,7 @@ BDEPEND="
 
 RESTRICT="!test? ( test )"
 
-distutils_enable_sphinx docs \
+distutils_enable_sphinx docs/source \
 	'dev-python/guzzle_sphinx_theme'
 
 python_prepare_all() {
