@@ -1180,6 +1180,7 @@ EBUILDS_KEEP_ALL = (
     'dev-python/libvirt-python',
     'dev-python/linecache2',
     'dev-python/lit',
+    'dev-python/livereload',
     'dev-python/logutils',
     'dev-python/lxml',
     'dev-python/lz4',
