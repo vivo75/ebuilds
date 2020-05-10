@@ -6,4 +6,4 @@
 /metadata/md5-cache/
 /packages/
 /profiles/use.local.desc
-
+/scripts/consts/__pycache__
