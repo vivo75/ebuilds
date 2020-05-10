@@ -3,7 +3,7 @@
 
 EAPI="6"
 PYTHON_COMPAT=( python{3_8,3_7} )
-USE_RUBY="ruby27"
+USE_RUBY="ruby24 ruby25"
 
 # No, I am not calling ruby-ng
 inherit multilib python-r1 toolchain-funcs multilib-minimal
