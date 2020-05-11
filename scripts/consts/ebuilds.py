@@ -310,6 +310,7 @@ EBUILDS_KEEP_ALL = (
     'app-shells/push',
     'app-shells/quoter',
     'app-shells/tcsh',
+    'app-shells/zsh',
     'app-text/an',
     'app-text/asciidoc',
     'app-text/aspell',
