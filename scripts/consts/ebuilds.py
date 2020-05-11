@@ -1215,6 +1215,7 @@ EBUILDS_KEEP_ALL = (
     'dev-python/netaddr',
     'dev-python/netifaces',
     'dev-python/nltk',
+    'dev-python/nltk-data',
     'dev-python/notify2',
     'dev-python/numpy',
     'dev-python/oauth2client',
