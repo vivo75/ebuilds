@@ -1213,6 +1213,7 @@ EBUILDS_KEEP_ALL = (
     'dev-python/ndg-httpsclient',
     'dev-python/netaddr',
     'dev-python/netifaces',
+    'dev-python/nltk',
     'dev-python/notify2',
     'dev-python/numpy',
     'dev-python/oauth2client',
