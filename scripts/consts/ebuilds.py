@@ -1183,6 +1183,7 @@ EBUILDS_KEEP_ALL = (
     'dev-python/lit',
     'dev-python/livereload',
     'dev-python/logutils',
+    'dev-python/lunr',
     'dev-python/lxml',
     'dev-python/lz4',
     'dev-python/m2crypto',
