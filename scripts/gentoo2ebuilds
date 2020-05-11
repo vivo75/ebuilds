@@ -106,6 +106,7 @@ ebuilds_overlay = (
     'dev-python/clientcookie',
     'dev-python/jonpy',
     'dev-python/photohash',
+    'dev-python/pystache',
     'dev-python/relatorio',
     'dev-util/flatpak-builder',
     'games-board/python-chess',
