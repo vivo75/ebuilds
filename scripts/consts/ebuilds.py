@@ -818,6 +818,7 @@ EBUILDS_KEEP_ALL = (
     'dev-perl/File-LibMagic',
     'dev-perl/File-Listing',
     'dev-perl/File-MimeInfo',
+    'dev-perl/File-Next',
     'dev-perl/File-ShareDir',
     'dev-perl/File-ShareDir-Install',
     'dev-perl/File-ShareDir-ProjectDistDir',
