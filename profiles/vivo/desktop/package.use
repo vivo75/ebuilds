@@ -37,7 +37,7 @@ app-text/poppler qt5 -qt4
 >=app-text/texlive-core-2017-r2 xetex
 dev-cpp/eigen c++11
 dev-db/mariadb -client-libs innodb-lz4 rocksdb oqgraph
-dev-db/postgresql perl python uuid
+dev-db/postgresql llvm perl python uuid
 dev-db/sqlite secure-delete
 dev-db/unixODBC -minimal
 dev-java/icedtea-bin nsplugin
