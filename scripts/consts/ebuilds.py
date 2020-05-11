@@ -1171,6 +1171,7 @@ EBUILDS_KEEP_ALL = (
     'dev-python/jinja',
     'dev-python/jinja2-time',
     'dev-python/jmespath',
+    'dev-python/joblib',
     'dev-python/josepy',
     'dev-python/jsondiff',
     'dev-python/jsonschema',
