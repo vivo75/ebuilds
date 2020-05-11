@@ -2817,6 +2817,7 @@ EBUILDS_KEEP_ALL = (
     'www-servers/gunicorn',
     'www-servers/nginx',
     'www-servers/nginx-unit',
+    'www-servers/tornado',
     'www-servers/uwsgi',
     'x11-apps/appres',
     'x11-apps/bdftopcf',
