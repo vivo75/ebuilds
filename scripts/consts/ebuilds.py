@@ -1376,6 +1376,7 @@ EBUILDS_KEEP_ALL = (
     'dev-python/tldextract',
     'dev-python/toml',
     'dev-python/towncrier',
+    'dev-python/tqdm',
     'dev-python/traceback2',
     'dev-python/traitlets',
     'dev-python/transitions',
