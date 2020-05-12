@@ -2322,6 +2322,7 @@ EBUILDS_KEEP_ALL = (
     'net-im/skype-dbus-mock',
     'net-im/telegram-desktop-bin',
     'net-irc/hexchat',
+    'net-irc/konversation',
     'net-irc/kvirc',
     'net-irc/quassel',
     'net-libs/accounts-qml',
