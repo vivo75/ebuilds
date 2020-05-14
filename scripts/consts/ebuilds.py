@@ -1054,6 +1054,7 @@ EBUILDS_KEEP_ALL = (
     'dev-python/blinker',
     'dev-python/boto3',
     'dev-python/botocore',
+    'dev-python/brotlipy',
     'dev-python/bz2file',
     'dev-python/cairocffi',
     'dev-python/certifi',
