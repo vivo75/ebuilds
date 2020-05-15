@@ -2975,4 +2975,9 @@ EBUILDS_KEEP_ALL = (
     'x11-themes/papirus-icon-theme',
     'x11-themes/sound-theme-freedesktop',
     'x11-wm/openbox',
+    'dev-python/jsonpatch',
+    'dev-python/oauthlib',
+    'dev-python/pyserial',
+    'net-analyzer/macchanger',
+    'sys-fs/growpart',
 )
