@@ -2980,4 +2980,5 @@ EBUILDS_KEEP_ALL = (
     'dev-python/pyserial',
     'net-analyzer/macchanger',
     'sys-fs/growpart',
+    'dev-python/pyjwt',
 )
