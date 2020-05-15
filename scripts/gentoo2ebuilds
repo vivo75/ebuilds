@@ -122,6 +122,8 @@ ebuilds_overlay = (
     'dev-python/mako',
     'dev-python/gst-python',
     'x11-wm/xpra',
+    'dev-python/doxypypy',
+    'dev-python/doxyqml',
     )
 
 #EBUILDS_KEEP_ALL = (
