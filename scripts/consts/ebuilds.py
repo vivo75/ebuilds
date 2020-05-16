@@ -2981,4 +2981,6 @@ EBUILDS_KEEP_ALL = (
     'net-analyzer/macchanger',
     'sys-fs/growpart',
     'dev-python/pyjwt',
+    'dev-python/jsonpatch',
+    'dev-python/jsonpointer',
 )
