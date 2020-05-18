@@ -5,6 +5,7 @@ app-crypt/certbot-apache
 app-text/htmldoc
 dev-lang/php
 dev-libs/elfutils
+dev-libs/libmemcached
 dev-php/composer
 dev-php/PEAR-Auth_SASL
 dev-php/PEAR-Mail_Mime
@@ -17,6 +18,7 @@ media-gfx/imagemagick
 media-libs/gd
 net-dns/bind-tools
 net-misc/curl
+net-misc/memcached
 net-misc/socat
 dev-db/mariadb
 dev-db/mysql-connector-c
@@ -26,7 +28,7 @@ www-servers/apache
 # php pecl additions (also used by Nextcloud)
 dev-php/pecl-apcu
 dev-php/pecl-imagick
-dev-php/pecl-memcached
+#dev-php/pecl-memcached
 dev-php/pecl-redis
 dev-php/pecl-geoip
 
