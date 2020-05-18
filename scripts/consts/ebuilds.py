@@ -1255,6 +1255,7 @@ EBUILDS_KEEP_ALL = (
     'dev-python/py-cpuinfo',
     'dev-python/pyasn1',
     'dev-python/pyasn1-modules',
+    'dev-python/pybind11',
     'dev-python/pyblake2',
     'dev-python/pycairo',
     'dev-python/pychroot',
