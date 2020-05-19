@@ -418,6 +418,7 @@ EBUILDS_KEEP_ALL = (
     'dev-cpp/tbb',
     'dev-cpp/tclap',
     'dev-cpp/yaml-cpp',
+    'dev-db/cdb',
     'dev-db/etcd',
     'dev-db/go-etcd',
     'dev-db/innotop',
