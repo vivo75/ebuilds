@@ -476,6 +476,7 @@ EBUILDS_KEEP_ALL = (
     'dev-java/hamcrest-generator',
     'dev-java/hawtjni-runtime',
     'dev-java/icedtea',
+    'dev-java/icedtea-bin',
     'dev-java/icedtea-sound',
     'dev-java/icedtea-web',
     'dev-java/icu4j',
