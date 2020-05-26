@@ -34,6 +34,7 @@ DISTUTILS_IN_SOURCE_BUILD=1
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-4.5.0-tests-pypy.patch
+	"${FILESDIR}"/lxml-4.5.1-py39.patch
 )
 
 python_prepare_all() {

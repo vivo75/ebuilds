@@ -19,7 +19,6 @@ RESTRICT="!test? ( test )"
 RDEPEND="
 	=dev-python/elementpath-1.4*[${PYTHON_USEDEP}]"
 BDEPEND="${RDEPEND}
-	dev-python/setuptools[${PYTHON_USEDEP}]
 	test? (
 		dev-python/lxml[${PYTHON_USEDEP}]
 	)"

@@ -18,7 +18,6 @@ IUSE="test"
 RESTRICT="!test? ( test )"
 
 BDEPEND="
-	dev-python/setuptools[${PYTHON_USEDEP}]
 	test? (
 		dev-python/lxml[${PYTHON_USEDEP}]
 		dev-python/xmlschema[${PYTHON_USEDEP}]

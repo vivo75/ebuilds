@@ -24,8 +24,6 @@ RDEPEND="
 	dev-python/markupsafe[${PYTHON_USEDEP}]
 	dev-python/six[${PYTHON_USEDEP}]
 	>=dev-python/werkzeug-0.14.1[${PYTHON_USEDEP}]"
-BDEPEND="
-	dev-python/setuptools[${PYTHON_USEDEP}]"
 
 PATCHES=(
 	# do not import raven if it's not going to be used
