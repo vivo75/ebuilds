@@ -25,3 +25,8 @@ src_prepare() {
 		-i setup.cfg || die
 	distutils-r1_src_prepare
 }
+
+python_test() {
+	distutils_install_for_testing
+	pytest -vv || die "Tests failed with ${EPYTHON}"
+}

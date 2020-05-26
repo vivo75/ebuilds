@@ -18,7 +18,6 @@ KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~
 IUSE="test"
 
 DEPEND="
-	dev-python/setuptools[${PYTHON_USEDEP}]
 	test? ( $(python_gen_cond_dep '
 			dev-python/unittest2[${PYTHON_USEDEP}]
 			' python2_7 pypy3

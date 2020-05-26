@@ -49,6 +49,9 @@ python_prepare_all() {
 	# fragile test for import time
 	sed -i -e 's:test_import_time:_&:' test_path.py || die
 
+	# fails on py3.9
+	sed -i -e 's:test_version:_&:' test_path.py || die
+
 	distutils-r1_python_prepare_all
 }
 

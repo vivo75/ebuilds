@@ -18,7 +18,6 @@ KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~s
 IUSE=""
 
 RDEPEND="
-	dev-python/setuptools[${PYTHON_USEDEP}]
 	|| ( >=sys-libs/timezone-data-2017a sys-libs/glibc[vanilla] )"
 DEPEND="${RDEPEND}
 	app-arch/unzip"
