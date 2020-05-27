@@ -15,6 +15,4 @@ SLOT="0"
 KEYWORDS="amd64 ~arm arm64 ~hppa ~ia64 ~sparc x86"
 IUSE=""
 
-BDEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
-
 # no tests

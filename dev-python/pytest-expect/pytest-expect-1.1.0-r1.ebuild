@@ -19,9 +19,5 @@ RDEPEND="
 	dev-python/pytest[${PYTHON_USEDEP}]
 	dev-python/u-msgpack[${PYTHON_USEDEP}]"
 
-BDEPEND="
-	${RDEPEND}
-	dev-python/setuptools[${PYTHON_USEDEP}]"
-
 # no tests...
 RESTRICT="test"

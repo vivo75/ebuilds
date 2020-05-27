@@ -18,11 +18,16 @@ IUSE="+bcrypt doc +scrypt +totp"
 RDEPEND="bcrypt? ( dev-python/bcrypt[${PYTHON_USEDEP}] )
 	totp? ( dev-python/cryptography[${PYTHON_USEDEP}] )
 	scrypt? ( dev-python/scrypt[${PYTHON_USEDEP}] )"
-DEPEND="${RDEPEND}
-	dev-python/setuptools[${PYTHON_USEDEP}]"
+BDEPEND="
+	test? (
+		dev-python/bcrypt[${PYTHON_USEDEP}]
+		dev-python/cryptography[${PYTHON_USEDEP}]
+		dev-python/scrypt[${PYTHON_USEDEP}]
+	)"
 
 PATCHES=(
 	"${FILESDIR}/passlib-1.7.2-pypy3.patch"
+	"${FILESDIR}/passlib-1.7.2-py39.patch"
 )
 
 distutils_enable_tests nose

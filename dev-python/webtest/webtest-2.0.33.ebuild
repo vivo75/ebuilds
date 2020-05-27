@@ -35,7 +35,6 @@ BDEPEND="${RDEPEND}
 		dev-python/pyquery[${PYTHON_USEDEP}]
 		dev-python/pastedeploy[${PYTHON_USEDEP}]
 		dev-python/wsgiproxy2[${PYTHON_USEDEP}]
-		dev-python/coverage[${PYTHON_USEDEP}]
 		$(python_gen_cond_dep 'dev-python/mock[${PYTHON_USEDEP}]' python2_7 )
 	)"
 
