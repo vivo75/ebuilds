@@ -3,6 +3,7 @@
 
 EAPI=7
 
+DISTUTILS_USE_SETUPTOOLS=no
 PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
 
 inherit distutils-r1
@@ -17,7 +18,7 @@ KEYWORDS="~alpha amd64 ~arm ~arm64 ~hppa ~sparc x86 ~amd64-linux ~x86-linux"
 IUSE="examples"
 
 BDEPEND="
-	test? (	dev-python/testpath[${PYTHON_USEDEP}] )
+	test? ( dev-python/testpath[${PYTHON_USEDEP}] )
 "
 
 distutils_enable_tests pytest

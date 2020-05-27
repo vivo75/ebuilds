@@ -17,7 +17,6 @@ IUSE="test"
 
 RDEPEND="<dev-python/requests-3.0.0[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}
-	dev-python/setuptools[${PYTHON_USEDEP}]
 	test? (
 		dev-python/betamax[${PYTHON_USEDEP}]
 		dev-python/mock[${PYTHON_USEDEP}]

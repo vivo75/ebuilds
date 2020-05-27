@@ -28,7 +28,6 @@ BDEPEND="
 	test? (
 		${RDEPEND}
 		>=dev-python/pytest-2.8[${PYTHON_USEDEP}]
-		dev-python/backports-unittest-mock[${PYTHON_USEDEP}]
 		dev-python/freezegun[${PYTHON_USEDEP}]
 	)
 "
