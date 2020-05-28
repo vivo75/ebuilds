@@ -58,6 +58,10 @@ distutils_enable_sphinx docs \
 	dev-python/towncrier
 distutils_enable_tests pytest
 
+PATCHES=(
+	"${FILESDIR}"/${P}-py39.patch
+)
+
 src_prepare() {
 	# we don't have xonsh
 	rm tests/unit/activation/test_xonsh.py || die
