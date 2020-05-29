@@ -12,11 +12,11 @@ SRC_URI="https://www.kernel.org/pub/linux/utils/${PN}/v$(ver_cut 1-2)/${P/_/-}.t
 LICENSE="GPL-2+"
 SLOT="0/12" # libcryptsetup.so version
 [[ ${PV} != *_rc* ]] && \
-KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~mips ppc ppc64 s390 sparc x86"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86"
 CRYPTO_BACKENDS="gcrypt kernel nettle +openssl"
 # we don't support nss since it doesn't allow cryptsetup to be built statically
 # and it's missing ripemd160 support so it can't provide full backward compatibility
-IUSE="${CRYPTO_BACKENDS} +argon2 libressl +luks1_default nls pwquality reencrypt static static-libs +udev urandom"
+IUSE="${CRYPTO_BACKENDS} +argon2 libressl luks1_default nls pwquality reencrypt static static-libs +udev urandom"
 REQUIRED_USE="^^ ( ${CRYPTO_BACKENDS//+/} )
 	libressl? ( openssl )
 	static? ( !gcrypt )" #496612
