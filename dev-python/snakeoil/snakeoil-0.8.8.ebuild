@@ -27,6 +27,10 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 "
 [[ ${PV} == 9999 ]] && DEPEND+=" dev-python/cython[${PYTHON_USEDEP}]"
 
+PATCHES=(
+	"${FILESDIR}"/${P}-py39.patch
+)
+
 python_test() {
 	esetup.py test
 }

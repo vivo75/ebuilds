@@ -19,6 +19,10 @@ KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-l
 distutils_enable_tests pytest
 distutils_enable_sphinx docs dev-python/sphinx_rtd_theme
 
+PATCHES=(
+	"${FILESDIR}"/${P}-py39.patch
+)
+
 python_compile() {
 	local WRAPT_EXTENSIONS=true
 
