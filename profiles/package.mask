@@ -32,6 +32,14 @@
 
 #--- END OF EXAMPLES ---
 
+# Michał Górny <mgorny@gentoo.org> (2020-05-31)
+# Outdated.  Not touched since the initial commit.  Lacks py3.7 support.
+# No reverse dependencies outside the three packages.
+# Removal in 30 days.  Bug #708270.
+dev-python/Rx
+dev-python/graphql-core
+dev-python/gql
+
 # Hans de Graaff <graaff@gentoo.org> (2020-05-24)
 # No releases since 2011, upstream is gone, fails tests,
 # no reverse dependencies.
@@ -154,17 +162,6 @@ x11-drivers/xf86-input-mouse
 # Included in recent texlive versions. Please uninstall.
 # Removal in 30 days.
 dev-tex/revtex
-
-# Andreas Sturmlechner <asturm@gentoo.org> (2020-05-01)
-# Currently packaged release from 2015, needs maintainer + bump. Bug #720346
-# Stuck on Python 2 and pygtk. Masked for removal in 30 days.
-app-mobilephone/ganyremote
-
-# Andreas Sturmlechner <asturm@gentoo.org> (2020-05-01)
-# Last release in 2018, wip/gtk3 branch untouched since 2017. Bug #598906
-# Stuck on Python 2 and pygtk. Masked for removal in 30 days.
-app-office/pybliographer
-dev-python/python-bibtex
 
 # Thomas Deutschmann <whissi@gentoo.org> (2020-04-30)
 # Requires <OpenSSL-1.1.x. Please migrate to
