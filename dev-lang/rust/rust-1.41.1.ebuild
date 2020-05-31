@@ -51,9 +51,9 @@ IUSE="clippy cpu_flags_x86_sse2 debug doc libressl nightly parallel-compiler rls
 LLVM_DEPEND="
 	|| (
 		sys-devel/llvm:9[llvm_targets_WebAssembly?]
-		wasm? ( =sys-devel/lld-9* )
 	)
 	<sys-devel/llvm-10:=
+	wasm? ( sys-devel/lld )
 "
 LLVM_MAX_SLOT=9
 
@@ -65,7 +65,7 @@ COMMON_DEPEND="
 	net-misc/curl:=[ssl]
 	sys-libs/zlib:=
 	!libressl? ( dev-libs/openssl:0= )
-	libressl? ( dev-libs/libressl:0= )
+	libressl? ( <dev-libs/libressl-3.1:0= )
 	elibc_musl? ( sys-libs/libunwind )
 	system-llvm? (
 		${LLVM_DEPEND}

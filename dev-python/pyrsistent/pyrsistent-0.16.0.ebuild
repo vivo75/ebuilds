@@ -19,7 +19,8 @@ RDEPEND="
 	dev-python/six[${PYTHON_USEDEP}]"
 
 DEPEND="
-	${RDEPEND}
-	test? (	dev-python/hypothesis[${PYTHON_USEDEP}]	)"
+	test? (
+		dev-python/hypothesis[${PYTHON_USEDEP}]
+	)"
 
 distutils_enable_tests pytest

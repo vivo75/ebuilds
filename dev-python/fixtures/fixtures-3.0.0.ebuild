@@ -1,7 +1,7 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
 
@@ -25,7 +25,14 @@ RDEPEND="
 	>=dev-python/testtools-0.9.22[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}
 	test? ( dev-python/mock[${PYTHON_USEDEP}] )"
-#DISTUTILS_IN_SOURCE_BUILD=1
+
+src_prepare() {
+	# broken on py3.9
+	# https://github.com/testing-cabal/fixtures/issues/44
+	sed -i -e 's:test_patch_classmethod_with:_&:' \
+		fixtures/tests/_fixtures/test_monkeypatch.py || die
+	distutils-r1_src_prepare
+}
 
 python_test() {
 	emake check
