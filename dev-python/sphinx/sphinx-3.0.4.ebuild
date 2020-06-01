@@ -44,13 +44,13 @@ RDEPEND="
 		dev-texlive/texlive-luatex
 		app-text/dvipng
 	)"
-DEPEND="${RDEPEND}
-	dev-python/setuptools[${PYTHON_USEDEP}]
+BDEPEND="
 	doc? (
 		dev-python/sphinxcontrib-websupport[${PYTHON_USEDEP}]
 		media-gfx/graphviz
 	)
 	test? (
+		${RDEPEND}
 		dev-python/html5lib[${PYTHON_USEDEP}]
 		dev-python/pytest[${PYTHON_USEDEP}]
 		virtual/imagemagick-tools[jpeg,png,svg]

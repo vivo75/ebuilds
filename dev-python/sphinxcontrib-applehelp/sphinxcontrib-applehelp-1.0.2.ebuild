@@ -18,8 +18,7 @@ KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~m68k ~mips ppc ppc64 ~s390 sparc x8
 RDEPEND="dev-python/namespace-sphinxcontrib[${PYTHON_USEDEP}]"
 PDEPEND="
 	>=dev-python/sphinx-2.0[${PYTHON_USEDEP}]"
-DEPEND="
-	dev-python/setuptools[${PYTHON_USEDEP}]
+BDEPEND="
 	test? ( ${PDEPEND} )"
 
 distutils_enable_tests pytest
