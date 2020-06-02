@@ -275,6 +275,7 @@ EBUILDS_KEEP_ALL = (
     'app-i18n/unicode-data',
     'app-laptop/radeontool',
     'app-misc/asciinema',
+    'app-misc/binwalk',
     'app-misc/c_rehash',
     'app-misc/ca-certificates',
     'app-misc/colordiff',
