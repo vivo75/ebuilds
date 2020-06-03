@@ -7,12 +7,12 @@ PYTHON_COMPAT=( python{3_8,3_7} )
 inherit distutils-r1
 
 DESCRIPTION="Secure backup system using gnupg to encrypt data"
-HOMEPAGE="http://www.nongnu.org/duplicity/"
-SRC_URI="https://code.launchpad.net/${PN}/$(ver_cut 1-2)-series/${PV}/+download/${P}.tar.gz"
+HOMEPAGE="https://www.nongnu.org/duplicity/"
+SRC_URI="https://code.launchpad.net/${PN}/$(ver_cut 1-2)-series/$(ver_cut 1-3)/+download/${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 x86 ~amd64-linux ~x86-linux ~x64-macos ~x86-macos"
+KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux ~x64-macos ~x86-macos"
 IUSE="s3 test"
 
 CDEPEND="
@@ -37,7 +37,7 @@ RDEPEND="${CDEPEND}
 RESTRICT="test"
 
 PATCHES=(
-	"${FILESDIR}/${P}-fix-docs.patch"
+	"${FILESDIR}/${P}-fix-docs-cmd.patch"
 )
 
 python_test() {
