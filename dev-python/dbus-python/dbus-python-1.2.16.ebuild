@@ -33,6 +33,8 @@ BDEPEND="
 		dev-python/tappy[${PYTHON_USEDEP}] )
 "
 
+PATCHES=( "${FILESDIR}/${P}-py39.patch" )
+
 python_check_deps() {
 	has_version "dev-python/sphinx[${PYTHON_USEDEP}]"
 }

@@ -28,6 +28,13 @@ BDEPEND="
 	test? (
 		dev-python/more-itertools[${PYTHON_USEDEP}]
 		dev-python/pyyaml[${PYTHON_USEDEP}]
+		$(python_gen_cond_dep '
+			dev-python/mock[${PYTHON_USEDEP}]
+		' -2)
 	)"
 
 distutils_enable_tests unittest
+
+PATCHES=(
+	"${FILESDIR}"/${P}-yaml.patch
+)
