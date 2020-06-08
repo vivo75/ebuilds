@@ -3,7 +3,7 @@
 
 EAPI=7
 PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
-PYTHON_REQ_USE="threads(+)"
+PYTHON_REQ_USE="threads(+),sqlite(+)"
 DISTUTILS_USE_SETUPTOOLS=rdepend
 
 inherit distutils-r1
@@ -14,12 +14,13 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~alpha amd64 arm ~arm64 ~ia64 ~mips ppc ppc64 sparc"
+KEYWORDS="~alpha amd64 arm arm64 ~ia64 ~mips ppc ppc64 sparc"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
 BDEPEND="
 	test? (
+		dev-python/coverage[${PYTHON_USEDEP}]
 		dev-python/PyContracts[${PYTHON_USEDEP}]
 		dev-python/flaky[${PYTHON_USEDEP}]
 		dev-python/mock[${PYTHON_USEDEP}]
