@@ -4,7 +4,7 @@
 EAPI=7
 PYTHON_COMPAT=( python{3_8,3_7} )
 
-inherit flag-o-matic distutils-r1
+inherit distutils-r1
 
 MY_PV=${PV/_pre/.dev}
 MY_P=${PN}-${MY_PV}
@@ -17,7 +17,7 @@ S=${WORKDIR}/${MY_P}
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~amd64 ~arm64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="doc examples midi opengl test X"
 RESTRICT="!test? ( test )"
 
