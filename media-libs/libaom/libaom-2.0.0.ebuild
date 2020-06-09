@@ -10,9 +10,7 @@ if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://aomedia.googlesource.com/aom"
 else
-	MY_COMMIT="1e711b0aca6721da83835e3b5ceda07238e8b6ae"
-	#SRC_URI="https://aomedia.googlesource.com/aom/+archive/${MY_COMMIT}.tar.gz -> ${P}.tar.gz"
-	SRC_URI="https://dev.gentoo.org/~whissi/dist/${PN}/${P}.tar.gz"
+	SRC_URI="https://dev.gentoo.org/~lu_zero/${PN}/${P}.tar.gz"
 	S="${WORKDIR}"
 	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 fi
@@ -52,7 +50,8 @@ multilib_src_configure() {
 		-DENABLE_TOOLS=ON
 		-DENABLE_WERROR=OFF
 
-		-DENABLE_NEON=$(usex cpu_flags_arm_neon ON OFF)
+		# neon support is assumed to be always enabled on arm64
+		-DENABLE_NEON=$(usex cpu_flags_arm_neon ON $(usex arm64 ON OFF))
 		# ENABLE_DSPR2 / ENABLE_MSA for mips
 		-DENABLE_MMX=$(usex cpu_flags_x86_mmx ON OFF)
 		-DENABLE_SSE=$(usex cpu_flags_x86_sse ON OFF)
