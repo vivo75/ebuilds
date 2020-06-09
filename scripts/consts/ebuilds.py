@@ -1964,6 +1964,7 @@ EBUILDS_KEEP_ALL = (
     'kde-plasma/ksysguard',
     'kde-plasma/kwallet-pam',
     'kde-plasma/kwayland-integration',
+    'kde-plasma/kwayland-server',
     'kde-plasma/kwin',
     'kde-plasma/kwrited',
     'kde-plasma/libkscreen',
