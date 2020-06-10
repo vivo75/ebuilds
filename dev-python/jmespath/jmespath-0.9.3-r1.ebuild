@@ -13,15 +13,5 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="amd64 ~arm64 x86 ~amd64-linux ~x86-linux"
-IUSE="test"
-RESTRICT="!test? ( test )"
 
-DEPEND="
-	dev-python/setuptools[${PYTHON_USEDEP}]
-	test? ( dev-python/nose[${PYTHON_USEDEP}] )
-"
-RDEPEND=""
-
-python_test() {
-	nosetests || die
-}
+distutils_enable_tests nose
