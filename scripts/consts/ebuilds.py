@@ -728,6 +728,7 @@ EBUILDS_KEEP_ALL = (
     'dev-libs/openssl',
     'dev-libs/openssl-compat',
     'dev-libs/pkcs11-helper',
+    'dev-libs/plasma-wayland-protocols',
     'dev-libs/popt',
     'dev-libs/ppl',
     'dev-libs/protobuf',
