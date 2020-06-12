@@ -2328,6 +2328,7 @@ EBUILDS_KEEP_ALL = (
     'net-ftp/ncftp',
     'net-ftp/tftp-hpa',
     'net-ftp/vsftpd',
+    'net-im/discord-bin',
     'net-im/pidgin',
     'net-im/signal-desktop-bin',
     'net-im/skype-dbus-mock',
