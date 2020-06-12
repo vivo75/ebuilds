@@ -2210,6 +2210,7 @@ EBUILDS_KEEP_ALL = (
     'media-libs/sdl2-ttf',
     'media-libs/shaderc',
     'media-libs/smpeg',
+    'media-libs/smpeg2',
     'media-libs/speexdsp',
     'media-libs/t1lib',
     'media-libs/taglib',
