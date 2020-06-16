@@ -2995,4 +2995,13 @@ EBUILDS_KEEP_ALL = (
     'dev-python/pyjwt',
     'dev-python/jsonpatch',
     'dev-python/jsonpointer',
+    'games-util/lutris',
+    'app-misc/geoclue',
+    'gnome-base/gnome-desktop',
+    'media-plugins/gst-plugins-opus',
+    'media-sound/fluid-soundfont',
+    'net-libs/webkit-gtk',
+    'sys-apps/bubblewrap',
+    'sys-apps/xdg-dbus-proxy',
+    'x11-apps/xgamma',
 )
