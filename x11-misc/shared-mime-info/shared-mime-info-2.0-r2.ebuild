@@ -31,6 +31,10 @@ DEPEND="${RDEPEND}"
 
 DOCS=( HACKING.md NEWS README.md )
 
+PATCHES=(
+	"${FILESDIR}/${P}-pkgconfig_install_path.patch" #728404
+)
+
 src_install() {
 	meson_src_install
 
