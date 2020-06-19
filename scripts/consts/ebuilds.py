@@ -2614,6 +2614,7 @@ EBUILDS_KEEP_ALL = (
     'sys-auth/pam_mktemp',
     'sys-auth/pam_passwdqc',
     'sys-auth/pambase',
+    'sys-auth/passwdqc',
     'sys-auth/polkit',
     'sys-auth/polkit-qt',
     'sys-auth/realtime-base',
