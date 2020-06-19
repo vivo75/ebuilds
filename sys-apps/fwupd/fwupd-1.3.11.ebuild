@@ -90,8 +90,7 @@ RDEPEND="
 
 PATCHES=(
 	"${FILESDIR}/${PN}-1.3.9-logind_plugin.patch"
-	"${FILESDIR}/${P}-optional_agent_man_page.patch"
-	"${FILESDIR}/${P}-fwupdtool_path.patch"
+	"${FILESDIR}/${PN}-1.4.4-help2man_var.patch" #728484
 )
 
 pkg_setup() {
@@ -120,6 +119,7 @@ src_configure() {
 		$(meson_use elogind)
 		$(meson_use gpg)
 		$(meson_use gtk-doc gtkdoc)
+		$(meson_use introspection)
 		$(meson_use man)
 		$(meson_use nvme plugin_nvme)
 		$(meson_use pkcs7)
