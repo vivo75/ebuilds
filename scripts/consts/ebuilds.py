@@ -655,6 +655,7 @@ EBUILDS_KEEP_ALL = (
     'dev-libs/libgcrypt',
     'dev-libs/libgdata',
     'dev-libs/libgit2',
+    'dev-libs/libgnt',
     'dev-libs/libgpg-error',
     'dev-libs/libgudev',
     'dev-libs/libgusb',
