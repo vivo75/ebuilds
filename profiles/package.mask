@@ -32,16 +32,19 @@
 
 #--- END OF EXAMPLES ---
 
+# Ulrich Müller <ulm@gentoo.org> (2020-06-20)
+# Unmaintained upstream, included with TeX Live.
+# Use >=dev-texlive/texlive-metapost-2020-r1 as replacement.
+# Removal in 30 days. Bug #728904.
+dev-tex/feynmf
+
 # Aaron Bauman <bman@gentoo.org> (2020-06-20)
 # Py2 only
 # Removal in 14 days
-app-admin/clustershell
 app-crypt/openvpn-blacklist
 app-forensics/volatility
-app-misc/golly
 app-misc/yagtd
 app-text/pylize
-app-text/rpl
 app-vim/easytags
 app-vim/notes
 dev-db/metakit
@@ -73,7 +76,6 @@ sci-chemistry/pymol-plugins-msms
 sci-geosciences/tilecache
 sci-libs/deap
 sci-libs/pycifrw
-sys-cluster/zookeeper-bin
 www-apps/curator
 x11-apps/whyteboard
 x11-plugins/purple-plugin_pack
@@ -121,13 +123,6 @@ dev-ruby/did_you_mean:2.4
 # Merged into the app-text/texlive-core package
 # Removal in 30 days.
 app-text/xindy
-
-# Lars Wendler <polynomial-c@gentoo.org> (2020-06-10)
-# At least alsactl is broken:
-#   double free or corruption (fasttop)
-# https://bugs.gentoo.org/727838
-=media-libs/alsa-lib-1.2.3
-=media-sound/alsa-utils-1.2.3
 
 # Aaron Bauman <bman@gentoo.org> (2020-06-07)
 # py2 only. dead upstream. m-n. rdep.
