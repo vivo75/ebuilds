@@ -3,6 +3,7 @@
 
 EAPI=7
 
+CMAKE_ECLASS=cmake
 PYTHON_COMPAT=( python{3_8,3_7} )
 inherit cmake-multilib linux-info llvm.org multiprocessing python-any-r1
 
@@ -66,6 +67,13 @@ pkg_setup() {
 	use test && python-any-r1_pkg_setup
 }
 
+src_prepare() {
+	# cmake eclasses suck by forcing ${S} here
+	CMAKE_USE_DIR=${S} \
+	S=${WORKDIR} \
+	cmake_src_prepare
+}
+
 multilib_src_configure() {
 	local libdir="$(get_libdir)"
 	local mycmakeargs=(
@@ -95,12 +103,12 @@ multilib_src_configure() {
 		-DOPENMP_TEST_C_COMPILER="$(type -P "${CHOST}-clang")"
 		-DOPENMP_TEST_CXX_COMPILER="$(type -P "${CHOST}-clang++")"
 	)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 multilib_src_test() {
 	# respect TMPDIR!
 	local -x LIT_PRESERVES_TMP=1
 
-	cmake-utils_src_make check-libomp
+	cmake_build check-libomp
 }

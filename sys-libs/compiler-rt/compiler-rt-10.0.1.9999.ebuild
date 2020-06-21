@@ -4,7 +4,7 @@
 EAPI=7
 
 PYTHON_COMPAT=( python{3_8,3_7} )
-inherit cmake-utils flag-o-matic llvm llvm.org multiprocessing \
+inherit cmake flag-o-matic llvm llvm.org multiprocessing \
 	python-any-r1 toolchain-funcs
 
 DESCRIPTION="Compiler runtime library for clang (built-in part)"
@@ -47,6 +47,13 @@ pkg_pretend() {
 pkg_setup() {
 	llvm_pkg_setup
 	python-any-r1_pkg_setup
+}
+
+src_prepare() {
+	# cmake eclasses suck by forcing ${S} here
+	CMAKE_USE_DIR=${S} \
+	S=${WORKDIR} \
+	cmake_src_prepare
 }
 
 test_compiler() {
@@ -99,12 +106,12 @@ src_configure() {
 		)
 	fi
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_test() {
 	# respect TMPDIR!
 	local -x LIT_PRESERVES_TMP=1
 
-	cmake-utils_src_make check-builtins
+	cmake_build check-builtins
 }
