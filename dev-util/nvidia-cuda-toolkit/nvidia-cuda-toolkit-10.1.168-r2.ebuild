@@ -6,7 +6,7 @@ EAPI=7
 inherit check-reqs cuda toolchain-funcs unpacker
 
 MYD=$(ver_cut 1-2 ${PV})
-DRIVER_PV="418.39"
+DRIVER_PV="418.67"
 
 DESCRIPTION="NVIDIA CUDA Toolkit (compiler and friends)"
 HOMEPAGE="https://developer.nvidia.com/cuda-zone"
@@ -43,6 +43,7 @@ pkg_setup() {
 src_prepare() {
 	local cuda_supported_gcc
 
+	# ATTENTION: change requires revbump
 	cuda_supported_gcc="4.7 4.8 4.9 5.3 5.4 6.3 6.4 7.2 7.3 8.2 8.3 8.4"
 
 	sed \
