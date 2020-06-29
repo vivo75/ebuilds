@@ -1,7 +1,10 @@
 ABI_X86="-32 64"
 CHOST="x86_64-pc-linux-gnu"
-CFLAGS="-O3 -pipe -march=skylake -mtune=skylake -frecord-gcc-switches -fdiagnostics-color=never"
-CXXFLAGS="-O3 -pipe -march=skylake -mtune=skylake -frecord-gcc-switches -fdiagnostics-color=never"
+# REMOVE "-fno-tree-loop-distribute-patterns -fno-tree-loop-vectorize" when possible, see:
+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93334
+# https://github.com/Beep6581/RawTherapee/issues/5749
+CFLAGS="-O3 -pipe -march=skylake -mtune=skylake -frecord-gcc-switches -fdiagnostics-color=never  -fno-tree-loop-distribute-patterns -fno-tree-loop-vectorize"
+CXXFLAGS="-O3 -pipe -march=skylake -mtune=skylake -frecord-gcc-switches -fdiagnostics-color=never  -fno-tree-loop-distribute-patterns -fno-tree-loop-vectorize"
 FCFLAGS="-O3 -pipe -march=skylake -mtune=skylake"
 FFLAGS="-O3 -pipe -march=skylake -mtune=skylake"
 CPU_FLAGS_X86="aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3"
