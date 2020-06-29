@@ -13,7 +13,7 @@ SRC_URI="https://rawtherapee.com/shared/source/${MY_P}.tar.xz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="openmp tcmalloc"
+IUSE="+lto +openmp tcmalloc"
 
 RDEPEND="
 	dev-libs/expat
@@ -58,6 +58,7 @@ src_configure() {
 		-DCACHE_NAME_SUFFIX=""
 		-DWITH_SYSTEM_KLT="off"
 		-DENABLE_TCMALLOC=$(usex tcmalloc)
+		-DWITH_LTO=$(usex lto)
 	)
 	cmake_src_configure
 }

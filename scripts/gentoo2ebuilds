@@ -110,6 +110,7 @@ ebuilds_overlay = (
     'dev-python/relatorio',
     'dev-util/flatpak-builder',
     'games-board/python-chess',
+    'media-gfx/rawtherapee',
     'kde-apps/kcontacts',
     'net-libs/libgmail',
     'net-misc/lxc-fake-net',
