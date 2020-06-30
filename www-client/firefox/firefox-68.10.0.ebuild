@@ -47,7 +47,7 @@ inherit check-reqs eapi7-ver flag-o-matic toolchain-funcs eutils \
 DESCRIPTION="Firefox Web Browser"
 HOMEPAGE="https://www.mozilla.com/firefox"
 
-KEYWORDS="amd64 arm64 ~ppc64 x86"
+KEYWORDS="~amd64 ~arm64 ~ppc64 ~x86"
 
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
@@ -69,7 +69,7 @@ SRC_URI="${SRC_URI}
 	${PATCH_URIS[@]}"
 
 CDEPEND="
-	>=dev-libs/nss-3.44.3
+	>=dev-libs/nss-3.44.4
 	>=dev-libs/nspr-4.21
 	dev-libs/atk
 	dev-libs/expat
@@ -90,7 +90,7 @@ CDEPEND="
 	>=x11-libs/pixman-0.19.2
 	>=dev-libs/glib-2.26:2
 	>=sys-libs/zlib-1.2.3
-	>=virtual/libffi-3.0.10:=
+	>=dev-libs/libffi-3.0.10:=
 	media-video/ffmpeg
 	x11-libs/libX11
 	x11-libs/libXcomposite
@@ -189,21 +189,6 @@ if [[ -z $GMP_PLUGIN_LIST ]] ; then
 	GMP_PLUGIN_LIST=( gmp-gmpopenh264 gmp-widevinecdm )
 fi
 
-fix_path() {
-	local value_to_move=${1}
-	local new_path path_value
-	IFS=:; local -a path_values=( ${PATH} )
-	for path_value in "${path_values[@]}" ; do
-		if [[ ${path_value} == *"${value_to_move}"* ]] ; then
-			new_path="${path_value}${new_path:+:}${new_path}"
-		else
-			new_path+="${new_path:+:}${path_value}"
-		fi
-	done
-
-	echo "${new_path}"
-}
-
 llvm_check_deps() {
 	if ! has_version --host-root "sys-devel/clang:${LLVM_SLOT}" ; then
 		ewarn "sys-devel/clang:${LLVM_SLOT} is missing! Cannot use LLVM slot ${LLVM_SLOT} ..." >&2
@@ -278,17 +263,10 @@ pkg_setup() {
 
 	llvm_pkg_setup
 
-	# Workaround for #627726
 	if has ccache ${FEATURES} ; then
 		if use clang && use pgo ; then
 			die "Using FEATURES=ccache with USE=clang and USE=pgo is currently known to be broken (bug #718632)."
 		fi
-
-		einfo "Fixing PATH for FEATURES=ccache ..."
-		PATH=$(fix_path 'ccache/bin')
-	elif has distcc ${FEATURES} ; then
-		einfo "Fixing PATH for FEATURES=distcc ..."
-		PATH=$(fix_path 'distcc/bin')
 	fi
 }
 
@@ -543,6 +521,7 @@ src_configure() {
 	# Set both --target and --host as mozilla uses python to guess values otherwise
 	mozconfig_annotate '' --target="${CHOST}"
 	mozconfig_annotate '' --host="${CBUILD:-${CHOST}}"
+	mozconfig_annotate '' --with-toolchain-prefix="${CHOST}-"
 	if use system-libevent ; then
 		mozconfig_annotate '' --with-system-libevent="${SYSROOT}${EPREFIX}"/usr
 	fi
