@@ -7,8 +7,9 @@ if [[ ${PV} = *9999 ]]; then
 	EGIT_REPO_URI="https://github.com/Exiv2/exiv2.git"
 	inherit git-r3
 else
-	SRC_URI="https://pre-release.exiv2.org/builds/${P/_rc2/.20}-Source.tar.gz"
-# 	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~x64-solaris ~x86-solaris"
+	SRC_URI="https://exiv2.org/builds/${P}-Source.tar.gz"
+	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~x64-solaris ~x86-solaris"
+	S="${WORKDIR}/${P}-Source"
 fi
 
 CMAKE_ECLASS=cmake
@@ -45,8 +46,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 DOCS=( README.md doc/ChangeLog doc/cmd.txt )
-
-S="${WORKDIR}/${P/_rc2/.20}-Source"
 
 pkg_setup() {
 	use doc && python-any-r1_pkg_setup
