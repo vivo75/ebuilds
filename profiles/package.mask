@@ -32,6 +32,25 @@
 
 #--- END OF EXAMPLES ---
 
+# Hans de Graaff <graaff@gentoo.org> (2020-07-05)
+# Obsolete slot with known security issues. Please
+# update to slot "5" instead.
+# Removal in 30 days.  Bug #728506.
+dev-ruby/sanitize:4
+
+# Michał Górny <mgorny@gentoo.org> (2020-07-04)
+# Unmaintained.  Requires scipy-python2.  Current version is from 2015,
+# latest upstream release from 2017.  The only revdep is masked
+# for removal.
+# Removal in 30 days.  Bug #730760.
+dev-python/algopy
+
+# Jonas Stein <jstein@gentoo.org> (2020-07-04)
+# Last rite, dead upstream, several open bugs.
+# Removal after 2020-09-01
+# Bug #730640
+net-misc/termpkg
+
 # Michał Górny <mgorny@gentoo.org> (2020-07-04)
 # Unmaintained.  Python 2 only.  Effectively depends on vulnerable
 # version of dev-python/pillow.  No revdeps.  Multiple bugs open.
