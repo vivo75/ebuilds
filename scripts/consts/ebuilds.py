@@ -787,6 +787,7 @@ EBUILDS_KEEP_ALL = (
     'dev-perl/Cpanel-JSON-XS',
     'dev-perl/Crypt-OpenSSL-Bignum',
     'dev-perl/Crypt-OpenSSL-DSA',
+    'dev-perl/Crypt-OpenSSL-Guess',
     'dev-perl/Crypt-OpenSSL-RSA',
     'dev-perl/Crypt-OpenSSL-Random',
     'dev-perl/DBD-SQLite',
