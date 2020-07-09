@@ -20,16 +20,17 @@ IUSE="doc examples test"
 RESTRICT="!test? ( test )"
 
 RDEPEND="
-	>=dev-libs/libev-4.23
-	>=net-dns/c-ares-1.12
+	>=dev-libs/libev-4.23:=
+	dev-libs/libuv:=
+	>=net-dns/c-ares-1.12:=
 	>=dev-python/greenlet-0.4.14
+	dev-python/zope-event[${PYTHON_USEDEP}]
+	dev-python/zope-interface[${PYTHON_USEDEP}]
 	virtual/python-greenlet[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}
 	test? (
 		dev-python/psutil[${PYTHON_USEDEP}]
 		dev-python/requests[${PYTHON_USEDEP}]
-		dev-python/zope-event[${PYTHON_USEDEP}]
-		dev-python/zope-interface[${PYTHON_USEDEP}]
 		$(python_gen_cond_dep '
 			dev-python/futures[${PYTHON_USEDEP}]
 			dev-python/mock[${PYTHON_USEDEP}]
