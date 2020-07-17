@@ -11,7 +11,7 @@ SRC_URI="https://www.clamav.net/downloads/production/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~sparc-solaris ~x86-solaris"
+KEYWORDS="~alpha ~amd64 ~arm arm64 ~hppa ~ia64 ppc ppc64 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~sparc-solaris ~x86-solaris"
 IUSE="bzip2 doc clamdtop clamsubmit iconv ipv6 libclamav-only libressl milter metadata-analysis-api selinux test uclibc xml"
 
 REQUIRED_USE="libclamav-only? ( !clamdtop !clamsubmit !milter !metadata-analysis-api )"
@@ -51,7 +51,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0.101.2-tinfo.patch" #670729
 	"${FILESDIR}/${PN}-0.102.1-libxml2_pkgconfig.patch" #661328
 	"${FILESDIR}/${PN}-0.102.2-fix-curl-detection.patch" #709616
-	"${FILESDIR}/${P}-system-tomsfastmath.patch" # 649394
+	"${FILESDIR}/${PN}-0.102.3-system-tomsfastmath.patch" # 649394
 )
 
 src_prepare() {
