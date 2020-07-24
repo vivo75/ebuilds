@@ -1,7 +1,7 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=7
 
 case ${CHOST} in
 	hppa*)    CTARGET=hppa64-${CHOST#*-};;
@@ -15,14 +15,13 @@ export CTARGET
 TOOLCHAIN_ALLOWED_LANGS="c"
 GCC_TARGET_NO_MULTILIB=true
 
-PATCH_VER="1.1"
-
-inherit eutils toolchain
+PATCH_VER="3"
+inherit toolchain
 
 DESCRIPTION="64bit kernel compiler"
 
-# Works on mips and sparc; all other archs, refer to bug #228115
-KEYWORDS="-hppa ~mips"
+# Works on hppa and mips; all other archs, refer to bug #228115
+KEYWORDS="~hppa ~mips"
 
 # unlike every other target, hppa has not unified the 32/64 bit
 # ports in binutils yet
