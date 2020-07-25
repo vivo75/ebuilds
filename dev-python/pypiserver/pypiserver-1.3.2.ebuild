@@ -27,7 +27,6 @@ BDEPEND="
 		>=dev-python/pytest-2.3[${PYTHON_USEDEP}]
 		dev-python/twine[${PYTHON_USEDEP}]
 		dev-python/webtest[${PYTHON_USEDEP}]
-		$(python_gen_cond_dep 'dev-python/mock[${PYTHON_USEDEP}]' -2)
 	)"
 
 DOCS=( README.rst )
