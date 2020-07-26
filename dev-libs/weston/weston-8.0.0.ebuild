@@ -16,10 +16,10 @@ HOMEPAGE="https://wayland.freedesktop.org/ https://gitlab.freedesktop.org/waylan
 
 if [[ $PV = 9999* ]]; then
 	SRC_URI="${SRC_PATCHES}"
-	KEYWORDS=""
+	KEYWORDS="amd64 arm x86"
 else
 	SRC_URI="https://wayland.freedesktop.org/releases/${P}.tar.xz"
-	KEYWORDS="~amd64 ~arm ~x86"
+	KEYWORDS="amd64 arm x86"
 fi
 
 LICENSE="MIT CC-BY-SA-3.0"
@@ -65,7 +65,7 @@ RDEPEND="
 	gles2? (
 		media-libs/mesa[gles2,wayland]
 	)
-	pipewire? ( >=media-video/pipewire-0.2 )
+	pipewire? ( =media-video/pipewire-0.2*:= )
 	rdp? ( >=net-misc/freerdp-2.0.0_rc2:= )
 	remoting? (
 		media-libs/gstreamer:1.0
