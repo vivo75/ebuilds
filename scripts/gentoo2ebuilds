@@ -95,6 +95,7 @@ CATEGORIES_KEEP_ALL = (
     'acct-user',
     'app-metrics',
     'app-portage',
+    'gui-libs',
     'virtual',
     )
 
