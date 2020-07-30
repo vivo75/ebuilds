@@ -3,6 +3,7 @@
 
 EAPI=5
 
+DISTUTILS_USE_SETUPTOOLS=no
 PYTHON_COMPAT=( python{3_8,3_7} )
 
 inherit distutils-r1
