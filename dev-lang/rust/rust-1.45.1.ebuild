@@ -18,10 +18,10 @@ else
 	SLOT="stable/${ABI_VER}"
 	MY_P="rustc-${PV}"
 	SRC="${MY_P}-src.tar.xz"
-	KEYWORDS="amd64 ~arm ~arm64 ppc64 x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 fi
 
-RUST_STAGE0_VERSION="1.$(($(ver_cut 2) - 1)).0"
+RUST_STAGE0_VERSION="1.$(($(ver_cut 2) - 1)).1"
 
 DESCRIPTION="Systems programming language from Mozilla"
 HOMEPAGE="https://www.rust-lang.org/"
@@ -60,12 +60,25 @@ LLVM_MAX_SLOT=10
 
 BOOTSTRAP_DEPEND="|| ( >=dev-lang/rust-1.$(($(ver_cut 2) - 1)) >=dev-lang/rust-bin-1.$(($(ver_cut 2) - 1)) )"
 
+BDEPEND="${PYTHON_DEPS}
+	app-eselect/eselect-rust
+	|| (
+		>=sys-devel/gcc-4.7
+		>=sys-devel/clang-3.5
+	)
+	system-bootstrap? ( ${BOOTSTRAP_DEPEND} )
+	!system-llvm? (
+		dev-util/cmake
+		dev-util/ninja
+	)
+"
+
 # libgit2 should be at least same as bundled into libgit-sys #707746
-COMMON_DEPEND="
+DEPEND="
 	>=dev-libs/libgit2-0.99:=
 	net-libs/libssh2:=
 	net-libs/http-parser:=
-	net-misc/curl:=[ssl]
+	net-misc/curl:=[http2,ssl]
 	sys-libs/zlib:=
 	!libressl? ( dev-libs/openssl:0= )
 	libressl? ( dev-libs/libressl:0= )
@@ -75,21 +88,8 @@ COMMON_DEPEND="
 	)
 "
 
-DEPEND="${COMMON_DEPEND}
-	${PYTHON_DEPS}
-	|| (
-		>=sys-devel/gcc-4.7
-		>=sys-devel/clang-3.5
-	)
-	system-bootstrap? ( ${BOOTSTRAP_DEPEND}	)
-	!system-llvm? (
-		dev-util/cmake
-		dev-util/ninja
-	)
-"
-
-RDEPEND="${COMMON_DEPEND}
-	>=app-eselect/eselect-rust-20190311
+RDEPEND="${DEPEND}
+	app-eselect/eselect-rust
 "
 
 REQUIRED_USE="|| ( ${ALL_LLVM_TARGETS[*]} )
@@ -102,21 +102,23 @@ REQUIRED_USE="|| ( ${ALL_LLVM_TARGETS[*]} )
 QA_FLAGS_IGNORED="
 	usr/bin/.*-${PV}
 	usr/lib.*/lib.*.so
+	usr/lib/rustlib/.*/bin/rust-lld
 	usr/lib/rustlib/.*/codegen-backends/librustc_codegen_llvm-llvm.so
 	usr/lib/rustlib/.*/lib/lib.*.so
+"
+
+QA_SONAME="
+	usr/lib.*/lib.*.so
+	usr/lib.*/librustc_macros.*.s
 "
 
 # tests need a bit more work, currently they are causing multiple
 # re-compilations and somewhat fragile.
 RESTRICT="test"
 
-QA_SONAME="usr/lib.*/librustc_macros.*.so"
-
 PATCHES=(
-	"${FILESDIR}"/1.40.0-add-soname.patch
 	"${FILESDIR}"/0012-Ignore-broken-and-non-applicable-tests.patch
-	"${FILESDIR}"/1.43.0-llvm10.patch
-	"${FILESDIR}"/1.42.0-libressl.patch
+	"${FILESDIR}"/1.44.0-libressl.patch
 )
 
 S="${WORKDIR}/${MY_P}-src"
@@ -180,6 +182,11 @@ src_configure() {
 	done
 	if use wasm; then
 		rust_targets="${rust_targets},\"wasm32-unknown-unknown\""
+		if use system-llvm; then
+			# un-hardcode rust-lld linker for this target
+			# https://bugs.gentoo.org/715348
+			sed -i '/linker:/ s/rust-lld/wasm-ld/' src/librustc_target/spec/wasm32_base.rs || die
+		fi
 	fi
 	rust_targets="${rust_targets#,}"
 
@@ -253,6 +260,7 @@ src_configure() {
 		optimize-tests = $(toml_usex !debug)
 		codegen-tests = true
 		dist-src = false
+		remap-debuginfo = true
 		lld = $(usex system-llvm false $(toml_usex wasm))
 		backtrace-on-ice = true
 		jemalloc = false
@@ -293,6 +301,83 @@ src_configure() {
 			linker = "$(usex system-llvm lld rust-lld)"
 		EOF
 	fi
+
+	if [[ -n ${I_KNOW_WHAT_I_AM_DOING_CROSS} ]]; then #whitespace intentionally shifted below
+	# experimental cross support
+	# discussion: https://bugs.gentoo.org/679878
+	# TODO: c*flags, clang, system-llvm, cargo.eclass target support
+	# it would be much better if we could split out stdlib
+	# complilation to separate ebuild and abuse CATEGORY to
+	# just install to /usr/lib/rustlib/<target>
+
+	# extra targets defined as a bash array
+	# spec format:  <LLVM target>:<rust-target>:<CTARGET>
+	# best place would be /etc/portage/env/dev-lang/rust
+	# Example:
+	# RUST_CROSS_TARGETS=(
+	#	"AArch64:aarch64-unknown-linux-gnu:aarch64-unknown-linux-gnu"
+	# )
+	# no extra hand holding is done, no target transformations, all
+	# values are passed as-is with just basic checks, so it's up to user to supply correct values
+	# valid rust targets can be obtained with
+	# 	rustc --print target-list
+	# matching cross toolchain has to be installed
+	# matching LLVM_TARGET has to be enabled for both rust and llvm (if using system one)
+	# only gcc toolchains installed with crossdev are checked for now.
+
+	# BUG: we can't pass host flags to cross compiler, so just filter for now
+	# BUG: this should be more fine-grained.
+	filter-flags '-mcpu=*' '-march=*' '-mtune=*'
+
+	local cross_target_spec
+	for cross_target_spec in "${RUST_CROSS_TARGETS[@]}";do
+		# extracts first element form <LLVM target>:<rust-target>:<CTARGET>
+		local cross_llvm_target="${cross_target_spec%%:*}"
+		# extracts toolchain triples, <rust-target>:<CTARGET>
+		local cross_triples="${cross_target_spec#*:}"
+		# extracts first element after before : separator
+		local cross_rust_target="${cross_triples%%:*}"
+		# extracts last element after : separator
+		local cross_toolchain="${cross_triples##*:}"
+		use llvm_targets_${cross_llvm_target} || die "need llvm_targets_${cross_llvm_target} target enabled"
+		command -v ${cross_toolchain}-gcc > /dev/null 2>&1 || die "need ${cross_toolchain} cross toolchain"
+
+		cat <<- EOF >> "${S}"/config.toml
+			[target.${cross_rust_target}]
+			cc = "${cross_toolchain}-gcc"
+			cxx = "${cross_toolchain}-g++"
+			linker = "${cross_toolchain}-gcc"
+			ar = "${cross_toolchain}-ar"
+		EOF
+		if use system-llvm; then
+			cat <<- EOF >> "${S}"/config.toml
+				llvm-config = "$(get_llvm_prefix "${LLVM_MAX_SLOT}")/bin/llvm-config"
+			EOF
+		fi
+
+		# append cross target to "normal" target list
+		# example 'target = ["powerpc64le-unknown-linux-gnu"]'
+		# becomes 'target = ["powerpc64le-unknown-linux-gnu","aarch64-unknown-linux-gnu"]'
+
+		rust_targets="${rust_targets},\"${cross_rust_target}\""
+		sed -i "/^target = \[/ s#\[.*\]#\[${rust_targets}\]#" config.toml || die
+
+		ewarn
+		ewarn "Enabled ${cross_rust_target} rust target"
+		ewarn "Using ${cross_toolchain} cross toolchain"
+		ewarn
+		if ! has_version -b 'sys-devel/binutils[multitarget]' ; then
+			ewarn "'sys-devel/binutils[multitarget]' is not installed"
+			ewarn "'strip' will be unable to strip cross libraries"
+			ewarn "cross targets will be installed with full debug information"
+			ewarn "enable 'multitarget' USE flag for binutils to be able to strip object files"
+			ewarn
+			ewarn "Alternatively llvm-strip can be used, it supports stripping any target"
+			ewarn "define STRIP=\"llvm-strip\" to use it (experimental)"
+			ewarn
+		fi
+	done
+	fi # I_KNOW_WHAT_I_AM_DOING_CROSS
 
 	einfo "Rust configured with the following settings:"
 	cat "${S}"/config.toml || die
