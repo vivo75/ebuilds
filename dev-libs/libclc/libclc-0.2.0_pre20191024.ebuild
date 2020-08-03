@@ -20,6 +20,8 @@ REQUIRED_USE="|| ( ${IUSE_VIDEO_CARDS} )"
 
 BDEPEND="
 	|| (
+		sys-devel/clang:12
+		sys-devel/clang:11
 		sys-devel/clang:10
 		sys-devel/clang:9
 		sys-devel/clang:8
