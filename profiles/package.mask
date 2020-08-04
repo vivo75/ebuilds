@@ -32,6 +32,23 @@
 
 #--- END OF EXAMPLES ---
 
+
+# Mikle Kolyada <zlogene@gentoo.org>
+# Starting with this version pambase was
+# completly rewritten in python.
+# Initial testing needed.
+=sys-auth/pambase-20200804
+
+# Jack Todaro <solpeth@posteo.org> (2020-08-04)
+# Deprecated in favour of dev-haskell/dbus.
+# Unmaintained since 2012.
+dev-haskell/dbus-core
+
+# Jack Todaro <solpeth@posteo.org> (2020-08-04)
+# Requires porting for MonadFail. No upstream
+# activity since January 2018.
+dev-haskell/hans
+
 # Sam James <sam@gentoo.org> (2020-08-04)
 # Dead upstream, unmaintained.
 # Open security bug. Large number of other bugs.
@@ -629,11 +646,6 @@ net-misc/termpkg
 # version of dev-python/pillow.  No revdeps.  Multiple bugs open.
 # Removal in 30 days.  Bug #715682.
 media-gfx/uniconvertor
-
-# Mikle Kolyada <zlogene@gentoo.org> (2020-07-03)
-# Merged into dev-texlive/texlive-langcjk.
-# Removal in 30 days.
-dev-tex/cjk-latex
 
 # Stephan Hartmann <stha09@googlemail.com> (2020-06-29)
 # Dev channel releases are only for people who

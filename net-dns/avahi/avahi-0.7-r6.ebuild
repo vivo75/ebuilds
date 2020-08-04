@@ -1,12 +1,12 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="7"
+EAPI="6"
 
 PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE="gdbm"
 
-inherit autotools eutils flag-o-matic multilib multilib-minimal mono-env python-r1 systemd
+inherit autotools eutils flag-o-matic ltprune multilib multilib-minimal mono-env python-r1 systemd user
 
 DESCRIPTION="System which facilitates service discovery on a local network"
 HOMEPAGE="http://avahi.org/"
@@ -14,8 +14,8 @@ SRC_URI="https://github.com/lathiat/avahi/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86"
-IUSE="autoipd bookmarks dbus doc gdbm gtk gtk3 howl-compat +introspection ipv6 kernel_linux mdnsresponder-compat mono nls python qt5 selinux systemd test"
+KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~mips ppc ppc64 ~s390 sparc x86"
+IUSE="autoipd dbus doc gdbm gtk gtk3 howl-compat +introspection ipv6 kernel_linux mdnsresponder-compat mono nls python qt5 selinux test"
 RESTRICT="!test? ( test )"
 
 REQUIRED_USE="
@@ -23,10 +23,9 @@ REQUIRED_USE="
 	mono? ( dbus )
 	howl-compat? ( dbus )
 	mdnsresponder-compat? ( dbus )
-	systemd? ( dbus )
 "
 
-DEPEND="
+COMMON_DEPEND="
 	dev-libs/libdaemon
 	dev-libs/expat
 	dev-libs/glib:2[${MULTILIB_USEDEP}]
@@ -46,30 +45,22 @@ DEPEND="
 		dbus? ( dev-python/dbus-python[${PYTHON_USEDEP}] )
 		introspection? ( dev-python/pygobject:3[${PYTHON_USEDEP}] )
 	)
-	bookmarks? (
-		${PYTHON_DEPS}
-		>=dev-python/twisted-16.0.0[${PYTHON_USEDEP}]
-	)
 "
-RDEPEND="
-	acct-user/avahi
-	acct-group/avahi
-	acct-group/netdev
-	autoipd? (
-		acct-user/avahi-autoipd
-		acct-group/avahi-autoipd
-	)
-	${DEPEND}
-	howl-compat? ( !net-misc/howl )
-	mdnsresponder-compat? ( !net-misc/mDNSResponder )
-	selinux? ( sec-policy/selinux-avahi )
-"
-BDEPEND="
+
+DEPEND="
+	${COMMON_DEPEND}
 	dev-util/glib-utils
 	doc? ( app-doc/doxygen )
 	app-doc/xmltoman
 	dev-util/intltool
 	virtual/pkgconfig
+"
+
+RDEPEND="
+	${COMMON_DEPEND}
+	howl-compat? ( !net-misc/howl )
+	mdnsresponder-compat? ( !net-misc/mDNSResponder )
+	selinux? ( sec-policy/selinux-avahi )
 "
 
 MULTILIB_WRAPPED_HEADERS=( /usr/include/avahi-qt5/qt-watch.h )
@@ -78,6 +69,17 @@ PATCHES=(
 	"${FILESDIR}/${P}-qt5.patch"
 	"${FILESDIR}/${P}-CVE-2017-6519.patch"
 )
+
+pkg_preinst() {
+	enewgroup netdev
+	enewgroup avahi
+	enewuser avahi -1 -1 -1 avahi
+
+	if use autoipd; then
+		enewgroup avahi-autoipd
+		enewuser avahi-autoipd -1 -1 -1 avahi-autoipd
+	fi
+}
 
 pkg_setup() {
 	use mono && mono-env_pkg_setup
@@ -172,8 +174,7 @@ multilib_src_compile() {
 
 multilib_src_install() {
 	emake install DESTDIR="${D}"
-	use bookmarks && use python && use dbus && use gtk || \
-		rm -f "${ED}"/usr/bin/avahi-bookmarks
+	rm -f "${ED}"/usr/bin/avahi-bookmarks
 
 	# https://github.com/lathiat/avahi/issues/28
 	use howl-compat && dosym avahi-compat-howl.pc /usr/$(get_libdir)/pkgconfig/howl.pc
@@ -187,7 +188,7 @@ multilib_src_install() {
 	fi
 
 	# The build system creates an empty "/run" directory, so we clean it up here
-	rmdir "${ED}"/run || die
+	rmdir "${ED}"/run
 }
 
 multilib_src_install_all() {
@@ -201,7 +202,7 @@ multilib_src_install_all() {
 
 	dodoc docs/{AUTHORS,NEWS,README,TODO}
 
-	find "${ED}" -name '*.la' -type f -delete || die
+	prune_libtool_files --all
 }
 
 pkg_postinst() {
