@@ -5,7 +5,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python{3_8,3_7} )
 
-inherit python-any-r1
+inherit pam python-any-r1
 
 DESCRIPTION="PAM base configuration files"
 HOMEPAGE="https://github.com/gentoo/pambase"
@@ -68,7 +68,5 @@ src_configure() {
 src_test() { :; }
 
 src_install() {
-	dodir /etc/pam.d
-	insinto /etc/pam.d
-	doins -r stack/.
+	dopamd -r stack/.
 }
