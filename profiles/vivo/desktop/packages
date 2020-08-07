@@ -29,7 +29,6 @@ app-forensics/lynis
 app-forensics/memdump
 app-misc/colordiff
 app-misc/elasticsearch
-app-misc/evemu
 app-misc/fdupes
 app-misc/jq
 app-misc/symlinks
