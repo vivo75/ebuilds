@@ -32,6 +32,16 @@
 
 #--- END OF EXAMPLES ---
 
+# Hans de Graaff <graaff@gentoo.org> (2020-08-07)
+# Slot with known security issues. Please use a newer slot
+# instead. Removal in 30 days. Bug #713478.
+dev-ruby/json:0
+
+# Hans de Graaff <graaff@gentoo.org> (2020-08-07)
+# Slot with known security issues. Please use a newer slot
+# instead. Removal in 30 days. Bug #733116.
+dev-ruby/kramdown:0
+
 # Michał Górny <mgorny@gentoo.org> (2020-08-06)
 # Py2.7 only.  Last release in 2009.  No reverse dependencies left.
 # Removal in 30 days.  Bug #735610.
@@ -52,7 +62,7 @@ dev-libs/liboobs
 # Starting with this version pambase was
 # completly rewritten in python.
 # Initial testing needed.
-=sys-auth/pambase-20200805
+=sys-auth/pambase-20200806
 
 # Jack Todaro <solpeth@posteo.org> (2020-08-04)
 # Deprecated in favour of dev-haskell/dbus.
@@ -533,6 +543,13 @@ app-text/glosung
 ~virtual/perl-IPC-Cmd-1.40.0
 ~virtual/perl-JSON-PP-4.40.0
 ~virtual/perl-Math-BigInt-1.999.818
+~virtual/perl-Math-BigInt-FastCalc-0.500.900
+~virtual/perl-Module-CoreList-5.202.6.200
+~virtual/perl-Module-Load-Conditional-0.700.0
+~virtual/perl-Module-Metadata-1.0.37
+~virtual/perl-Net-Ping-2.720.0
+~virtual/perl-parent-0.238.0
+~virtual/perl-podlators-4.140.0
 
 # Christoph Junghans <junghans@gentoo.org> (2020-07-14)
 # Unmaintained upstream and does not support systemd or firewalld.
@@ -548,7 +565,13 @@ app-admin/denyhosts
 #
 # https://www.gentoo.org/support/news-items/2020-04-03-kubernetes-moving-to-single-package.html
 #
+# dev-lang/go-1.12.17 has been added to this mask because it will be
+# removed at the same time since it has been out of support upstream for
+# months and was kept only to allow these kubernetes split packages to
+# build.
+#
 # Removal in 60 days. Bug #731804
+=dev-lang/go-1.12*
 sys-cluster/kubeadm
 sys-cluster/kube-apiserver
 sys-cluster/kube-controller-manager
@@ -631,12 +654,6 @@ kde-apps/kblog
 # Needs porting to gtk3/fxce4panel-4.15: bug #729492.
 # Removal in 30 days.
 x11-misc/xmonad-log-applet
-
-# Hans de Graaff <graaff@gentoo.org> (2020-07-05)
-# Obsolete slot with known security issues. Please
-# update to slot "5" instead.
-# Removal in 30 days.  Bug #728506.
-dev-ruby/sanitize:4
 
 # Michał Górny <mgorny@gentoo.org> (2020-07-04)
 # Unmaintained.  Requires scipy-python2.  Current version is from 2015,
