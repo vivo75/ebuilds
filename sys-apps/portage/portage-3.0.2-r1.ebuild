@@ -89,8 +89,8 @@ pkg_pretend() {
 python_prepare_all() {
 	distutils-r1_python_prepare_all
 
-	# Apply d65e759fc26e for bug 733370.
-	sed -e 's:^import logging$:import functools\n\0:' -i lib/portage/sync/syncbase.py || die
+	# Apply 7d891b78ec906bbd73a43d83abd296350678f002 for bug 736912
+	sed -e 's|from xml.parsers.expat import ExpatError|try:\n\t\0\nexcept Exception:\n\tExpatError = SyntaxError|' -i lib/portage/xml/metadata.py || die
 
 	sed -e "s:^VERSION = \"HEAD\"$:VERSION = \"${PV}\":" -i lib/portage/__init__.py || die
 
