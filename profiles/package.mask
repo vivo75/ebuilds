@@ -32,6 +32,20 @@
 
 #--- END OF EXAMPLES ---
 
+# Sergei Trofimovich <slyfox@gentoo.org> (2020-08-14)
+# Was subsumed by dev-haskell/network. Use that instead.
+# Removal in 30 days. bug #735796
+dev-haskell/network-bytestring
+
+# Sergei Trofimovich <slyfox@gentoo.org> (2020-08-14)
+# Was not ported to >=ghc-8. Old dev-vcs/darcs was the only user.
+# Removal in 30 days. bug #735998
+dev-haskell/hashed-storage
+
+# Rick Farina <zerochaos@gentoo.org> (2020-08-14)
+# Obsolete, nothing depends on it. Removal in 30 days.
+net-wireless/lorcon-old
+
 # Mikle Kolyada <zlogene@gentoo.org> (2020-08-14)
 # Obsolete package. Current version is py2-only.
 # py3 port has been abandoned for a long time.
@@ -770,10 +784,6 @@ app-misc/ifp-line
 # Meson port does not handle multilib yet and has issues
 # regarding runstatedir (not using /run).
 =net-misc/networkmanager-1.22.10-r11
-
-# Stefan Strogin <steils@gentoo.org> (2020-06-03)
-# Masked for testing
->=dev-libs/libressl-3.2.0
 
 # Jonas Stein <jstein@gentoo.org> (2020-06-01)
 # Last rite package due to missing/unclear license.
