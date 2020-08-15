@@ -3,6 +3,7 @@
 
 EAPI=7
 
+DISTUTILS_USE_SETUPTOOLS=rdepend
 PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
 
 inherit distutils-r1
@@ -13,24 +14,23 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 SLOT="0"
 LICENSE="MIT"
-KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~mips ppc ppc64 s390 sparc x86"
-IUSE="test"
-RESTRICT="!test? ( test )"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~s390 ~sparc ~x86"
 
+# please do not depend on pytest to avoid unnecessary USEDEP enforcement
 RDEPEND="
-	>=dev-python/execnet-1.1[${PYTHON_USEDEP}]
-	dev-python/pytest[${PYTHON_USEDEP}]
+	dev-python/execnet[${PYTHON_USEDEP}]
+	dev-python/psutil[${PYTHON_USEDEP}]
 	dev-python/pytest-forked[${PYTHON_USEDEP}]
-	dev-python/six[${PYTHON_USEDEP}]
 "
 
-# See #673106 about the pytest-xdist blocker.
-DEPEND="${RDEPEND}
-	!!dev-python/pytest-capturelog
-	dev-python/setuptools[${PYTHON_USEDEP}]
+BDEPEND="
 	dev-python/setuptools_scm[${PYTHON_USEDEP}]
-	test? ( !!<dev-python/pytest-xdist-1.22 )
+	test? (
+		dev-python/filelock[${PYTHON_USEDEP}]
+	)
 "
+
+distutils_enable_tests pytest
 
 python_test() {
 	distutils_install_for_testing

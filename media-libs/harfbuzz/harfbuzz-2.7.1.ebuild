@@ -5,7 +5,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python{3_8,3_7} )
 
-inherit flag-o-matic libtool meson multilib-minimal python-any-r1 xdg-utils
+inherit flag-o-matic meson multilib-minimal python-any-r1 xdg-utils
 
 DESCRIPTION="An OpenType text shaping engine"
 HOMEPAGE="https://www.freedesktop.org/wiki/Software/HarfBuzz"
@@ -40,6 +40,7 @@ DEPEND="${RDEPEND}
 BDEPEND="
 	virtual/pkgconfig
 	doc? ( dev-util/gtk-doc )
+	introspection? ( dev-util/glib-utils )
 "
 
 pkg_setup() {
