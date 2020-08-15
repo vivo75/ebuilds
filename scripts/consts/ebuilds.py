@@ -2229,6 +2229,7 @@ EBUILDS_KEEP_ALL = (
     'media-libs/x264',
     'media-libs/x265',
     'media-libs/xvid',
+    'media-libs/zita-alsa-pcmi',
     'media-libs/zita-resampler',
     'media-plugins/alsa-plugins',
     'media-plugins/frei0r-plugins',
