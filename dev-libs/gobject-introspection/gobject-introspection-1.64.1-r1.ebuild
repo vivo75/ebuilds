@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 PYTHON_REQ_USE="xml"
 inherit gnome.org meson python-single-r1 toolchain-funcs xdg
 
@@ -15,7 +15,7 @@ SLOT="0"
 IUSE="doctool gtk-doc test"
 RESTRICT="!test? ( test )"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
-KEYWORDS="~alpha ~amd64 ~arm arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
+KEYWORDS="~alpha ~amd64 arm arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
 
 # virtual/pkgconfig needed at runtime, bug #505408
 RDEPEND="
