@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_USE_SETUPTOOLS=rdepend
-PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
+PYTHON_COMPAT=( python3_{7,8,9} pypy3 )
 inherit distutils-r1
 
 MY_PN="python-${PN}"
@@ -18,7 +18,7 @@ then
 	EGIT_REPO_URI="https://github.com/mitya57/python-markdown-math.git"
 else
 	SRC_URI="mirror://pypi/${MY_PN:0:1}/${PN}/${P}.tar.gz"
-	KEYWORDS="~amd64 ~x86"
+	KEYWORDS="amd64 x86"
 fi
 
 LICENSE="BSD"
