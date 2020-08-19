@@ -13,7 +13,7 @@ else
 	KEYWORDS="amd64 arm arm64 ppc64 x86"
 	S="${WORKDIR}/${MY_P}"
 fi
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 USE_RUBY="ruby25 ruby26 ruby27"
 inherit check-reqs cmake flag-o-matic python-any-r1 qmake-utils ruby-single toolchain-funcs
 
@@ -82,6 +82,8 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 CHECKREQS_DISK_BUILD="16G" # bug 417307
+
+PATCHES=( "${FILESDIR}/${P}-bison-3.7.patch" ) # bug 736499
 
 _check_reqs() {
 	if [[ ${MERGE_TYPE} != binary ]] && is-flagq "-g*" && ! is-flagq "-g*0"; then
