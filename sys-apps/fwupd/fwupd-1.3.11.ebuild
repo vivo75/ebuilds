@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit linux-info meson python-single-r1 vala xdg toolchain-funcs
 
@@ -44,7 +44,7 @@ CDEPEND="${PYTHON_DEPS}
 	dev-libs/libgpg-error
 	dev-libs/libgudev:=
 	>=dev-libs/libgusb-0.2.9[introspection?]
-	>=dev-libs/libxmlb-0.1.13
+	>=dev-libs/libxmlb-0.1.13:=
 	$(python_gen_cond_dep '
 		dev-python/pillow[${PYTHON_MULTI_USEDEP}]
 		dev-python/pycairo[${PYTHON_MULTI_USEDEP}]
