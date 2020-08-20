@@ -4,7 +4,7 @@
 EAPI=7
 
 PYTHON_REQ_USE="sqlite"
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python{3_6,3_7} )
 
 inherit eutils python-any-r1 readme.gentoo-r1
 
@@ -36,7 +36,7 @@ else
 		)
 		binary? ( https://dev.gentoo.org/~tamiko/distfiles/${P}-bin.tar.xz )
 		"
-	KEYWORDS="amd64 ~arm64 ~ppc ~ppc64 x86"
+	KEYWORDS="amd64 arm64 ~ppc ~ppc64 x86"
 	IUSE="+binary"
 	REQUIRED_USE+="
 		!amd64? ( binary )
