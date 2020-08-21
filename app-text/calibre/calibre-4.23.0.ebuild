@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6..8} )
 PYTHON_REQ_USE="sqlite,ssl"
 
 inherit bash-completion-r1 desktop toolchain-funcs python-single-r1 xdg-utils
@@ -75,7 +75,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	')
 	dev-qt/qtcore:5=
 	dev-qt/qtdbus:5=
-	dev-qt/qtgui:5=
+	dev-qt/qtgui:5=[jpeg]
 	>=dev-qt/qtwebengine-5.12
 	dev-qt/qtwidgets:5=
 	dev-util/desktop-file-utils
@@ -153,6 +153,7 @@ src_prepare() {
 '-e', 's|^CXXFLAGS .*|\\\\\\\\0 ${CXXFLAGS}|', \
 '-e', 's|^LFLAGS .*|\\\\\\\\0 ${LDFLAGS}|', \
 '-i', 'Makefile'])" \
+		-e "s|open(self.j(bdir, '.qmake.conf'), 'wb').close()|open(self.j(bdir, '.qmake.conf'), 'wb').write(b'QMAKE_LFLAGS += ${LDFLAGS}')|" \
 		-i setup/build.py || die "sed failed to patch build.py"
 }
 
@@ -162,14 +163,15 @@ src_install() {
 
 	# Bypass kbuildsycoca and update-mime-database in order to
 	# avoid sandbox violations if xdg-mime tries to call them.
-	cat - > "${T}/kbuildsycoca" <<-EOF
+	mkdir "${T}/bin" || die
+	cat - > "${T}/bin/kbuildsycoca" <<-EOF
 	#!${BASH}
 	echo $0 : $@
 	exit 0
 	EOF
 
-	cp "${T}"/{kbuildsycoca,update-mime-database} || die
-	chmod +x "${T}"/{kbuildsycoca,update-mime-database} || die
+	cp "${T}"/bin/{kbuildsycoca,update-mime-database} || die
+	chmod +x "${T}"/bin/{kbuildsycoca,update-mime-database} || die
 
 	export QMAKE="${EPREFIX}/usr/$(get_libdir)/qt5/bin/qmake"
 
@@ -202,7 +204,7 @@ src_install() {
 
 	addpredict /dev/dri #665310
 
-	PATH=${T}:${PATH} PYTHONPATH=${S}/src${PYTHONPATH:+:}${PYTHONPATH} \
+	PATH=${T}/bin:${PATH} PYTHONPATH=${S}/src${PYTHONPATH:+:}${PYTHONPATH} \
 	"${PYTHON}" setup.py install \
 		--root="${D}" \
 		--prefix="${EPREFIX}/usr" \

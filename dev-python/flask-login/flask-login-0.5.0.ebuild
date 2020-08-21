@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
+PYTHON_COMPAT=( pypy3 python3_{6..9} )
 inherit distutils-r1
 
 DESCRIPTION="Login session support for Flask"
@@ -14,7 +14,7 @@ SRC_URI="https://github.com/maxcountryman/${PN}/archive/${PV}.tar.gz -> ${P}.tar
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+KEYWORDS="~amd64 ~arm ~arm64 x86"
 
 RDEPEND="
 	>=dev-python/flask-0.10[${PYTHON_USEDEP}]

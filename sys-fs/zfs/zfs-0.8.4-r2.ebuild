@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_OPTIONAL=1
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7} )
 
 inherit autotools bash-completion-r1 flag-o-matic linux-info distutils-r1 systemd toolchain-funcs udev usr-ldscript
 
@@ -16,7 +16,7 @@ if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="https://github.com/openzfs/zfs.git"
 else
 	SRC_URI="https://github.com/openzfs/${PN}/releases/download/${P}/${P}.tar.gz"
-	KEYWORDS="amd64 ~arm64 ~ppc64"
+	KEYWORDS="amd64 arm64 ppc64"
 fi
 
 LICENSE="BSD-2 CDDL MIT"

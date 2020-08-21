@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python{3_6,3_7,3_8} )
 
 inherit eutils flag-o-matic python-single-r1 toolchain-funcs
 
@@ -91,6 +91,7 @@ BDEPEND="
 PATCHES=(
 	"${FILESDIR}"/${PN}-8.3.1-verbose-build.patch
 	"${FILESDIR}"/${PN}-9.1-ia64.patch
+	"${FILESDIR}"/${P}-sim-ppc-fno-common.patch
 )
 
 GDB_BUILD_DIR="${WORKDIR}"/${P}-build
