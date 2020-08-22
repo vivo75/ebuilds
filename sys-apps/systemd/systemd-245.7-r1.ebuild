@@ -19,7 +19,7 @@ else
 	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86"
 fi
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit bash-completion-r1 linux-info meson multilib-minimal ninja-utils pam python-any-r1 systemd toolchain-funcs udev usr-ldscript
 
@@ -120,7 +120,7 @@ RDEPEND="${COMMON_DEPEND}
 # sys-apps/dbus: the daemon only (+ build-time lib dep for tests)
 PDEPEND=">=sys-apps/dbus-1.9.8[systemd]
 	hwdb? ( >=sys-apps/hwids-20150417[udev] )
-	>=sys-fs/udev-init-scripts-34
+	>=sys-fs/udev-init-scripts-25
 	policykit? ( sys-auth/polkit )
 	!vanilla? ( sys-apps/gentoo-systemd-integration )"
 
@@ -205,8 +205,9 @@ src_prepare() {
 
 	if ! use vanilla; then
 		PATCHES+=(
-			"${FILESDIR}/gentoo-generator-path-r2.patch"
+			"${FILESDIR}/gentoo-generator-path-r1.patch"
 			"${FILESDIR}/gentoo-systemctl-disable-sysv-sync.patch"
+			"${FILESDIR}/gentoo-journald-audit.patch"
 		)
 	fi
 

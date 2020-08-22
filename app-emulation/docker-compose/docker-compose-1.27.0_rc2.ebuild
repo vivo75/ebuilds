@@ -3,14 +3,15 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7} )
 DISTUTILS_USE_SETUPTOOLS=rdepend
 
 inherit bash-completion-r1 distutils-r1
 
+MY_PV=${PV/_/-}
 DESCRIPTION="Multi-container orchestration for Docker"
 HOMEPAGE="https://github.com/docker/compose"
-SRC_URI="https://github.com/docker/compose/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/docker/compose/archive/${MY_PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -20,9 +21,11 @@ RESTRICT="!test? ( test )"
 
 RDEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 	>=dev-python/cached-property-1.2.0[${PYTHON_USEDEP}]
-	>=dev-python/docker-py-3.7.0[${PYTHON_USEDEP}]
+	>=dev-python/distro-1.5.0[${PYTHON_USEDEP}]
+	>=dev-python/docker-py-4.3.1[${PYTHON_USEDEP}]
 	>=dev-python/dockerpty-0.4.1[${PYTHON_USEDEP}]
 	>=dev-python/docopt-0.6.1[${PYTHON_USEDEP}]
+	>=dev-python/python-dotenv-0.13.0[${PYTHON_USEDEP}]
 	>=dev-python/jsonschema-2.5.1[${PYTHON_USEDEP}]
 	dev-python/paramiko[${PYTHON_USEDEP}]
 	>=dev-python/PySocks-1.6.0[${PYTHON_USEDEP}]
@@ -35,16 +38,18 @@ RDEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 DEPEND="${RDEPEND}
 	test? (
 		>=dev-python/pytest-5[${PYTHON_USEDEP}]
-		dev-python/ddt[${PYTHON_USEDEP}]
+		>=dev-python/ddt-1.2.2[${PYTHON_USEDEP}]
 	)"
 
-S="${WORKDIR}/compose-${PV}"
+S="${WORKDIR}/compose-${MY_PV}"
 
 PATCHES=(
 	# Bug #679968 -- https://bugs.gentoo.org/679968
 	# Bug #681002 -- https://bugs.gentoo.org/681002
-	"${FILESDIR}"/${PN}-1.25.2-setup-py.patch
+	"${FILESDIR}"/${PN}-1.27.0_rc1-setup-py.patch
 )
+
+DOCS=( CHANGELOG.md README.md )
 
 src_prepare() {
 	# Address QA issue "docker-compose.exe: missing alias (symlink) for completed command."

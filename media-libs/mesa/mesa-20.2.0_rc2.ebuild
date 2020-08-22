@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit llvm meson multilib-minimal python-any-r1 linux-info
 
@@ -78,7 +78,7 @@ RDEPEND="
 	>=dev-libs/expat-2.1.0-r3:=[${MULTILIB_USEDEP}]
 	>=sys-libs/zlib-1.2.8[${MULTILIB_USEDEP}]
 	libglvnd? (
-		>=media-libs/libglvnd-1.2.0-r1[X?,${MULTILIB_USEDEP}]
+		>=media-libs/libglvnd-1.3.2[X?,${MULTILIB_USEDEP}]
 		!app-eselect/eselect-opengl
 	)
 	!libglvnd? (
