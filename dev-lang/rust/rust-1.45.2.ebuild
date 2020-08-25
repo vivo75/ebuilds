@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit bash-completion-r1 check-reqs estack flag-o-matic llvm multiprocessing multilib-build python-any-r1 rust-toolchain toolchain-funcs
 
@@ -140,7 +140,7 @@ boostrap_rust_version_check() {
 
 	if ver_test "${rustc_version}" -lt "${rustc_wanted}" ; then
 		eerror "Rust >=${rustc_wanted} is required"
-		eerror "please run \'eselect rust\' and set correct rust version" 
+		eerror "please run \'eselect rust\' and set correct rust version"
 		die
 	else
 		einfo "Using rust ${rustc_version} to build"
