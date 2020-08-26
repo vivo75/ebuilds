@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 inherit bash-completion-r1 estack eutils llvm toolchain-funcs prefix python-r1 linux-info
 
 MY_PV="${PV/_/-}"
@@ -153,7 +153,8 @@ perf_make() {
 	# FIXME: NO_CORESIGHT
 	# FIXME: NO_LIBBABELTRACE
 	emake V=1 VF=1 \
-		CC="$(tc-getCC)" CXX="$(tc-getCXX)" AR="$(tc-getAR)" LD="$(tc-getLD)" \
+		HOSTCC="$(tc-getBUILD_CC)" HOSTLD="$(tc-getBUILD_LD)" \
+		CC="$(tc-getCC)" CXX="$(tc-getCXX)" AR="$(tc-getAR)" LD="$(tc-getLD)" NM="$(tc-getNM)" \
 		PKG_CONFIG="$(tc-getPKG_CONFIG)" \
 		prefix="${EPREFIX}/usr" bindir_relative="bin" \
 		EXTRA_CFLAGS="${CFLAGS}" \
