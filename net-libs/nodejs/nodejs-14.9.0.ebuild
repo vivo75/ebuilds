@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 PYTHON_REQ_USE="threads(+)"
 inherit bash-completion-r1 eutils flag-o-matic pax-utils python-any-r1 toolchain-funcs xdg-utils
 
@@ -23,7 +23,7 @@ REQUIRED_USE="
 "
 
 RDEPEND="
-	>=dev-libs/libuv-1.38.1:=
+	>=dev-libs/libuv-1.39.0:=
 	>=net-dns/c-ares-1.16.0
 	>=net-libs/nghttp2-1.41.0
 	sys-libs/zlib
