@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit eutils python-single-r1 toolchain-funcs
 
@@ -24,12 +24,15 @@ RDEPEND="caps? ( >=sys-libs/libcap-2.24 )
 			dev-python/pyelftools[${PYTHON_MULTI_USEDEP}]
 		')
 	)
-	seccomp? ( sys-libs/libseccomp )"
-DEPEND="${RDEPEND}"
+	seccomp? ( sys-libs/libseccomp )
+"
 # >=linux-headers-4.11 to pick linux headers with statx, bug #737094
+DEPEND="
+	${RDEPEND}
+	kernel_linux? ( >=sys-kernel/linux-headers-4.11 )
+"
 BDEPEND="
 	caps? ( virtual/pkgconfig )
-	kernel_linux? ( >=sys-kernel/linux-headers-4.11 )
 	seccomp? ( virtual/pkgconfig )
 "
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
