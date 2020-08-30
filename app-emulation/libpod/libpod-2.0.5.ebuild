@@ -3,7 +3,7 @@
 
 EAPI=7
 
-EGIT_COMMIT="cab27868766a3b01ac14ff46180af8644c41d1cd"
+EGIT_COMMIT="776abc52106ec7652ced6dbc0869020123ed393d"
 
 inherit bash-completion-r1 flag-o-matic go-module
 

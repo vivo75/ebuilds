@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-COMMIT=63085f5bef1131aa9ec0907a5c8d66b67de7c4b2
+COMMIT=67abbb3cefbdc876447583d5ea45e76bf441eba7
 inherit go-module bash-completion-r1
 
 DESCRIPTION="Command line utility foroperations on container images and image repositories"
