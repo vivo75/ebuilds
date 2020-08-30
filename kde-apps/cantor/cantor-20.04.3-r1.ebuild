@@ -6,7 +6,7 @@ EAPI=7
 CMAKE_MAKEFILE_GENERATOR="emake"
 ECM_HANDBOOK="forceoptional"
 ECM_TEST="forceoptional"
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{7,8} )
 PVCUT=$(ver_cut 1-3)
 KFMIN=5.70.0
 QTMIN=5.14.2
@@ -25,6 +25,7 @@ REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 # TODO Add Sage Mathematics Software backend (http://www.sagemath.org)
 DEPEND="
+	app-text/poppler[qt5]
 	>=dev-qt/qtgui-${QTMIN}:5
 	>=dev-qt/qtprintsupport-${QTMIN}:5
 	>=dev-qt/qtsvg-${QTMIN}:5

@@ -4,7 +4,7 @@
 EAPI=7
 VALA_USE_DEPEND="vapigen"
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 PYTHON_REQ_USE="xml(+)"
 
 inherit meson multilib-minimal python-any-r1 vala
@@ -15,7 +15,7 @@ SRC_URI="https://people.freedesktop.org/~hughsient/releases/${P}.tar.xz"
 
 LICENSE="LGPL-2.1+"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc x86"
 
 IUSE="gtk-doc +introspection static-libs test +vala"
 REQUIRED_USE="vala? ( introspection )"

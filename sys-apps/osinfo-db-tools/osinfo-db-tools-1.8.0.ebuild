@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit meson python-any-r1
 
@@ -14,7 +14,7 @@ SRC_URI="https://releases.pagure.org/libosinfo/${P}.tar.xz"
 LICENSE="GPL-2+"
 SLOT="0"
 
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~sparc x86"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
