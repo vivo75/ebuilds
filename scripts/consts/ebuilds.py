@@ -627,6 +627,7 @@ EBUILDS_KEEP_ALL = (
     'dev-libs/libatasmart',
     'dev-libs/libatomic_ops',
     'dev-libs/libb64',
+    'dev-libs/libbpf',
     'dev-libs/libbsd',
     'dev-libs/libbytesize',
     'dev-libs/libcdio',
