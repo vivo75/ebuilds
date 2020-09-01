@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python3_{6,7,8,9} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 
 inherit autotools flag-o-matic perl-module python-single-r1 eapi7-ver
 

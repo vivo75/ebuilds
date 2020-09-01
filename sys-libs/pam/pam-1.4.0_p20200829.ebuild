@@ -8,13 +8,14 @@ inherit autotools db-use fcaps toolchain-funcs usr-ldscript multilib-minimal
 DESCRIPTION="Linux-PAM (Pluggable Authentication Modules)"
 HOMEPAGE="https://github.com/linux-pam/linux-pam"
 
-SRC_URI="https://github.com/linux-pam/linux-pam/archive/v${PV}.tar.gz -> ${P}.tar.gz
-	https://dev.gentoo.org/~zlogene/distfiles/${CATEGORY}/${PN}/${P}-doc.tar.xz"
+COMMIT_HASH="e42e178c71c11bb25740a5177eed110ee17b8af2"
+SRC_URI="https://github.com/linux-pam/linux-pam/archive/${COMMIT_HASH}.tar.gz#/${PN}-${COMMIT_HASH}.tar.gz
+	https://dev.gentoo.org/~zlogene/distfiles/${CATEGORY}/${PN}-1.4.0_p20200809-doc.tar.xz"
 
 LICENSE="|| ( BSD GPL-2 )"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux"
-IUSE="audit berkdb debug nis +pie selinux static-libs"
+IUSE="audit berkdb debug nis +pie selinux"
 
 BDEPEND="
 	dev-libs/libxslt
@@ -29,18 +30,18 @@ DEPEND="
 	audit? ( >=sys-process/audit-2.2.2[${MULTILIB_USEDEP}] )
 	berkdb? ( >=sys-libs/db-4.8.30-r1:=[${MULTILIB_USEDEP}] )
 	selinux? ( >=sys-libs/libselinux-2.2.2-r4[${MULTILIB_USEDEP}] )
-	nis? ( >=net-libs/libtirpc-0.2.4-r2[${MULTILIB_USEDEP}] )"
+	nis? ( net-libs/libnsl[${MULTILIB_USEDEP}]
+	>=net-libs/libtirpc-0.2.4-r2[${MULTILIB_USEDEP}] )"
 
 RDEPEND="${DEPEND}"
 
 PDEPEND=">=sys-auth/pambase-20200616"
 
-S="${WORKDIR}/linux-${P}"
+S="${WORKDIR}/linux-${PN}-${COMMIT_HASH}"
 
 src_prepare() {
 	default
 	touch ChangeLog || die
-	eapply "${FILESDIR}"/fix-test-calls.patch
 	eautoreconf
 }
 
@@ -62,12 +63,14 @@ multilib_src_configure() {
 		--includedir="${EPREFIX}"/usr/include/security
 		--libdir="${EPREFIX}"/usr/$(get_libdir)
 		--exec-prefix="${EPREFIX}"
+		--enable-unix
 		--disable-prelude
 		--disable-cracklib
 		--disable-tally
 		--disable-tally2
 		--disable-doc
 		--disable-regenerate-docu
+		--disable-static
 		--disable-Werror
 		$(use_enable audit)
 		$(use_enable berkdb db)
@@ -75,7 +78,6 @@ multilib_src_configure() {
 		$(use_enable nis)
 		$(use_enable pie)
 		$(use_enable selinux)
-		$(use_enable static-libs static)
 		--enable-isadir='.' #464016
 		)
 	ECONF_SOURCE="${S}" econf "${myconf[@]}"
@@ -107,7 +109,7 @@ multilib_src_install_all() {
 		d /run/sepermit 0755 root root
 	_EOF_
 
-	for i in "${WORKDIR}"/${P}-doc/*; do
+	for i in "${WORKDIR}"/${PN}-1.4.0_p20200809-doc/*; do
 		doman ${i}
 	done
 }

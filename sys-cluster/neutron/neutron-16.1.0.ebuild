@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python3_7 )
+PYTHON_COMPAT=( python{3_8,3_7} )
 # still no 34 :( https://bugs.launchpad.net/neutron/+bug/1630439
 
 inherit distutils-r1 linux-info

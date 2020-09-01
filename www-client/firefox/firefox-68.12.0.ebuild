@@ -290,6 +290,7 @@ src_unpack() {
 }
 
 src_prepare() {
+	rm "${WORKDIR}"/firefox/2016_set_CARGO_PROFILE_RELEASE_LTO.patch
 	eapply "${WORKDIR}/firefox"
 
 	# Make LTO respect MAKEOPTS

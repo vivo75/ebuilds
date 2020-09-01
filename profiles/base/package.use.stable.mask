@@ -4,6 +4,10 @@
 # This file requires eapi 5 or later. New entries go on top.
 # Please use the same syntax as in package.use.mask
 
+# Pacho Ramos <pacho@gentoo.org> (2020-08-21)
+# app-text/pandoc is hard to stabilize #737612
+sys-apps/earlyoom docs
+
 # Andreas Sturmlechner <asturm@gentoo.org> (2020-08-03)
 # dev-qt/qtquicktimeline-5.15.0 not yet stable, bug 711120
 # dev-libs/libclangformat-ide not stable and unclear maintainer, bug 711120
@@ -174,10 +178,6 @@ app-portage/layman g-sorcery
 # Michael Palimaka <kensington@gentoo.org (2017-01-26)
 # Requires testing version of media-libs/opencv
 media-libs/mlt opencv
-
-# Michael Palimaka <kensington@gentoo.org (2017-01-18)
-# www-client/weboob is horribly outdated and not stable
-app-office/kmymoney weboob
 
 # Andreas K. Hüttel <dilfridge@gentoo.org> (2017-01-15)
 # Has no stable reverse deps requiring this useflag

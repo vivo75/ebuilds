@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( pypy3 python3_{6,7,8,9} )
+PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
 DISTUTILS_USE_SETUPTOOLS=rdepend
 
 inherit distutils-r1
@@ -16,7 +16,7 @@ S="${WORKDIR}/${MY_PN}-${PV}"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="amd64 arm arm64 ~hppa ~ia64 ~ppc ~ppc64 sparc x86"
+KEYWORDS="amd64 arm arm64 ~hppa ~ia64 ppc ~ppc64 sparc x86"
 
 RDEPEND="
 	>=dev-python/jaraco-functools-1.20[${PYTHON_USEDEP}]

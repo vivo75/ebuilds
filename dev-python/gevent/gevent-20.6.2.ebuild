@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_USE_SETUPTOOLS=rdepend
-PYTHON_COMPAT=( python2_7 python3_{6,7,8,9} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 PYTHON_REQ_USE="ssl(+),threads(+)"
 
 inherit distutils-r1 flag-o-matic

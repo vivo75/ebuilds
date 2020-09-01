@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_USE_SETUPTOOLS=rdepend
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 
 inherit distutils-r1 llvm.org
 

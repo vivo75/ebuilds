@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 
 inherit flag-o-matic linux-info multilib pam prefix python-single-r1 systemd
 

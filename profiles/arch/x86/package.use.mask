@@ -1,6 +1,10 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
+# Thomas Deutschmann <whissi@gentoo.org> (2020-08-17)
+# Columnstore engine is supported on x86
+dev-db/mariadb -columnstore
+
 # Thomas Deutschmann <whissi@gentoo.org> (2020-07-27)
 # media-video/pipewire:0/0.3 is available for x86
 www-client/firefox -screencast
@@ -96,9 +100,8 @@ sys-block/fio -python -gnuplot
 sys-firmware/seabios -debug
 
 # Georgy Yakovlev <gyakovlev@gentoo.org> (2019-08-28)
-# upstream provides docs and tools for tier-1 arches
+# upstream provides docs only for tier-1 arches
 dev-lang/rust-bin -doc
->=dev-lang/rust-bin-1.37 -clippy -rustfmt
 
 # Thomas Deutschmann <whissi@gentoo.org> (2019-08-03)
 # Early microcode loading is supported on x86

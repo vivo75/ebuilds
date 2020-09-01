@@ -5,7 +5,7 @@ EAPI=6
 
 GNOME_ORG_MODULE="GConf"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python3_{7,8,9} )
+PYTHON_COMPAT=( python{3_8,3_7} )
 PYTHON_REQ_USE="xml"
 
 inherit gnome2 multilib-minimal python-single-r1

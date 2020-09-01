@@ -17,7 +17,7 @@ IUSE="gtk-doc +introspection +vala test"
 RESTRICT="!test? ( test )"
 REQUIRED_USE="vala? ( introspection )"
 
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha amd64 ~arm arm64 ~ia64 ~ppc ~ppc64 ~sparc x86"
 
 # Unsure about osinfo-db-tools rdep, but at least fedora does it too
 RDEPEND="
@@ -53,8 +53,8 @@ src_configure() {
 		$(meson_feature introspection enable-introspection)
 		$(meson_use test enable-tests)
 		$(meson_feature vala enable-vala)
-		-Dwith-pci-ids-path=/usr/share/misc/usb.ids
-		-Dwith-usb-ids-path=/usr/share/misc/pci.ids
+		-Dwith-pci-ids-path=/usr/share/misc/pci.ids
+		-Dwith-usb-ids-path=/usr/share/misc/usb.ids
 	)
 	meson_src_configure
 }
