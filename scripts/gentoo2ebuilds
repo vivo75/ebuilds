@@ -149,6 +149,9 @@ def rsync(src, dst, delete=True, capture_output=False, check=True):
 
 
 def update_python_compat(cat, pkg, ebuild):
+    pass
+
+def OBSOLETE_update_python_compat(cat, pkg, ebuild):
     if pkg in KEEP_PYTHON_VER:
         return
     new_python_compat = []

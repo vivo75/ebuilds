@@ -32,6 +32,25 @@
 
 #--- END OF EXAMPLES ---
 
+# Georgy Yakovlev <gyakovlev@gentoo.org> (2020-09-02)
+# Masked for removal. No revdeps.
+dev-python/ansimarkup
+
+# Rick Farina <zerochaos@gentoo.org> (2020-09-02)
+# Masked for removal in 30 days. Obsolete versions
+# of kismet and tools which use it are no longer maintained.
+# Users should upgrade to a newer version of kismet which
+# is supported.
+dev-perl/Net-Kismet
+net-wireless/kismet-ubertooth
+<net-wireless/kismet-2017
+
+# Bernard Cafarelli <voyageur@gentoo.org> (2020-09-02)
+# Abandoned upstream in favor of media-libs/libinsane
+# No more in-tree users
+# Removal in 30 days. Bug #740100
+dev-python/pyinsane
+
 # Arfrever Frehtes Taifersar Arahesis <arfrever.fta@gmail.com> (2020-09-01)
 # Abandoned long time ago. Last release in 2008. Not ported to GTK+ 3.
 # Masked for deletion in 30 days.
