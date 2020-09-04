@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_USE_SETUPTOOLS=rdepend
-PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
+PYTHON_COMPAT=( python2_7 python3_{6,7,8,9} pypy3 )
 PYTHON_REQ_USE="ssl(+),threads(+)"
 
 inherit bash-completion-r1 distutils-r1 multiprocessing
@@ -25,7 +25,7 @@ SRC_URI="
 # setuptools & wheel .whl files are required for testing, exact version is not very important.
 
 LICENSE="MIT"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~riscv ~sparc ~x86"
 SLOT="0"
 IUSE="test -vanilla"
 

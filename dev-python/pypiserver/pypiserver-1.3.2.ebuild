@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_USE_SETUPTOOLS=rdepend
-PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
+PYTHON_COMPAT=( python3_{6,7,8,9} pypy3 )
 inherit distutils-r1
 
 DESCRIPTION="Minimal PyPI server"
@@ -13,7 +13,7 @@ SRC_URI="https://github.com/${PN}/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="ZLIB MIT"
 SLOT="0"
-KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ppc ppc64 sparc x86"
+KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ppc ppc64 ~riscv sparc x86"
 IUSE="test"
 
 RDEPEND="

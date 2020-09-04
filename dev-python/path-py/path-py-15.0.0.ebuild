@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
+PYTHON_COMPAT=( python3_{6..9} pypy3 )
 DISTUTILS_USE_SETUPTOOLS=rdepend
 
 inherit distutils-r1
@@ -17,7 +17,7 @@ S="${WORKDIR}/${MY_P}"
 
 SLOT="0"
 LICENSE="MIT"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux"
 
 RDEPEND="
 	dev-python/appdirs[${PYTHON_USEDEP}]

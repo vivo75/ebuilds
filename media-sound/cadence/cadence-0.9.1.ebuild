@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8,9} )
 inherit python-single-r1 xdg desktop
 
 DESCRIPTION="Collection of tools useful for audio production"
@@ -41,6 +41,7 @@ RDEPEND="${CDEPEND}"
 DEPEND="${CDEPEND}"
 
 PATCHES=(
+	"${FILESDIR}"/${P}-fix-clang.patch
 	"${FILESDIR}"/${P}-fix-qt5.15.patch
 )
 

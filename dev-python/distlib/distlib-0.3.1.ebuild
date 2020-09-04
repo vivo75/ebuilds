@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_USE_SETUPTOOLS=no
-PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
+PYTHON_COMPAT=( python{2_7,3_{6,7,8,9}} pypy3 )
 
 inherit distutils-r1 vcs-snapshot
 
@@ -17,7 +17,7 @@ SRC_URI="
 
 LICENSE="PSF-2"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~riscv ~sparc ~x86"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
