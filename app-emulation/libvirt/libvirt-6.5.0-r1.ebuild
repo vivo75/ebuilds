@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7} )
 
 inherit autotools out-of-source bash-completion-r1 eutils linux-info python-any-r1 readme.gentoo-r1 systemd
 
@@ -123,7 +123,7 @@ DEPEND="${RDEPEND}
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-6.0.0-fix_paths_in_libvirt-guests_sh.patch
-	"${FILESDIR}"/${PN}-6.1.0-fix-paths-for-apparmor.patch
+	"${FILESDIR}"/${PN}-6.5.0-fix-paths-for-apparmor.patch
 	"${FILESDIR}"/${PN}-6.5.0-do-not-use-sysconfig.patch
 )
 
