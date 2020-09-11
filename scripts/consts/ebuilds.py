@@ -2366,6 +2366,7 @@ EBUILDS_KEEP_ALL = (
     'net-libs/librsync',
     'net-libs/libsignal-protocol-c',
     'net-libs/libslirp',
+    'net-libs/libsmi',
     'net-libs/libsoup',
     'net-libs/libsrtp',
     'net-libs/libssh',
