@@ -750,6 +750,7 @@ EBUILDS_KEEP_ALL = (
     'dev-libs/snowball-stemmer',
     'dev-libs/spdlog',
     'dev-libs/stp',
+    'dev-libs/tomsfastmath',
     'dev-libs/totem-pl-parser',
     'dev-libs/uriparser',
     'dev-libs/userspace-rcu',
