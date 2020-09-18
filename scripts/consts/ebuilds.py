@@ -2310,6 +2310,7 @@ EBUILDS_KEEP_ALL = (
     'net-dns/pdns',
     'net-dns/pdns-recursor',
     'net-dns/unbound',
+    'net-firewall/conntrack-tools',
     'net-firewall/ebtables',
     'net-firewall/fwbuilder',
     'net-firewall/ipset',
