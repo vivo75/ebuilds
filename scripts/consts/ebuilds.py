@@ -84,6 +84,7 @@ EBUILDS_KEEP_ALL = (
     'app-crypt/certbot',
     'app-crypt/certbot-apache',
     'app-crypt/certbot-dns-nsone',
+    'app-crypt/cfssl',
     'app-crypt/easy-rsa',
     'app-crypt/efitools',
     'app-crypt/gcr',
