@@ -2419,6 +2419,7 @@ EBUILDS_KEEP_ALL = (
     'net-misc/anydesk',
     'net-misc/bridge-utils',
     'net-misc/chrony',
+    'net-misc/cni-plugins',
     'net-misc/curl',
     'net-misc/dhcp',
     'net-misc/dhcpcd',
