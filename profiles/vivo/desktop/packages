@@ -76,6 +76,7 @@ dev-python/python-evdev
 dev-python/python-memcached
 dev-python/python-xlib
 dev-python/pyudev
+dev-python/scipy
 dev-python/texttable
 dev-python/virtualenv
 dev-python/zstandard
@@ -215,7 +216,6 @@ net-wireless/wireless-tools
 sci-geosciences/gpx-viewer
 sci-geosciences/gpxsee
 sci-libs/alglib
-sci-libs/scipy
 sci-libs/umfpack
 sys-apps/cpuid
 sys-apps/ed
