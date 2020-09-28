@@ -14,3 +14,6 @@
 <sys-apps/most-9999 amd64
 <sys-cluster/kubernetes-9999 amd64
 
+# kubernetes 1.19 require go 1.15
+<dev-lang/go-1.16 amd64
+
