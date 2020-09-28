@@ -6,7 +6,6 @@ app-arch/lzop
 app-arch/p7zip
 app-arch/snappy
 app-arch/tardelta
-app-arch/unarj
 app-arch/unrar
 app-arch/unzip
 app-arch/unshield
