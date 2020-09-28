@@ -545,6 +545,7 @@ EBUILDS_KEEP_ALL = (
     'dev-java/xpp3',
     'dev-java/xsdlib',
     'dev-lang/go',
+    'dev-lang/go-bootstrap',
     'dev-lang/lua',
     'dev-lang/luajit',
     'dev-lang/mujs',
