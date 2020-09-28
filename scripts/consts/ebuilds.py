@@ -2693,6 +2693,7 @@ EBUILDS_KEEP_ALL = (
     'sys-devel/native-cctools',
     'sys-devel/patch',
     'sys-devel/prelink',
+    'sys-devel/rust-std',
     'sys-devel/ucpp',
     'sys-fabric/libibumad',
     'sys-fabric/libibverbs',
