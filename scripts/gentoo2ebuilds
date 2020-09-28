@@ -112,6 +112,7 @@ ebuilds_overlay = (
     'dev-util/flatpak-builder',
     'games-board/python-chess',
     'media-gfx/rawtherapee',
+    'media-gfx/displaycal',
     'kde-apps/kcontacts',
     'net-libs/libgmail',
     'net-misc/lxc-fake-net',
