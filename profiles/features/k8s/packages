@@ -1,0 +1,24 @@
+# Kubernetes & co
+app-crypt/cfssl
+app-emulation/containerd
+app-emulation/cri-tools
+app-emulation/docker-credential-helpers
+app-emulation/docker-proxy
+app-emulation/docker-registry
+dev-db/etcd
+dev-python/docker-py
+dev-python/docker-pycreds
+dev-python/dockerpty
+dev-util/docker-distribution-pruner
+dev-util/docker-ls
+net-misc/cni-plugins
+sys-apps/most
+sys-cluster/kubernetes
+
+
+# globally useful packages
+app-crypt/certbot
+net-misc/socat
+dev-db/mysql-connector-c
+app-admin/sudo
+

@@ -1,0 +1,7 @@
+# utils = many small utilities
+dev-libs/nss cacert utils
+
+# Require python 2.7
+dev-util/boost-build -python
+sys-fs/eudev -hwdb
+

@@ -1,0 +1,7 @@
+<app-admin/ansible-3 amd64
+<app-admin/sudo-9999 amd64
+<app-arch/zstd-9999 amd64
+<app-crypt/certbot-9999 amd64
+<app-crypt/certbot-apache-9999 amd64
+<net-misc/curl-8 amd64
+

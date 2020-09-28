@@ -1,0 +1,6 @@
+net-misc/curl http2 idn
+
+sys-apps/systemd -cryptsetup
+
+# alternative is gtk ...
+app-emulation/docker-credential-helpers pass
