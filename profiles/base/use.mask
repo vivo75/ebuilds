@@ -5,10 +5,6 @@
 # app-office/openoffice-bin is being removed.
 office_implementation_openoffice
 
-# Patrick Lauer <patrick@gentoo.org> (2020-08-18)
-# pg13 is currently beta and has no keywords yet
-postgres_targets_postgres13
-
 # Mikle Kolyada <zlogene@gentoo.org> (2020-08-02)
 # consolekit is masked for removal
 consolekit
@@ -118,3 +114,11 @@ prelude
 # Diego Elio Pettenò <flameeyes@gentoo.org> (2012-08-27)
 # netlink is a Linux-specific interface
 netlink
+
+# Andreas K. Hüttel <dilfridge@gentoo.org> (2019-09-18)
+# mask removed ABI_RISCV flags so they do not trigger rebuild
+# in emerge
+abi_riscv_lp64
+abi_riscv_lp64d
+abi_riscv_ilp32
+abi_riscv_ilp32d

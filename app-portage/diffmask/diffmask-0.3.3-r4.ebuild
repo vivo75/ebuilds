@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_USE_SETUPTOOLS=no
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit distutils-r1
 
@@ -14,7 +14,7 @@ SRC_URI="https://github.com/mgorny/diffmask/releases/download/${P}/${P}.tar.bz2"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~mips ~x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~amd64 ~arm64 ~mips ~x86 ~amd64-linux ~x86-linux"
 IUSE=""
 
 RDEPEND="sys-apps/portage[${PYTHON_USEDEP}]"

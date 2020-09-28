@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit python-any-r1 scons-utils toolchain-funcs flag-o-matic
 
@@ -37,7 +37,7 @@ RDEPEND="${CDEPEND}"
 # Respect {C,LD}FLAGS.
 PATCHES=(
 	"${FILESDIR}"/${PN}-26.4.5-strip-extra-cflags.patch
-	"${FILESDIR}"/${PN}-26.4.4-respect-AR.patch
+	"${FILESDIR}"/${PN}-26.4.5-respect-toolchain.patch
 )
 
 S="${WORKDIR}/${MY_P}"
@@ -55,7 +55,7 @@ src_prepare() {
 }
 
 src_configure() {
-	tc-export AR CC CXX
+	tc-export AR CC CXX OBJDUMP
 	# Uses hardware specific code that seems to depend on SSE4.2
 	if use cpu_flags_x86_sse4_2 ; then
 		append-cflags -msse4.2

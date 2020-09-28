@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6..9} )
 inherit cmake llvm llvm.org multilib-minimal pax-utils \
 	python-single-r1 toolchain-funcs
 
@@ -79,8 +79,6 @@ src_prepare() {
 	BUILD_DIR=${WORKDIR}/x/y/clang
 
 	llvm.org_src_prepare
-
-	mv ../clang-tools-extra tools/extra || die
 }
 
 check_distribution_components() {
@@ -254,6 +252,7 @@ multilib_src_configure() {
 
 	if multilib_is_native_abi; then
 		mycmakeargs+=(
+			-DLLVM_EXTERNAL_CLANG_TOOLS_EXTRA_SOURCE_DIR="${WORKDIR}"/clang-tools-extra
 			# normally copied from LLVM_INCLUDE_DOCS but the latter
 			# is lacking value in stand-alone builds
 			-DCLANG_INCLUDE_DOCS=ON

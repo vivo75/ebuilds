@@ -3,7 +3,7 @@
 
 EAPI=6
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit gnome2 python-single-r1 virtualx
 
@@ -12,7 +12,7 @@ HOMEPAGE="https://glade.gnome.org/"
 
 LICENSE="GPL-2+ FDL-1.1+"
 SLOT="3.10/12" # subslot = suffix of libgladeui-2.so
-KEYWORDS="~alpha amd64 arm arm64 ~ia64 ~mips ~ppc ~ppc64 ~sparc x86"
+KEYWORDS="~alpha amd64 arm arm64 ~ia64 ~mips ~ppc ~ppc64 sparc x86"
 
 IUSE="+introspection python webkit"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"

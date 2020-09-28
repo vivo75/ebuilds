@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 WX_GTK_VER="3.0-gtk3"
 
 inherit distutils-r1 multiprocessing virtualx wxwidgets
@@ -11,7 +11,7 @@ MY_PN="wxPython"
 MY_PV="${PV}.post2"
 
 DESCRIPTION="A blending of the wxWindows C++ class library with Python"
-HOMEPAGE="http://www.wxpython.org/"
+HOMEPAGE="https://www.wxpython.org/"
 SRC_URI="mirror://pypi/${P:0:1}/${MY_PN}/${MY_PN}-${MY_PV}.tar.gz"
 
 LICENSE="wxWinLL-3"

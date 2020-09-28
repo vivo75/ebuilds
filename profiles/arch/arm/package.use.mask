@@ -184,10 +184,6 @@ net-misc/bfgminer adl lm-sensors
 # no point in pursuing it right now.
 app-shells/bash-completion test
 
-# James Le Cuirot <chewi@gentoo.org> (2017-04-25)
-# Oracle doesn't include VisualVM on this platform.
-dev-java/oracle-jdk-bin visualvm
-
 # Patrice Clement <monsieurp@gentoo.org> (2017-04-09)
 # Enable MQTT support on supported architectures
 app-metrics/collectd -collectd_plugins_mqtt
@@ -356,10 +352,6 @@ mail-filter/opendkim opendbx stats
 # app-emulation/qemu is not keyworded on arm arch.
 # app-text/pandoc is not keyworded on arm arch.
 app-emulation/xen-tools system-qemu doc
-
-# Markus Meier <maekke@gentoo.org> (2014-02-23)
-# Needs sci-physics/bullet tested #499974
-dev-libs/efl physics
 
 # Markus Meier <maekke@gentoo.org> (2013-12-26)
 # Unkeyworded deps, bug #488724

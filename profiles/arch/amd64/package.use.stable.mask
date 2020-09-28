@@ -17,9 +17,10 @@
 
 #--- END OF EXAMPLES ---
 
-# Thomas Deutschmann <whissi@gentoo.org> (2020-08-05)
+# Thomas Deutschmann <whissi@gentoo.org> (2020-09-07)
 # sys-cluster/slurm has no stable keywords
-app-metrics/collectd collectd_plugins_slurm
+# dev-util/nvidia-cuda-toolkit has no stable keywords
+app-metrics/collectd collectd_plugins_slurm collectd_plugins_gpu_nvidia
 
 # Joonas Niilola <juippis@gentoo.org> (2020-06-21)
 # sys-apps/apparmor doesn't have stable keywords.
@@ -96,4 +97,4 @@ gnustep-base/gnustep-make libobjc2
 # Michał Górny <mgorny@gentoo.org> (2014-03-30)
 # Don't apply stable masks to python-exec since we're forcing every
 # impl there anyway. Please keep this in sync with use.stable.mask.
-dev-lang/python-exec -python_targets_pypy3 -python_targets_python3_8
+dev-lang/python-exec -python_targets_pypy3

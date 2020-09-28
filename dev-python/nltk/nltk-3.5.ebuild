@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_USE_SETUPTOOLS=rdepend
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 PYTHON_REQ_USE="sqlite,tk?,xml(+)"
 
 inherit distutils-r1
@@ -32,7 +32,7 @@ BDEPEND="
 		dev-python/pyparsing[${PYTHON_USEDEP}]
 		dev-python/twython[${PYTHON_USEDEP}]
 		sci-libs/scikits_learn[${PYTHON_USEDEP}]
-		sci-libs/scipy[${PYTHON_USEDEP}]
+		dev-python/scipy[${PYTHON_USEDEP}]
 	)"
 PDEPEND="dev-python/nltk-data"
 

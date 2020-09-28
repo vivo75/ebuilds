@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit linux-info autotools python-single-r1 user
 
@@ -48,6 +48,7 @@ DOCS="AUTHORS HACKING NEWS README"
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-3.1-ia64.patch
+	"${FILESDIR}"/${PN}-4.0-AR.patch
 )
 
 pkg_setup() {

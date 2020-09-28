@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
+PYTHON_COMPAT=( python2_7 python3_{6,7,8} pypy3 )
 
 DISTUTILS_USE_SETUPTOOLS=rdepend
 
@@ -21,15 +21,9 @@ IUSE="doc"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~mips ppc ppc64 sparc x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos"
-
-DEPEND="test? (
-	dev-python/pygments[${PYTHON_USEDEP}]
-	dev-python/pytidylib[${PYTHON_USEDEP}]
-	dev-python/pyyaml[${PYTHON_USEDEP}] )"
+RESTRICT="test"
 
 S="${WORKDIR}/${P^}"
-
-distutils_enable_tests pytest
 
 python_install_all() {
 	use doc && dodoc -r docs/

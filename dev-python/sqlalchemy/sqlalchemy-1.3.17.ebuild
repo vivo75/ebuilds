@@ -3,10 +3,10 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
+PYTHON_COMPAT=( python3_{6..9} pypy3 )
 PYTHON_REQ_USE="sqlite?"
 
-inherit distutils-r1 eutils flag-o-matic
+inherit distutils-r1 flag-o-matic optfeature
 
 MY_PN="SQLAlchemy"
 MY_P="${MY_PN}-${PV/_beta/b}"

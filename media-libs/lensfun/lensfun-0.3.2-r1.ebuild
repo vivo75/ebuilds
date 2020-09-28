@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 inherit python-single-r1 cmake
 
 DESCRIPTION="Library for rectifying and simulating photographic lens distortions"
@@ -33,6 +33,10 @@ RDEPEND="${PYTHON_DEPS}
 DEPEND="${RDEPEND}"
 
 DOCS=( README.md docs/mounts.txt ChangeLog )
+
+PATCHES=(
+	"${FILESDIR}/${P}-warnings.patch"
+)
 
 src_configure() {
 	local mycmakeargs=(

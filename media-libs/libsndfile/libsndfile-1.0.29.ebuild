@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} pypy3 )
+PYTHON_COMPAT=( python3_{6,7,8} pypy3 )
 
 if [[ ${PV} == *9999 ]]; then
 	inherit autotools git-r3
@@ -41,6 +41,11 @@ if [[ ${PV} == *9999 ]]; then
 		sys-devel/autogen
 	"
 fi
+
+PATCHES=(
+	# bug 719020: backported, remove on version bump
+	"${FILESDIR}"/${P}-pointer-aliasing.patch
+)
 
 pkg_setup() {
 	if use test || [[ ${PV} == *9999 ]]; then

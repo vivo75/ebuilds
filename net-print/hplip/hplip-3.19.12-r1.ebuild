@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7} )
 PYTHON_REQ_USE="threads(+),xml"
 
 # 14 and 15 spit out a lot of warnings about subdirs
@@ -35,7 +35,7 @@ COMMON_DEPEND="
 		snmp? (
 			!libressl? ( dev-libs/openssl:0= )
 			libressl? ( dev-libs/libressl:= )
-			net-analyzer/net-snmp
+			net-analyzer/net-snmp:=
 		)
 	)
 "

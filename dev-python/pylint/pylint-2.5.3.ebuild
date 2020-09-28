@@ -3,13 +3,13 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 PYTHON_REQ_USE="threads(+)"
 DISTUTILS_USE_SETUPTOOLS=rdepend
 # entry_points is added via **kwargs in a dict
 _DISTUTILS_SETUPTOOLS_WARNED=1
 
-inherit distutils-r1 eutils
+inherit distutils-r1 optfeature
 
 DESCRIPTION="Python code static checker"
 HOMEPAGE="https://www.logilab.org/project/pylint

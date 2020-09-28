@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7} )
 
 inherit bash-completion-r1 multilib python-r1
 
@@ -190,7 +190,7 @@ pkg_postinst() {
 	fi
 
 	if [[ -e ${EROOT%/}/etc/runlevels/sysinit ]]; then
-		if [[ ! -e ${EROOT%/}/etc/runlevels/sysinit/kmod-static-nodes ]]; then
+		if ! has_version sys-apps/systemd && [[ ! -e ${EROOT%/}/etc/runlevels/sysinit/kmod-static-nodes ]]; then
 			ewarn
 			ewarn "You need to add kmod-static-nodes to the sysinit runlevel for"
 			ewarn "kernel modules to have required static nodes!"

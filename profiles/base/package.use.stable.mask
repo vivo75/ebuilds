@@ -4,14 +4,17 @@
 # This file requires eapi 5 or later. New entries go on top.
 # Please use the same syntax as in package.use.mask
 
+# Michał Górny <mgorny@gentoo.org> (2020-09-20)
+# Always build python-exec with all the targets.
+dev-lang/python-exec -python_targets_python3_9
+
+# Georgy Yakovlev <gyakovlev@gentoo.org> (2020-09-18)
+# openjfx:8 will never be stabilized
+dev-java/openjdk:8 javafx
+
 # Pacho Ramos <pacho@gentoo.org> (2020-08-21)
 # app-text/pandoc is hard to stabilize #737612
 sys-apps/earlyoom docs
-
-# Andreas Sturmlechner <asturm@gentoo.org> (2020-08-03)
-# dev-qt/qtquicktimeline-5.15.0 not yet stable, bug 711120
-# dev-libs/libclangformat-ide not stable and unclear maintainer, bug 711120
->=dev-qt/qt-creator-4.12 clang qmldesigner
 
 # Andreas Sturmlechner <asturm@gentoo.org> (2020-06-06)
 # dev-python/wxpython:4.0 w/ py3 is not stable, bug #714566
@@ -20,7 +23,6 @@ dev-python/matplotlib wxwidgets
 # Sergei Trofimovich <slyfox@gentoo.org> (2020-04-13)
 # app-text/pandoc (dev-lang/ghc) has no stable keywords.
 app-emulation/xen-tools doc
-dev-python/notebook doc
 
 # Sergei Trofimovich <slyfox@gentoo.org> (2020-04-13)
 # dev-util/shellcheck (dev-lang/ghc) has no stable keywords.
@@ -73,7 +75,6 @@ dev-perl/Business-ISBN barcode
 dev-perl/Template-Toolkit gd
 media-fonts/unifont utils fontforge
 media-video/vdrsync dvdr
-www-apps/bugzilla extras
 
 # Andreas Sturmlechner <asturm@gentoo.org> (2019-07-16)
 # sci-libs/dcmtk is not stable
@@ -117,10 +118,6 @@ net-analyzer/wireshark doc
 # Andreas Sturmlechner <asturm@gentoo.org> (2018-05-21)
 # Depends on lots of unstable dependencies
 dev-python/s3fs test
-
-# Andreas Sturmlechner <asturm@gentoo.org> (2018-03-03)
-# sci-geosciences/grass is not stable
-sci-geosciences/qgis grass
 
 # Matthias Maier <tamiko@gentoo.org> (2018-03-18)
 # dev-libs/capstone hasn't been stabilized yet
@@ -197,10 +194,6 @@ net-libs/gnutls test-full
 # flag until a source based version that doesn't depend
 # on a vulnerable libgcrypt version is in tree
 dev-db/mariadb sst-xtrabackup
-
-# Sergey Popov <pinkbyte@gentoo.org> (2016-02-15)
-# Mask monitoring capabilities of Ganeti on stable branches
-app-emulation/ganeti monitoring
 
 # Pacho Ramos <pacho@gentoo.org> (2015-05-15)
 # Version compatible with current ffmpeg is not ready to be stabilized
