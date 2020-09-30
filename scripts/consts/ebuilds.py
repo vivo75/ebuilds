@@ -2508,6 +2508,7 @@ EBUILDS_KEEP_ALL = (
     'sci-libs/metis',
     'sci-libs/qrupdate',
     'dev-python/scipy',
+    'dev-python/sortedcontainers',
     'dev-python/ovs',
     'sci-libs/suitesparseconfig',
     'sci-libs/umfpack',
