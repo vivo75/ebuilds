@@ -617,6 +617,7 @@ EBUILDS_KEEP_ALL = (
     'dev-libs/judy',
     'dev-libs/kdiagram',
     'dev-libs/kpeoplevcard',
+    'dev-libs/kuserfeedback',
     'dev-libs/leveldb',
     'dev-libs/libIDL',
     'dev-libs/libaio',
