@@ -265,6 +265,7 @@ EBUILDS_KEEP_ALL = (
     'app-forensics/memdump',
     'app-forensics/unhide',
     'app-i18n/enca',
+    'app-i18n/ibus',
     'app-i18n/man-pages-it',
     'app-i18n/uchardet',
     'app-i18n/unicode-data',
