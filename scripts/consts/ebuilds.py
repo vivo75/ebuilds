@@ -2041,6 +2041,7 @@ EBUILDS_KEEP_ALL = (
     'media-fonts/libertine',
     'media-fonts/mathematica-fonts',
     'media-fonts/noto',
+    'media-fonts/noto-emoji',
     'media-fonts/oxygen-fonts',
     'media-fonts/roboto',
     'media-fonts/takao-fonts',
