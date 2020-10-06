@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_6 python3_7 )
+DISTUTILS_USE_SETUPTOOLS=rdepend
 
 inherit distutils-r1
 
@@ -28,7 +29,6 @@ CDEPEND="
 	dev-python/six[${PYTHON_USEDEP}]
 "
 DEPEND="
-	dev-python/setuptools[${PYTHON_USEDEP}]
 	test? (
 		${CDEPEND}
 		>=dev-python/httpretty-0.7.1[${PYTHON_USEDEP}]

@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8,9} )
 inherit cmake python-any-r1
 
 DESCRIPTION="A linkable library for Git"

@@ -4,7 +4,7 @@
 EAPI=7
 
 PYTHON_REQ_USE="sqlite"
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python{3_6,3_7} )
 
 inherit eutils python-any-r1 readme.gentoo-r1
 
@@ -96,6 +96,11 @@ pkg_setup() {
 }
 
 src_prepare() {
+	if ! use binary; then
+		sed -i -r \
+			-e "/function SetupPython3/,/\}/{s,\\\$\(whereis python3\),${EPYTHON},g}" \
+			"${S}"/edksetup.sh || die "Fixing for correct Python3 support failed"
+	fi
 	if  [[ ${PV} != "999999" ]] && use binary; then
 		eapply_user
 		return

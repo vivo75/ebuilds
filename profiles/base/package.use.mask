@@ -53,10 +53,6 @@ sys-cluster/pacemaker heartbeat
 app-metrics/collectd collectd_plugins_gmond
 app-metrics/collectd collectd_plugins_onewire
 
-# Stephan Hartmann <sultan@gentoo.org> (2020-09-06)
-# Causes seccomp sandbox violation or chromium might hang on startup.
->=www-client/chromium-87 wayland
-
 # Michał Górny <mgorny@gentoo.org> (2020-08-22)
 # These flags depend on dev-python/pygtk that is masked for removal.
 app-mobilephone/sobexsrv gtk
@@ -245,11 +241,6 @@ sys-libs/libxcrypt split-usr system
 # net-libs/openslp is being removed.
 sys-block/open-iscsi slp
 sys-block/open-isns slp
-
-# Brian Evans <grknight@gentoo.org> (2019-10-01)
-# PHP support is broken with current version
-# Mask USE until they are fixed
-media-gfx/exact-image php
 
 # Michał Górny <mgorny@gentoo.org> (2019-09-28)
 # media-fonts/hkscs-ming is slated for removal.
@@ -509,11 +500,6 @@ dev-java/icedtea cacao jamvm
 # https://bugs.gentoo.org/show_bug.cgi?id=533876
 >=sci-libs/vtk-6.1.0 examples
 
-# Jason Zaman <perfinion@gentoo.org> (2015-09-06)
-# This is for cgmanager which is linux only.
-# Unmasked in default/linux/package.use.mask.
-sys-auth/consolekit cgroups
-
 # James Le Cuirot <chewi@gentoo.org> (2015-08-18)
 # gcc[awt] is only used by gcj-jdk[awt] and that isn't needed by
 # anything in the tree. The toolchain folks aren't keen to support it
@@ -617,10 +603,6 @@ net-analyzer/net-snmp pci
 # Diego Elio Pettenò (2012-08-20)
 # The prevent-removal USE flag is only implemented for Linux.
 sys-auth/pam_mktemp prevent-removal
-
-# Samuli Suominen <ssuominen@gentoo.org> (2012-03-20)
-# This is for udev-acl. Unmasked in default/linux/package.use.mask.
-sys-auth/consolekit acl
 
 # Bernard Cafarelli <voyageur@gentoo.org> (2012-02-08)
 # libobjc2/clang experimental support

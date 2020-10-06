@@ -3,8 +3,9 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=(python3_{6..9})
 PYTHON_REQ_USE="readline(+)"
+DISTUTILS_USE_SETUPTOOLS=no
 
 inherit distutils-r1
 
