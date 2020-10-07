@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{7,8,9} )
 PVCUT=$(ver_cut 1-3)
 inherit ecm kde.org python-any-r1
 
@@ -12,7 +12,7 @@ HOMEPAGE="https://invent.kde.org/plasma/breeze-gtk"
 
 LICENSE="LGPL-2.1+"
 SLOT="5"
-KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
+KEYWORDS="amd64 ~arm ~arm64 ~ppc64 x86"
 IUSE=""
 
 BDEPEND="${PYTHON_DEPS}
