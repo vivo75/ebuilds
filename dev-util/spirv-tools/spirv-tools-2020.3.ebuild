@@ -5,7 +5,7 @@ EAPI=7
 
 MY_PN=SPIRV-Tools
 CMAKE_ECLASS="cmake"
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 inherit cmake-multilib python-any-r1
 
 if [[ ${PV} == *9999* ]]; then
@@ -13,7 +13,7 @@ if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
 else
 	SRC_URI="https://github.com/KhronosGroup/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="amd64 ~arm ~arm64 ~ppc ~ppc64 x86"
+	KEYWORDS="amd64 arm arm64 ~ppc ~ppc64 x86"
 	S="${WORKDIR}"/${MY_PN}-${PV}
 fi
 
