@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6..9} )
 
 inherit autotools elisp-common python-single-r1 systemd
 
@@ -70,6 +70,10 @@ SITEFILE="50${PN}-mode-gentoo.el"
 
 DOCS=( AUTHORS ChangeLog NEWS README.md THANKS )
 
+PATCHES=(
+	"${FILESDIR}/${PN}-7.7-flock.patch"
+)
+
 # Maintainer notes:
 # * The build system will always configure & build argp-standalone but it'll never use it
 #   if the argp.h header is found in the system. Which should be the case with
@@ -82,10 +86,6 @@ pkg_setup() {
 
 src_prepare() {
 	default
-
-	# https://bugs.gentoo.org/705536
-	# https://bugzilla.redhat.com/show_bug.cgi?id=1793990
-	eapply "${FILESDIR}/glusterfs-6.7-fix-seek.patch"
 
 	# build rpc-transport and xlators only once as shared libs
 	find rpc/rpc-transport xlators -name Makefile.am |
@@ -175,6 +175,8 @@ src_install() {
 	if ! use static-libs; then
 		find "${D}" -type f -name '*.la' -delete || die
 	fi
+
+	python_optimize "${ED}"
 }
 
 src_test() {

@@ -24,10 +24,6 @@ net-im/telepathy-connection-managers gadu icq meanwhile steam yahoo
 ~dev-db/percona-server-5.7.27.30 test
 sci-geosciences/viking mapnik
 
-# Ulrich Müller <ulm@gentoo.org> (2020-09-25)
-# Python 2 only. Bug #735496.
-sys-cluster/ganglia python
-
 # Joonas Niilola <juippis@gentoo.org> (2020-09-23)
 # Highly experimental, may cause breakages when updating. Use with 
 # caution!
@@ -157,7 +153,6 @@ net-analyzer/hydra ncp
 # Michał Górny <mgorny@gentoo.org> (2020-03-28)
 # Requires masked dev-vcs/bzr.  Remove the mask if breezy is packaged
 # and the package is confirmed to work with it.
-dev-vcs/cvs2svn bazaar
 <=dev-util/rosinstall-0.7.8 test
 <=dev-util/wstool-0.1.18 test
 <=dev-python/vcstools-0.1.42 test
