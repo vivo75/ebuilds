@@ -32,6 +32,23 @@
 
 #--- END OF EXAMPLES ---
 
+# Andrew Savchenko <bircoph@gentoo.org> (2020-10-11)
+# Mask old openafs version and corresponding openafs-kernel with
+# multiple CVEs.
+# All kernel module functionality is merged back in the single
+# net-fs/openafs package using USE="modules" starting from 1.8 branch.
+# No reverse dependencies, bug #719136. Removal in 30 days.
+net-fs/openafs-kernel
+<net-fs/openafs-1.8
+
+# Sam James <sam@gentoo.org> (2020-10-11)
+# Current Wireshark in ~arch is vulnerable.
+# Not updated yet due to maintainer inactivity.
+# This forces a downgrade to the fixed, stable
+# version of Wireshark.
+# bug #744592
+=net-analyzer/wireshark-3.3.0
+
 # Sergei Trofimovich <slyfox@gentoo.org> (2020-10-11)
 # Mask new version until calendar apps are sorted out:
 # bug #747538.
@@ -599,6 +616,11 @@ net-libs/nDPI
 # are developers or want more experimental features
 # and accept a more unstable release.
 >=www-client/chromium-87
+
+# Mart Raudsepp <leio@gentoo.org> (2020-06-06)
+# Meson port does not handle multilib yet and has issues
+# regarding runstatedir (not using /run).
+=net-misc/networkmanager-1.22*
 
 # Georgy Yakovlev <gyakovlev@gentoo.org> (2020-03-27)
 # Vulnerable old version of icedtea-web #711392
