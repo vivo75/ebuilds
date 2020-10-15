@@ -5,6 +5,7 @@ EBUILDS_KEEP_ALL = (
     'app-accessibility/speech-dispatcher',
     'app-admin/analog',
     'app-admin/ansible',
+    'app-admin/ansible-base',
     'app-admin/ansible-cmdb',
     'app-admin/ansible-lint',
     'app-admin/apache-tools',
