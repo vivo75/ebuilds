@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6..9} )
 inherit check-reqs cmake flag-o-matic llvm llvm.org python-any-r1
 
 DESCRIPTION="Compiler runtime libraries for clang (sanitizers & xray)"
@@ -25,6 +25,7 @@ CLANG_SLOT=${SLOT%%.*}
 DEPEND="
 	>=sys-devel/llvm-6"
 BDEPEND="
+	>=dev-util/cmake-3.16
 	clang? ( sys-devel/clang )
 	elibc_glibc? ( net-libs/libtirpc )
 	test? (
@@ -86,6 +87,8 @@ src_configure() {
 		-DCOMPILER_RT_BUILD_PROFILE=$(usex profile)
 		-DCOMPILER_RT_BUILD_SANITIZERS=$(usex sanitize)
 		-DCOMPILER_RT_BUILD_XRAY=$(usex xray)
+
+		-DPython3_EXECUTABLE="${PYTHON}"
 	)
 	if use test; then
 		mycmakeargs+=(

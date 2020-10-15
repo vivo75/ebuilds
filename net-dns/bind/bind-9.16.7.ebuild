@@ -12,7 +12,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6..9} )
 
 inherit python-r1 eutils autotools toolchain-funcs flag-o-matic multilib db-use systemd
 
@@ -33,7 +33,7 @@ SRC_URI="https://downloads.isc.org/isc/bind9/${PV}/${P}.tar.xz
 
 LICENSE="Apache-2.0 BSD BSD-2 GPL-2 HPND ISC MPL-2.0"
 SLOT="0"
-KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~mips ppc ppc64 ~s390 sparc x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux"
 # -berkdb by default re bug 602682
 IUSE="-berkdb +caps +dlz dnstap doc dnsrps fixed-rrset geoip geoip2 gssapi
 json ldap libressl lmdb mysql odbc postgres python selinux static-libs
@@ -41,8 +41,9 @@ urandom xml +zlib"
 # sdb-ldap - patch broken
 # no PKCS11 currently as it requires OpenSSL to be patched, also see bug 409687
 
+# Upstream dropped the old geoip library, but the BIND configuration for using
+# GeoIP remained the same.
 REQUIRED_USE="
-	?? ( geoip geoip2 )
 	postgres? ( dlz )
 	berkdb? ( dlz )
 	mysql? ( dlz )
@@ -63,7 +64,7 @@ DEPEND="
 	postgres? ( dev-db/postgresql:= )
 	caps? ( >=sys-libs/libcap-2.1.0 )
 	xml? ( dev-libs/libxml2 )
-	geoip? ( >=dev-libs/geoip-1.4.6 )
+	geoip? ( dev-libs/libmaxminddb )
 	geoip2? ( dev-libs/libmaxminddb )
 	gssapi? ( virtual/krb5 )
 	json? ( dev-libs/json-c:= )
@@ -82,6 +83,10 @@ RDEPEND="${DEPEND}
 	sys-process/psmisc"
 
 S="${WORKDIR}/${MY_P}"
+
+PATCHES=(
+	"${FILESDIR}/ldap-library-path-on-multilib-machines.patch"
+)
 
 # bug 479092, requires networking
 # bug 710840, cmocka fails LDFLAGS='-Wl,-O1'
@@ -140,9 +145,18 @@ bind_configure() {
 		$(use_with zlib)
 		"${@}"
 	)
-
-	use geoip && myeconfargs+=( --enable-geoip )
-	use geoip2 && myeconfargs+=( --with-maxminddb )
+	# This is for users to start to migrate back to USE=geoip, rather than
+	# USE=geoip2
+	if use geoip ; then
+		myeconfargs+=( $(use_with geoip maxminddb) --enable-geoip )
+	elif use geoip2 ; then
+		# Added 2020/09/30
+		# Remove USE=geoip2 support after 2020/03/01
+		ewarn "USE=geoip2 is deprecated; update your USE flags!"
+		myeconfargs+=( $(use_with geoip2 maxminddb) --enable-geoip )
+	else
+		myeconfargs+=( --without-maxminddb --disable-geoip )
+	fi
 
 	# bug #158664
 #	gcc-specs-ssp && replace-flags -O[23s] -O
