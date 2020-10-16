@@ -18,7 +18,7 @@ if [[ ${PV} == 9999 ]]; then
 	KEYWORDS=""
 else
 	SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86 ~x64-macos"
+	KEYWORDS="amd64 ~arm arm64 ~ppc64 x86 ~x64-macos"
 fi
 
 LICENSE="GPL-3"
@@ -56,6 +56,8 @@ DEPEND="
 		dev-python/unittest2[${PYTHON_USEDEP}]
 		dev-vcs/git
 	)"
+
+PATCHES=( "${FILESDIR}/ansible-2.10.0-CVE-2020-25635-6.patch" )
 
 python_compile() {
 	export ANSIBLE_SKIP_CONFLICT_CHECK=1
