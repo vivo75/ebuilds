@@ -14,14 +14,13 @@ SRC_URI="mirror://imagemagick/${MY_P}.tar.xz"
 
 LICENSE="imagemagick"
 SLOT="0/6.9.11"
-KEYWORDS="~alpha amd64 arm hppa ~ia64 ~mips ppc ppc64 ~s390 sparc x86 ~ppc-aix ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~x64-solaris ~x86-solaris"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86 ~ppc-aix ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~x64-solaris ~x86-solaris"
 IUSE="bzip2 corefonts +cxx djvu fftw fontconfig fpx graphviz hdri heif jbig jpeg jpeg2k lcms lqr lzma opencl openexr openmp pango perl png postscript q32 q8 raw static-libs svg test tiff truetype webp wmf X xml zlib"
 
 REQUIRED_USE="corefonts? ( truetype )
 	test? ( corefonts )"
 
-RESTRICT="perl? ( userpriv )
-	!test? ( test )"
+RESTRICT="!test? ( test )"
 
 RDEPEND="
 	dev-libs/libltdl:0
@@ -211,7 +210,7 @@ src_install() {
 
 	if use opencl; then
 		cat <<-EOF > "${T}"/99${PN}
-		SANDBOX_PREDICT="/dev/nvidiactl:/dev/nvidia-uvm:/dev/ati/card:/dev/dri/card:/dev/dri/renderD128"
+		SANDBOX_PREDICT="/dev/nvidiactl:/dev/nvidia-uvm:/dev/ati/card:/dev/dri/card:/dev/dri/card0:/dev/dri/renderD128"
 		EOF
 
 		insinto /etc/sandbox.d
