@@ -1,7 +1,7 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 JAVA_PKG_IUSE="doc source"
 
 inherit java-pkg-2 java-ant-2
@@ -13,15 +13,15 @@ SRC_URI="https://java.net/projects/javamail/downloads/download/source/javamail-$
 # either of these
 LICENSE="CDDL GPL-2 BSD"
 SLOT="0"
-KEYWORDS="amd64 ~arm ~arm64 ppc64 x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
 IUSE=""
 
 DEPEND="
 	app-arch/unzip
-	>=virtual/jdk-1.6
+	virtual/jdk:1.8
 "
 
-RDEPEND=">=virtual/jre-1.6"
+RDEPEND="virtual/jre:1.8"
 
 S="${WORKDIR}"
 
@@ -36,6 +36,7 @@ src_unpack() {
 
 EANT_DOC_TARGET="docs"
 EANT_EXTRA_ARGS="-Dspec.dir=doc/spec"
+JAVA_PKG_BSFIX="off" #https://bugs.gentoo.org/698954
 
 src_install() {
 	java-pkg_dojar target/release/mail.jar
