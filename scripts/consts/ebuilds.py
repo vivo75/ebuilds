@@ -383,6 +383,7 @@ EBUILDS_KEEP_ALL = (
     'app-text/tessdata_best',
     'app-text/tessdata_fast',
     'media-libs/alsa-topology-conf',
+    'media-libs/alsa-ucm-conf',
     'media-libs/leptonica',
     'app-text/tree',
     'app-text/txt2man',
