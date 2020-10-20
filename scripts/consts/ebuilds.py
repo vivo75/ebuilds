@@ -1978,6 +1978,7 @@ EBUILDS_KEEP_ALL = (
     'kde-plasma/oxygen',
     'kde-plasma/plasma-browser-integration',
     'kde-plasma/plasma-desktop',
+    'kde-plasma/plasma-disks',
     'kde-plasma/plasma-integration',
     'kde-plasma/plasma-meta',
     'kde-plasma/plasma-nm',
