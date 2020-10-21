@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 inherit autotools multilib-minimal python-single-r1
 
 DESCRIPTION="Advanced Linux Sound Architecture Library"
@@ -18,7 +18,10 @@ IUSE="alisp debug doc elibc_uclibc python +thread-safety"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 BDEPEND="doc? ( >=app-doc/doxygen-1.2.6 )"
-RDEPEND="python? ( ${PYTHON_DEPS} )"
+RDEPEND="python? ( ${PYTHON_DEPS} )
+	media-libs/alsa-topology-conf
+	media-libs/alsa-ucm-conf
+"
 DEPEND="${RDEPEND}"
 
 PATCHES=(
