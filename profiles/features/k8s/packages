@@ -20,7 +20,6 @@ sys-cluster/kubectl
 sys-cluster/kubelet
 sys-cluster/kubeletctl
 sys-cluster/kube-proxy
-sys-cluster/kubernetes
 sys-cluster/kube-router
 sys-cluster/kube-scheduler
 
