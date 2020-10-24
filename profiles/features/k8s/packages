@@ -13,8 +13,16 @@ dev-util/docker-distribution-pruner
 dev-util/docker-ls
 net-misc/cni-plugins
 sys-apps/most
+sys-cluster/kubeadm
+sys-cluster/kube-apiserver
+sys-cluster/kube-controller-manager
+sys-cluster/kubectl
+sys-cluster/kubelet
+sys-cluster/kubeletctl
+sys-cluster/kube-proxy
 sys-cluster/kubernetes
-
+sys-cluster/kube-router
+sys-cluster/kube-scheduler
 
 # globally useful packages
 app-crypt/certbot
