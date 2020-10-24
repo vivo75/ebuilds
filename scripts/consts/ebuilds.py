@@ -2663,6 +2663,7 @@ EBUILDS_KEEP_ALL = (
     'sys-cluster/galera',
     'sys-cluster/glusterfs',
     'sys-cluster/hpx',
+    'sys-cluster/ipvsadm',
     'sys-cluster/kubeadm',
     'sys-cluster/kube-apiserver',
     'sys-cluster/kube-controller-manager',
