@@ -32,6 +32,10 @@
 
 #--- END OF EXAMPLES ---
 
+# Piotr Karbowski <slashbeast@gentoo.org> (2020-10-25)
+# The bumped opentmpfiles after code cleanup no longer work. Masked for now.
+=sys-apps/opentmpfiles-0.3
+
 # David Seifert <soap@gentoo.org> (2020-10-24)
 # EAPI 4, broken since 2012, upstream disappeared, multiple QA issues,
 # build system is completely broken. Removal in 30 days,
@@ -247,12 +251,6 @@ sys-apps/lcdtest
 =dev-python/pypy3-7.3.2_p37*
 =dev-python/pypy3-exe-7.3.2_p37*
 =dev-python/pypy3-exe-bin-7.3.2_p37*
-
-# Michał Górny <mgorny@gentoo.org> (2020-09-25)
-# Effectively unmaintained.  Not ported to py3.7.  Multiple unresolved
-# build failures reported.  No reverse dependencies.
-# Removal in 30 days.  Bug #737412.
-sci-libs/shogun
 
 # Michał Górny <mgorny@gentoo.org> (2020-09-09)
 # These packages (or package versions) still require Python 2.7.
