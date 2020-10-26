@@ -6,15 +6,14 @@ EAPI=7
 CMAKE_MAKEFILE_GENERATOR="emake"
 ECM_HANDBOOK="forceoptional"
 ECM_TEST="forceoptional"
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{7,8} )
 PVCUT=$(ver_cut 1-3)
 KFMIN=5.70.0
 QTMIN=5.14.2
 inherit ecm kde.org python-single-r1
 
 DESCRIPTION="Interface for doing mathematics and scientific computing"
-HOMEPAGE="https://kde.org/applications/education/org.kde.cantor
-https://edu.kde.org/cantor/"
+HOMEPAGE="https://apps.kde.org/en/cantor https://edu.kde.org/cantor/"
 
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="5"

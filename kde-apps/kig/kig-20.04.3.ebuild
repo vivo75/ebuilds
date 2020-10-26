@@ -5,14 +5,13 @@ EAPI=7
 
 ECM_HANDBOOK="forceoptional"
 ECM_TEST="true"
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{7,8} )
 KFMIN=5.70.0
 QTMIN=5.14.2
 inherit python-single-r1 ecm kde.org
 
 DESCRIPTION="KDE Interactive Geometry tool"
-HOMEPAGE="https://kde.org/applications/education/org.kde.kig
-https://edu.kde.org/kig/"
+HOMEPAGE="https://apps.kde.org/en/kig https://edu.kde.org/kig/"
 
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="5"
