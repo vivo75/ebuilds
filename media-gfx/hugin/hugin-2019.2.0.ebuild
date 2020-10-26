@@ -4,7 +4,7 @@
 EAPI=6
 
 WX_GTK_VER="3.0"
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit python-single-r1 wxwidgets cmake-utils eapi7-ver xdg
 
@@ -85,6 +85,10 @@ src_configure() {
 src_install() {
 	cmake-utils_src_install
 	use python && python_optimize
+
+	mkdir -p "${ED}"/usr/share/metainfo || die
+	mv "${ED}"/usr/share/appdata/* "${ED}"/usr/share/metainfo/ || die
+	rmdir "${ED}"/usr/share/appdata || die
 
 	local lang
 	for lang in ${LANGS} ; do
