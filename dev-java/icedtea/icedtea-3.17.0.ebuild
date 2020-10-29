@@ -17,16 +17,16 @@ ICEDTEA_BRANCH=$(get_version_component_range 1-2)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
 
-CORBA_TARBALL="ea3169880d70.tar.xz"
-JAXP_TARBALL="883803235596.tar.xz"
-JAXWS_TARBALL="e5d96dc9988a.tar.xz"
-JDK_TARBALL="bb9b9a0ad162.tar.xz"
-LANGTOOLS_TARBALL="e47d37e5fe0b.tar.xz"
-OPENJDK_TARBALL="bca1f7228ce8.tar.xz"
-NASHORN_TARBALL="1d70dcb4ab53.tar.xz"
-HOTSPOT_TARBALL="eeb08cfebded.tar.xz"
-SHENANDOAH_TARBALL="e4e81ae21643.tar.xz"
-AARCH32_TARBALL="ecc1eb1dc760.tar.xz"
+CORBA_TARBALL="${PV}.tar.xz"
+JAXP_TARBALL="${PV}.tar.xz"
+JAXWS_TARBALL="${PV}.tar.xz"
+JDK_TARBALL="${PV}.tar.xz"
+LANGTOOLS_TARBALL="${PV}.tar.xz"
+OPENJDK_TARBALL="${PV}.tar.xz"
+NASHORN_TARBALL="${PV}.tar.xz"
+HOTSPOT_TARBALL="${PV}.tar.xz"
+SHENANDOAH_TARBALL="${PV}.tar.xz"
+AARCH32_TARBALL="${PV}.tar.xz"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.xz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -137,10 +137,10 @@ RDEPEND="${COMMON_DEP}
 # Ant is no longer needed under the new build system
 DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP} ${X_DEPEND}
 	|| (
+		dev-java/openjdk-bin:8
+		dev-java/openjdk:8
 		dev-java/icedtea-bin:8
 		dev-java/icedtea:8
-		dev-java/openjdk:8
-		dev-java/openjdk-bin:8
 	)
 	app-arch/cpio
 	app-arch/unzip
@@ -179,8 +179,8 @@ pkg_setup() {
 	icedtea_check_requirements
 
 	JAVA_PKG_WANT_BUILD_VM="
-		icedtea-8 icedtea-bin-8
-		openjdk-8 openjdk-bin-8"
+		openjdk-8 openjdk-bin-8
+		icedtea-8 icedtea-bin-8"
 	JAVA_PKG_WANT_SOURCE="1.5"
 	JAVA_PKG_WANT_TARGET="1.5"
 
