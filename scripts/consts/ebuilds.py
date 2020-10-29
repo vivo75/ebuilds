@@ -2338,6 +2338,7 @@ EBUILDS_KEEP_ALL = (
     'net-im/pidgin',
     'net-im/signal-desktop-bin',
     'net-im/skype-dbus-mock',
+    'net-im/teams',
     'net-im/telegram-desktop-bin',
     'net-irc/hexchat',
     'net-irc/konversation',
