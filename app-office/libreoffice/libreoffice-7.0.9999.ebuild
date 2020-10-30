@@ -257,11 +257,11 @@ RDEPEND="${COMMON_DEPEND}
 	!app-office/openoffice
 	media-fonts/liberation-fonts
 	|| ( x11-misc/xdg-utils kde-plasma/kde-cli-tools )
-	java? (
+	java? ( || (
 		dev-java/openjdk:11
 		dev-java/openjdk-jre-bin:11
 		>=virtual/jre-1.8
-	)
+	) )
 	kde? ( kde-frameworks/breeze-icons:* )
 "
 if [[ ${MY_PV} != *9999* ]] && [[ ${PV} != *_* ]]; then
@@ -278,9 +278,6 @@ PATCHES=(
 	# not upstreamable stuff
 	"${FILESDIR}/${PN}-5.3.4.2-kioclient5.patch"
 	"${FILESDIR}/${PN}-6.1-nomancompress.patch"
-
-	# git master
-	"${FILESDIR}/${PN}-7.0.3.1-fix-non-pdfium-build.patch"
 )
 
 S="${WORKDIR}/${PN}-${MY_PV}"
