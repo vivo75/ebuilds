@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 VALA_USE_DEPEND="vapigen"
 inherit cmake python-any-r1 vala
 
@@ -48,6 +48,7 @@ DOCS=(
 PATCHES=(
 	"${FILESDIR}/${PN}-3.0.4-tests.patch"
 	"${FILESDIR}/${PN}-3.0.5-pkgconfig-libdir.patch"
+	"${FILESDIR}/${P}-icu-68.patch" # pending upstream PR #448, bug #751928
 )
 
 pkg_setup() {

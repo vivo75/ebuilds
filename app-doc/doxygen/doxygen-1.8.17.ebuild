@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 CMAKE_MAKEFILE_GENERATOR="emake"
 
-inherit cmake-utils eutils llvm python-any-r1
+inherit cmake-utils eutils flag-o-matic llvm python-any-r1
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/doxygen/doxygen.git"
