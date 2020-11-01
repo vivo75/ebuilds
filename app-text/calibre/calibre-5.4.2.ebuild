@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6..8} )
 PYTHON_REQ_USE="sqlite,ssl"
 
 inherit bash-completion-r1 desktop toolchain-funcs python-single-r1 xdg-utils
@@ -11,8 +11,7 @@ inherit bash-completion-r1 desktop toolchain-funcs python-single-r1 xdg-utils
 DESCRIPTION="Ebook management application"
 HOMEPAGE="https://calibre-ebook.com/"
 SRC_URI="https://download.calibre-ebook.com/${PV}/${P}.tar.xz
-	https://github.com/kovidgoyal/calibre/commit/db7007a25faefb0cc90e64dda1c0793393b9512d.patch -> calibre-4.17.0-qt-5.15-fontconfig-bug-725020.patch
-	https://github.com/kovidgoyal/calibre/commit/7b6416ac6522fc40f24f6baf3ca552b17a8b91d6.patch -> calibre-4.9.1-bug-731786.patch"
+	https://dev.gentoo.org/~zmedico/dist/calibre-5.4.2-SIP-v4.patch.xz"
 
 LICENSE="
 	GPL-3+
@@ -33,7 +32,7 @@ LICENSE="
 	OFL-1.1
 	PSF-2
 "
-KEYWORDS="amd64 ~arm x86"
+KEYWORDS="~amd64 ~arm ~x86"
 SLOT="0"
 IUSE="ios +udisks"
 
@@ -64,7 +63,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
 		>=dev-python/lxml-3.8.0[${PYTHON_MULTI_USEDEP}]
 		>=dev-python/markdown-3.0.1[${PYTHON_MULTI_USEDEP}]
 		>=dev-python/mechanize-0.3.5[${PYTHON_MULTI_USEDEP}]
-		>=dev-python/msgpack-0.5.6[${PYTHON_MULTI_USEDEP}]
+		>=dev-python/msgpack-0.6.2[${PYTHON_MULTI_USEDEP}]
 		>=dev-python/netifaces-0.10.5[${PYTHON_MULTI_USEDEP}]
 		>=dev-python/pillow-3.2.0[${PYTHON_MULTI_USEDEP}]
 		>=dev-python/psutil-4.3.0[${PYTHON_MULTI_USEDEP}]
@@ -73,6 +72,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
 		>=dev-python/PyQt5-5.12[gui,svg,widgets,network,printsupport,${PYTHON_MULTI_USEDEP}]
 		>=dev-python/PyQtWebEngine-5.12[${PYTHON_MULTI_USEDEP}]
 		dev-python/regex[${PYTHON_MULTI_USEDEP}]
+		dev-python/zeroconf[${PYTHON_MULTI_USEDEP}]
 	')
 	dev-qt/qtcore:5=
 	dev-qt/qtdbus:5=
@@ -124,9 +124,7 @@ src_prepare() {
 	eapply \
 		"${FILESDIR}/${PN}-2.9.0-no_updates_dialog.patch" \
 		"${FILESDIR}/${PN}-disable_plugins.patch" \
-		"${FILESDIR}/${PN}-4.9.1-py3-Ignore-TypeError-sorting-collections-kobo.patch" \
-		"${DISTDIR}/calibre-4.17.0-qt-5.15-fontconfig-bug-725020.patch" \
-		"${DISTDIR}/calibre-4.9.1-bug-731786.patch"
+		"${WORKDIR}/${PN}-5.4.2-SIP-v4.patch"
 
 	eapply_user
 
@@ -157,6 +155,7 @@ src_prepare() {
 '-e', 's|^CXXFLAGS .*|\\\\\\\\0 ${CXXFLAGS}|', \
 '-e', 's|^LFLAGS .*|\\\\\\\\0 ${LDFLAGS}|', \
 '-i', 'Makefile'])" \
+		-e "s|open(self.j(bdir, '.qmake.conf'), 'wb').close()|open(self.j(bdir, '.qmake.conf'), 'wb').write(b'QMAKE_LFLAGS += ${LDFLAGS}')|" \
 		-i setup/build.py || die "sed failed to patch build.py"
 }
 
@@ -166,14 +165,15 @@ src_install() {
 
 	# Bypass kbuildsycoca and update-mime-database in order to
 	# avoid sandbox violations if xdg-mime tries to call them.
-	cat - > "${T}/kbuildsycoca" <<-EOF
+	mkdir "${T}/bin" || die
+	cat - > "${T}/bin/kbuildsycoca" <<-EOF
 	#!${BASH}
 	echo $0 : $@
 	exit 0
 	EOF
 
-	cp "${T}"/{kbuildsycoca,update-mime-database} || die
-	chmod +x "${T}"/{kbuildsycoca,update-mime-database} || die
+	cp "${T}"/bin/{kbuildsycoca,update-mime-database} || die
+	chmod +x "${T}"/bin/{kbuildsycoca,update-mime-database} || die
 
 	export QMAKE="${EPREFIX}/usr/$(get_libdir)/qt5/bin/qmake"
 
@@ -206,7 +206,7 @@ src_install() {
 
 	addpredict /dev/dri #665310
 
-	PATH=${T}:${PATH} PYTHONPATH=${S}/src${PYTHONPATH:+:}${PYTHONPATH} \
+	PATH=${T}/bin:${PATH} PYTHONPATH=${S}/src${PYTHONPATH:+:}${PYTHONPATH} \
 	"${PYTHON}" setup.py install \
 		--root="${D}" \
 		--prefix="${EPREFIX}/usr" \
@@ -228,25 +228,10 @@ src_install() {
 	python_fix_shebang --force "${ED}"
 
 	einfo "Compiling python modules"
-	python_optimize "${ED}"/usr/lib/calibre
+	python_optimize "${ED}"/usr/$(get_libdir)/calibre "${D}/$(python_get_sitedir)"
 
 	newinitd "${FILESDIR}"/calibre-server-3.init calibre-server
 	newconfd "${FILESDIR}"/calibre-server-3.conf calibre-server
-
-	bashcomp_alias calibre \
-		lrfviewer \
-		calibre-debug \
-		ebook-meta \
-		calibre-server \
-		ebook-viewer \
-		ebook-polish \
-		fetch-ebook-metadata \
-		lrf2lrs \
-		ebook-convert \
-		ebook-edit \
-		calibre-smtp \
-		ebook-device
-
 }
 
 pkg_preinst() {
