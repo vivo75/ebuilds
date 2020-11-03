@@ -32,6 +32,13 @@
 
 #--- END OF EXAMPLES ---
 
+# Sergei Trofimovich <slyfox@gentoo.org> (2020-11-03)
+# Hackage release does not build against gcc-8:
+# https://github.com/Helium4Haskell/helium/issues/4
+# Masked for removal. Bugs: #751757, #736054
+dev-lang/helium
+dev-haskell/lvmlib
+
 # Joonas Niilola <juippis@gentoo.org> (2020-11-03)
 # Dead upstream, or broken for a long time, not maintained in Gentoo.
 # Removal in 30 days. Bug #752462
@@ -256,19 +263,6 @@ sys-auth/pam_passwdqc
 # Version 1.11 introduced different startup conventions for the server
 # which breaks the OpenRC init script. Bug #746227.
 >=net-misc/tigervnc-1.11.0
-
-# David Seifert <soap@gentoo.org> (2020-10-03)
-# Broken for over 2 years, declared EOL by upstream,
-# the only revdep is media-gfx/pinta, which is also
-# broken. Bug #612592, #644232, #659436, #688722,
-# Removal in 30 days.
-dev-dotnet/mono-addins
-media-gfx/pinta
-
-# Alexey Sokolov <alexey+gentoo@asokolov.org> (2020-10-03)
-# Package with no available HOMEPAGE, SRC_URI and multiple compilation issues.
-# Bug #741468, removal in 30 days.
-games-board/spider
 
 # Michał Górny <mgorny@gentoo.org> (2020-09-25)
 # PyPy3.7 alpha.  Known to break a few packages.  Masked until it
