@@ -4,7 +4,7 @@
 EAPI=6
 
 DISTUTILS_USE_SETUPTOOLS=no
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 PYTHON_REQ_USE='bzip2(+)'
 
 inherit distutils-r1
@@ -50,7 +50,7 @@ python_install() {
 }
 
 pkg_postinst() {
-	if [[ -z {REPLACING_VERSIONS} ]]; then
+	if [[ -z ${REPLACING_VERSIONS} ]]; then
 		elog ""
 		elog "This release of repoman is from the new portage/repoman split"
 		elog "release code base."
