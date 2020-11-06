@@ -3,7 +3,7 @@
 
 EAPI="7"
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit python-r1 toolchain-funcs
 
@@ -35,7 +35,7 @@ LIB_DEPEND="aio? ( dev-libs/libaio[static-libs(+)] )
 	)
 	glusterfs? ( sys-cluster/glusterfs[static-libs(+)] )
 	gtk? ( dev-libs/glib:2[static-libs(+)] )
-	io-uring? ( sys-libs/liburing[static-libs(+)] )
+	io-uring? ( sys-libs/liburing:=[static-libs(+)] )
 	numa? ( sys-process/numactl[static-libs(+)] )
 	rbd? ( sys-cluster/ceph[static-libs(+)] )
 	rdma? (

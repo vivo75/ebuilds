@@ -3,7 +3,9 @@
 
 EAPI=7
 
-inherit autotools flag-o-matic readme.gentoo-r1 toolchain-funcs wxwidgets
+LUA_COMPAT=( lua5-{1,2,3} )
+
+inherit autotools flag-o-matic lua-single readme.gentoo-r1 toolchain-funcs wxwidgets
 
 DESCRIPTION="Command-line driven interactive plotting program"
 HOMEPAGE="http://www.gnuplot.info/"
@@ -25,6 +27,7 @@ S="${WORKDIR}/${MY_P}"
 LICENSE="gnuplot"
 SLOT="0"
 IUSE="aqua bitmap cairo doc examples +gd ggi latex libcaca libcerf lua qt5 readline regis wxwidgets X"
+REQUIRED_USE="lua? ( ${LUA_REQUIRED_USE} )"
 
 RDEPEND="
 	cairo? (
@@ -38,7 +41,7 @@ RDEPEND="
 			dev-tex/pgf
 			>=dev-texlive/texlive-latexrecommended-2008-r2 ) )
 	libcaca? ( media-libs/libcaca )
-	lua? ( dev-lang/lua:0 )
+	lua? ( ${LUA_DEPS} )
 	qt5? (
 		dev-qt/qtcore:5=
 		dev-qt/qtgui:5=
@@ -73,7 +76,12 @@ TEXMF="${EPREFIX}/usr/share/texmf-site"
 PATCHES=(
 	"${FILESDIR}"/${PN}-5.0.1-fix-underlinking.patch
 	"${FILESDIR}"/${PN}-5.0.6-no-picins.patch
+	"${FILESDIR}"/${PN}-5.4.0-pkg-config.patch
 )
+
+pkg_setup() {
+	use lua && lua-single_pkg_setup
+}
 
 src_prepare() {
 	default
