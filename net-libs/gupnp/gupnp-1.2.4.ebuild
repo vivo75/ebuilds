@@ -3,7 +3,7 @@
 
 EAPI="7"
 VALA_USE_DEPEND="vapigen"
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 PYTHON_REQ_USE="xml"
 
 inherit gnome.org meson multilib-minimal python-single-r1 vala xdg
@@ -13,7 +13,7 @@ HOMEPAGE="https://wiki.gnome.org/Projects/GUPnP"
 
 LICENSE="LGPL-2+ GPL-2+" # gupnp-binding-tool is GPL-2+
 SLOT="0/1.2-0" # <API version>-<soname>
-KEYWORDS="~alpha amd64 ~arm arm64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86"
+KEYWORDS="~alpha amd64 ~arm arm64 ~hppa ~ia64 ~ppc ppc64 ~sparc x86"
 
 IUSE="connman gtk-doc +introspection kernel_linux networkmanager vala"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}
