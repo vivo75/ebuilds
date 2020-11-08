@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit cmake python-single-r1 udev systemd
 
@@ -15,7 +15,7 @@ if [[ ${PV} == "9999" ]]; then
 	EGIT_REPO_URI="https://github.com/linux-rdma/rdma-core"
 else
 	SRC_URI="https://github.com/linux-rdma/rdma-core/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~alpha amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~s390 ~sparc x86"
+	KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ppc ppc64 ~s390 sparc x86"
 fi
 
 LICENSE="|| ( GPL-2 ( CC0-1.0 MIT BSD BSD-with-attribution ) )"
