@@ -51,8 +51,8 @@ LINGUAS="en it"
 CONFIG_PROTECT_MASK="/etc/mtab"
 
 # python targets to build
-PYTHON_SINGLE_TARGET="-* python3_7"
-PYTHON_TARGETS="python2_7 python3_7"
+PYTHON_SINGLE_TARGET="-* python3_8"
+PYTHON_TARGETS="python3_8 python3_9"
 
 LLVM_TARGETS="AArch64 AMDGPU ARM BPF NVPTX WebAssembly X86"
 VIDEO_CARDS="-* intel i965 nouveau radeon radeonsi amdgpu qxl modesetting virgl"
