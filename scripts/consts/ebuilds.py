@@ -1207,6 +1207,7 @@ EBUILDS_KEEP_ALL = (
     'dev-python/mechanize',
     'dev-python/mediafile',
     'dev-python/meld3',
+    'dev-python/python-mimeparse',
     'dev-python/mistune',
     'dev-python/mkdocs',
     'dev-python/mock',
