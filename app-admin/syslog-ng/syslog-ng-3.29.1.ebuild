@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{7..9} )
 inherit autotools python-single-r1 systemd
 
 MY_PV_MM=$(ver_cut 1-2)
@@ -34,7 +34,7 @@ RDEPEND="
 	python? ( ${PYTHON_DEPS} )
 	redis? ( >=dev-libs/hiredis-0.11.0:= )
 	smtp? ( net-libs/libesmtp )
-	snmp? ( net-analyzer/net-snmp )
+	snmp? ( net-analyzer/net-snmp:0= )
 	spoof-source? ( net-libs/libnet:1.1= )
 	systemd? ( sys-apps/systemd:= )
 	tcpd? ( >=sys-apps/tcp-wrappers-7.6 )
@@ -49,8 +49,9 @@ BDEPEND="
 DOCS=( AUTHORS NEWS.md CONTRIBUTING.md contrib/syslog-ng.conf.{HP-UX,RedHat,SunOS,doc}
 	contrib/syslog2ng "${T}/syslog-ng.conf.gentoo.hardened"
 	"${T}/syslog-ng.logrotate.hardened" "${FILESDIR}/README.hardened" )
-
-PATCHES=( "${FILESDIR}/patches/${PN}-fno-common.patch" )
+PATCHES=(
+	"${FILESDIR}"/${PN}-3.28.1-net-snmp.patch
+)
 
 pkg_setup() {
 	use python && python-single-r1_pkg_setup
@@ -125,7 +126,7 @@ src_configure() {
 		$(use_enable python)
 		$(use_enable redis)
 		$(use_enable smtp)
-		$(use_enable snmp snmp-dest)
+		$(use_enable snmp afsnmp)
 		$(use_enable spoof-source)
 		$(use_enable systemd)
 		$(use_enable tcpd tcp-wrapper)
