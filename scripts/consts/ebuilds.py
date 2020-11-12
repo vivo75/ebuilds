@@ -1239,6 +1239,7 @@ EBUILDS_KEEP_ALL = (
     'dev-python/passlib',
     'dev-python/pastedeploy',
     'dev-python/path-py',
+    'dev-python/pathspec',
     'dev-python/pathlib',
     'dev-python/pbr',
     'dev-python/pecan',
