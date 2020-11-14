@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_USE_SETUPTOOLS=no
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7} )
 PYTHON_REQ_USE="xml(+),threads(+)"
 
 inherit distutils-r1
@@ -68,7 +68,6 @@ pkg_postinst() {
 		elog "    app-admin/eclean-kernel"
 		elog "    app-portage/diffmask"
 		elog "    app-portage/flaggie"
-		elog "    app-portage/install-mask"
 		elog "    app-portage/portpeek"
 		elog "    app-portage/smart-live-rebuild"
 	fi

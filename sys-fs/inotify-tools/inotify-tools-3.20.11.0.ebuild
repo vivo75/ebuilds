@@ -11,7 +11,7 @@ SRC_URI="https://github.com/${PN}/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 arm ~arm64 ~hppa ~mips ~sparc x86"
+KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~mips ~sparc ~x86"
 IUSE="doc"
 
 DEPEND="doc? ( app-doc/doxygen )"
@@ -30,6 +30,7 @@ src_prepare() {
 src_configure() {
 	# only docs installed are doxygen ones, so use /html
 	local myeconfargs=(
+		--disable-static
 		--docdir='$(datarootdir)'/doc/${PF}/html
 		$(use_enable doc doxygen)
 	)
@@ -38,5 +39,5 @@ src_configure() {
 
 src_install() {
 	default
-	find "${ED}" \( -name '*.a*' -o -name '*.la' \) -delete || die
+	find "${ED}" -name '*.la' -delete || die
 }
