@@ -32,6 +32,31 @@
 
 #--- END OF EXAMPLES ---
 
+# Michał Górny <mgorny@gentoo.org> (2020-11-15)
+# Fails to build.  Lots of bugs filed.  Not touched by maintainer
+# since 2018.
+# Removal in 30 days.  Bug #721990.
+media-video/cinelerra
+
+# Sergei Trofimovich <slyfox@gentoo.org> (2020-11-03)
+# Not compatible with ghc-8.8 or above: #754285
+# No revdeps. Masked for removal.
+dev-haskell/ghc-syb-utils
+
+# Aisha Tammy <gentoo@aisha.cc> (2020-11-13)
+# dead packages with latest releases before 2013
+# these are superseded by other scikit packages
+# scikit-optimize, sktime
+# Removal in 30 days (Bug #749297)
+sci-libs/scikits_optimization
+sci-libs/scikits_timeseries
+
+# Jonas Stein <jstein@gentoo.org> (2020-11-12)
+# Adobe will stop distributing Flash Player after 2020-12-31.
+# Masked for removal after 2020-12-31
+# Bug #754192
+www-plugins/adobe-flash
+
 # Michał Górny <mgorny@gentoo.org> (2020-11-10)
 # This old Kodi version requires vulnerable dev-python/pillow
 # and prevents users from upgrading.  Masked for the time being.
@@ -126,20 +151,6 @@ sci-libs/mkl-rt
 # Removal in 30 days.  Bug #725646.
 media-fonts/mathematica-fonts
 
-# Michał Górny <mgorny@gentoo.org> (2020-11-07)
-# sys-cluster/cluster-glue fails to install for almost a year now.
-# The remaining packages are its reverse dependencies.
-#
-# The stable version of sys-cluster/pacemaker is vulnerable.  It is also
-# using Python 2.  A newer version can not be stabilized because
-# of the above.
-#
-# Removal in 30 days.  Bug #704610.
-sys-cluster/cluster-glue
-sys-cluster/crmsh
-sys-cluster/pacemaker
-sys-cluster/resource-agents
-
 # Andreas Sturmlechner <asturm@gentoo.org> (2020-11-05)
 # Replaced by kde-frameworks/kdav, masked for removal in 14 days.
 kde-apps/kdav
@@ -177,14 +188,6 @@ net-wireless/openbsc
 net-wireless/openggsn
 net-wireless/osmobts
 net-wireless/osmocom-bb
-
-# Aisha Tammy <gentoo@aisha.cc> (2020-10-31)
-# Redundant historical packages now being provided
-# together by sci-libs/lapack
-# Removal in 14 days. Bug #746962.
-sci-libs/blas-reference
-sci-libs/cblas-reference
-sci-libs/lapack-reference
 
 # Lars Wendler <polynomial-c@gentoo.org> (2020-10-30)
 # Removed public macro definitions for TRUE and FALSE which breaks lots of
@@ -345,12 +348,16 @@ dev-lua/luacrypto
 # Added sci-visualization/gnuplot.
 >=app-misc/worker-3.8.3-r100
 =dev-libs/efl-1.25.1-r10
+>=dev-lua/lua-bit32-5.3.5-r100
+>=dev-lua/lua-zlib-1.2-r100
+>=dev-lua/luaevent-0.4.6-r100
 >=dev-lua/luv-1.32.0.0-r100
 >=dev-lua/luadbi-0.7.2-r100
 >=dev-lua/lutok-0.4-r10
 >=dev-lua/messagepack-0.3.2-r100
 >=dev-lua/toluapp-1.0.93_p20190513-r100
 >=dev-util/geany-plugins-1.37-r100
+=games-action/minetest-5.3.0-r100
 >=games-engines/love-0.7.2-r100:0.7
 >=games-engines/love-0.8.0-r100:0.8
 >=games-engines/love-11.3-r100:0
@@ -363,6 +370,7 @@ dev-lua/luacrypto
 >=www-servers/lighttpd-1.4.55-r100
 >=app-admin/conky-1.11.4
 >=media-sound/aqualung-1.1-r100
+>=games-roguelike/stone-soup-0.25.1-r100
 
 # Andrew Savchenko <bircoph@gentoo.org> (2020-10-11)
 # Mask old openafs version and corresponding openafs-kernel with
@@ -372,13 +380,6 @@ dev-lua/luacrypto
 # No reverse dependencies, bug #719136. Removal in 30 days.
 net-fs/openafs-kernel
 <net-fs/openafs-1.8
-
-# Mikle Kolyada <zlogene@gentoo.org> (2020-10-09)
-# pam module separated from
-# the sys-auth/passwdqc package
-# (now merged back).
-# Removal in 30 days
-sys-auth/pam_passwdqc
 
 # Azamat H. Hackimov <azamat.hackimov@gmail.com> (2020-10-06)
 # 1.3.3 is broken and failing unittests for net-im/prosody. Bug #746782.
@@ -704,12 +705,9 @@ app-admin/amazon-ec2-init
 # Masked slotted lua for testing
 # William Hubbs <williamh@gentoo.org> (2016-08-07)
 # Taking this mask since Mabi is retired
-# Rafael Martins <rafaelmartins@gentoo.org> (2016-12-04)
-# Adding Lua 5.3 to mask
+# consolidating all slotted lua masks
 app-eselect/eselect-lua
-=dev-lang/lua-5.1.5-r103
-=dev-lang/lua-5.2.4-r2
-=dev-lang/lua-5.3.5-r2
+>=dev-lang/lua-5.1.5-r100
 
 # Samuli Suominen <ssuominen@gentoo.org> (2012-03-06)
 # Masked for testing since this is known to break nearly
