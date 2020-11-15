@@ -6,7 +6,7 @@ EAPI=6
 USE_RUBY="ruby23 ruby24 ruby25"
 RUBY_OPTIONAL=yes
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=(python3_6)
 
 inherit eutils perl-module ruby-ng python-single-r1
 
@@ -17,7 +17,7 @@ SRC_URI="http://libguestfs.org/download/${PN}/${P}.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="amd64 x86"
-IUSE="ocaml readline +perl python test static-libs ruby"
+IUSE="ocaml readline +perl python test ruby"
 
 RDEPEND="
 	virtual/libiconv
@@ -82,6 +82,7 @@ src_configure() {
 		--disable-ruby
 		$(use_enable python)
 		--disable-rpath
+		--disable-static
 		)
 
 	econf ${myeconfargs[@]}
@@ -102,4 +103,6 @@ src_install() {
 	if use perl; then
 		perl_delete_localpod
 	fi
+
+	find "${ED}" -name '*.la' -delete || die
 }
