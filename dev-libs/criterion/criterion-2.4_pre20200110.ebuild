@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit meson python-any-r1
 
@@ -27,7 +27,7 @@ RESTRICT="!test? ( test )"
 
 RDEPEND="dev-libs/nanomsg:=
 	dev-libs/libgit2:=
-	virtual/libffi:="
+	dev-libs/libffi:="
 DEPEND="${RDEPEND}
 	dev-libs/boxfort
 	test? (
