@@ -9,9 +9,14 @@ HOMEPAGE="https://github.com/nodejs/http-parser"
 SRC_URI="https://github.com/nodejs/http-parser/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
-SLOT="0/2.9.0"
-KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~mips ~ppc ppc64 ~s390 ~sparc x86 ~amd64-linux ~x64-macos ~x64-solaris"
-IUSE="static-libs"
+# 2.9.4 restored ABI compatibility with 2.9.0 but since we failed
+# to set subslot in 2.9.3, we want to provoke another rebuild
+SLOT="0/2.9.4"
+KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~mips ppc ppc64 ~s390 ~sparc x86 ~amd64-linux ~x64-macos ~x64-solaris"
+
+PATCHES=(
+	"${FILESDIR}"/${P}-non-x86-test.patch
+)
 
 src_prepare() {
 	default
@@ -21,7 +26,6 @@ src_prepare() {
 
 multilib_src_compile() {
 	emake PREFIX="${EPREFIX}/usr" LIBDIR="${EPREFIX}/usr/$(get_libdir)" CFLAGS_FAST="${CFLAGS}" library
-	use static-libs && emake CFLAGS_FAST="${CFLAGS}" package
 }
 
 multilib_src_test() {
@@ -30,5 +34,4 @@ multilib_src_test() {
 
 multilib_src_install() {
 	emake DESTDIR="${D}" PREFIX="${EPREFIX}/usr" LIBDIR="${EPREFIX}/usr/$(get_libdir)" install
-	use static-libs && dolib.a libhttp_parser.a
 }
