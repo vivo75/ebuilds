@@ -18,19 +18,19 @@ SRC_URI="mirror://sourceforge/hplip/${P}.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~arm arm64 ppc ppc64 x86"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~x86"
 
 IUSE="doc fax +hpcups hpijs kde libnotify libressl -libusb0 minimal parport policykit qt5 scanner +snmp static-ppds X"
 
 COMMON_DEPEND="
 	net-print/cups
+	sys-apps/dbus
 	virtual/jpeg:0
 	hpijs? ( net-print/cups-filters[foomatic] )
+	!libusb0? ( virtual/libusb:1 )
+	libusb0? ( virtual/libusb:0 )
+	${PYTHON_DEPS}
 	!minimal? (
-		${PYTHON_DEPS}
-		sys-apps/dbus
-		!libusb0? ( virtual/libusb:1 )
-		libusb0? ( virtual/libusb:0 )
 		scanner? (
 			media-gfx/sane-backends
 		)
@@ -78,7 +78,7 @@ RDEPEND="
 	policykit? ( sys-auth/polkit )
 "
 
-REQUIRED_USE="!minimal? ( ${PYTHON_REQUIRED_USE} )"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
 	"${WORKDIR}/patches"
@@ -95,31 +95,30 @@ https://wiki.gentoo.org/wiki/Printing
 "
 
 pkg_setup() {
-	use !minimal && python-single-r1_pkg_setup
+	python-single-r1_pkg_setup
 
 	use scanner && ! use X && ewarn "You need USE=X for the scanner GUI."
+
+	use parport && linux-info_pkg_setup
+
+	if use minimal ; then
+		ewarn "Installing driver portions only, make sure you know what you are doing."
+		ewarn "Depending on the USE flags set for hpcups or hpijs the appropiate driver"
+		ewarn "is installed. If both USE flags are set hpijs overrides hpcups."
+		ewarn "This also disables fax, network, scanner and gui support!"
+	fi
 
 	if ! use hpcups && ! use hpijs ; then
 		ewarn "Installing neither hpcups (USE=-hpcups) nor hpijs (USE=-hpijs) driver,"
 		ewarn "which is probably not what you want."
 		ewarn "You will almost certainly not be able to print."
 	fi
-
-	if use minimal ; then
-		ewarn "Installing driver portions only, make sure you know what you are doing."
-		ewarn "Depending on the USE flags set for hpcups or hpijs the appropiate driver"
-		ewarn "is installed. If both USE flags are set hpijs overrides hpcups."
-	else
-		use parport && linux-info_pkg_setup
-	fi
 }
 
 src_prepare() {
 	default
 
-	if use !minimal ; then
-		python_fix_shebang .
-	fi
+	python_fix_shebang .
 
 	# Make desktop files follow the specification
 	# Gentoo bug: https://bugs.gentoo.org/show_bug.cgi?id=443680
@@ -146,13 +145,7 @@ src_prepare() {
 }
 
 src_configure() {
-	local myconf drv_build minimal_build
-
-	if use libusb0 ; then
-		myconf="${myconf} --enable-libusb01_build"
-	else
-		myconf="${myconf} --disable-libusb01_build"
-	fi
+	local drv_build minimal_build
 
 	if use hpcups ; then
 		drv_build="$(use_enable hpcups hpcups-install)"
@@ -196,19 +189,38 @@ src_configure() {
 			minimal_build="${minimal_build} --disable-hpcups-only-build"
 		fi
 		minimal_build="${minimal_build} --disable-fax-build"
+		minimal_build="${minimal_build} --disable-network-build"
+		minimal_build="${minimal_build} --disable-scan-build"
+		minimal_build="${minimal_build} --disable-gui-build"
 	else
 		if use fax ; then
 			minimal_build="${minimal_build} --enable-fax-build"
 		else
 			minimal_build="${minimal_build} --disable-fax-build"
 		fi
+		if use snmp ; then
+			minimal_build="${minimal_build} --enable-network-build"
+		else
+			minimal_build="${minimal_build} --disable-network-build"
+		fi
+		if use scanner ; then
+			minimal_build="${minimal_build} --enable-scan-build"
+		else
+			minimal_build="${minimal_build} --disable-scan-build"
+		fi
+		if use qt5 ; then
+			minimal_build="${minimal_build} --enable-gui-build"
+		else
+			minimal_build="${minimal_build} --disable-gui-build"
+		fi
 	fi
 
 	# disable class driver for now
 	econf \
+		--disable-class-driver \
+		--disable-foomatic-rip-hplip-install \
 		--disable-cups11-build \
 		--disable-lite-build \
-		--disable-foomatic-rip-hplip-install \
 		--disable-shadow-build \
 		--disable-qt3 \
 		--disable-qt4 \
@@ -217,19 +229,14 @@ src_configure() {
 		--with-cupsfilterdir=$(cups-config --serverbin)/filter \
 		--with-docdir=/usr/share/doc/${PF} \
 		--with-htmldir=/usr/share/doc/${PF}/html \
-		${myconf} \
+		--enable-hpps-install \
+		--enable-dbus-build \
 		${drv_build} \
 		${minimal_build} \
-		--enable-hpps-install \
-		--disable-class-driver \
 		$(use_enable doc doc-build) \
-		$(use_enable !minimal gui-build) \
-		$(use_enable !minimal dbus-build) \
+		$(use_enable libusb0 libusb01_build) \
 		$(use_enable parport pp-build) \
-		$(use_enable policykit) \
-		$(use_enable qt5) \
-		$(use_enable scanner scan-build) \
-		$(use_enable snmp network-build)
+		$(use_enable policykit)
 
 	# hpijs ppds are created at configure time but are not installed (3.17.11)
 
@@ -269,9 +276,7 @@ src_install() {
 
 	find "${D}" -name '*.la' -delete || die
 
-	if use !minimal ; then
-		python_optimize "${ED}"/usr/share/hplip
-	fi
+	python_optimize "${ED}"/usr/share/hplip
 
 	readme.gentoo_create_doc
 }
