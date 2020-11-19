@@ -106,6 +106,7 @@ EBUILDS_KEEP_ALL = (
     'app-crypt/sbsigntools',
     'app-crypt/seahorse',
     'app-crypt/stoken',
+    'app-crypt/tpm2-tss',
     'app-crypt/trousers',
     'app-dicts/aspell-en',
     'app-dicts/aspell-it',
