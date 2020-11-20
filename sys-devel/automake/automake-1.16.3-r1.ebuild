@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_6 python3_7 )
 
 inherit python-any-r1
 
@@ -48,8 +48,9 @@ BDEPEND="
 
 PATCHES=(
 	"${FILESDIR}"/automake-1.16.2-py3-compile.patch
+	"${FILESDIR}"/automake-1.16.2-fix-instmany-python.sh-test.patch
+	"${FILESDIR}"/automake-1.16.2-fix-py-compile-basedir.sh-test.patch
 )
-# All patches have been submitted upstream.
 
 pkg_setup() {
 	use test && python-any-r1_pkg_setup

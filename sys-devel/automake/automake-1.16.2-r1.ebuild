@@ -11,7 +11,7 @@ if [[ ${PV} == 9999 ]] ; then
 
 	inherit git-r3
 else
-	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~ppc-aix ~x64-cygwin ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~m68k-mint ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
+	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc x86 ~ppc-aix ~x64-cygwin ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~m68k-mint ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
 	if [[ ${PV/_beta} == ${PV} ]]; then
 		MY_P="${P}"
 		SRC_URI="mirror://gnu/${PN}/${P}.tar.xz
@@ -48,8 +48,10 @@ BDEPEND="
 
 PATCHES=(
 	"${FILESDIR}"/automake-1.16.2-py3-compile.patch
+	"${FILESDIR}"/automake-1.16.2-fix-instmany-python.sh-test.patch
+	"${FILESDIR}"/automake-1.16.2-fix-py-compile-basedir.sh-test.patch
+	"${FILESDIR}"/automake-1.16.2-skip-tags-lisp-space-without-etags.patch
 )
-# All patches have been submitted upstream.
 
 pkg_setup() {
 	use test && python-any-r1_pkg_setup

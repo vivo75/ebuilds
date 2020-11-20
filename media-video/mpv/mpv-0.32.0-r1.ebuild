@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python{3_6,3_7,3_8} )
 PYTHON_REQ_USE='threads(+)'
 
 WAF_PV=2.0.9
@@ -82,7 +82,7 @@ COMMON_DEPEND="
 	jpeg? ( virtual/jpeg:0 )
 	lcms? ( >=media-libs/lcms-2.6:2 )
 	libass? (
-		>=media-libs/libass-0.12.1:=[fontconfig,harfbuzz]
+		>=media-libs/libass-0.12.1:=[fontconfig,harfbuzz(+)]
 		virtual/ttf-fonts
 	)
 	libcaca? ( >=media-libs/libcaca-0.99_beta18 )
