@@ -1287,6 +1287,7 @@ EBUILDS_KEEP_ALL = (
     'dev-python/pymdstat',
     'dev-python/pymysql',
     'dev-python/pynacl',
+    'dev-python/pyocr',
     'dev-python/pyopengl',
     'dev-python/pyopengl_accelerate',
     'dev-python/pyopenssl',
