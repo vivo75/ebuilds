@@ -432,12 +432,6 @@ gnome-base/orbit
 # Removal in 30 days.  Bug #635592.
 games-strategy/asc
 
-# Michał Górny <mgorny@gentoo.org> (2020-10-23)
-# Needs a dedicated maintainer.  The current version fails to build.
-# Needs a version bump.
-# Removal in 30 days.  Bug #614408.
-games-strategy/megaglest
-
 # Maciej Mrozowski <reavertm@gentoo.org> (2020-10-23)
 # Crashes at startup - bug #750770, dead upstream - bug #737936
 # Removal in 30 days.
@@ -467,6 +461,8 @@ dev-lua/luacrypto
 >=dev-lua/lua-bit32-5.3.5-r100
 >=dev-lua/lua-zlib-1.2-r100
 >=dev-lua/luaevent-0.4.6-r100
+>=dev-lua/luasec-0.9-r100
+>=dev-lua/luasocket-3.0_rc1_p20200328-r100
 >=dev-lua/luv-1.32.0.0-r100
 >=dev-lua/luadbi-0.7.2-r100
 >=dev-lua/lutok-0.4-r10
