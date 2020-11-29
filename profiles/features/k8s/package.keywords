@@ -6,7 +6,6 @@
 <app-emulation/docker-registry-9999 amd64
 <dev-db/etcd-9999 amd64
 <dev-python/docker-py-9999 amd64
-<dev-python/docker-pycreds-9999 amd64
 <dev-python/dockerpty-9999 amd64
 <dev-util/docker-distribution-pruner-9999 amd64
 <dev-util/docker-ls-9999 amd64
