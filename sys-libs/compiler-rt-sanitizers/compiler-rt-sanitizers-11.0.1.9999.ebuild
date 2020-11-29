@@ -3,19 +3,15 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
-inherit check-reqs cmake-utils flag-o-matic llvm llvm.org \
-	multiprocessing python-any-r1
+PYTHON_COMPAT=( python3_{6..9} )
+inherit check-reqs cmake flag-o-matic llvm llvm.org python-any-r1
 
 DESCRIPTION="Compiler runtime libraries for clang (sanitizers & xray)"
 HOMEPAGE="https://llvm.org/"
-LLVM_COMPONENTS=( compiler-rt )
-LLVM_TEST_COMPONENTS=( llvm/lib/Testing/Support llvm/utils/unittest )
-llvm.org_set_globals
 
 LICENSE="Apache-2.0-with-LLVM-exceptions || ( UoI-NCSA MIT )"
 SLOT="$(ver_cut 1-3)"
-KEYWORDS="amd64 arm arm64 ppc64 x86 ~amd64-linux ~ppc-macos ~x64-macos ~x86-macos"
+KEYWORDS=""
 IUSE="+clang +libfuzzer +profile +sanitize test +xray elibc_glibc"
 # FIXME: libfuzzer does not enable all its necessary dependencies
 REQUIRED_USE="libfuzzer? ( || ( sanitize xray ) )"
@@ -26,17 +22,20 @@ CLANG_SLOT=${SLOT%%.*}
 DEPEND="
 	>=sys-devel/llvm-6"
 BDEPEND="
+	>=dev-util/cmake-3.16
 	clang? ( sys-devel/clang )
 	elibc_glibc? ( net-libs/libtirpc )
 	test? (
 		!<sys-apps/sandbox-2.13
 		$(python_gen_any_dep ">=dev-python/lit-5[\${PYTHON_USEDEP}]")
 		=sys-devel/clang-${PV%_*}*:${CLANG_SLOT}
-		sys-libs/compiler-rt:${SLOT} )
+		sys-libs/compiler-rt:${SLOT}
+	)
 	${PYTHON_DEPS}"
 
-# least intrusive of all
-CMAKE_BUILD_TYPE=RelWithDebInfo
+LLVM_COMPONENTS=( compiler-rt )
+LLVM_TEST_COMPONENTS=( llvm/lib/Testing/Support llvm/utils/unittest )
+llvm.org_set_globals
 
 python_check_deps() {
 	use test || return 0
@@ -58,6 +57,12 @@ pkg_setup() {
 	check_space
 	llvm_pkg_setup
 	python-any-r1_pkg_setup
+}
+
+src_prepare() {
+	sed -i -e 's:-Werror::' lib/tsan/go/buildgo.sh || die
+
+	llvm.org_src_prepare
 }
 
 src_configure() {
@@ -84,12 +89,14 @@ src_configure() {
 		-DCOMPILER_RT_BUILD_PROFILE=$(usex profile)
 		-DCOMPILER_RT_BUILD_SANITIZERS=$(usex sanitize)
 		-DCOMPILER_RT_BUILD_XRAY=$(usex xray)
+
+		-DPython3_EXECUTABLE="${PYTHON}"
 	)
 	if use test; then
 		mycmakeargs+=(
 			-DLLVM_MAIN_SRC_DIR="${WORKDIR}/llvm"
 			-DLLVM_EXTERNAL_LIT="${EPREFIX}/usr/bin/lit"
-			-DLLVM_LIT_ARGS="-vv;-j;${LIT_JOBS:-$(makeopts_jobs "${MAKEOPTS}" "$(get_nproc)")}"
+			-DLLVM_LIT_ARGS="$(get_lit_flags)"
 
 			# they are created during src_test()
 			-DCOMPILER_RT_TEST_COMPILER="${BUILD_DIR}/lib/llvm/${CLANG_SLOT}/bin/clang"
@@ -110,7 +117,7 @@ src_configure() {
 		)
 	fi
 
-	cmake-utils_src_configure
+	cmake_src_configure
 
 	if use test; then
 		local sys_dir=( "${EPREFIX}"/usr/lib/clang/${SLOT}/lib/* )
@@ -142,5 +149,5 @@ src_test() {
 	# wipe LD_PRELOAD to make ASAN happy
 	local -x LD_PRELOAD=
 
-	cmake-utils_src_make check-all
+	cmake_build check-all
 }

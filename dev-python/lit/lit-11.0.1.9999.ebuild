@@ -4,18 +4,16 @@
 EAPI=7
 
 DISTUTILS_USE_SETUPTOOLS=rdepend
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6..9} )
 
-inherit distutils-r1 llvm.org multiprocessing
+inherit distutils-r1 llvm.org
 
 DESCRIPTION="A stand-alone install of the LLVM suite testing tool"
 HOMEPAGE="https://llvm.org/"
-LLVM_COMPONENTS=( llvm/utils/lit )
-llvm.org_set_globals
 
 LICENSE="Apache-2.0-with-LLVM-exceptions UoI-NCSA"
 SLOT="0"
-KEYWORDS="amd64 arm arm64 ppc64 x86"
+KEYWORDS=""
 IUSE="test"
 RESTRICT="!test? ( test )"
 
@@ -25,10 +23,18 @@ BDEPEND="
 		dev-python/psutil[${PYTHON_USEDEP}]
 		sys-devel/llvm )"
 
+LLVM_COMPONENTS=( llvm/utils/lit )
+llvm.org_set_globals
+
 # TODO: move the manpage generation here (from sys-devel/llvm)
+
+src_prepare() {
+	cd "${WORKDIR}" || die
+	distutils-r1_src_prepare
+}
 
 python_test() {
 	local -x LIT_PRESERVES_TMP=1
-	./lit.py -j "${LIT_JOBS:-$(makeopts_jobs "${MAKEOPTS}" "$(get_nproc)")}" \
-		-vv tests || die
+	local litflags=$(get_lit_flags)
+	./lit.py ${litflags//;/ } tests || die
 }

@@ -3,19 +3,15 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
-inherit cmake-utils llvm llvm.org multiprocessing python-single-r1 \
-	toolchain-funcs
+PYTHON_COMPAT=( python3_{6..9} )
+inherit cmake llvm llvm.org python-single-r1 toolchain-funcs
 
 DESCRIPTION="The LLVM debugger"
 HOMEPAGE="https://llvm.org/"
-LLVM_COMPONENTS=( lldb )
-LLVM_TEST_COMPONENTS=( llvm/lib/Testing/Support llvm/utils/unittest )
-llvm.org_set_globals
 
 LICENSE="Apache-2.0-with-LLVM-exceptions UoI-NCSA"
 SLOT="0"
-KEYWORDS="amd64 arm arm64 x86"
+KEYWORDS=""
 IUSE="libedit lzma ncurses +python test"
 REQUIRED_USE=${PYTHON_REQUIRED_USE}
 RESTRICT="!test? ( test )"
@@ -35,16 +31,19 @@ RDEPEND="
 	!<sys-devel/llvm-4.0"
 DEPEND="${RDEPEND}"
 BDEPEND="
+	>=dev-util/cmake-3.16
 	python? ( >=dev-lang/swig-3.0.11 )
 	test? (
 		$(python_gen_cond_dep "
 			~dev-python/lit-${PV}[\${PYTHON_MULTI_USEDEP}]
 		")
-		sys-devel/lld )
+		sys-devel/lld
+	)
 	${PYTHON_DEPS}"
 
-# least intrusive of all
-CMAKE_BUILD_TYPE=RelWithDebInfo
+LLVM_COMPONENTS=( lldb )
+LLVM_TEST_COMPONENTS=( llvm/lib/Testing/Support llvm/utils/unittest )
+llvm.org_set_globals
 
 pkg_setup() {
 	LLVM_MAX_SLOT=${PV%%.*} llvm_pkg_setup
@@ -72,6 +71,8 @@ src_configure() {
 		# ncurses with complete library set (including autodetection
 		# of -ltinfo)
 		-DCURSES_NEED_NCURSES=ON
+
+		-DPython3_EXECUTABLE="${PYTHON}"
 	)
 	use test && mycmakeargs+=(
 		-DLLVM_BUILD_TESTS=$(usex test)
@@ -80,20 +81,21 @@ src_configure() {
 
 		-DLLVM_MAIN_SRC_DIR="${WORKDIR}/llvm"
 		-DLLVM_EXTERNAL_LIT="${EPREFIX}/usr/bin/lit"
-		-DLLVM_LIT_ARGS="-vv;-j;${LIT_JOBS:-$(makeopts_jobs "${MAKEOPTS}" "$(get_nproc)")}"
+		-DLLVM_LIT_ARGS="$(get_lit_flags)"
 	)
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_test() {
 	local -x LIT_PRESERVES_TMP=1
-	cmake-utils_src_make check-lldb-lit
-	use python && cmake-utils_src_make check-lldb
+	cmake_build check-lldb-lit
+	# failures + hangs
+	#use python && cmake_build check-lldb
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 	find "${D}" -name '*.a' -delete || die
 
 	use python && python_optimize

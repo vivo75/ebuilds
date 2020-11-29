@@ -3,18 +3,15 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
-inherit cmake-utils flag-o-matic llvm llvm.org multiprocessing \
-	python-any-r1 toolchain-funcs
+PYTHON_COMPAT=( python3_{6..9} )
+inherit cmake flag-o-matic llvm llvm.org python-any-r1 toolchain-funcs
 
 DESCRIPTION="Compiler runtime library for clang (built-in part)"
 HOMEPAGE="https://llvm.org/"
-LLVM_COMPONENTS=( compiler-rt )
-llvm.org_set_globals
 
 LICENSE="Apache-2.0-with-LLVM-exceptions || ( UoI-NCSA MIT )"
 SLOT="$(ver_cut 1-3)"
-KEYWORDS="amd64 arm arm64 ppc64 x86 ~amd64-linux ~ppc-macos ~x64-macos ~x86-macos"
+KEYWORDS=""
 IUSE="+clang test"
 RESTRICT="!test? ( test ) !clang? ( test )"
 
@@ -23,14 +20,16 @@ CLANG_SLOT=${SLOT%%.*}
 DEPEND="
 	>=sys-devel/llvm-6"
 BDEPEND="
+	>=dev-util/cmake-3.16
 	clang? ( sys-devel/clang )
 	test? (
 		$(python_gen_any_dep ">=dev-python/lit-9.0.1[\${PYTHON_USEDEP}]")
-		=sys-devel/clang-${PV%_*}*:${CLANG_SLOT} )
+		=sys-devel/clang-${PV%_*}*:${CLANG_SLOT}
+	)
 	${PYTHON_DEPS}"
 
-# least intrusive of all
-CMAKE_BUILD_TYPE=RelWithDebInfo
+LLVM_COMPONENTS=( compiler-rt )
+llvm.org_set_globals
 
 python_check_deps() {
 	use test || return 0
@@ -80,6 +79,8 @@ src_configure() {
 		-DCOMPILER_RT_BUILD_PROFILE=OFF
 		-DCOMPILER_RT_BUILD_SANITIZERS=OFF
 		-DCOMPILER_RT_BUILD_XRAY=OFF
+
+		-DPython3_EXECUTABLE="${PYTHON}"
 	)
 
 	if use prefix && [[ "${CHOST}" == *-darwin* ]] ; then
@@ -92,19 +93,19 @@ src_configure() {
 	if use test; then
 		mycmakeargs+=(
 			-DLLVM_EXTERNAL_LIT="${EPREFIX}/usr/bin/lit"
-			-DLLVM_LIT_ARGS="-vv;-j;${LIT_JOBS:-$(makeopts_jobs "${MAKEOPTS}" "$(get_nproc)")}"
+			-DLLVM_LIT_ARGS="$(get_lit_flags)"
 
 			-DCOMPILER_RT_TEST_COMPILER="${EPREFIX}/usr/lib/llvm/${CLANG_SLOT}/bin/clang"
 			-DCOMPILER_RT_TEST_CXX_COMPILER="${EPREFIX}/usr/lib/llvm/${CLANG_SLOT}/bin/clang++"
 		)
 	fi
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_test() {
 	# respect TMPDIR!
 	local -x LIT_PRESERVES_TMP=1
 
-	cmake-utils_src_make check-builtins
+	cmake_build check-builtins
 }

@@ -3,51 +3,46 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
-inherit cmake-utils llvm llvm.org multilib-minimal multiprocessing \
-	pax-utils python-single-r1 toolchain-funcs
+PYTHON_COMPAT=( python3_{6..9} )
+inherit cmake llvm llvm.org multilib-minimal pax-utils \
+	python-single-r1 toolchain-funcs
 
-MANPAGE_P=llvm-10.0.0-manpages
 DESCRIPTION="C language family frontend for LLVM"
 HOMEPAGE="https://llvm.org/"
-SRC_URI="
-	!doc? ( https://dev.gentoo.org/~mgorny/dist/llvm/${MANPAGE_P}.tar.bz2 )"
-LLVM_COMPONENTS=( clang clang-tools-extra )
-LLVM_TEST_COMPONENTS=(
-	llvm/lib/Testing/Support
-	llvm/utils/{lit,llvm-lit,unittest}
-)
-llvm.org_set_globals
-# We need extra level of indirection for CLANG_RESOURCE_DIR
-S=${WORKDIR}/x/y/clang
 
 # Keep in sync with sys-devel/llvm
-ALL_LLVM_EXPERIMENTAL_TARGETS=( ARC AVR )
-ALL_LLVM_TARGETS=( AArch64 AMDGPU ARM BPF Hexagon Lanai Mips MSP430
+ALL_LLVM_EXPERIMENTAL_TARGETS=( ARC VE )
+ALL_LLVM_TARGETS=( AArch64 AMDGPU ARM AVR BPF Hexagon Lanai Mips MSP430
 	NVPTX PowerPC RISCV Sparc SystemZ WebAssembly X86 XCore
 	"${ALL_LLVM_EXPERIMENTAL_TARGETS[@]}" )
 ALL_LLVM_TARGETS=( "${ALL_LLVM_TARGETS[@]/#/llvm_targets_}" )
-LLVM_TARGET_USEDEPS=${ALL_LLVM_TARGETS[@]/%/?}
 
 # MSVCSetupApi.h: MIT
 # sorttable.js: MIT
 
 LICENSE="Apache-2.0-with-LLVM-exceptions UoI-NCSA MIT"
 SLOT="$(ver_cut 1)"
-KEYWORDS="amd64 arm arm64 ppc64 x86 ~amd64-linux"
-IUSE="debug default-compiler-rt default-libcxx doc +static-analyzer
-	test xml kernel_FreeBSD ${ALL_LLVM_TARGETS[*]}"
+KEYWORDS=""
+IUSE="debug default-compiler-rt default-libcxx default-lld
+	doc +static-analyzer test xml kernel_FreeBSD ${ALL_LLVM_TARGETS[*]}"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}
 	|| ( ${ALL_LLVM_TARGETS[*]} )"
 RESTRICT="!test? ( test )"
 
 RDEPEND="
-	~sys-devel/llvm-${PV}:${SLOT}=[debug=,${LLVM_TARGET_USEDEPS// /,},${MULTILIB_USEDEP}]
+	~sys-devel/llvm-${PV}:${SLOT}=[debug=,${MULTILIB_USEDEP}]
 	static-analyzer? ( dev-lang/perl:* )
 	xml? ( dev-libs/libxml2:2=[${MULTILIB_USEDEP}] )
 	${PYTHON_DEPS}"
+for x in "${ALL_LLVM_TARGETS[@]}"; do
+	RDEPEND+="
+		${x}? ( ~sys-devel/llvm-${PV}:${SLOT}[${x}] )"
+done
+unset x
+
 DEPEND="${RDEPEND}"
 BDEPEND="
+	>=dev-util/cmake-3.16
 	doc? ( dev-python/sphinx )
 	xml? ( virtual/pkgconfig )
 	${PYTHON_DEPS}"
@@ -58,10 +53,17 @@ PDEPEND="
 	sys-devel/clang-common
 	~sys-devel/clang-runtime-${PV}
 	default-compiler-rt? ( =sys-libs/compiler-rt-${PV%_*}* )
-	default-libcxx? ( >=sys-libs/libcxx-${PV} )"
+	default-libcxx? ( >=sys-libs/libcxx-${PV} )
+	default-lld? ( sys-devel/lld )"
 
-# least intrusive of all
-CMAKE_BUILD_TYPE=RelWithDebInfo
+LLVM_COMPONENTS=( clang clang-tools-extra )
+LLVM_MANPAGES=build
+LLVM_TEST_COMPONENTS=(
+	llvm/lib/Testing/Support
+	llvm/utils/{lit,llvm-lit,unittest}
+	llvm/utils/{UpdateTestChecks,update_cc_test_checks.py}
+)
+llvm.org_set_globals
 
 # Multilib notes:
 # 1. ABI_* flags control ABIs libclang* is built for only.
@@ -79,17 +81,74 @@ pkg_setup() {
 	python-single-r1_pkg_setup
 }
 
-src_unpack() {
-	# create extra parent dir for CLANG_RESOURCE_DIR
+src_prepare() {
+	# create extra parent dir for relative CLANG_RESOURCE_DIR access
 	mkdir -p x/y || die
-	cd x/y || die
-	llvm.org_src_unpack
-	mv clang-tools-extra clang/tools/extra || die
+	BUILD_DIR=${WORKDIR}/x/y/clang
 
-	if ! use doc; then
-		ebegin "Unpacking ${MANPAGE_P}.tar.bz2"
-		tar -xf "${DISTDIR}/${MANPAGE_P}.tar.bz2" || die
-		eend ${?}
+	llvm.org_src_prepare
+
+	mv ../clang-tools-extra tools/extra || die
+}
+
+check_distribution_components() {
+	if [[ ${CMAKE_MAKEFILE_GENERATOR} == ninja ]]; then
+		local all_targets=() my_targets=() l
+		cd "${BUILD_DIR}" || die
+
+		while read -r l; do
+			if [[ ${l} == install-*-stripped:* ]]; then
+				l=${l#install-}
+				l=${l%%-stripped*}
+
+				case ${l} in
+					# meta-targets
+					clang-libraries|distribution)
+						continue
+						;;
+					# headers for clang-tidy static library
+					clang-tidy-headers)
+						continue
+						;;
+					# tools
+					clang|clangd|clang-*)
+						;;
+					# static libraries
+					clang*|findAllSymbols)
+						continue
+						;;
+					# conditional to USE=doc
+					docs-clang-html|docs-clang-tools-html)
+						use doc || continue
+						;;
+				esac
+
+				all_targets+=( "${l}" )
+			fi
+		done < <(ninja -t targets all)
+
+		while read -r l; do
+			my_targets+=( "${l}" )
+		done < <(get_distribution_components $"\n")
+
+		local add=() remove=()
+		for l in "${all_targets[@]}"; do
+			if ! has "${l}" "${my_targets[@]}"; then
+				add+=( "${l}" )
+			fi
+		done
+		for l in "${my_targets[@]}"; do
+			if ! has "${l}" "${all_targets[@]}"; then
+				remove+=( "${l}" )
+			fi
+		done
+
+		if [[ ${#add[@]} -gt 0 || ${#remove[@]} -gt 0 ]]; then
+			eqawarn "get_distribution_components() is outdated!"
+			eqawarn "   Add: ${add[*]}"
+			eqawarn "Remove: ${remove[*]}"
+		fi
+		cd - >/dev/null || die
 	fi
 }
 
@@ -118,7 +177,6 @@ get_distribution_components() {
 			c-index-test
 			clang
 			clang-format
-			clang-import-test
 			clang-offload-bundler
 			clang-offload-wrapper
 			clang-refactor
@@ -142,11 +200,17 @@ get_distribution_components() {
 			pp-trace
 		)
 
+		if llvm_are_manpages_built; then
+			out+=(
+				# manpages
+				docs-clang-man
+				docs-clang-tools-man
+			)
+		fi
+
 		use doc && out+=(
 			docs-clang-html
-			docs-clang-man
 			docs-clang-tools-html
-			docs-clang-tools-man
 		)
 
 		use static-analyzer && out+=(
@@ -190,28 +254,36 @@ multilib_src_configure() {
 		# override default stdlib and rtlib
 		-DCLANG_DEFAULT_CXX_STDLIB=$(usex default-libcxx libc++ "")
 		-DCLANG_DEFAULT_RTLIB=$(usex default-compiler-rt compiler-rt "")
+		-DCLANG_DEFAULT_LINKER=$(usex default-lld lld "")
 
 		-DCLANG_ENABLE_ARCMT=$(usex static-analyzer)
 		-DCLANG_ENABLE_STATIC_ANALYZER=$(usex static-analyzer)
+
+		-DPython3_EXECUTABLE="${PYTHON}"
 	)
 	use test && mycmakeargs+=(
-		-DLLVM_MAIN_SRC_DIR="${WORKDIR}/x/y/llvm"
-		-DLLVM_LIT_ARGS="-vv;-j;${LIT_JOBS:-$(makeopts_jobs "${MAKEOPTS}" "$(get_nproc)")}"
+		-DLLVM_MAIN_SRC_DIR="${WORKDIR}/llvm"
+		-DLLVM_LIT_ARGS="$(get_lit_flags)"
 	)
 
 	if multilib_is_native_abi; then
+		local build_docs=OFF
+		if llvm_are_manpages_built; then
+			build_docs=ON
+			mycmakeargs+=(
+				-DLLVM_BUILD_DOCS=ON
+				-DLLVM_ENABLE_SPHINX=ON
+				-DCLANG_INSTALL_SPHINX_HTML_DIR="${EPREFIX}/usr/share/doc/${PF}/html"
+				-DCLANG-TOOLS_INSTALL_SPHINX_HTML_DIR="${EPREFIX}/usr/share/doc/${PF}/tools-extra"
+				-DSPHINX_WARNINGS_AS_ERRORS=OFF
+			)
+		fi
+
 		mycmakeargs+=(
 			# normally copied from LLVM_INCLUDE_DOCS but the latter
 			# is lacking value in stand-alone builds
-			-DCLANG_INCLUDE_DOCS=$(usex doc)
-			-DCLANG_TOOLS_EXTRA_INCLUDE_DOCS=$(usex doc)
-		)
-		use doc && mycmakeargs+=(
-			-DLLVM_BUILD_DOCS=ON
-			-DLLVM_ENABLE_SPHINX=ON
-			-DCLANG_INSTALL_SPHINX_HTML_DIR="${EPREFIX}/usr/share/doc/${PF}/html"
-			-DCLANG-TOOLS_INSTALL_SPHINX_HTML_DIR="${EPREFIX}/usr/share/doc/${PF}/tools-extra"
-			-DSPHINX_WARNINGS_AS_ERRORS=OFF
+			-DCLANG_INCLUDE_DOCS=${build_docs}
+			-DCLANG_TOOLS_EXTRA_INCLUDE_DOCS=${build_docs}
 		)
 	else
 		mycmakeargs+=(
@@ -240,11 +312,13 @@ multilib_src_configure() {
 
 	# LLVM_ENABLE_ASSERTIONS=NO does not guarantee this for us, #614844
 	use debug || local -x CPPFLAGS="${CPPFLAGS} -DNDEBUG"
-	cmake-utils_src_configure
+	cmake_src_configure
+
+	multilib_is_native_abi && check_distribution_components
 }
 
 multilib_src_compile() {
-	cmake-utils_src_compile
+	cmake_build distribution
 
 	# provide a symlink for tests
 	if [[ ! -L ${WORKDIR}/lib/clang ]]; then
@@ -256,9 +330,9 @@ multilib_src_compile() {
 multilib_src_test() {
 	# respect TMPDIR!
 	local -x LIT_PRESERVES_TMP=1
-	cmake-utils_src_make check-clang
+	cmake_build check-clang
 	multilib_is_native_abi &&
-		cmake-utils_src_make check-clang-tools check-clangd
+		cmake_build check-clang-tools check-clangd
 }
 
 src_install() {
@@ -314,7 +388,7 @@ src_install() {
 }
 
 multilib_src_install() {
-	DESTDIR=${D} cmake-utils_src_make install-distribution
+	DESTDIR=${D} cmake_build install-distribution
 
 	# move headers to /usr/include for wrapping & ABI mismatch checks
 	# (also drop the version suffix from runtime headers)
@@ -329,13 +403,8 @@ multilib_src_install_all() {
 		python_optimize "${ED}"/usr/lib/llvm/${SLOT}/share/scan-view
 	fi
 
-	# install pre-generated manpages
-	if ! use doc; then
-		insinto "/usr/lib/llvm/${SLOT}/share/man/man1"
-		doins "${WORKDIR}/x/y/${MANPAGE_P}/clang"/*.1
-	fi
-
 	docompress "/usr/lib/llvm/${SLOT}/share/man"
+	llvm_install_manpages
 	# match 'html' non-compression
 	use doc && docompress -x "/usr/share/doc/${PF}/tools-extra"
 	# +x for some reason; TODO: investigate
