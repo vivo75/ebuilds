@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6..8} )
 PYTHON_REQ_USE="sqlite,ssl"
 
 inherit bash-completion-r1 desktop toolchain-funcs python-single-r1 xdg-utils
@@ -122,7 +122,8 @@ src_prepare() {
 	# disable_plugins: walking sec-hole, wait for upstream to use GHNS interface
 	eapply \
 		"${FILESDIR}/${PN}-2.9.0-no_updates_dialog.patch" \
-		"${FILESDIR}/${PN}-disable_plugins.patch"
+		"${FILESDIR}/${PN}-disable_plugins.patch" \
+		"${FILESDIR}/${PN}-4.22.0-icu68.patch"
 
 	eapply_user
 
