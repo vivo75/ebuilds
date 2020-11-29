@@ -2981,6 +2981,7 @@ EBUILDS_KEEP_ALL = (
     'x11-libs/xtrans',
     'x11-misc/appmenu-gtk-module',
     'x11-misc/colord',
+    'x11-misc/compose-tables',
     'x11-misc/gccmakedep',
     'x11-misc/icon-naming-utils',
     'x11-misc/imake',
