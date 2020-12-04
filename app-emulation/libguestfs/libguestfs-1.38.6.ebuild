@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_6 )
 
 inherit autotools bash-completion-r1 eapi7-ver eutils linux-info perl-functions python-single-r1 xdg-utils
 
@@ -78,7 +78,7 @@ COMMON_DEPEND="
 	)
 	virtual/acl
 	sys-libs/libcap
-	lua? ( dev-lang/lua:* )
+	lua? ( dev-lang/lua:0= )
 	>=dev-libs/yajl-2.0.4
 	gtk? (
 		sys-apps/dbus
