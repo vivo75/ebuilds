@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7} )
 
 inherit font python-any-r1
 
@@ -12,7 +12,7 @@ HOMEPAGE="https://github.com/liberationfonts/liberation-fonts"
 SRC_URI="!fontforge? ( https://github.com/liberationfonts/liberation-fonts/files/4178407/${PN}-ttf-${PV}.tar.gz )
 fontforge? ( https://github.com/liberationfonts/liberation-fonts/files/4178448/${P}.tar.gz )"
 
-KEYWORDS="~alpha amd64 arm arm64 ~ia64 ppc ppc64 x86 ~x64-cygwin ~amd64-linux ~x86-linux ~x64-solaris"
+KEYWORDS="~alpha amd64 arm arm64 ~ia64 ppc ppc64 ~riscv x86 ~x64-cygwin ~amd64-linux ~x86-linux ~x64-solaris"
 SLOT="0"
 LICENSE="OFL-1.1"
 IUSE="fontforge X"
