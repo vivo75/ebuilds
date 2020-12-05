@@ -497,6 +497,7 @@ gnome-base/orbit
 # Marek Szuba <marecki@gentoo.org> (2020-10-13)
 # Ulrich Müller <ulm@gentoo.org> (2020-11-06)
 # Robin H. Johnson <robbat2@gentoo.org> (2020-11-28)
+# Conrad Kostecki <conikost@gentoo.org> (2020-12-05)
 # ...and others who have not added their names here
 # All these ebuilds require slotted Lua, which is still masked.
 >=app-admin/conky-1.11.4
@@ -544,7 +545,7 @@ gnome-base/orbit
 >=dev-lua/lutok-0.4-r10
 >=dev-lua/luv-1.32.0.0-r100
 >=dev-lua/mediator_lua-1.1.2_p0-r100
->=dev-lua/messagepack-0.3.2-r100
+>=dev-lua/messagepack-0.5.2-r100
 >=dev-lua/mpack-1.0.8-r100
 >=dev-lua/penlight-1.9.2-r100
 >=dev-lua/say-1.3_p1-r100
@@ -573,6 +574,7 @@ gnome-base/orbit
 >=media-gfx/geeqie-1.5.1-r1
 >=media-sound/aqualung-1.1-r100
 >=net-analyzer/suricata-6.0.0-r100
+>=net-im/prosody-0.11.7-r100
 >=net-im/swift-4.0.2-r100
 >=net-p2p/eiskaltdcpp-2.2.10-r100
 >=sci-astronomy/celestia-1.7.0_pre20200316-r100
