@@ -34,7 +34,7 @@ patches() {
 }
 
 # The version of readline this bash normally ships with.
-READLINE_VER="8.1_rc3"
+READLINE_VER="8.1"
 
 DESCRIPTION="The standard GNU Bourne again shell"
 HOMEPAGE="http://tiswww.case.edu/php/chet/bash/bashtop.html"
@@ -103,6 +103,7 @@ src_prepare() {
 	touch -r . doc/* || die
 
 	eapply -p0 "${PATCHES[@]}"
+	eapply "${FILESDIR}/${PN}-5.1-parallel_make.patch"
 	eapply_user
 }
 
