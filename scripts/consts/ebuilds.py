@@ -1606,6 +1606,7 @@ EBUILDS_KEEP_ALL = (
     'dev-util/squashmerge',
     'dev-util/strace',
     'dev-util/sysdig',
+    'dev-util/sysprof-capture',
     'dev-util/systemtap',
     'dev-util/umockdev',
     'dev-util/valgrind',
