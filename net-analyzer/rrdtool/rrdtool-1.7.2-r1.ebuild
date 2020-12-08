@@ -5,7 +5,7 @@ EAPI=6
 DISTUTILS_OPTIONAL=true
 DISTUTILS_SINGLE_IMPL=true
 GENTOO_DEPEND_ON_PERL=no
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 inherit autotools perl-module distutils-r1 flag-o-matic multilib
 
 MY_P=${P/_/-}
@@ -30,7 +30,7 @@ CDEPEND="
 		>=x11-libs/cairo-1.10.2[svg,static-libs(+)?]
 		>=x11-libs/pango-1.28
 	)
-	lua? ( dev-lang/lua:* )
+	lua? ( dev-lang/lua:0= )
 	perl? ( dev-lang/perl:= )
 	python? ( ${PYTHON_DEPS} )
 	rados? ( sys-cluster/ceph )
