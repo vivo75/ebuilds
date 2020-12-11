@@ -4,13 +4,13 @@
 EAPI=7
 
 DISTUTILS_USE_SETUPTOOLS=rdepend
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7} )
 
 inherit distutils-r1
 
 DESCRIPTION="Checks ansible playbooks for practices and behaviour that can be improved"
-HOMEPAGE="https://github.com/ansible/ansible-lint"
-SRC_URI="https://github.com/ansible/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://github.com/ansible-community/ansible-lint"
+SRC_URI="https://github.com/ansible-community/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
