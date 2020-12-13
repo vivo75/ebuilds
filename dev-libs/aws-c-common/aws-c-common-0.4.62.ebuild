@@ -5,8 +5,8 @@ EAPI=7
 
 inherit cmake
 
-DESCRIPTION="Cross-Platform HW accelerated CRC32c and CRC32 with software fallbacks"
-HOMEPAGE="https://github.com/awslabs/aws-checksums"
+DESCRIPTION="Core c99 package for AWS SDK for C"
+HOMEPAGE="https://github.com/awslabs/aws-c-common"
 SRC_URI="https://github.com/awslabs/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
@@ -16,12 +16,15 @@ IUSE="static-libs test"
 
 RESTRICT="!test? ( test )"
 
-DEPEND="
-	>=dev-libs/aws-c-common-0.4.26:=[static-libs=]
+BDEPEND="
+	|| (
+		>dev-util/cmake-3.19.1
+		<dev-util/cmake-3.19.0
+	)
 "
 
 PATCHES=(
-	"${FILESDIR}/${P}-cmake-prefix.patch"
+	"${FILESDIR}"/${PN}-0.4.57-remove-Werror-CFLAG.patch
 )
 
 src_configure() {

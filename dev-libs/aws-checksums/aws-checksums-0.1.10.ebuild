@@ -5,8 +5,8 @@ EAPI=7
 
 inherit cmake
 
-DESCRIPTION="C99 implementation of the vnd.amazon.eventstream content-type"
-HOMEPAGE="https://github.com/awslabs/aws-c-event-stream"
+DESCRIPTION="Cross-Platform HW accelerated CRC32c and CRC32 with software fallbacks"
+HOMEPAGE="https://github.com/awslabs/aws-checksums"
 SRC_URI="https://github.com/awslabs/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
@@ -16,13 +16,19 @@ IUSE="static-libs test"
 
 RESTRICT="!test? ( test )"
 
+BDEPEND="
+	|| (
+		>dev-util/cmake-3.19.1
+		<dev-util/cmake-3.19.0
+	)
+"
+
 DEPEND="
-	>=dev-libs/aws-c-common-0.4.26:=[static-libs=]
-	>=dev-libs/aws-checksums-0.1.9:=[static-libs=]
+	>=dev-libs/aws-c-common-0.4.62:=[static-libs=]
 "
 
 PATCHES=(
-	"${FILESDIR}"/0.1.3-add_missing_cmake_install_prefix.patch
+	"${FILESDIR}/${PN}-0.1.9-cmake-prefix.patch"
 )
 
 src_configure() {

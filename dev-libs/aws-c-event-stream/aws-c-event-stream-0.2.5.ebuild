@@ -5,8 +5,8 @@ EAPI=7
 
 inherit cmake
 
-DESCRIPTION="Core c99 package for AWS SDK for C"
-HOMEPAGE="https://github.com/awslabs/aws-c-common"
+DESCRIPTION="C99 implementation of the vnd.amazon.eventstream content-type"
+HOMEPAGE="https://github.com/awslabs/aws-c-event-stream"
 SRC_URI="https://github.com/awslabs/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
@@ -16,8 +16,20 @@ IUSE="static-libs test"
 
 RESTRICT="!test? ( test )"
 
+BDEPEND="
+	|| (
+		>dev-util/cmake-3.19.1
+		<dev-util/cmake-3.19.0
+	)
+"
+
+DEPEND="
+	>=dev-libs/aws-c-common-0.4.62:=[static-libs=]
+	>=dev-libs/aws-checksums-0.1.10:=[static-libs=]
+"
+
 PATCHES=(
-	"${FILESDIR}"/${P}-remove-Werror-CFLAG.patch
+	"${FILESDIR}"/0.1.3-add_missing_cmake_install_prefix.patch
 )
 
 src_configure() {
