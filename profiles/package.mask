@@ -375,20 +375,6 @@ net-news/quiterss
 # (current RC2 is from 2016). Bugs #653100 and #734880. Removal in 30 days.
 app-text/goldendict
 
-# Michał Górny <mgorny@gentoo.org> (2020-11-15)
-# Fails to build.  Lots of bugs filed.  Not touched by maintainer
-# since 2018.
-# Removal in 30 days.  Bug #721990.
-media-video/cinelerra
-
-# Aisha Tammy <gentoo@aisha.cc> (2020-11-13)
-# dead packages with latest releases before 2013
-# these are superseded by other scikit packages
-# scikit-optimize, sktime
-# Removal in 30 days (Bug #749297)
-sci-libs/scikits_optimization
-sci-libs/scikits_timeseries
-
 # Jonas Stein <jstein@gentoo.org> (2020-11-12)
 # Adobe will stop distributing Flash Player after 2020-12-31.
 # Masked for removal after 2020-12-31
@@ -599,7 +585,8 @@ kde-apps/kdebase-meta:5
 >=net-p2p/eiskaltdcpp-2.2.10-r100
 >=sci-astronomy/celestia-1.7.0_pre20200316-r100
 >=sci-libs/plplot-5.15.0-r100
->=sci-visualization/gnuplot-5.4.0-r100
+=sci-visualization/gnuplot-5.4.0-r100
+=sci-visualization/gnuplot-5.4.1-r1
 >=sci-visualization/fityk-1.3.1-r100
 >=sys-apps/likwid-4.3.4
 >=www-apache/mod_security-2.9.3-r100
