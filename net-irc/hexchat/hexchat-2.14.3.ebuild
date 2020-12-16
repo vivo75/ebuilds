@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit meson mono-env python-single-r1 xdg
 
@@ -36,7 +36,7 @@ RDEPEND="
 	libcanberra? ( media-libs/libcanberra )
 	libproxy? ( net-libs/libproxy )
 	libnotify? ( x11-libs/libnotify )
-	lua? ( dev-lang/lua:= )
+	lua? ( dev-lang/lua:0= )
 	perl? ( dev-lang/perl:= )
 	plugin-sysinfo? ( sys-apps/pciutils )
 	python? ( ${PYTHON_DEPS} )
