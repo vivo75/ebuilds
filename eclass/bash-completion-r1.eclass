@@ -61,10 +61,11 @@ _bash-completion-r1_get_bashcompdir() {
 	_bash-completion-r1_get_bashdir completionsdir /usr/share/bash-completion/completions
 }
 
-# @FUNCTION: _bash-completion-r1_get_helpersdir
+# @FUNCTION: _bash-completion-r1_get_bashhelpersdir
 # @INTERNAL
 # @DESCRIPTION:
 # Get unprefixed bash-completion helpers directory.
+
 _bash-completion-r1_get_bashhelpersdir() {
 	debug-print-function ${FUNCNAME} "${@}"
 
@@ -91,7 +92,7 @@ get_bashhelpersdir() {
 }
 
 # @FUNCTION: dobashcomp
-# @USAGE: file [...]
+# @USAGE: <file> [...]
 # @DESCRIPTION:
 # Install bash-completion files passed as args. Has EAPI-dependant failure
 # behavior (like doins).
@@ -106,7 +107,7 @@ dobashcomp() {
 }
 
 # @FUNCTION: newbashcomp
-# @USAGE: file newname
+# @USAGE: <file> <newname>
 # @DESCRIPTION:
 # Install bash-completion file under a new name. Has EAPI-dependant failure
 # behavior (like newins).

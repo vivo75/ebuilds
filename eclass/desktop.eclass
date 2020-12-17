@@ -6,11 +6,16 @@
 # base-system@gentoo.org
 # @BLURB: support for desktop files, menus, and icons
 
+# @VARIABLE: _DESKTOP_ECLASS
+# @INTERNAL
+# @DESCRIPTION:
+# If null set to 1
+
 if [[ -z ${_DESKTOP_ECLASS} ]]; then
 _DESKTOP_ECLASS=1
 
 # @FUNCTION: make_desktop_entry
-# @USAGE: make_desktop_entry(<command>, [name], [icon], [type], [fields])
+# @USAGE: <command> [name] [icon] [type] [fields]
 # @DESCRIPTION:
 # Make a .desktop file.
 #
