@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="7"
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{7,8} )
 
 inherit distutils-r1 linux-info
 
@@ -30,12 +30,12 @@ RDEPEND="
 	sys-apps/portage
 	server? (
 		app-arch/tar[xattr]
+		app-cdr/cdrtools
 		app-crypt/md5deep
 		dev-libs/libcgroup
 		dev-vcs/git
 		net-misc/rsync
 		sys-fs/squashfs-tools
-		virtual/cdrtools
 		|| (
 			sys-kernel/genkernel
 			sys-kernel/genkernel-next
