@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python{3_6,3_7} )
 
 inherit flag-o-matic gnome.org gnome2-utils linux-info meson multilib multilib-minimal python-any-r1 toolchain-funcs xdg
 
@@ -250,14 +250,7 @@ pkg_postinst() {
 		gnome2_giomodule_cache_update \
 			|| die "Update GIO modules cache failed (for ${ABI})"
 	}
-	if ! tc-is-cross-compiler ; then
-		multilib_foreach_abi multilib_pkg_postinst
-	else
-		ewarn "Updating of GIO modules cache skipped due to cross-compilation."
-		ewarn "You might want to run gio-querymodules manually on the target for"
-		ewarn "your final image for performance reasons and re-run it when packages"
-		ewarn "installing GIO modules get upgraded or added to the image."
-	fi
+	multilib_foreach_abi multilib_pkg_postinst
 }
 
 pkg_postrm() {
