@@ -30,7 +30,7 @@ SRC_URI="http://www.opensource.apple.com/tarballs/ld64/${LD64}.tar.gz
 	https://dev.gentoo.org/~grobian/distfiles/${PN}-patches-5.1-r2.tar.bz2
 	https://dev.gentoo.org/~grobian/distfiles/${PN}-patches-7.3-r2.tar.bz2
 	https://dev.gentoo.org/~grobian/distfiles/${PN}-patches-8.2-r1.tar.bz2
-	https://dev.gentoo.org/~grobian/distfiles/${PN}-patches-11.3.tar.bz2"
+	https://dev.gentoo.org/~grobian/distfiles/${PN}-patches-11.3-r1.tar.bz2"
 
 LICENSE="APSL-2"
 KEYWORDS="~x64-macos ~x86-macos"
@@ -79,6 +79,10 @@ src_prepare() {
 	mkdir -p include/mach-o || die
 	# never present because it's private
 	cp ../../${DYLD}/include/mach-o/dyld_priv.h include/mach-o || die
+	# TARGET_OS_BRIDGE is undefined in TargetConditionals.h of newer MacOSX.sdk.
+	# We don't target BridgeOS. Disable it to avoid errors when clang adds:
+	# -Werror,-Wundef-prefix=TARGET_OS_
+	sed -i -e 's/#if TARGET_OS_BRIDGE/#if 0/' include/mach-o/dyld_priv.h
 
 	local VER_STR="\"@(#)PROGRAM:ld  PROJECT:${LD64} (Gentoo ${PN}-${PVR})\\n\""
 	echo "char ldVersionString[] = ${VER_STR};" > version.cpp
@@ -94,9 +98,9 @@ src_prepare() {
 	epatch "${S}"/${PN}-5.1-extraneous-includes.patch
 	epatch "${S}"/${PN}-5.1-strnlen.patch
 	epatch "${S}"/${PN}-7.3-make-j.patch
-	epatch "${S}"/${PN}-11.3.1-no-developertools-dir.patch # 7.3 failed to apply. updated
-	epatch "${S}"/${PN}-11.3.1-llvm-prefix.patch # 8.2.1 failed to apply. updated
-	epatch "${S}"/${PN}-8.2.1-llvm-shim.patch
+	epatch "${S}"/${PN}-11.3.1-no-developertools-dir.patch
+	epatch "${S}"/${PN}-11.3.1-llvm-prefix.patch
+	epatch "${S}"/${PN}-11.3.1-llvm-shim.patch
 	epatch "${S}"/${PN}-11.3.1-nolto-fix.patch # bugfix
 	epatch "${S}"/${PN}-11.3.1-segaddrtable-fix.patch # bugfix
 	eprefixify libstuff/execute.c
