@@ -32,6 +32,16 @@
 
 #--- END OF EXAMPLES ---
 
+# Michał Górny <mgorny@gentoo.org> (2020-12-20)
+# Causes segfaults, pending investigation.  Bug #760917.
+=dev-lang/python-3.8.7_rc1
+
+# Michał Górny <mgorny@gentoo.org> (2020-12-20)
+# Requires old dev-python/unidecode.  Last commit in 2017.  No revdeps.
+# Suggested replacement: dev-python/python-slugify.
+# Removal in 30 days.  Bug #714718.
+dev-python/awesome-slugify
+
 # Sergei Trofimovich <slyfox@gentoo.org> (2020-12-20)
 # Needs a port to haskell-src-exts compatible with ghc-8.8.
 # https://github.com/ndmitchell/derive/pull/37
@@ -525,9 +535,14 @@ kde-apps/kdebase-meta:5
 >=net-analyzer/rrdtool-1.7.2-r100
 >=net-analyzer/snort-2.9.16-r100
 >=net-analyzer/suricata-6.0.1-r100
+>=net-analyzer/wireshark-3.4.2-r100
 >=net-im/prosody-0.11.7-r100
 >=net-im/swift-4.0.2-r100
+>=net-irc/hexchat-2.14.3-r100
+>=net-irc/weechat-3.0-r100
+>=net-libs/axtls-2.1.5-r100
 >=net-misc/asterisk-16.14.0-r100
+>=net-mail/dovecot-2.3.11.3-r100
 >=net-p2p/eiskaltdcpp-2.2.10-r100
 >=sci-astronomy/celestia-1.7.0_pre20200316-r100
 >=sci-libs/libsc-2.2-r100
