@@ -7,9 +7,9 @@ inherit kernel-build verify-sig
 
 MY_P=linux-${PV}
 # https://koji.fedoraproject.org/koji/packageinfo?packageID=8
-CONFIG_VER=5.4.21
-CONFIG_HASH=2809b7faa6a8cb232cd825096c146b7bdc1e08ea
-GENTOO_CONFIG_VER=5.4.77-r1
+CONFIG_VER=5.10.0
+CONFIG_HASH=12700e38e8ba0a7be437a4c5804ba0e6417fdc24
+GENTOO_CONFIG_VER=5.9.8-r1
 
 DESCRIPTION="Linux kernel built from vanilla upstream sources"
 HOMEPAGE="https://www.kernel.org/"
@@ -20,26 +20,28 @@ SRC_URI+=" https://cdn.kernel.org/pub/linux/kernel/v$(ver_cut 1).x/${MY_P}.tar.x
 		https://cdn.kernel.org/pub/linux/kernel/v$(ver_cut 1).x/${MY_P}.tar.sign
 	)
 	amd64? (
-		https://src.fedoraproject.org/rpms/kernel/raw/${CONFIG_HASH}/f/kernel-x86_64.config
-			-> kernel-x86_64.config.${CONFIG_VER}
+		https://src.fedoraproject.org/rpms/kernel/raw/${CONFIG_HASH}/f/kernel-x86_64-fedora.config
+			-> kernel-x86_64-fedora.config.${CONFIG_VER}
 	)
 	arm64? (
-		https://src.fedoraproject.org/rpms/kernel/raw/${CONFIG_HASH}/f/kernel-aarch64.config
-			-> kernel-aarch64.config.${CONFIG_VER}
+		https://src.fedoraproject.org/rpms/kernel/raw/${CONFIG_HASH}/f/kernel-aarch64-fedora.config
+			-> kernel-aarch64-fedora.config.${CONFIG_VER}
 	)
 	ppc64? (
-		https://src.fedoraproject.org/rpms/kernel/raw/${CONFIG_HASH}/f/kernel-ppc64le.config
-			-> kernel-ppc64le.config.${CONFIG_VER}
+		https://src.fedoraproject.org/rpms/kernel/raw/${CONFIG_HASH}/f/kernel-ppc64le-fedora.config
+			-> kernel-ppc64le-fedora.config.${CONFIG_VER}
 	)
 	x86? (
-		https://src.fedoraproject.org/rpms/kernel/raw/${CONFIG_HASH}/f/kernel-i686.config
-			-> kernel-i686.config.${CONFIG_VER}
+		https://src.fedoraproject.org/rpms/kernel/raw/${CONFIG_HASH}/f/kernel-i686-fedora.config
+			-> kernel-i686-fedora.config.${CONFIG_VER}
 	)"
 S=${WORKDIR}/${MY_P}
 
 LICENSE="GPL-2"
-KEYWORDS="~amd64 ~arm64 ~x86"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 IUSE="debug"
+REQUIRED_USE="
+	arm? ( savedconfig )"
 
 RDEPEND="
 	!sys-kernel/vanilla-kernel-bin:${SLOT}"
@@ -48,13 +50,6 @@ BDEPEND="
 	verify-sig? ( app-crypt/openpgp-keys-kernel )"
 
 VERIFY_SIG_OPENPGP_KEY_PATH=${BROOT}/usr/share/openpgp-keys/kernel.org.asc
-
-pkg_pretend() {
-	ewarn "Starting with 5.4.52, Distribution Kernels are switching from Arch"
-	ewarn "Linux configs to Fedora.  Please keep a backup kernel just in case."
-
-	kernel-install_pkg_pretend
-}
 
 src_unpack() {
 	if use verify-sig; then
@@ -74,16 +69,19 @@ src_prepare() {
 	# prepare the default config
 	case ${ARCH} in
 		amd64)
-			cp "${DISTDIR}/kernel-x86_64.config.${CONFIG_VER}" .config || die
+			cp "${DISTDIR}/kernel-x86_64-fedora.config.${CONFIG_VER}" .config || die
+			;;
+		arm)
+			return
 			;;
 		arm64)
-			cp "${DISTDIR}/kernel-aarch64.config.${CONFIG_VER}" .config || die
+			cp "${DISTDIR}/kernel-aarch64-fedora.config.${CONFIG_VER}" .config || die
 			;;
 		ppc64)
-			cp "${DISTDIR}/kernel-ppc64le.config.${CONFIG_VER}" .config || die
+			cp "${DISTDIR}/kernel-ppc64le-fedora.config.${CONFIG_VER}" .config || die
 			;;
 		x86)
-			cp "${DISTDIR}/kernel-i686.config.${CONFIG_VER}" .config || die
+			cp "${DISTDIR}/kernel-i686-fedora.config.${CONFIG_VER}" .config || die
 			;;
 		*)
 			die "Unsupported arch ${ARCH}"
@@ -96,9 +94,5 @@ src_prepare() {
 	use debug || merge_configs+=(
 		"${WORKDIR}/gentoo-kernel-config-${GENTOO_CONFIG_VER}"/no-debug.config
 	)
-	[[ ${ARCH} == x86 ]] && merge_configs+=(
-		"${WORKDIR}/gentoo-kernel-config-${GENTOO_CONFIG_VER}"/32-bit.config
-	)
-
 	kernel-build_merge_configs "${merge_configs[@]}"
 }
