@@ -2370,6 +2370,8 @@ EBUILDS_KEEP_ALL = (
     'net-libs/gupnp',
     'net-libs/gupnp-igd',
     'net-libs/http-parser',
+    'net-libs/kdsoap-ws-discovery-client',
+    'net-libs/kdsoap',
     'net-libs/ldns',
     'net-libs/libaccounts-glib',
     'net-libs/libasyncns',
