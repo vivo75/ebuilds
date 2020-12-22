@@ -707,6 +707,7 @@ EBUILDS_KEEP_ALL = (
     'dev-libs/libspt',
     'dev-libs/libtar',
     'dev-libs/libtasn1',
+    'dev-libs/libtomcrypt',
     'dev-libs/libtommath',
     'dev-libs/libunistring',
     'dev-libs/libusb',
