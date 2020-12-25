@@ -247,6 +247,8 @@ EBUILDS_KEEP_ALL = (
     'app-eselect/eselect-lapack',
     'app-eselect/eselect-lcdfilter',
     'app-eselect/eselect-lib-bin-symlink',
+    'app-eselect/eselect-lua',
+    'app-eselect/eselect-luajit',
     'app-eselect/eselect-mpg123',
     'app-eselect/eselect-notify-send',
     'app-eselect/eselect-package-manager',
