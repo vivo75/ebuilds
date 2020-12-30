@@ -2,41 +2,41 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-
 inherit autotools multilib multilib-minimal portability toolchain-funcs
 
 DESCRIPTION="A powerful light-weight programming language designed for extending applications"
-HOMEPAGE="http://www.lua.org/"
-TEST_PV="5.3.4"
-TEST_A="${PN}-${TEST_PV}-tests.tar.gz"
-PKG_A="${P}.tar.gz"
+HOMEPAGE="https://www.lua.org/"
+TEST_PV="5.4.2"
+TEST_P="${PN}-${TEST_PV}-tests"
 SRC_URI="
-	http://www.lua.org/ftp/${PKG_A}
-	test? ( https://www.lua.org/tests/${TEST_A} )"
+	https://www.lua.org/ftp/${P}.tar.gz
+	test? ( https://www.lua.org/tests/${TEST_P}.tar.gz )"
 
 LICENSE="MIT"
-SLOT="5.3"
+SLOT="5.4"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
-IUSE="+deprecated readline static test test-complete"
-RESTRICT="!test? ( test )"
+IUSE="+deprecated readline test test-complete"
 
-RDEPEND="readline? ( sys-libs/readline:0= )
+COMMON_DEPEND="
 	>=app-eselect/eselect-lua-3
+	readline? ( sys-libs/readline:0= )
 	!dev-lang/lua:0"
-DEPEND="${RDEPEND}
-	sys-devel/libtool"
+DEPEND="${COMMON_DEPEND}"
+RDEPEND="${COMMON_DEPEND}"
+BDEPEND="sys-devel/libtool"
+
+RESTRICT="!test? ( test )"
 
 MULTILIB_WRAPPED_HEADERS=(
 	/usr/include/lua${SLOT}/luaconf.h
 )
 
 PATCHES=(
-	"${FILESDIR}/${PN}-$(ver_cut 1-2)-make-r1.patch"
+	"${FILESDIR}"/lua-5.4.2-make.patch
 )
 
 src_prepare() {
 	default
-
 	# use glibtool on Darwin (versus Apple libtool)
 	if [[ ${CHOST} == *-darwin* ]] ; then
 		sed -i -e '/LIBTOOL = /s:/libtool:/glibtool:' \
@@ -48,19 +48,11 @@ src_prepare() {
 
 	sed -i -e 's:\(/README\)\("\):\1.gz\2:g' doc/readme.html || die
 
-	if ! use readline ; then
-		sed -i -e '/#define LUA_USE_READLINE/d' src/luaconf.h || die
-	fi
-
 	# Using dynamic linked lua is not recommended for performance
 	# reasons. http://article.gmane.org/gmane.comp.lang.lua.general/18519
 	# Mainly, this is of concern if your arch is poor with GPRs, like x86
 	# Note that this only affects the interpreter binary (named lua), not the lua
-	# compiler (built statically) nor the lua libraries (both shared and static
-	# are installed)
-	if use static ; then
-		sed -i -e 's:\(-export-dynamic\):-static \1:' src/Makefile || die
-	fi
+	# compiler (built statically) nor the lua libraries.
 
 	# upstream does not use libtool, but we do (see bug #336167)
 	cp "${FILESDIR}/configure.in" "${S}/configure.ac" || die
@@ -94,11 +86,12 @@ multilib_src_compile() {
 	cd src
 
 	local myCFLAGS=""
-	use deprecated && myCFLAGS="-DLUA_COMPAT_5_1 -DLUA_COMPAT_5_2"
+	use deprecated && myCFLAGS+="-DLUA_COMPAT_5_3 "
+	use readline && myCFLAGS+="-DLUA_USE_READLINE "
 
 	case "${CHOST}" in
 		*-mingw*) : ;;
-		*) myCFLAGS+=" -DLUA_USE_LINUX" ;;
+		*) myCFLAGS+="-DLUA_USE_LINUX " ;;
 	esac
 
 	emake CC="${CC}" CFLAGS="${myCFLAGS} ${CFLAGS}" \
@@ -155,6 +148,8 @@ multilib_src_install_all() {
 	einstalldocs
 	newman doc/lua.1 lua${SLOT}.1
 	newman doc/luac.1 luac${SLOT}.1
+	find "${ED}" -name '*.la' -delete || die
+	find "${ED}" -name 'liblua*.a' -delete || die
 }
 
 # Makefile contains a dummy target that doesn't do tests
@@ -170,7 +165,7 @@ src_test() {
 	# The basic subset is selected by passing -e'_U=true'
 	# The complete set is noted to contain tests that may consume too much memory or have non-portable tests.
 	# attrib.lua for example needs some multilib customization (have to compile the stuff in libs/ for each ABI)
-	use test-complete || TEST_OPTS="-e_U=true"
+	TEST_OPTS="$(usex test-complete '' '-e_U=true')"
 	TEST_MARKER="${T}/test.failed"
 	rm -f "${TEST_MARKER}"
 

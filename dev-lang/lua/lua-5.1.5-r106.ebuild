@@ -2,34 +2,47 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-
 inherit multilib multilib-minimal portability toolchain-funcs
 
 DESCRIPTION="A powerful light-weight programming language designed for extending applications"
-HOMEPAGE="http://www.lua.org/"
-SRC_URI="http://www.lua.org/ftp/${P}.tar.gz"
+HOMEPAGE="https://www.lua.org/"
+SRC_URI="https://www.lua.org/ftp/${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="5.1"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
-IUSE="+deprecated readline static"
+IUSE="+deprecated readline"
 
-RDEPEND="readline? ( >=sys-libs/readline-6.2_p5-r1:0=[${MULTILIB_USEDEP}] )
+COMMON_DEPEND="
 	>=app-eselect/eselect-lua-3
+	readline? ( >=sys-libs/readline-6.2_p5-r1:0=[${MULTILIB_USEDEP}] )
 	!dev-lang/lua:0"
-DEPEND="${RDEPEND}
-	sys-devel/libtool"
+DEPEND="${COMMON_DEPEND}"
+RDEPEND="${COMMON_DEPEND}"
+BDEPEND="sys-devel/libtool"
 
 MULTILIB_WRAPPED_HEADERS=(
 	/usr/include/lua${SLOT}/luaconf.h
 )
 
-PATCHES=(
-	"${FILESDIR}/${PN}-$(ver_cut 1-2)-make-r2.patch"
-	"${FILESDIR}/${PN}-$(ver_cut 1-2)-module_paths.patch"
-)
-
 src_prepare() {
+	PATCHES=(
+		"${FILESDIR}/lua-5.1.5-make.patch"
+		"${FILESDIR}/${PN}-$(ver_cut 1-2)-module_paths.patch"
+	)
+	if ! use deprecated ; then
+		# patches from 5.1.4 still apply
+		PATCHES+=(
+			"${FILESDIR}"/${PN}-5.1.4-deprecated.patch
+			"${FILESDIR}"/${PN}-5.1.4-test.patch
+		)
+	fi
+	if ! use readline ; then
+		PATCHES+=(
+			"${FILESDIR}"/${PN}-$(ver_cut 1-2)-readline.patch
+		)
+	fi
+
 	default
 
 	# use glibtool on Darwin (versus Apple libtool)
@@ -43,25 +56,11 @@ src_prepare() {
 
 	sed -i -e 's:\(/README\)\("\):\1.gz\2:g' doc/readme.html
 
-	if ! use deprecated ; then
-		# patches from 5.1.4 still apply
-		eapply "${FILESDIR}"/${PN}-5.1.4-deprecated.patch
-		eapply "${FILESDIR}"/${PN}-5.1.4-test.patch
-	fi
-
-	if ! use readline ; then
-		eapply "${FILESDIR}"/${PN}-$(ver_cut 1-2)-readline.patch
-	fi
-
 	# Using dynamic linked lua is not recommended for performance
 	# reasons. http://article.gmane.org/gmane.comp.lang.lua.general/18519
 	# Mainly, this is of concern if your arch is poor with GPRs, like x86
 	# Note that this only affects the interpreter binary (named lua), not the lua
-	# compiler (built statically) nor the lua libraries (both shared and static
-	# are installed)
-	if use static ; then
-		sed -i -e 's:\(-export-dynamic\):-static \1:' src/Makefile || die
-	fi
+	# compiler (built statically) nor the lua libraries.
 
 	# A slotted Lua uses different directories for headers & names for
 	# libraries, and pkgconfig should reflect that.
@@ -121,6 +120,8 @@ multilib_src_install_all() {
 	einstalldocs
 	newman doc/lua.1 lua${SLOT}.1
 	newman doc/luac.1 luac${SLOT}.1
+	find "${ED}" -name '*.la' -delete || die
+	find "${ED}" -name 'liblua*.a' -delete || die
 }
 
 multilib_src_test() {
