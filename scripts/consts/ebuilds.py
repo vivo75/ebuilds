@@ -1585,6 +1585,7 @@ EBUILDS_KEEP_ALL = (
     'dev-util/mdds',
     'dev-util/meld',
     'dev-util/meson',
+    'dev-util/meson-format-array',
     'dev-util/mingw64-runtime',
     'dev-util/netsurf-buildsystem',
     'dev-util/ninja',
