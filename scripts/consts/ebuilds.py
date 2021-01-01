@@ -1,4 +1,5 @@
 EBUILDS_KEEP_ALL = (
+    'dev-util/wayland-scanner',
     'app-accessibility/at-spi2-atk',
     'app-accessibility/at-spi2-core',
     'app-accessibility/espeak',
