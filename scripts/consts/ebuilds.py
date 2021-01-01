@@ -2541,6 +2541,7 @@ EBUILDS_KEEP_ALL = (
     'dev-python/scipy',
     'dev-python/sortedcontainers',
     'dev-python/ovs',
+    'dev-python/typing-extensions',
     'sci-libs/suitesparseconfig',
     'sci-libs/umfpack',
     'sci-mathematics/cgal',
