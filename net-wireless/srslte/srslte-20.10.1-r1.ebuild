@@ -1,4 +1,4 @@
-# Copyright 2019-2020 Gentoo Authors
+# Copyright 2019-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -25,8 +25,8 @@ SLOT="0"
 IUSE="bladerf simcard soapysdr uhd zeromq"
 
 DEPEND="
-	dev-libs/boost
-	dev-libs/libconfig
+	dev-libs/boost:=
+	dev-libs/libconfig:=
 	net-misc/lksctp-tools
 	net-libs/mbedtls:=
 	sci-libs/fftw:3.0=
@@ -34,7 +34,7 @@ DEPEND="
 	simcard? ( sys-apps/pcsc-lite )
 	soapysdr? ( net-wireless/soapysdr:= )
 	uhd? ( net-wireless/uhd:= )
-	zeromq? ( net-libs/zeromq )
+	zeromq? ( net-libs/zeromq:= )
 "
 RDEPEND="${DEPEND}"
 BDEPEND=""
