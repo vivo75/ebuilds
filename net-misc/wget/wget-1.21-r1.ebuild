@@ -1,9 +1,9 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7,8} )
+PYTHON_COMPAT=( python3_{6..9} )
 
 inherit flag-o-matic python-any-r1 toolchain-funcs
 
@@ -53,6 +53,12 @@ BDEPEND="
 "
 
 DOCS=( AUTHORS MAILING-LIST NEWS README doc/sample.wgetrc )
+
+PATCHES=(
+	"${FILESDIR}"/${P}-gnulib-utime-errno.patch  # 763123, drop next release
+	"${FILESDIR}"/${PN}-1.21-avoid_bashisms.patch #762946
+	"${FILESDIR}"/${PN}-1.21-avoid_eautoreconf.patch
+)
 
 pkg_setup() {
 	use test && python-any-r1_pkg_setup
