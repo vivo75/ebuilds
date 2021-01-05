@@ -920,6 +920,7 @@ EBUILDS_KEEP_ALL = (
     'dev-perl/Parse-Yapp',
     'dev-perl/Path-Tiny',
     'dev-perl/PlRPC',
+    'dev-perl/Pod-Parser',
     'dev-perl/Probe-Perl',
     'dev-perl/RPC-XML',
     'dev-perl/Readonly',
