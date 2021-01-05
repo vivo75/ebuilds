@@ -85,6 +85,7 @@ dev-util/bcc
 dev-util/cgdb
 dev-util/clinfo
 dev-util/cscope
+dev-util/debootstrap
 dev-util/patchutils
 dev-util/radare2
 dev-util/source-highlight
