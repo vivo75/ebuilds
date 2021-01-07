@@ -263,8 +263,6 @@ sys-libs/libomp
 sys-power/acpid
 sys-power/apcupsd
 sys-power/cpupower
-sys-power/pm-quirks
-sys-power/pm-utils
 sys-power/powertop
 sys-process/atop
 sys-process/glances
