@@ -32,6 +32,62 @@
 
 #--- END OF EXAMPLES ---
 
+# Brian Evans <grknight@gentoo.org> (2021-01-07)
+# PHP 7.2 is security vulnerable and end-of-life
+# Please upgrade to a newer slot
+dev-lang/php:7.2
+virtual/httpd-php:7.2
+=dev-php/phpunit-5.7.15-r3
+=dev-php/PHP_CodeCoverage-4.0.7-r2
+=dev-php/PHP_TokenStream-1.4.11-r1
+
+# Joonas Niilola <juippis@gentoo.org> (2020-01-07)
+# Eterm's development stopped 2014 and upstream brought to life 
+# its successor, terminology. Eterm is unmaintained in Gentoo with 
+# multiple bugs open for a long time. Switch to any available 
+# alternative, https://packages.gentoo.org/categories/x11-terms
+# For Esetroot replacement, use feh from media-gfx/feh or wmsetbg
+# from x11-wm/windowmaker.
+# Removal in ~30 days. Bug: #764359
+x11-terms/eterm
+
+# Joonas Niilola <juippis@gentoo.org> (2020-01-07)
+# Doesn't compile, no maintainer, EAPI-5. Last version bump 3 years 
+# ago. Use any of the available alternatives, 
+# https://packages.gentoo.org/categories/x11-terms
+# Removal in ~30 days. Bug: #764353
+x11-terms/pangoterm
+
+# Andreas Sturmlechner <asturm@gentoo.org> (2021-01-06)
+# Post-consolekit cleanup, dead upstream since 2016.
+# https://s3hh.wordpress.com/2016/06/18/whither-cgmanager/
+# Masked for removal in 30 days.
+app-admin/cgmanager
+sys-libs/libnih
+
+# Andreas Sturmlechner <asturm@gentoo.org> (2021-01-06)
+# Abandoned upstream, countless bugs. Removal in 30 days. Bug #659616.
+sys-power/pm-utils
+sys-power/pm-quirks
+
+# Michał Górny <mgorny@gentoo.org> (2021-01-06)
+# (on behalf of QA)
+# The new docker version splits the docker(1) executable into a separate
+# app-emulation/docker-cli package.  However, the package is not pulled
+# automatically and the new version does not even warn the user about
+# that.  In other words, the upgrade breaks people's systems hard.
+>=app-emulation/docker-20.1.0
+>=app-emulation/docker-cli-20.1.0
+
+# Michał Górny <mgorny@gentoo.org> (2021-01-05)
+# The portable version has been discontinued upstream (i.e. it is now
+# available only as tightly coupled part of OpenBSD).  The current
+# version relies on dev-libs/libressl implementation details, and can
+# not be easily ported to dev-libs/openssl.  Reported to fail to build
+# with gcc-10.  There are multiple alternative ACME clients available.
+# Removal in 30 days.  Bug #762310.
+app-crypt/acme-client
+
 # Jaco Kroon <jaco@uls.co.za> (2021-01-04)
 # media-libs/libilbc is (for every package I manage) a drop-in for
 # dev-libs/ilbc-rfc3951. The latter had net-misc/asterisk,
@@ -299,17 +355,6 @@ dev-util/creduce
 # Fails to validate certificates which have multiple trusted
 # paths.
 =net-libs/gnutls-3.7.0
-
-# Joonas Niilola <juippis@gentoo.org> (2020-12-06)
-# Not keyworded, unmaintained, unbuildable for a long time, EAPI-5.
-# Removal in ~30 days. List sorted by their bug numbers.
-# Bugs: #752432, #752435, #752438, #752441, #752444, #752453.
-media-plugins/kodi-screensaver-crystalmorph
-media-plugins/kodi-visualization-nastyfft
-media-plugins/kodi-screensaver-rsxs
-net-wireless/qradiolink
-net-libs/liba53
-app-emulation/qt-virt-manager
 
 # Thomas Deutschmann <whissi@gentoo.org> (2020-11-24)
 # Serious data corruption bug when using XFS, see https://www.spinics.net/lists/linux-xfs/msg47004.html
