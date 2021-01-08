@@ -2146,6 +2146,7 @@ EBUILDS_KEEP_ALL = (
     'media-libs/jbig2dec',
     'media-libs/jbigkit',
     'media-libs/jpeg',
+    'media-libs/kimageannotator',
     'media-libs/ladspa-sdk',
     'media-libs/lcms',
     'media-libs/lensfun',
