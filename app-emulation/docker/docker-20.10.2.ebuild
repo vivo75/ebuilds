@@ -1,8 +1,8 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-EGO_PN="github.com/docker/docker"
+EGO_PN="github.com/moby/moby"
 GIT_COMMIT=f0014860c1
 inherit bash-completion-r1 linux-info systemd udev golang-vcs-snapshot
 
@@ -14,7 +14,7 @@ SRC_URI="https://github.com/moby/moby/archive/v${MY_PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
-IUSE="apparmor aufs btrfs +container-init device-mapper hardened overlay seccomp selinux"
+IUSE="apparmor aufs btrfs +cli +container-init device-mapper hardened overlay seccomp"
 
 DEPEND="
 	acct-group/docker
@@ -37,9 +37,10 @@ RDEPEND="
 	>=dev-vcs/git-1.7
 	>=app-arch/xz-utils-4.9
 	dev-libs/libltdl
-	~app-emulation/containerd-1.4.3[apparmor?,btrfs?,device-mapper?,seccomp?,selinux?]
-	~app-emulation/runc-1.0.0_rc92[apparmor?,seccomp?,selinux(-)?]
-	~app-emulation/docker-proxy-0.8.0_p20201211
+	~app-emulation/containerd-1.4.3[apparmor?,btrfs?,device-mapper?,seccomp?]
+	~app-emulation/runc-1.0.0_rc92[apparmor?,seccomp?]
+	~app-emulation/docker-proxy-0.8.0_p20201215
+	cli? ( app-emulation/docker-cli )
 	container-init? ( >=sys-process/tini-0.19.0[static] )
 "
 
@@ -235,14 +236,6 @@ src_install() {
 	cp -R contrib/* "${ED}/usr/share/${PN}/contrib"
 }
 
-splitting_docker_cli() {
-	local v
-	for v in ${REPLACING_VERSIONS}; do
-		ver_test ${v} -lt 20.10.1 && return 0
-	done
-	return 1
-}
-
 pkg_postinst() {
 	udev_reload
 
@@ -277,10 +270,24 @@ pkg_postinst() {
 		elog
 	fi
 
-	if splitting_docker_cli; then
-		ewarn "Starting with docker 20.10.1, docker has been split into"
+	if use cli; then
+		ewarn "Starting with docker 20.10.2, docker has been split into"
 		ewarn "two packages upstream, so Gentoo has followed suit."
+		ewarn
 		ewarn "app-emulation/docker contains the daemon and"
 		ewarn "app-emulation/docker-cli contains the docker command."
+		ewarn
+		ewarn "docker currently installs docker-cli using the cli use flag."
+		ewarn
+		ewarn "This use flag is temporary, so you need to take the"
+		ewarn "following actions:"
+		ewarn
+		ewarn "First, disable the cli use flag for app-emulation/docker"
+		ewarn
+		ewarn "Then, if you need docker-cli and docker on the same machine,"
+		ewarn "run the following command:"
+		ewarn
+		ewarn "# emerge --noreplace docker-cli"
+		ewarn
 	fi
 }
