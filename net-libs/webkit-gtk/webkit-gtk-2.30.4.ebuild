@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python3_{6..8} )
+PYTHON_COMPAT=( python3_6 python3_7 python3_8 python3_9 )
 USE_RUBY="ruby24 ruby25 ruby26 ruby27"
 
 inherit check-reqs cmake flag-o-matic gnome2 pax-utils python-any-r1 ruby-single toolchain-funcs virtualx

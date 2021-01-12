@@ -4,7 +4,7 @@
 EAPI=7
 
 # Not ready for Python 3.9 yet: https://github.com/PyCQA/pylint/issues/3895
-PYTHON_COMPAT=( python3_{6..8} )
+PYTHON_COMPAT=( python3_6 python3_7 python3_8 python3_9 )
 PYTHON_REQ_USE="threads(+)"
 DISTUTILS_USE_SETUPTOOLS=rdepend
 

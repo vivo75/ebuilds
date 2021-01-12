@@ -3,7 +3,7 @@
 
 EAPI=5
 
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_8 python3_7 python3_9 )
 
 inherit linux-info python-r1 toolchain-funcs
 
