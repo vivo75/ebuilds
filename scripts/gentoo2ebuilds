@@ -135,10 +135,10 @@ def rsync(src, dst, delete=True, capture_output=False, check=True):
                           check=check)
 
 
-def update_python_compat(cat, pkg, ebuild):
+def OBSOLETE_update_python_compat(cat, pkg, ebuild):
     pass
 
-def OBSOLETE_update_python_compat(cat, pkg, ebuild):
+def update_python_compat(cat, pkg, ebuild):
     if pkg in KEEP_PYTHON_VER:
         return
     new_python_compat = []
@@ -152,20 +152,23 @@ def OBSOLETE_update_python_compat(cat, pkg, ebuild):
                     timeout=5,
                     check=False)
         expanded_compat = ret.stdout.decode('ascii').strip()
-        if expanded_compat in ('python3_8 python3_7', 'python3_8 python3_7 pypy3', 'python2_7'):
+
+        # no need to modify an ebuild already supporting our wanted version
+        if expanded_compat.find('python3_9') >= 0:
             return
 
-        print(os.path.join(cat,pkg), end=' : ')
-        # if ebuild support at least one version of py3 than we suppose it support all
-        if expanded_compat.find('python3_') >= 0:
-            new_python_compat.append('python{3_8,3_7}')
-        # pypy3 is different enough to trust gentoo upstream
-        if expanded_compat.find('pypy3') >= 0:
-            new_python_compat.append('pypy3')
+        # this ebuild only support legacy python
+        if expanded_compat in ('python2_7', ):
+            return
 
-        # if there is no py3 support but py2 exist, then use it
-        if not new_python_compat and expanded_compat.find('python2_') >= 0:
-            new_python_compat = [ 'python2_7', ]
+        new_python_compat = expanded_compat.split(" ")
+
+        print(os.path.join(cat,pkg), end=' : ')
+        # if ebuild support at least one version of py3
+        # than we suppose it support our preferred
+        if expanded_compat.find('python3_') >= 0:
+            new_python_compat.append('python3_9')
+
         print('PYTHON_COMPAT=%s' % ' '.join(new_python_compat))
 
         cmd = ['sed',
