@@ -1593,6 +1593,7 @@ EBUILDS_KEEP_ALL = (
     'dev-util/nvidia-cuda-sdk',
     'dev-util/nvidia-cuda-toolkit',
     'dev-util/opencl-headers',
+    'dev-util/ostree',
     'dev-util/patchelf',
     'dev-util/patchutils',
     'dev-util/perf',
