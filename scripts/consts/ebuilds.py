@@ -994,7 +994,6 @@ EBUILDS_KEEP_ALL = (
     'dev-perl/YAML',
     'dev-perl/YAML-Tiny',
     'dev-perl/ZMQ-Constants',
-    'dev-perl/ZMQ-LibZMQ3',
     'dev-perl/common-sense',
     'dev-perl/glib-perl',
     'dev-perl/go-perl',

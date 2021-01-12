@@ -9,7 +9,6 @@ mail-filter/rspamd
 mail-mta/postfix
 net-libs/libnsl
 net-mail/dovecot
-dev-perl/ZMQ-LibZMQ3
 
 # Antispam
 mail-filter/amavisd-new
