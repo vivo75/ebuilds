@@ -17,9 +17,8 @@ HOMEPAGE="https://www.twistedmatrix.com/trac/"
 SRC_URI="https://twistedmatrix.com/Releases/${TWISTED_PN}"
 SRC_URI="${SRC_URI}/${TWISTED_RELEASE}/${TWISTED_P}.tar.bz2
 	https://dev.gentoo.org/~mgorny/dist/twisted-regen-cache.gz"
-S=${WORKDIR}/${TWISTED_P}
 
-KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~mips ppc ppc64 s390 sparc x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~alpha amd64 arm arm64 ~ia64 ~mips ppc ppc64 ~riscv s390 sparc x86 ~amd64-linux ~x86-linux ~x64-macos"
 
 LICENSE="MIT"
 SLOT="0"
@@ -27,7 +26,7 @@ IUSE="conch crypt http2 serial test"
 RESTRICT="!test? ( test )"
 
 RDEPEND="
-	>=dev-python/attrs-17.4.0[${PYTHON_USEDEP}]
+	>=dev-python/attrs-19.2.0[${PYTHON_USEDEP}]
 	>=dev-python/automat-0.3.0[${PYTHON_USEDEP}]
 	>=dev-python/constantly-15.1.0[${PYTHON_USEDEP}]
 	>=dev-python/hyperlink-17.1.1[${PYTHON_USEDEP}]
@@ -79,12 +78,13 @@ DEPEND="
 	)
 "
 
+S=${WORKDIR}/${TWISTED_P}
+
 python_prepare_all() {
 	local PATCHES=(
-		"${FILESDIR}"/${P}-py38.patch
-		"${FILESDIR}"/twisted-19.10.0-py38-cgi.patch
+		"${FILESDIR}"/twisted-20.3.0-py38-cgi.patch
 		"${FILESDIR}"/twisted-20.3.0-py38-hmac.patch
-		"${FILESDIR}"/twisted-19.10.0-py39-b64.patch
+		"${FILESDIR}"/twisted-20.3.0-py39-b64.patch
 		"${FILESDIR}"/twisted-20.3.0-py39-combined.patch
 	)
 
@@ -103,10 +103,6 @@ python_prepare_all() {
 	# trying to open more files due to some gi magic
 	sed -e '/SKIP_EMFILE/s:None:"Fails on non-pristine systems":' \
 		-i src/twisted/internet/test/test_tcp.py || die
-
-	# TODO: times out, i can't find where to increase the timeout
-	sed -e 's:test_manyProcesses:_&:' \
-		-i src/twisted/test/test_process.py || die
 
 	# multicast tests fail within network-sandbox
 	sed -e 's:test_joinLeave:_&:' \
