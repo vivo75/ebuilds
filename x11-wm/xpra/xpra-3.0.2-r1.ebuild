@@ -4,7 +4,7 @@
 EAPI=6
 
 # PyCObject_Check and PyCObject_AsVoidPtr vanished with python 3.3
-PYTHON_COMPAT=( python{3_8,3_7} )
+PYTHON_COMPAT=( python3_{6,7} )
 inherit xdg distutils-r1 eutils flag-o-matic user tmpfiles prefix
 
 DESCRIPTION="X Persistent Remote Apps (xpra) and Partitioning WM (parti) based on wimpiggy"
@@ -14,7 +14,7 @@ SRC_URI="http://xpra.org/src/${P}.tar.xz"
 LICENSE="GPL-2 BSD"
 SLOT="0"
 KEYWORDS="amd64 x86"
-IUSE="+client +clipboard csc cups dbus dec_avcodec2 enc_ffmpeg enc_x264 enc_x265 jpeg libav +lz4 lzo opengl pillow pulseaudio server sound test vpx webcam webp"
+IUSE="+client +clipboard csc cups dbus dec_avcodec2 enc_ffmpeg enc_x264 enc_x265 jpeg +lz4 lzo opengl pillow pulseaudio server sound test vpx webcam webp"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}
 	clipboard? ( || ( server client ) )
@@ -33,32 +33,20 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	x11-libs/libXrandr
 	x11-libs/libXtst
 	x11-libs/libxkbfile
-	csc? (
-		!libav? ( >=media-video/ffmpeg-1.2.2:0= )
-		libav? ( media-video/libav:0= )
-	)
-	dec_avcodec2? (
-		!libav? ( >=media-video/ffmpeg-2:0=[x264,x265] )
-		libav? ( media-video/libav:0=[x264,x265] )
-	)
-	enc_ffmpeg? (
-		!libav? ( >=media-video/ffmpeg-3.2.2:0= )
-		libav? ( media-video/libav:0= )
-	)
+	csc? ( >=media-video/ffmpeg-1.2.2:0= )
+	dec_avcodec2? ( >=media-video/ffmpeg-2:0=[x264,x265] )
+	enc_ffmpeg? ( >=media-video/ffmpeg-3.2.2:0= )
 	enc_x264? ( media-libs/x264
-		!libav? ( >=media-video/ffmpeg-1.0.4:0=[x264] )
-		libav? ( media-video/libav:0=[x264] )
-	)
+	>=media-video/ffmpeg-1.0.4:0=[x264] )
 	enc_x265? ( media-libs/x265
-		!libav? ( >=media-video/ffmpeg-2:0=[x264] )
-		libav? ( media-video/libav:0=[x264] ) )
+	>=media-video/ffmpeg-2:0=[x264] )
 	jpeg? ( media-libs/libjpeg-turbo )
 	opengl? ( dev-python/pyopengl )
 	pulseaudio? ( media-sound/pulseaudio )
 	sound? ( media-libs/gstreamer:1.0
 		media-libs/gst-plugins-base:1.0
 		dev-python/gst-python:1.0 )
-	vpx? ( media-libs/libvpx virtual/ffmpeg )
+	vpx? ( media-libs/libvpx media-video/ffmpeg )
 	webp? ( media-libs/libwebp )"
 
 RDEPEND="${COMMON_DEPEND}
@@ -100,7 +88,7 @@ pkg_postinst() {
 }
 
 python_prepare_all() {
-	use dbus || eapply ${FILESDIR}/${PN}-3.0.2-dbus.patch
+	use dbus || eapply "${FILESDIR}/${PN}-3.0.2-dbus.patch"
 
 	hprefixify -w '/os.path/' setup.py
 	hprefixify tmpfiles.d/xpra.conf xpra/server/server_util.py \

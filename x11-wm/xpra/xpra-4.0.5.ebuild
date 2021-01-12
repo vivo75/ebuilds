@@ -3,9 +3,9 @@
 
 EAPI=6
 
-# PyCObject_Check and PyCObject_AsVoidPtr vanished with python 3.3
-PYTHON_COMPAT=( python{3_8,3_7} )
-inherit xdg distutils-r1 eutils flag-o-matic user tmpfiles prefix
+PYTHON_COMPAT=( python3_{6,7,8,9} )
+DISTUTILS_USE_SETUPTOOLS=no
+inherit xdg distutils-r1 eutils flag-o-matic tmpfiles prefix
 
 DESCRIPTION="X Persistent Remote Apps (xpra) and Partitioning WM (parti) based on wimpiggy"
 HOMEPAGE="http://xpra.org/ http://xpra.org/src/"
@@ -14,7 +14,7 @@ SRC_URI="http://xpra.org/src/${P}.tar.xz"
 LICENSE="GPL-2 BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+client +clipboard csc cups dbus ffmpeg jpeg libav +lz4 lzo opengl pillow pulseaudio server sound test vpx webcam webp"
+IUSE="brotli +client +clipboard csc cups dbus ffmpeg jpeg +lz4 lzo minimal opengl pillow pulseaudio server sound test vpx webcam webp"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}
 	|| ( client server )
@@ -23,7 +23,7 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}
 "
 
 COMMON_DEPEND="${PYTHON_DEPS}
-	dev-python/pygobject:3[${PYTHON_USEDEP}]
+	dev-python/pygobject:3[cairo,${PYTHON_USEDEP}]
 	x11-libs/gtk+:3[introspection]
 	x11-libs/libX11
 	x11-libs/libXcomposite
@@ -32,24 +32,23 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	x11-libs/libXrandr
 	x11-libs/libXtst
 	x11-libs/libxkbfile
-	csc? (
-		!libav? ( >=media-video/ffmpeg-1.2.2:0= )
-		libav? ( media-video/libav:0= )
-	)
-	ffmpeg? (
-		!libav? ( >=media-video/ffmpeg-3.2.2:0=[x264,x265] )
-		libav? ( media-video/libav:0=[x264,x265] )
-	)
+	brotli? ( app-arch/brotli )
+	csc? ( >=media-video/ffmpeg-1.2.2:0= )
+	ffmpeg? ( >=media-video/ffmpeg-3.2.2:0=[x264,x265] )
 	jpeg? ( media-libs/libjpeg-turbo )
 	opengl? ( dev-python/pyopengl )
-	pulseaudio? ( media-sound/pulseaudio )
+	pulseaudio? (
+		media-sound/pulseaudio
+		media-plugins/gst-plugins-pulse:1.0
+	)
 	sound? ( media-libs/gstreamer:1.0
 		media-libs/gst-plugins-base:1.0
 		dev-python/gst-python:1.0 )
-	vpx? ( media-libs/libvpx virtual/ffmpeg )
+	vpx? ( media-libs/libvpx media-video/ffmpeg )
 	webp? ( media-libs/libwebp )
 "
 RDEPEND="${COMMON_DEPEND}
+	acct-group/xpra
 	dev-python/netifaces[${PYTHON_USEDEP}]
 	dev-python/rencode[${PYTHON_USEDEP}]
 	dev-python/pillow[jpeg?,${PYTHON_USEDEP}]
@@ -76,12 +75,11 @@ RESTRICT="!test? ( test )"
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-3.0.2_ignore-gentoo-no-compile.patch
-	"${FILESDIR}"/${PN}-2.0-suid-warning.patch
 	"${FILESDIR}"/${PN}-3.0.2-ldconfig.patch
+	"${FILESDIR}"/${PN}-4.0.3-suid-warning.patch
 )
 
 pkg_postinst() {
-	enewgroup ${PN}
 	tmpfiles_process /usr/lib/tmpfiles.d/xpra.conf
 
 	xdg_pkg_postinst
@@ -91,6 +89,11 @@ python_prepare_all() {
 	hprefixify -w '/os.path/' setup.py
 	hprefixify tmpfiles.d/xpra.conf xpra/server/server_util.py \
 		xpra/platform{/xposix,}/paths.py xpra/scripts/server.py
+
+	if use minimal; then
+		sed -r -e 's/^(pam|scripts|xdg_open)_ENABLED.*/\1_ENABLED=False/' \
+			-i setup.py || die
+	fi
 
 	distutils-r1_python_prepare_all
 }
@@ -115,7 +118,6 @@ python_configure_all() {
 		$(use_with ffmpeg enc_ffmpeg)
 		$(use_with ffmpeg enc_x264)
 		$(use_with ffmpeg enc_x265)
-		--without-gtk2
 		--with-gtk3
 		--without-html5
 		$(use_with jpeg jpeg_encoder)

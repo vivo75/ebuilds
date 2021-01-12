@@ -266,7 +266,6 @@ sys-libs/tevent python
 sys-libs/timezone-data leaps_timezone
 sys-libs/zlib minizip static-libs
 >=sys-process/numactl-2.0.11-r1 static-libs
-virtual/ffmpeg sdl
 >=virtual/jpeg-0-r2:0 static-libs
 virtual/podofo-build tools
 >=virtual/pypy3-5.9.0 sqlite

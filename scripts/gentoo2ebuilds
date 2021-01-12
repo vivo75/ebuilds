@@ -124,7 +124,6 @@ ebuilds_overlay = (
     'dev-python/nose',
     'dev-python/mako',
     'dev-python/gst-python',
-    'x11-wm/xpra',
     'dev-python/doxypypy',
     'dev-python/doxyqml',
     )
