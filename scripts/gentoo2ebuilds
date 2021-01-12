@@ -36,8 +36,6 @@ find /srv/raid0/gentoo-repos/ebuilds \
     -e '^dev-python/jonpy$' \
     -e '^dev-python/relatorio$' \
     -e '^dev-util/flatpak-builder$' \
-    -e '^kde-apps/kcontacts$' \
-    -e '^net-libs/libgmail$' \
     -e '^net-misc/lxc-fake-net$' \
     -e '^sys-apps/flatpak$' \
     -e '^sys-apps/xdg-desktop-portal-gtk$' \
@@ -111,9 +109,6 @@ ebuilds_overlay = (
     'dev-python/relatorio',
     'games-board/python-chess',
     'media-gfx/rawtherapee',
-    'media-gfx/displaycal',
-    'kde-apps/kcontacts',
-    'net-libs/libgmail',
     'net-misc/lxc-fake-net',
     'sys-fs/libostree',
     'dev-python/doxypypy',
