@@ -2251,6 +2251,7 @@ EBUILDS_KEEP_ALL = (
     'media-video/mpeg2vidcodec',
     'media-video/mplayer',
     'media-video/mpv',
+    'media-video/obs-studio',
     'media-video/qmplay2',
     'media-video/rav1e',
     'media-video/transcode',
