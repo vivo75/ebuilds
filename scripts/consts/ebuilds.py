@@ -2547,6 +2547,7 @@ EBUILDS_KEEP_ALL = (
     'sys-apps/ethtool',
     'sys-apps/fakechroot',
     'sys-apps/fakeroot',
+    'sys-apps/fbset',
     'sys-apps/file',
     'sys-apps/findutils',
     'sys-apps/flashrom',
