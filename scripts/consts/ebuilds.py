@@ -2505,6 +2505,7 @@ EBUILDS_KEEP_ALL = (
     'sci-libs/metis',
     'sci-libs/qrupdate',
     'dev-python/argcomplete',
+    'dev-python/python-magic',
     'dev-python/scipy',
     'dev-python/sortedcontainers',
     'dev-python/ovs',
