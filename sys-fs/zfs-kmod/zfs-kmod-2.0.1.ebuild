@@ -21,7 +21,7 @@ fi
 
 LICENSE="CDDL MIT debug? ( GPL-2+ )"
 SLOT="0"
-IUSE="custom-cflags debug +rootfs"
+IUSE="custom-cflags debug +rootfs dist-kernel"
 
 DEPEND=""
 
