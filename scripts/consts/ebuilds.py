@@ -817,6 +817,7 @@ EBUILDS_KEEP_ALL = (
     'dev-perl/Digest-SHA1',
     'dev-perl/Dist-CheckConflicts',
     'dev-perl/Encode-Detect',
+    'dev-perl/Encode-IMAPUTF7',
     'dev-perl/Encode-Locale',
     'dev-perl/Error',
     'dev-perl/Expect',
