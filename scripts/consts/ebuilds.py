@@ -555,6 +555,7 @@ EBUILDS_KEEP_ALL = (
     'dev-lang/php',
     'dev-lang/python',
     'dev-lang/python-exec',
+    'dev-lang/python-exec-conf',
     'dev-lang/ruby',
     'dev-lang/rust',
     'dev-lang/sassc',
