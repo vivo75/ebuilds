@@ -843,6 +843,7 @@ EBUILDS_KEEP_ALL = (
     'dev-perl/File-ShareDir-Install',
     'dev-perl/File-ShareDir-ProjectDistDir',
     'dev-perl/File-Slurp',
+    'dev-perl/File-Tail',
     'dev-perl/File-Which',
     'dev-perl/File-chdir',
     'dev-perl/Filesys-Statvfs',
