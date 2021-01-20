@@ -1438,6 +1438,7 @@ EBUILDS_KEEP_ALL = (
     'dev-python/wtforms',
     'dev-python/wxpython',
     'dev-python/xcffib',
+    'dev-python/xlwt',
     'dev-python/xmlschema',
     'dev-python/xmltodict',
     'dev-python/zc-lockfile',
