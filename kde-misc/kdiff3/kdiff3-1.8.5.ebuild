@@ -4,38 +4,37 @@
 EAPI=7
 
 ECM_HANDBOOK="forceoptional"
-KFMIN=5.74.0
-QTMIN=5.15.1
+KFMIN=5.60.0
+QTMIN=5.12.3
 inherit ecm kde.org
 
-DESCRIPTION="KDE Plasma menu editor"
-HOMEPAGE="https://invent.kde.org/plasma/kmenuedit"
+DESCRIPTION="Frontend to diff3 based on KDE Frameworks"
+HOMEPAGE="https://apps.kde.org/en/kdiff3 https://userbase.kde.org/KDiff3"
+SRC_URI="mirror://kde/stable/${PN}/${P}.tar.xz"
 
-LICENSE="GPL-2" # TODO: CHECK
+LICENSE="GPL-2"
 SLOT="5"
-KEYWORDS="amd64 ~arm ~arm64 ~ppc64 ~x86"
+KEYWORDS="~amd64 ~arm64 ~ppc64 ~x86"
 IUSE=""
 
-RDEPEND="
-	>=dev-qt/qtdbus-${QTMIN}:5
+DEPEND="
 	>=dev-qt/qtgui-${QTMIN}:5
+	>=dev-qt/qtprintsupport-${QTMIN}:5
 	>=dev-qt/qtwidgets-${QTMIN}:5
-	>=dev-qt/qtxml-${QTMIN}:5
-	>=kde-frameworks/kcompletion-${KFMIN}:5
 	>=kde-frameworks/kconfig-${KFMIN}:5
 	>=kde-frameworks/kconfigwidgets-${KFMIN}:5
 	>=kde-frameworks/kcoreaddons-${KFMIN}:5
-	>=kde-frameworks/kdbusaddons-${KFMIN}:5
-	>=kde-frameworks/kglobalaccel-${KFMIN}:5
+	>=kde-frameworks/kcrash-${KFMIN}:5
 	>=kde-frameworks/ki18n-${KFMIN}:5
 	>=kde-frameworks/kiconthemes-${KFMIN}:5
-	>=kde-frameworks/kitemviews-${KFMIN}:5
 	>=kde-frameworks/kio-${KFMIN}:5
-	>=kde-frameworks/kservice-${KFMIN}:5
+	>=kde-frameworks/kparts-${KFMIN}:5
+	>=kde-frameworks/ktextwidgets-${KFMIN}:5
 	>=kde-frameworks/kwidgetsaddons-${KFMIN}:5
 	>=kde-frameworks/kxmlgui-${KFMIN}:5
-	>=kde-frameworks/sonnet-${KFMIN}:5
 "
-DEPEND="${RDEPEND}
-	>=kde-frameworks/kinit-${KFMIN}:5
+RDEPEND="${DEPEND}
+	sys-apps/diffutils
 "
+
+PATCHES=( "${FILESDIR}/${PN}-1.8.3-hidpi.patch" )
