@@ -17,7 +17,7 @@ if [[ ${PV} == *9999* ]]; then
 	SRC_URI=""
 else
 	SRC_URI="https://download.ceph.com/tarballs/${P}.tar.gz"
-	KEYWORDS="amd64 ~ppc64"
+	KEYWORDS="~amd64 ~ppc64"
 fi
 
 DESCRIPTION="Ceph distributed filesystem"
@@ -44,7 +44,7 @@ DEPEND="
 	app-shells/bash:0
 	app-misc/jq:=
 	dev-libs/crypto++:=
-	dev-libs/rocksdb:=
+	<dev-libs/rocksdb-6.15:=
 	dev-libs/leveldb:=[snappy,tcmalloc(-)?]
 	dev-libs/libaio:=
 	dev-libs/libnl:3=
@@ -195,6 +195,7 @@ PATCHES=(
 	"${FILESDIR}/ceph-14.2.3-dpdk-compile-fix-1.patch"
 	"${FILESDIR}/ceph-14.2.4-python-executable.patch"
 	"${FILESDIR}/ceph-14.2.4-undefined-behaviour.patch"
+	"${FILESDIR}/ceph-14.2.10-python-warnings.patch"
 	"${FILESDIR}/ceph-14.2.10-build-without-mgr.patch"
 	"${FILESDIR}/ceph-14.2.11-systemd-unit-fix.patch"
 )
