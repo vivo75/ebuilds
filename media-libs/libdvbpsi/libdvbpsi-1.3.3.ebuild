@@ -1,20 +1,19 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-DESCRIPTION="library for MPEG TS/DVB PSI tables decoding and generation"
+DESCRIPTION="Library for MPEG TS/DVB PSI tables decoding and generation"
 HOMEPAGE="https://www.videolan.org/libdvbpsi"
 SRC_URI="https://download.videolan.org/pub/${PN}/${PV}/${P}.tar.bz2"
 
 LICENSE="LGPL-2.1"
 # Sublot == libdvbpsi.so major
 SLOT="0/10"
-KEYWORDS="~alpha amd64 arm ~arm64 ppc ppc64 sparc x86"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="doc static-libs"
 
-RDEPEND=""
-DEPEND="
+BDEPEND="
 	doc? (
 		app-doc/doxygen
 		>=media-gfx/graphviz-2.26
@@ -41,5 +40,5 @@ src_compile() {
 src_install() {
 	use doc && local HTML_DOCS=( doc/doxygen/html/. )
 	default
-	find "${D}" -name '*.la' -delete || die
+	find "${ED}" -name '*.la' -delete || die
 }
