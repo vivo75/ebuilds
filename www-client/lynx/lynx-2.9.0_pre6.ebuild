@@ -1,13 +1,7 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-
-# VERSIONING SCHEME TRANSLATION
-# Upstream	:	Gentoo
-# rel.		:	_p
-# pre.		:	_rc
-# dev.		:	_pre
 
 case ${PV} in
 	*_pre*) MY_P="${PN}${PV/_pre/dev.}" ;;
@@ -21,7 +15,7 @@ SRC_URI="https://invisible-mirror.net/archives/lynx/tarballs/${MY_P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
 IUSE="bzip2 cjk gnutls idn ipv6 nls ssl unicode libressl"
 
 RDEPEND="
@@ -53,10 +47,6 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-2.8.9_p1-parallel.patch
 )
 
-pkg_setup() {
-	! use ssl && elog "SSL support disabled; you will not be able to access secure websites."
-}
-
 src_configure() {
 	local myconf=(
 		--enable-nested-tables
@@ -77,9 +67,13 @@ src_configure() {
 		$(use_enable cjk)
 		$(use_enable unicode japanese-utf8)
 		$(use_with bzip2 bzlib)
-		$(usex ssl "--with-$(usex gnutls gnutls ssl)=${EPREFIX}/usr" "")
-		--with-screen=$(usex unicode "ncursesw" "ncurses")
+		--with-screen=$(usex unicode ncursesw ncurses)
 	)
+	if use ssl; then
+		myconf+=(
+			--with-$(usex gnutls gnutls ssl)="${EPREFIX}/usr"
+		)
+	fi
 
 	econf "${myconf[@]}"
 }

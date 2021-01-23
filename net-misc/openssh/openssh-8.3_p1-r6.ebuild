@@ -11,9 +11,9 @@ PARCH=${P/_}
 
 # PV to USE for HPN patches
 #HPN_PV="${PV^^}"
-HPN_PV="8.3_P1"
+HPN_PV="8.1_P1"
 
-HPN_VER="14.22"
+HPN_VER="14.20"
 HPN_PATCHES=(
 	${PN}-${HPN_PV/./_}-hpn-DynWinNoneSwitch-${HPN_VER}.diff
 	${PN}-${HPN_PV/./_}-hpn-AES-CTR-${HPN_VER}.diff
@@ -21,20 +21,20 @@ HPN_PATCHES=(
 )
 
 SCTP_VER="1.2" SCTP_PATCH="${PARCH}-sctp-${SCTP_VER}.patch.xz"
-X509_VER="12.6" X509_PATCH="${PARCH}+x509-${X509_VER}.diff.gz"
+X509_VER="12.5.1" X509_PATCH="${PARCH}+x509-${X509_VER}.diff.gz"
 
 DESCRIPTION="Port of OpenBSD's free SSH release"
 HOMEPAGE="https://www.openssh.com/"
 SRC_URI="mirror://openbsd/OpenSSH/portable/${PARCH}.tar.gz
 	${SCTP_PATCH:+sctp? ( https://dev.gentoo.org/~chutzpah/dist/openssh/${SCTP_PATCH} )}
-	${HPN_VER:+hpn? ( $(printf "mirror://sourceforge/project/hpnssh/Patches/HPN-SSH%%20${HPN_VER/./v}%%20${HPN_PV/_P/p}/%s\n" "${HPN_PATCHES[@]}") )}
+	${HPN_VER:+hpn? ( $(printf "mirror://sourceforge/hpnssh/HPN-SSH%%20${HPN_VER/./v}%%20${HPN_PV/_P/p}/%s\n" "${HPN_PATCHES[@]}") )}
 	${X509_PATCH:+X509? ( https://roumenpetrov.info/openssh/x509-${X509_VER}/${X509_PATCH} )}
 "
 S="${WORKDIR}/${PARCH}"
 
 LICENSE="BSD GPL-2"
 SLOT="0"
-KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~m68k ~mips ppc ppc64 ~riscv s390 sparc x86 ~x64-cygwin ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~x64-cygwin ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
 # Probably want to drop ssl defaulting to on in a future version.
 IUSE="abi_mips_n32 audit bindist debug hpn kerberos kernel_linux ldns libedit libressl livecd pam +pie +scp sctp security-key selinux +ssl static test X X509 xmss"
 
@@ -58,7 +58,7 @@ LIB_DEPEND="
 	)
 	libedit? ( dev-libs/libedit:=[static-libs(+)] )
 	sctp? ( net-misc/lksctp-tools[static-libs(+)] )
-	security-key? ( >=dev-libs/libfido2-1.5.0:=[static-libs(+)] )
+	security-key? ( >=dev-libs/libfido2-1.4.0:=[static-libs(+)] )
 	selinux? ( >=sys-libs/libselinux-1.28[static-libs(+)] )
 	ssl? (
 		!libressl? (
@@ -85,7 +85,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	virtual/os-headers
-	kernel_linux? ( !prefix-guest? ( >=sys-kernel/linux-headers-5.1 ) )
+	kernel_linux? ( >=sys-kernel/linux-headers-5.1 )
 	static? ( ${LIB_DEPEND} )
 "
 RDEPEND="${RDEPEND}
@@ -138,9 +138,6 @@ src_prepare() {
 	eapply "${FILESDIR}"/${PN}-8.0_p1-fix-putty-tests.patch
 	eapply "${FILESDIR}"/${PN}-8.0_p1-deny-shmget-shmat-shmdt-in-preauth-privsep-child.patch
 
-	# https://bugs.gentoo.org/749026
-	use X509 || eapply "${FILESDIR}"/${PN}-8.4_p1-fix-ssh-copy-id.patch
-
 	# workaround for https://bugs.gentoo.org/734984
 	use X509 || eapply "${FILESDIR}"/${PN}-8.3_p1-sha2-include.patch
 
@@ -191,9 +188,15 @@ src_prepare() {
 		cp $(printf -- "${DISTDIR}/%s\n" "${HPN_PATCHES[@]}") "${hpn_patchdir}" || die
 		pushd "${hpn_patchdir}" &>/dev/null || die
 		eapply "${FILESDIR}"/${P}-hpn-${HPN_VER}-glue.patch
-		eapply "${FILESDIR}"/${PN}-8.4_p1-hpn-${HPN_VER}-libressl.patch
-		use X509 && eapply "${FILESDIR}"/${PN}-8.4_p1-hpn-${HPN_VER}-X509-glue.patch
-		use sctp && eapply "${FILESDIR}"/${PN}-8.4_p1-hpn-${HPN_VER}-sctp-glue.patch
+		eapply "${FILESDIR}"/${PN}-8.2_p1-hpn-${HPN_VER}-libressl.patch
+		if use X509; then
+		#	einfo "Will disable MT AES cipher due to incompatbility caused by X509 patch set"
+		#	# X509 and AES-CTR-MT don't get along, let's just drop it
+		#	rm openssh-${HPN_PV//./_}-hpn-AES-CTR-${HPN_VER}.diff || die
+
+			eapply "${FILESDIR}"/${PN}-8.2_p1-hpn-${HPN_VER}-X509-glue.patch
+		fi
+		use sctp && eapply "${FILESDIR}"/${PN}-8.2_p1-hpn-${HPN_VER}-sctp-glue.patch
 		popd &>/dev/null || die
 
 		eapply "${hpn_patchdir}"
@@ -320,16 +323,8 @@ src_configure() {
 		$(use_with !elibc_Cygwin hardening) #659210
 	)
 
-	if use elibc_musl; then
-		# stackprotect is broken on musl x86 and ppc
-		if use x86 || use ppc; then
-			myconf+=( --without-stackprotect )
-		fi
-
-		# musl defines bogus values for UTMP_FILE and WTMP_FILE
-		# https://bugs.gentoo.org/753230
-		myconf+=( --disable-utmp --disable-wtmp )
-	fi
+	# stackprotect is broken on musl x86 and ppc
+	use elibc_musl && ( use x86 || use ppc ) && myconf+=( --without-stackprotect )
 
 	# The seccomp sandbox is broken on x32, so use the older method for now. #553748
 	use amd64 && [[ ${ABI} == "x32" ]] && myconf+=( --with-sandbox=rlimit )
@@ -423,7 +418,9 @@ src_install() {
 	newinitd "${FILESDIR}"/sshd-r1.initd sshd
 	newconfd "${FILESDIR}"/sshd-r1.confd sshd
 
-	newpamd "${FILESDIR}"/sshd.pam_include.2 sshd
+	if use pam; then
+		newpamd "${FILESDIR}"/sshd.pam_include.2 sshd
+	fi
 
 	tweak_ssh_configs
 
@@ -441,7 +438,7 @@ src_install() {
 			|| die "failed to remove scp"
 	fi
 
-	rmdir "${ED}"/var/empty || die
+	keepdir /var/empty
 
 	systemd_dounit "${FILESDIR}"/sshd.{service,socket}
 	systemd_newunit "${FILESDIR}"/sshd_at.service 'sshd@.service'
