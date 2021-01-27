@@ -17,12 +17,6 @@
 
 #--- END OF EXAMPLES ---
 
-# Michał Górny <mgorny@gentoo.org> (2020-12-22)
-# This is a renamed dev-python/pycryptodome.  Since the latter has more
-# revdeps, please sed your package s:Cryptodome:Crypto:,
-# s:pycryptodomex:pycryptodome:.
-dev-python/pycryptodomex
-
 # Andreas Sturmlechner <asturm@gentoo.org> (2020-11-20)
 # dev-qt/qtwebkit is in the process of being removed, tracker bug #684580
 dev-qt/qtwebkit
@@ -30,10 +24,6 @@ dev-qt/qtwebkit
 # Mart Raudsepp <leio@gentoo.org> (2020-07-04)
 # Port to gtk+:3 using wxGTK:3.0-gtk3 SLOT
 x11-libs/wxGTK:3.0
-
-# Andreas Sturmlechner <asturm@gentoo.org> (2020-05-17)
-# Abandoned upstream, countless bugs. Removal tracked in bug #659616
-sys-power/pm-utils
 
 # Kent Fredric <kentnl@gentoo.org> (2020-04-15)
 # Functionality now provided by Net::SMTP 3.25+
