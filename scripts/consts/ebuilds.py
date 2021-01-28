@@ -2650,6 +2650,7 @@ EBUILDS_KEEP_ALL = (
     'sys-apps/smartmontools',
     'sys-apps/systemd',
     'sys-apps/systemd-readahead',
+    'sys-apps/systemd-tmpfiles',
     'sys-apps/sysvinit',
     'sys-apps/tcp-wrappers',
     'sys-apps/texinfo',
