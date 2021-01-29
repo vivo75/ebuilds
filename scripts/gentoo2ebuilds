@@ -113,6 +113,9 @@ ebuilds_overlay = (
     'sys-fs/libostree',
     'dev-python/doxypypy',
     'dev-python/doxyqml',
+    
+    'app-portage/lto-rebuild',
+    'sys-config/ltoize',
     )
 
 #EBUILDS_KEEP_ALL = (
