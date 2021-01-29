@@ -116,6 +116,8 @@ ebuilds_overlay = (
     
     'app-portage/lto-rebuild',
     'sys-config/ltoize',
+    'app-portage/portage-bashrc-mv',
+    'app-shells/runtitle',
     )
 
 #EBUILDS_KEEP_ALL = (
