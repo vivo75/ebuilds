@@ -1,4 +1,4 @@
-:features/compress
-:features/utils
-:features/gentoo-util
+../../../../../features/compress
+../../../../../features/utils
+../../../../../features/gentoo-util
 ..
