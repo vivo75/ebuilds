@@ -6,7 +6,7 @@
 #To use this file, first define NTHREADS to the number of threads you want the LTO
 #processes to use on your system at the top of your make.conf:
 
-#NTHREADS="12" 
+NTHREADS="8" 
 
 #A good number is the number of hardware threads you have available on your system.
 #You may also set this to "auto" to have gcc determine optimal number of cores (GCC 10+) 
