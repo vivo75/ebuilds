@@ -51,7 +51,6 @@ app-vim/ntp-syntax
 app-vim/securemodelines
 app-vim/udev-syntax
 dev-db/postgresql
-dev-java/jdbc-mysql
 dev-lang/php
 dev-libs/libusb-compat
 dev-libs/libxls
