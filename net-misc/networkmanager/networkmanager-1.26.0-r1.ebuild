@@ -5,7 +5,7 @@ EAPI=6
 GNOME_ORG_MODULE="NetworkManager"
 GNOME2_LA_PUNT="yes"
 VALA_USE_DEPEND="vapigen"
-PYTHON_COMPAT=( python3_6 python3_7 python3_8 python3_9 )
+PYTHON_COMPAT=( python3_7 python3_8 python3_9 )
 
 inherit bash-completion-r1 gnome2 linux-info multilib python-any-r1 systemd readme.gentoo-r1 vala virtualx udev multilib-minimal
 

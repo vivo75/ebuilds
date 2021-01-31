@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{7..9} )
 
 inherit multilib multilib-minimal toolchain-funcs python-r1 linux-info systemd usr-ldscript
 
@@ -84,6 +84,7 @@ multilib_src_compile() {
 		}
 		use python && python_foreach_impl python_compile
 	else
+		emake -C common
 		emake -C lib
 		emake -C auparse
 	fi

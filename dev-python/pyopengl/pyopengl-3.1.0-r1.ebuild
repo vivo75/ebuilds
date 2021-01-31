@@ -3,7 +3,7 @@
 
 EAPI=5
 PYTHON_REQ_USE="tk?"
-PYTHON_COMPAT=( python3_6 python3_7 python3_9 )
+PYTHON_COMPAT=( python3_7 python3_9 )
 
 inherit distutils-r1
 

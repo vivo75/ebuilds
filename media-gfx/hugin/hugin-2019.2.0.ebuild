@@ -4,7 +4,7 @@
 EAPI=6
 
 WX_GTK_VER="3.0"
-PYTHON_COMPAT=( python3_6 python3_7 python3_8 python3_9 )
+PYTHON_COMPAT=( python3_7 python3_8 python3_9 )
 
 inherit python-single-r1 wxwidgets cmake-utils eapi7-ver xdg
 

@@ -4,7 +4,7 @@
 EAPI=7
 VIM_VERSION="8.2"
 LUA_COMPAT=( lua5-1 luajit )
-PYTHON_COMPAT=( python3_6 python3_7 python3_8 python3_9 )
+PYTHON_COMPAT=( python3_7 python3_8 python3_9 )
 PYTHON_REQ_USE="threads(+)"
 USE_RUBY="ruby24 ruby25 ruby26 ruby27"
 

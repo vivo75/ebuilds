@@ -13,7 +13,7 @@ else
 fi
 
 CMAKE_ECLASS=cmake
-PYTHON_COMPAT=( python3_8 python3_7 python3_9 )
+PYTHON_COMPAT=( python3_{7,8,9} )
 inherit cmake-multilib python-any-r1
 
 DESCRIPTION="EXIF, IPTC and XMP metadata C++ library and command line utility"

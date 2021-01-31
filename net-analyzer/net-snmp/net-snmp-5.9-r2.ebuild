@@ -6,7 +6,7 @@ DISTUTILS_OPTIONAL=yesplz
 DISTUTILS_SINGLE_IMPL=yesplz
 GENTOO_DEPEND_ON_PERL=no
 PATCHSET=3
-PYTHON_COMPAT=( python3_6 python3_7 python3_8 python3_9 )
+PYTHON_COMPAT=( python3_7 python3_8 python3_9 )
 WANT_AUTOMAKE=none
 inherit autotools distutils-r1 perl-module systemd
 
