@@ -18,7 +18,6 @@ app-crypt/easy-rsa
 app-crypt/efitools
 app-crypt/seahorse
 app-editors/vim
-app-emulation/aqemu
 app-emulation/lxc
 app-emulation/qemu
 app-emulation/virt-manager
