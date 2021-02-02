@@ -7,9 +7,6 @@ import json
 import pathlib
 import configparser
 
-sys.path = [pathlib.Path(__file__).resolve().parent]+sys.path
-from consts.ebuilds import EBUILDS_KEEP_ALL
-
 INIFILE = "repomerge.ini"
 SECTION_SOURCES = "sources"
 SECTION_EBUILDS = "ebuilds"
