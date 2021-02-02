@@ -185,7 +185,7 @@ def main(argv):
     repos = [ x.strip(''' '" ''') for x in repos.split(",") ]
     for reponame in repos:
         repo_heads[reponame] = update_git_repo(REPOS_DIR, reponame)
-        commit_message += "  %s commit %s\n" % (reponame, repo_heads[reponame])
+        commit_message += f'{reponame: <20} commit {repo_heads[reponame]}\n'
 
     # add some metadata for later use
     with open(os.path.join(EBUILDS_REPO_PATH, 'metadata', 'gentoo2ebuilds.json'), 'wt') as f:
