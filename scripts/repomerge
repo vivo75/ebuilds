@@ -193,38 +193,38 @@ def main(argv):
             'repositories' : repo_heads,
             }, f)
 
-    ## These paths are synced as is, no operations
-    #for key in config[SECTION_SOURCES]:
-        #reponame, path = parse_file_keys(key)
-        #src = os.path.join(REPOS_DIR, reponame, path)
-        #value = get_dict_value(config[SECTION_SOURCES][key])
-        #if os.path.exists(src):
-            #rsync(
-                #src,
-                #os.path.join(EBUILDS_REPO_PATH, path),
-                #delete=(not value_is_merge(value)),
-                #)
-        #else:
-            #print( "WARNING: path '%s' not found in upstram repo" % src)
+    # These paths are synced as is, no operations
+    for key in config[SECTION_SOURCES]:
+        reponame, path = parse_file_keys(key)
+        src = os.path.join(REPOS_DIR, reponame, path)
+        value = get_dict_value(config[SECTION_SOURCES][key])
+        if os.path.exists(src):
+            rsync(
+                src,
+                os.path.join(EBUILDS_REPO_PATH, path),
+                delete=(not value_is_merge(value)),
+                )
+        else:
+            print( "WARNING: path '%s' not found in upstram repo" % src)
 
-    ## but some categories have too many packages, choose them wisely
-    #for key in config[SECTION_EBUILDS]:
-        ##print("key: ", key)
-        #reponame, path = parse_file_keys(key)
-        ## add os.path.sep for rsync
-        #src = os.path.join(REPOS_DIR, reponame, path) + os.path.sep
-        #dst = os.path.join(EBUILDS_REPO_PATH, path) + os.path.sep
-        #value = get_dict_value(config[SECTION_EBUILDS][key])
-        #if os.path.exists(src):
-            #rsync(src, dst)
+    # but some categories have too many packages, choose them wisely
+    for key in config[SECTION_EBUILDS]:
+        #print("key: ", key)
+        reponame, path = parse_file_keys(key)
+        # add os.path.sep for rsync
+        src = os.path.join(REPOS_DIR, reponame, path) + os.path.sep
+        dst = os.path.join(EBUILDS_REPO_PATH, path) + os.path.sep
+        value = get_dict_value(config[SECTION_EBUILDS][key])
+        if os.path.exists(src):
+            rsync(src, dst)
 
-            #if not value_is_no_python_update(value):
-                #with os.scandir(dst) as ebuilds:
-                    #for ebuild in [x for x in ebuilds if x.is_file() and x.name.endswith('.ebuild')]:
-                        #cat, pkg = path.split("/")
-                        #update_python_compat(cat, pkg, ebuild.path)
-        #else:
-            #print( "WARNING: package '%s' not found in upstram repo" % src)
+            if not value_is_no_python_update(value):
+                with os.scandir(dst) as ebuilds:
+                    for ebuild in [x for x in ebuilds if x.is_file() and x.name.endswith('.ebuild')]:
+                        cat, pkg = path.split("/")
+                        update_python_compat(cat, pkg, ebuild.path)
+        else:
+            print( "WARNING: package '%s' not found in upstram repo" % src)
 
     # Commit to the local ebuild repo
     ret = subprocess.run(['git', 'add', '.',], capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
