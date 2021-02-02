@@ -1,0 +1,251 @@
+#! /usr/bin/python3
+
+import os
+import sys
+import subprocess
+import json
+import pathlib
+import configparser
+
+sys.path = [pathlib.Path(__file__).resolve().parent]+sys.path
+from consts.ebuilds import EBUILDS_KEEP_ALL
+
+INIFILE = "repomerge.ini"
+SECTION_SOURCES = "sources"
+SECTION_EBUILDS = "ebuilds"
+# better than hardcoded (but not by much)
+REPOS_DIR = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '..', '..'))
+EBUILDS_REPO_PATH = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '..'))
+
+# git clone --shallow-since=2021-01-01 --no-single-branch --branch=stable  https://anongit.gentoo.org/git/repo/sync/gentoo.git
+#UPSTREAM_REPO_PATH = os.path.join(REPOS_DIR, 'gentoo')
+
+#categories_removed = (
+    #'app-emacs', 'app-leechcraft', 'app-pda', 'app-xemacs', 'dev-ada', 'dev-dotnet', 'dev-erlang', 'dev-games',
+    #'dev-haskell', 'dev-lisp', 'dev-lua', 'dev-ros', 'dev-tex', 'dev-texlive', 'games-arcade', 'games-board',
+    #'games-emulation', 'games-engines', 'games-fps', 'games-kids', 'games-misc', 'games-mud', 'games-puzzle',
+    #'games-roguelike', 'games-rpg', 'games-simulation', 'games-sports', 'games-util', 'gnustep-apps', 'gnustep-base',
+    #'gnustep-libs', 'gui-apps', 'gui-libs', 'gui-wm', 'mate-base', 'mate-extra', 'media-radio', 'media-tv',
+    #'net-news', 'net-nntp', 'net-p2p', 'net-voip', 'ros-meta', 'sci-astronomy', 'sci-biology', 'sci-calculators',
+    #'sci-chemistry', 'sci-electronics', 'sci-misc', 'sci-physics', 'sec-policy', 'sys-freebsd', 'xfce-base',
+    #'xfce-extra',
+    #)
+
+# TODO: review and update
+#ebuilds_overlay = (
+    #'app-admin/smalltools',
+    #'app-backup/zfs-auto-snapshot',
+    #'app-text/poppler-svg',
+    #'dev-python/marshmallow-sqlalchemy',
+    #'dev-python/clientcookie',
+    #'dev-python/jonpy',
+    #'dev-python/photohash',
+    #'dev-python/pystache',
+    #'dev-python/relatorio',
+    #'games-board/python-chess',
+    #'media-gfx/rawtherapee',
+    #'net-misc/lxc-fake-net',
+    #'sys-fs/libostree',
+    #'dev-python/doxypypy',
+    #'dev-python/doxyqml',
+    #)
+__CACHE_MKDIRS = []
+def make_known_path(path):
+    global __CACHE_MKDIRS
+    if path in __CACHE_MKDIRS:
+        return True
+    if os.path.exists(path):
+        __CACHE_MKDIRS.append(path)
+        return True
+    os.makedirs(path, 0o755, exist_ok=True)
+    return False
+
+def rsync(src, dst, delete=True, capture_output=False, check=True):
+    cmd = ['rsync', '-rt', '--update', '--inplace', '--exclude=*-9999*', "--exclude=metadata/layout.conf", ]
+    if delete:
+        cmd += ['--delete', ]
+    cmd += [
+           src + os.sep,
+           dst + os.sep,
+           ]
+    make_known_path(os.path.dirname(dst.rstrip(os.sep)))
+    return subprocess.run(cmd,
+                          capture_output=capture_output,
+                          cwd=EBUILDS_REPO_PATH,
+                          timeout=5,
+                          check=check)
+
+
+def update_python_compat(cat, pkg, ebuild):
+    new_python_compat = []
+    ret = subprocess.run(['grep', '-qm', '1', '^PYTHON_COMPAT=.*)', ebuild], check=False)
+    if ret.returncode == 0:
+        cmd = ['env', '-i',
+               'bash',
+               '-c', '''function inherit() { :; }  ; source '%s' 2> /dev/null; echo -n ${PYTHON_COMPAT[@]}''' % ebuild, ]
+        ret = subprocess.run(cmd,
+                    capture_output=True,
+                    timeout=5,
+                    check=False)
+        expanded_compat = ret.stdout.decode('ascii').strip()
+
+        # no need to modify an ebuild already supporting our wanted version
+        if expanded_compat.find('python3_9') >= 0:
+            return
+
+        # this ebuild only support legacy python
+        if expanded_compat in ('python2_7', ):
+            return
+
+        new_python_compat = expanded_compat.split(" ")
+
+        #print(os.path.join(cat,pkg), end=' : ')
+        # if ebuild support at least one version of py3
+        # than we suppose it support our preferred
+        if expanded_compat.find('python3_') >= 0:
+            new_python_compat.append('python3_9')
+
+        #print('PYTHON_COMPAT=%s' % ' '.join(new_python_compat))
+
+        cmd = ['sed',
+               '-e', 's/^PYTHON_COMPAT=.*)/PYTHON_COMPAT=( %s )/' % ' '.join(new_python_compat),
+               '-i', ebuild, ]
+        subprocess.run(cmd, check=True)
+
+
+def update_git_repo(path, reponame):
+    repo = os.path.join(path, reponame)
+    print("cd %s" % repo)
+    ret = subprocess.run(['git', 'rev-parse', '--verify', 'HEAD'],
+                         capture_output=True,
+                         cwd=repo,
+                         check=True)
+    oldGitHead = ret.stdout.strip().decode('ascii')
+    ret = subprocess.run(['git', 'fetch', '-a'],
+                         capture_output=False,
+                         cwd=repo,
+                         timeout=600,
+                         check=True)
+    ret = subprocess.run(['git', 'pull'],
+                         capture_output=False,
+                         cwd=repo,
+                         timeout=600,
+                         check=True)
+    ret = subprocess.run(['git', 'rev-parse', '--verify', 'HEAD'],
+                         capture_output=True,
+                         cwd=repo,
+                         check=True)
+    newGitHead = ret.stdout.strip().decode('ascii')
+
+    if oldGitHead == newGitHead:
+        print("repo %s already up to date, rev: %s" % (reponame, str(newGitHead)))
+    else:
+        print("repo %s at revision: %s" % (reponame, str(newGitHead)))
+
+    return newGitHead
+
+
+def parse_file_keys(k):
+    # return a tuple containing the repo and the relative file path
+    _file, reponame = k.split("::")
+    return (reponame, _file)
+
+
+def get_dict_value(value):
+    if value is None:
+        return value
+    return [ x.strip(''' '" ''') for x in value.split(",") ]
+
+
+def _value_is(value, key):
+    if value is None:
+        return False
+    if value == key:
+        return True
+    return (key in value)
+
+
+def value_is_merge(value):
+    return _value_is(value, "merge")
+
+
+def value_is_no_python_update(value):
+    return _value_is(value, "no_python_update")
+
+
+def main(argv):
+
+    repo_heads = {}
+    commit_message = "repomerge from:\n"
+
+    config = configparser.ConfigParser(allow_no_value=True, delimiters=('=', ))
+    # no lowercase, please
+    config.optionxform = str
+    config.read(os.path.join(EBUILDS_REPO_PATH, "scripts", INIFILE))
+
+    # get a list of repos and update them
+    repos = config['consts']['git_repos']
+    repos = [ x.strip(''' '" ''') for x in repos.split(",") ]
+    for reponame in repos:
+        repo_heads[reponame] = update_git_repo(REPOS_DIR, reponame)
+        commit_message += "  %s commit %s\n" % (reponame, repo_heads[reponame])
+
+    # add some metadata for later use
+    with open(os.path.join(EBUILDS_REPO_PATH, 'metadata', 'gentoo2ebuilds.json'), 'wt') as f:
+        json.dump({
+            'repositories' : repo_heads,
+            }, f)
+
+    ## These paths are synced as is, no operations
+    #for key in config[SECTION_SOURCES]:
+        #reponame, path = parse_file_keys(key)
+        #src = os.path.join(REPOS_DIR, reponame, path)
+        #value = get_dict_value(config[SECTION_SOURCES][key])
+        #if os.path.exists(src):
+            #rsync(
+                #src,
+                #os.path.join(EBUILDS_REPO_PATH, path),
+                #delete=(not value_is_merge(value)),
+                #)
+        #else:
+            #print( "WARNING: path '%s' not found in upstram repo" % src)
+
+    ## but some categories have too many packages, choose them wisely
+    #for key in config[SECTION_EBUILDS]:
+        ##print("key: ", key)
+        #reponame, path = parse_file_keys(key)
+        ## add os.path.sep for rsync
+        #src = os.path.join(REPOS_DIR, reponame, path) + os.path.sep
+        #dst = os.path.join(EBUILDS_REPO_PATH, path) + os.path.sep
+        #value = get_dict_value(config[SECTION_EBUILDS][key])
+        #if os.path.exists(src):
+            #rsync(src, dst)
+
+            #if not value_is_no_python_update(value):
+                #with os.scandir(dst) as ebuilds:
+                    #for ebuild in [x for x in ebuilds if x.is_file() and x.name.endswith('.ebuild')]:
+                        #cat, pkg = path.split("/")
+                        #update_python_compat(cat, pkg, ebuild.path)
+        #else:
+            #print( "WARNING: package '%s' not found in upstram repo" % src)
+
+    # Commit to the local ebuild repo
+    ret = subprocess.run(['git', 'add', '.',], capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
+    cmd = ['git',
+           'commit',
+           '-m',
+           commit_message
+           ]
+    ret = subprocess.run(cmd, capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
+
+    # +default remote
+    #ret = subprocess.run(['git', 'push', ], capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
+
+
+if __name__ == "__main__":
+    main(sys.argv)
+
+
+# kate: encoding utf-8; eol unix
+# kate: indent-width 4; mixedindent off; replace-tabs on; remove-trailing-spaces modified; space-indent on
+# kate: word-wrap-column 200; word-wrap on
