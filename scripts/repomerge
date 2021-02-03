@@ -58,7 +58,7 @@ def make_known_path(path):
     return False
 
 def rsync(src, dst, delete=True, capture_output=False, check=True):
-    cmd = ['rsync', '-rt', '--update', '--inplace', '--exclude=*-9999*', "--exclude=metadata/layout.conf", ]
+    cmd = ['rsync', '-rt', '--inplace', '--exclude=*-9999*', "--exclude=metadata/layout.conf", ]
     if delete:
         cmd += ['--delete', ]
     cmd += [
