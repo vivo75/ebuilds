@@ -236,7 +236,7 @@ def main(argv):
     ret = subprocess.run(cmd, capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
 
     # +default remote
-    #ret = subprocess.run(['git', 'push', ], capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
+    ret = subprocess.run(['git', 'push', ], capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
 
 
 if __name__ == "__main__":
