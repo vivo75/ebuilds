@@ -6,8 +6,10 @@ import subprocess
 import json
 import pathlib
 import configparser
+import re
 
 INIFILE = "repomerge.ini"
+SECTION_CONSTS = 'consts'
 SECTION_SOURCES = "sources"
 SECTION_EBUILDS = "ebuilds"
 # better than hardcoded (but not by much)
@@ -73,7 +75,7 @@ def rsync(src, dst, delete=True, capture_output=False, check=True):
                           check=check)
 
 
-def update_python_compat(cat, pkg, ebuild):
+def update_python_compat(cat, pkg, ebuild, python_ver):
     new_python_compat = []
     ret = subprocess.run(['grep', '-qm', '1', '^PYTHON_COMPAT=.*)', ebuild], check=False)
     if ret.returncode == 0:
@@ -87,7 +89,7 @@ def update_python_compat(cat, pkg, ebuild):
         expanded_compat = ret.stdout.decode('ascii').strip()
 
         # no need to modify an ebuild already supporting our wanted version
-        if expanded_compat.find('python3_9') >= 0:
+        if expanded_compat.find(python_ver) >= 0:
             return
 
         # this ebuild only support legacy python
@@ -100,7 +102,7 @@ def update_python_compat(cat, pkg, ebuild):
         # if ebuild support at least one version of py3
         # than we suppose it support our preferred
         if expanded_compat.find('python3_') >= 0:
-            new_python_compat.append('python3_9')
+            new_python_compat.append(python_ver)
 
         #print('PYTHON_COMPAT=%s' % ' '.join(new_python_compat))
 
@@ -162,13 +164,20 @@ def _value_is(value, key):
     return (key in value)
 
 
+def find_re_value(value, keyre):
+    ret = []
+    if isinstance(value, (str, )):
+        value = [value, ]
+
+    if isinstance(value, (list, dict, )):
+        for x in value:
+            m = re.search(keyre, x)
+            if m is not None:
+                ret.append(m.group(0))
+    return ret
+
 def value_is_merge(value):
     return _value_is(value, "merge")
-
-
-def value_is_no_python_update(value):
-    return _value_is(value, "no_python_update")
-
 
 def main(argv):
 
@@ -181,7 +190,7 @@ def main(argv):
     config.read(os.path.join(EBUILDS_REPO_PATH, "scripts", INIFILE))
 
     # get a list of repos and update them
-    repos = config['consts']['git_repos']
+    repos = config[SECTION_CONSTS]['git_repos']
     repos = [ x.strip(''' '" ''') for x in repos.split(",") ]
     for reponame in repos:
         repo_heads[reponame] = update_git_repo(REPOS_DIR, reponame)
@@ -218,11 +227,11 @@ def main(argv):
         if os.path.exists(src):
             rsync(src, dst)
 
-            if not value_is_no_python_update(value):
+            for add_python in find_re_value(value, '^python3_[0-9]+$'):
                 with os.scandir(dst) as ebuilds:
                     for ebuild in [x for x in ebuilds if x.is_file() and x.name.endswith('.ebuild')]:
                         cat, pkg = path.split("/")
-                        update_python_compat(cat, pkg, ebuild.path)
+                        update_python_compat(cat, pkg, ebuild.path, add_python)
         else:
             print( "WARNING: package '%s' not found in upstram repo" % src)
 
