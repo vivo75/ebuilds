@@ -59,6 +59,21 @@ def make_known_path(path):
     os.makedirs(path, 0o755, exist_ok=True)
     return False
 
+
+# Some categories are special and got copied differently
+__CATEGORIES = ['virtual', 'acct-group', 'acct-user', ]
+def add_category(cat):
+    global __CATEGORIES
+    if not cat in __CATEGORIES:
+        __CATEGORIES.append(cat)
+
+
+def save_categories():
+    __CATEGORIES.sort()
+    with open(os.path.join(EBUILDS_REPO_PATH, 'profiles', 'categories', ), 'w') as categories:
+        categories.write("\n".join(__CATEGORIES))
+
+
 def rsync(src, dst, delete=True, update=False, capture_output=False, check=True):
     cmd = ['rsync', '-rt', '--inplace', '--exclude=*-9999*', "--exclude=metadata/layout.conf", ]
     if delete:
@@ -228,15 +243,20 @@ def main(argv):
         dst = os.path.join(EBUILDS_REPO_PATH, path) + os.path.sep
         value = get_dict_value(config[SECTION_EBUILDS][key])
         if os.path.exists(src):
+            cat, pkg = path.split("/")
             rsync(src, dst)
 
+            # update usable python versions
             for add_python in find_re_value(value, '^python3_[0-9]+$'):
                 with os.scandir(dst) as ebuilds:
                     for ebuild in [x for x in ebuilds if x.is_file() and x.name.endswith('.ebuild')]:
-                        cat, pkg = path.split("/")
                         update_python_compat(cat, pkg, ebuild.path, add_python)
+
+            # remember category used
+            add_category(cat)
         else:
             print( "WARNING: package '%s' not found in upstram repo" % src)
+    save_categories()
 
     # Commit to the local ebuild repo
     ret = subprocess.run(['git', 'add', '.',], capture_output=False, cwd=EBUILDS_REPO_PATH, check=True)
