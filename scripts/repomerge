@@ -59,10 +59,12 @@ def make_known_path(path):
     os.makedirs(path, 0o755, exist_ok=True)
     return False
 
-def rsync(src, dst, delete=True, capture_output=False, check=True):
+def rsync(src, dst, delete=True, update=False, capture_output=False, check=True):
     cmd = ['rsync', '-rt', '--inplace', '--exclude=*-9999*', "--exclude=metadata/layout.conf", ]
     if delete:
         cmd += ['--delete', ]
+    if update:
+        cmd += ['--update', ]
     cmd += [
            src + os.sep,
            dst + os.sep,
@@ -212,6 +214,7 @@ def main(argv):
                 src,
                 os.path.join(EBUILDS_REPO_PATH, path),
                 delete=(not value_is_merge(value)),
+                update=(not value_is_merge(value)),
                 )
         else:
             print( "WARNING: path '%s' not found in upstram repo" % src)
