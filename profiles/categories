@@ -139,7 +139,6 @@ sys-auth
 sys-block
 sys-boot
 sys-cluster
-sys-config
 sys-devel
 sys-fabric
 sys-firmware
