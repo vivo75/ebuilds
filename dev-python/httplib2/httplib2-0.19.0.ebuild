@@ -13,7 +13,7 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~x64-macos"
+KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ppc ppc64 ~s390 sparc x86 ~amd64-linux ~x86-linux ~x64-macos"
 
 RDEPEND="app-misc/ca-certificates"
 BDEPEND="
@@ -41,12 +41,6 @@ python_test() {
 		# broken by new PySocks, probably
 		tests/test_proxy.py::test_server_not_found_error_is_raised_for_invalid_hostname
 		tests/test_proxy.py::test_socks5_auth
-	)
-
-	[[ ${EPYTHON} == pypy3 ]] && deselect+=(
-		# known pypy3.7 bug
-		# https://foss.heptapod.net/pypy/pypy/-/issues/3396
-		tests/test_https.py::test_sni_set_servername_callback
 	)
 
 	# tests in python* are replaced by tests/
