@@ -36,8 +36,6 @@ EBUILDS_REPO_PATH = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '
     #'app-backup/zfs-auto-snapshot',
     #'app-text/poppler-svg',
     #'dev-python/marshmallow-sqlalchemy',
-    #'dev-python/clientcookie',
-    #'dev-python/jonpy',
     #'dev-python/photohash',
     #'dev-python/pystache',
     #'dev-python/relatorio',

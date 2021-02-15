@@ -38,7 +38,6 @@ dev-python/cherrypy
 dev-python/flup
 dev-python/genshi
 dev-python/html5lib
-dev-python/jonpy
 dev-python/lxml
 dev-python/mechanize
 dev-python/pychart
