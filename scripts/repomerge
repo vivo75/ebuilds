@@ -29,23 +29,6 @@ EBUILDS_REPO_PATH = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '
     #'sci-chemistry', 'sci-electronics', 'sci-misc', 'sci-physics', 'sec-policy', 'sys-freebsd', 'xfce-base',
     #'xfce-extra',
     #)
-
-# TODO: review and update
-#ebuilds_overlay = (
-    #'app-admin/smalltools',
-    #'app-backup/zfs-auto-snapshot',
-    #'app-text/poppler-svg',
-    #'dev-python/marshmallow-sqlalchemy',
-    #'dev-python/photohash',
-    #'dev-python/pystache',
-    #'dev-python/relatorio',
-    #'games-board/python-chess',
-    #'media-gfx/rawtherapee',
-    #'net-misc/lxc-fake-net',
-    #'sys-fs/libostree',
-    #'dev-python/doxypypy',
-    #'dev-python/doxyqml',
-    #)
 __CACHE_MKDIRS = []
 def make_known_path(path):
     global __CACHE_MKDIRS
