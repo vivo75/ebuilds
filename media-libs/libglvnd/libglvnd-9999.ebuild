@@ -9,7 +9,7 @@ if [[ ${PV} = 9999* ]]; then
 	GIT_ECLASS="git-r3"
 fi
 
-PYTHON_COMPAT=( python3_8 python3_7 python3_9 )
+PYTHON_COMPAT=( python3_{7..9} )
 VIRTUALX_REQUIRED=manual
 
 inherit ${GIT_ECLASS} meson multilib-minimal python-any-r1 virtualx
@@ -32,14 +32,19 @@ RESTRICT="!test? ( test )"
 BDEPEND="${PYTHON_DEPS}
 	test? ( X? ( ${VIRTUALX_DEPEND} ) )"
 RDEPEND="
-	!media-libs/mesa[-libglvnd(-)]
-	!<media-libs/mesa-19.2.2
+	!media-libs/mesa[-libglvnd(+)]
 	X? (
 		x11-libs/libX11[${MULTILIB_USEDEP}]
 		x11-libs/libXext[${MULTILIB_USEDEP}]
 	)"
 DEPEND="${RDEPEND}
 	X? ( x11-base/xorg-proto )"
+
+src_prepare() {
+	default
+	sed -i -e "/^PLATFORM_SYMBOLS/a \    '__gentoo_check_ldflags__'," \
+		bin/symbols-check.py || die
+}
 
 multilib_src_configure() {
 	local emesonargs=(
