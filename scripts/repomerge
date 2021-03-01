@@ -56,7 +56,7 @@ def save_categories():
 
 
 def rsync(src, dst, delete=True, update=False, capture_output=False, check=True):
-    cmd = ['rsync', '-rt', '--inplace', '--exclude=*-9999*', "--exclude=metadata/layout.conf", ]
+    cmd = ['rsync', '-rt', '--inplace', "--exclude=metadata/layout.conf", ]
     if delete:
         cmd += ['--delete', ]
     if update:
