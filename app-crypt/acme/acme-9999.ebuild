@@ -34,7 +34,6 @@ RDEPEND="
 	dev-python/pytz[${PYTHON_USEDEP}]
 	>=dev-python/requests-2.10[${PYTHON_USEDEP}]
 	>=dev-python/requests-toolbelt-0.3.0[${PYTHON_USEDEP}]
-	>=dev-python/six-1.11.0[${PYTHON_USEDEP}]
 "
 DEPEND="
 	doc? (
