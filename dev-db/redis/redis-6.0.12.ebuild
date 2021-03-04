@@ -3,25 +3,29 @@
 
 EAPI=7
 
-inherit autotools flag-o-matic systemd toolchain-funcs
+# Redis does NOT build with Lua 5.2 or newer at this time:
+#  - 5.3 and 5.4 give:
+# lua_bit.c:83:2: error: #error "Unknown number type, check LUA_NUMBER_* in luaconf.h"
+#  - 5.2 fails with:
+# scripting.c:(.text+0x1f9b): undefined reference to `lua_open'
+#    because lua_open became lua_newstate in 5.2
+LUA_COMPAT=( lua5-1 luajit )
+
+inherit autotools flag-o-matic lua-single systemd toolchain-funcs
 
 DESCRIPTION="A persistent caching system, key-value and data structures database"
 HOMEPAGE="https://redis.io"
-SRC_URI="http://download.redis.io/releases/${P}.tar.gz"
+SRC_URI="https://download.redis.io/releases/${P}.tar.gz"
 
 LICENSE="BSD"
 KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~sparc ~x86 ~amd64-linux ~x86-linux ~x86-solaris"
-IUSE="+jemalloc luajit ssl tcmalloc test"
+IUSE="+jemalloc ssl tcmalloc test"
 RESTRICT="!test? ( test )"
 SLOT="0"
 
-# Redis does NOT build with Lua 5.2 or newer at this time.
-# This should link correctly with both unslotted & slotted Lua, without
-# changes.
 COMMON_DEPEND="
+	${LUA_DEPS}
 	jemalloc? ( >=dev-libs/jemalloc-5.1:= )
-	luajit? ( dev-lang/luajit:2 )
-	!luajit? ( || ( dev-lang/lua:5.1 =dev-lang/lua-5.1*:0 ) )
 	ssl? ( dev-libs/openssl:0= )
 	tcmalloc? ( dev-util/google-perftools )
 "
@@ -45,12 +49,13 @@ DEPEND="
 		ssl? ( dev-tcltk/tls )
 	)"
 
-REQUIRED_USE="?? ( jemalloc tcmalloc )"
+REQUIRED_USE="?? ( jemalloc tcmalloc )
+	${LUA_REQUIRED_USE}"
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-3.2.3-config.patch
 	"${FILESDIR}"/${PN}-5.0-shared.patch
-	"${FILESDIR}"/${PN}-6.0.9-sharedlua.patch
+	"${FILESDIR}"/${PN}-6.0.12-sharedlua.patch
 	"${FILESDIR}"/${PN}-5.0.8-ppc-atomic.patch
 	"${FILESDIR}"/${PN}-sentinel-5.0-config.patch
 )
@@ -85,34 +90,19 @@ src_prepare() {
 	# autodetection of compiler and settings; generates the modified Makefiles
 	cp "${FILESDIR}"/configure.ac-3.2 configure.ac || die
 
-	# Use the correct pkgconfig name for Lua
-	if false && has_version 'dev-lang/lua:5.3'; then
-		# Lua5.3 gives:
-		#lua_bit.c:83:2: error: #error "Unknown number type, check LUA_NUMBER_* in luaconf.h"
-		LUAPKGCONFIG=lua5.3
-	elif false && has_version 'dev-lang/lua:5.2'; then
-		# Lua5.2 fails with:
-		# scripting.c:(.text+0x1f9b): undefined reference to `lua_open'
-		# Because lua_open because lua_newstate in 5.2
-		LUAPKGCONFIG=lua5.2
-	elif has_version 'dev-lang/lua:5.1'; then
-		LUAPKGCONFIG=lua5.1
-	else
-		LUAPKGCONFIG=lua
-	fi
+	# Use the correct pkgconfig name for Lua.
 	# The upstream configure script handles luajit specially, and is not
 	# effected by these changes.
-	einfo "Selected LUAPKGCONFIG=${LUAPKGCONFIG}"
 	sed -i	\
 		-e "/^AC_INIT/s|, [0-9].+, |, $PV, |" \
 		-e "s:AC_CONFIG_FILES(\[Makefile\]):AC_CONFIG_FILES([${makefiles}]):g" \
-		-e "/PKG_CHECK_MODULES.*\<LUA\>/s,lua5.1,${LUAPKGCONFIG},g" \
+		-e "/PKG_CHECK_MODULES.*\<LUA\>/s,lua5.1,${ELUA},g" \
 		configure.ac || die "Sed failed for configure.ac"
 	eautoreconf
 }
 
 src_configure() {
-	econf $(use_with luajit)
+	econf $(use_with lua_single_target_luajit luajit)
 
 	# Linenoise can't be built with -std=c99, see https://bugs.gentoo.org/451164
 	# also, don't define ANSI/c99 for lua twice
@@ -154,19 +144,20 @@ src_test() {
 }
 
 src_install() {
-	insinto /etc/
+	insinto /etc/redis
 	doins redis.conf sentinel.conf
-	use prefix || fowners redis:redis /etc/{redis,sentinel}.conf
-	fperms 0644 /etc/{redis,sentinel}.conf
+	use prefix || fowners -R redis:redis /etc/redis /etc/redis/{redis,sentinel}.conf
+	fperms 0750 /etc/redis
+	fperms 0644 /etc/redis/{redis,sentinel}.conf
 
-	newconfd "${FILESDIR}/redis.confd-r1" redis
-	newinitd "${FILESDIR}/redis.initd-5" redis
+	newconfd "${FILESDIR}/redis.confd-r2" redis
+	newinitd "${FILESDIR}/redis.initd-6" redis
 
-	systemd_newunit "${FILESDIR}/redis.service-3" redis.service
+	systemd_newunit "${FILESDIR}/redis.service-4" redis.service
 	systemd_newtmpfilesd "${FILESDIR}/redis.tmpfiles-2" redis.conf
 
-	newconfd "${FILESDIR}/redis-sentinel.confd" redis-sentinel
-	newinitd "${FILESDIR}/redis-sentinel.initd" redis-sentinel
+	newconfd "${FILESDIR}/redis-sentinel.confd-r1" redis-sentinel
+	newinitd "${FILESDIR}/redis-sentinel.initd-r1" redis-sentinel
 
 	insinto /etc/logrotate.d/
 	newins "${FILESDIR}/${PN}.logrotate" ${PN}
@@ -184,4 +175,10 @@ src_install() {
 		diropts -m0750 -o redis -g redis
 	fi
 	keepdir /var/{log,lib}/redis
+}
+
+pkg_postinst() {
+	ewarn "The default redis configuration file location changed to:"
+	ewarn "  /etc/redis/{redis,sentinel}.conf"
+	ewarn "Please apply your changes to the new configuration files."
 }
