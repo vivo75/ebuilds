@@ -11,7 +11,7 @@ MY_P=pypy3.7-v${PYPY_PV/_/}
 PATCHSET="pypy3.7-gentoo-patches-${PV/_p37}"
 
 DESCRIPTION="A fast, compliant alternative implementation of the Python (3.7) language"
-HOMEPAGE="https://pypy.org/"
+HOMEPAGE="https://www.pypy.org/"
 SRC_URI="https://buildbot.pypy.org/pypy/${MY_P}-src.tar.bz2
 	https://dev.gentoo.org/~mgorny/dist/python/${PATCHSET}.tar.xz"
 S="${WORKDIR}/${MY_P}-src"
@@ -26,8 +26,8 @@ RESTRICT="test"
 
 RDEPEND="
 	|| (
-		dev-python/pypy3-exe:${PV%_p*}[bzip2?,ncurses?]
-		dev-python/pypy3-exe-bin:${PV%_p*}
+		>=dev-python/pypy3-exe-${PV}:${PV%_p*}[bzip2?,ncurses?]
+		>=dev-python/pypy3-exe-bin-${PV}:${PV%_p*}
 	)
 	!libressl? ( dev-libs/openssl:0= )
 	libressl? ( dev-libs/libressl:0= )
