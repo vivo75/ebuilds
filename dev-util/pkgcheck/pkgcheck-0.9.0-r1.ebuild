@@ -10,7 +10,7 @@ if [[ ${PV} == *9999 ]] ; then
 	EGIT_REPO_URI="https://github.com/pkgcore/pkgcheck.git"
 	inherit git-r3
 else
-	KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 sparc x86 ~x64-macos"
+	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x64-macos"
 	SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 fi
 
@@ -31,9 +31,10 @@ else
 fi
 RDEPEND+="
 	dev-python/chardet[${PYTHON_USEDEP}]
+	dev-python/lazy-object-proxy[${PYTHON_USEDEP}]
 	dev-python/lxml[${PYTHON_USEDEP}]
 	dev-python/pathspec[${PYTHON_USEDEP}]
-	dev-python/tree-sitter[${PYTHON_USEDEP}]
+	<dev-python/tree-sitter-0.19.0[${PYTHON_USEDEP}]
 "
 BDEPEND="
 	test? ( dev-python/pytest[${PYTHON_USEDEP}] )
