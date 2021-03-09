@@ -32,6 +32,12 @@
 
 #--- END OF EXAMPLES ---
 
+# Brian Evans <grknight@gentoo.org> (2021-03-08)
+# No longer consistently maintained, severely broken with PHP 8
+# No reverse dependencies, fails tests
+# Removal in 30 days.
+dev-php/PEAR-Config
+
 # Hans de Graaff <graaff@gentoo.org> (2021-03-08)
 # Last litc upstream release in 2010, no reverse dependencies,
 # ruby25-only. Includes fakeweb test dependency which is also
@@ -84,11 +90,6 @@ sci-physics/herwig++
 # Removal in 30 days.
 app-portage/splat
 
-# William Hubbs <williamh@gentoo.org> (2021-03-07)
-# Dependency issues, need resolution upstream
-=app-emulation/docker-20.10.4
-=app-emulation/docker-20.10.5
-
 # David Seifert <soap@gentoo.org> (2021-03-06)
 # Unmaintained, abandoned upstream, tests fail, broken USE=doc, no revdeps
 # in tree. Removal on 2021-04-03.  Bug #623488, #697804, #774447.
@@ -117,6 +118,10 @@ dev-ml/bin-prot
 dev-ml/configurator
 dev-ml/ppx_traverse
 dev-ml/ppx_type_conv
+dev-ml/bin-prot
+dev-ml/ppx_driver
+dev-ml/ppx_core
+dev-ml/ppx_ast
 
 # Conrad Kostecki <conikost@gentoo.org> (2021-03-05)
 # Deprecated by upstream and unsupported due EOL.
