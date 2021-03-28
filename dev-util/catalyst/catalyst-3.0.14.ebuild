@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -12,7 +12,7 @@ else
 	KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~mips ppc ppc64 ~riscv s390 sparc x86"
 fi
 
-PYTHON_COMPAT=( python3_7 python3_8 python3_9 )
+PYTHON_COMPAT=( python3_8 python3_9 )
 DISTUTILS_USE_SETUPTOOLS=no
 
 inherit distutils-r1 ${SRC_ECLASS}
