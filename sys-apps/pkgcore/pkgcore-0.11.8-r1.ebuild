@@ -33,6 +33,10 @@ BDEPEND="
 	)
 "
 
+PATCHES=(
+	"${FILESDIR}/pkgcore-0.10.18-sighdlr.patch"
+)
+
 distutils_enable_tests setup.py
 
 src_test() {
