@@ -32,12 +32,24 @@
 
 #--- END OF EXAMPLES ---
 
+# Craig Andrews <candrews@gentoo.org> (2021-03-29)
+# Unmaintained upstream.
+# Project is also not useful due to changes in cryptocurrency mining.
+# Open security issue, bug #779004
+# Removal on 2021-04-29, bug #779166
+net-p2p/xmr-stak
+
+# Jonas Stein <jstein@gentoo.org> (2021-03-29)
+# Depends on gtk-2, no release since 2010. 
+# Removal on 2021-05-01.  
+# Bug #779148.
+app-editors/beaver
+
 # Andreas Sturmlechner <asturm@gentoo.org> (2021-03-27)
 # Dead upstream. Bugs #437056, #453964, #550592, #768303
 # Removal on 2021-04-26.
 app-eselect/eselect-infinality
 app-eselect/eselect-lcdfilter
-media-fonts/infinality-ultimate-meta
 media-libs/fontconfig-ultimate
 media-libs/fontconfig-infinality
 
