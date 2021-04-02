@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_7 python3_8 python3_9 )
+PYTHON_COMPAT=( pypy3 python3_{7,8,9} )
 PYTHON_REQ_USE="ncurses"
 DISTUTILS_USE_SETUPTOOLS=rdepend
 

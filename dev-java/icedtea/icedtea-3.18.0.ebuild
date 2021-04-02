@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -7,15 +7,14 @@
 # * IF YOU CHANGE THIS EBUILD, CHANGE ICEDTEA-6.* AS WELL *
 # *********************************************************
 
-EAPI="6"
+EAPI=6
 SLOT="8"
 
-inherit check-reqs flag-o-matic java-pkg-2 java-vm-2 multiprocessing pax-utils prefix toolchain-funcs versionator xdg-utils
+inherit check-reqs eapi7-ver flag-o-matic java-pkg-2 java-vm-2 multiprocessing pax-utils prefix toolchain-funcs xdg-utils
 
-ICEDTEA_VER=$(get_version_component_range 1-3)
-ICEDTEA_BRANCH=$(get_version_component_range 1-2)
+ICEDTEA_VER=$(ver_cut 1-3)
+ICEDTEA_BRANCH=$(ver_cut 1-2)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-ICEDTEA_PRE=$(get_version_component_range _)
 
 CORBA_TARBALL="${PV}.tar.xz"
 JAXP_TARBALL="${PV}.tar.xz"
@@ -77,10 +76,9 @@ RESTRICT="!test? ( test )"
 REQUIRED_USE="gtk? ( !headless-awt )"
 
 # Ideally the following were optional at build time.
-ALSA_COMMON_DEP="
-	>=media-libs/alsa-lib-1.0"
-CUPS_COMMON_DEP="
-	>=net-print/cups-1.2.12"
+ALSA_COMMON_DEP=">=media-libs/alsa-lib-1.0"
+CUPS_COMMON_DEP=">=net-print/cups-1.2.12"
+
 X_COMMON_DEP="
 	>=media-libs/giflib-4.1.6:0=
 	>=media-libs/libpng-1.2:0=
@@ -89,12 +87,15 @@ X_COMMON_DEP="
 	>=x11-libs/libXi-1.1.3
 	>=x11-libs/libXrender-0.9.4
 	>=x11-libs/libXtst-1.0.3
-	x11-libs/libXcomposite"
+	x11-libs/libXcomposite
+"
+
 X_DEPEND="
 	x11-base/xorg-proto
 	>=x11-libs/libXau-1.0.3
 	>=x11-libs/libXdmcp-1.0.2
-	>=x11-libs/libXinerama-1.0.2"
+	>=x11-libs/libXinerama-1.0.2
+"
 
 # The Javascript requirement is obsolete; OpenJDK 8+ has Nashorn
 COMMON_DEP="
@@ -104,13 +105,19 @@ COMMON_DEP="
 	>=media-libs/freetype-2.5.3:2=
 	>=sys-libs/zlib-1.2.3
 	virtual/jpeg:0=
+	gtk? (
+		>=dev-libs/atk-1.30.0
+		>=x11-libs/cairo-1.8.8
+		x11-libs/gdk-pixbuf:2
+		>=x11-libs/gtk+-2.8:2
+		>=x11-libs/pango-1.24.5
+	)
 	kerberos? ( virtual/krb5 )
 	sctp? ( net-misc/lksctp-tools )
 	smartcard? ( sys-apps/pcsc-lite )
-	system-lcms? ( >=media-libs/lcms-2.9:2= )"
+	system-lcms? ( >=media-libs/lcms-2.9:2= )
+"
 
-# Gtk+ will move to COMMON_DEP in time; PR1982
-# gsettings-desktop-schemas will be needed for native proxy support; PR1976
 RDEPEND="${COMMON_DEP}
 	!dev-java/icedtea:0
 	!dev-java/icedtea-web:7
@@ -119,17 +126,10 @@ RDEPEND="${COMMON_DEP}
 	virtual/ttf-fonts
 	alsa? ( ${ALSA_COMMON_DEP} )
 	cups? ( ${CUPS_COMMON_DEP} )
-	gtk? (
-		>=dev-libs/atk-1.30.0
-		>=x11-libs/cairo-1.8.8
-		x11-libs/gdk-pixbuf:2
-		>=x11-libs/gtk+-2.8:2
-		>=x11-libs/pango-1.24.5
-	)
 	!headless-awt? ( ${X_COMMON_DEP} )
-	selinux? ( sec-policy/selinux-java )"
+	selinux? ( sec-policy/selinux-java )
+"
 
-# ca-certificates, perl and openssl are used for the cacerts keystore generation
 # perl is needed for running the SystemTap tests and the bootstrap javac
 # lsb-release is used to obtain distro information for the version & crash dump output
 # attr is needed for xattr.h which defines the extended attribute syscalls used by NIO2
@@ -198,6 +198,13 @@ src_configure() {
 		append-flags -fcommon
 		append-flags -fno-delete-null-pointer-checks -fno-lifetime-dse
 	fi
+	# this patch helps with gcc10 as well
+	# since build system unpacks tarballs itself, this is a way to force makefile
+	# to apply our patch. it expects relative path inside source, so we can't specify
+	# ${FILESDIR} directly.
+	mkdir -v gentoo_patches || die
+	cp -v "${FILESDIR}/openjdk-8-hotspot-arrayallocator.patch" gentoo_patches || die
+	export DISTRIBUTION_PATCHES="gentoo_patches//openjdk-8-hotspot-arrayallocator.patch"
 
 	# For bootstrap builds as the sandbox control file might not yet exist.
 	addpredict /proc/self/coredump_filter #nowarn
