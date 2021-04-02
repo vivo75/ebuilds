@@ -1,9 +1,9 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI="7"
 
-inherit eutils linux-info flag-o-matic systemd udev tmpfiles
+inherit linux-info flag-o-matic systemd udev tmpfiles
 
 DESCRIPTION="APC UPS daemon with integrated tcp/ip remote shutdown"
 HOMEPAGE="http://www.apcupsd.org/"
@@ -11,42 +11,55 @@ SRC_URI="mirror://sourceforge/apcupsd/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~arm ppc x86"
-IUSE="snmp +usb cgi nls gnome kernel_linux"
+KEYWORDS="~amd64 ~arm ~ppc ~x86"
+IUSE="snmp +usb +modbus cgi gnome kernel_linux"
 
-DEPEND="
-	>=sys-apps/util-linux-2.23[tty-helpers(-)]
+DEPEND=">=sys-apps/util-linux-2.23[tty-helpers(-)]
 	cgi? ( >=media-libs/gd-1.8.4 )
-	nls? ( sys-devel/gettext )
-	snmp? ( >=net-analyzer/net-snmp-5.7.2 )
-	gnome? ( >=x11-libs/gtk+-2.4.0:2
+	modbus? ( usb? ( virtual/libusb:0 ) )
+	gnome? (
+		>=x11-libs/gtk+-2.4.0:2
 		dev-libs/glib:2
-		>=gnome-base/gconf-2.0 )"
+		>=gnome-base/gconf-2.0
+	)
+	snmp? ( >=net-analyzer/net-snmp-5.7.2 )"
+
 RDEPEND="${DEPEND}
-	sys-apps/openrc
 	virtual/mailx"
 
 CONFIG_CHECK="~USB_HIDDEV ~HIDRAW"
 ERROR_USB_HIDDEV="CONFIG_USB_HIDDEV:	needed to access USB-attached UPSes"
 ERROR_HIDRAW="CONFIG_HIDRAW:		needed to access USB-attached UPSes"
 
+DOCS=( ChangeLog ReleaseNotes )
+HTML_DOCS=( doc/manual )
+
+PATCHES=(
+	"${FILESDIR}"/${PN}-3.14.9-aliasing.patch
+	"${FILESDIR}"/${PN}-3.14.9-close-on-exec.patch
+	"${FILESDIR}"/${PN}-3.14.9-commfailure.patch
+	"${FILESDIR}"/${PN}-3.14.9-fix-nologin.patch
+	"${FILESDIR}"/${PN}-3.14.9-gapcmon.patch
+	"${FILESDIR}"/${PN}-3.14.9-wall-on-mounted-usr.patch
+)
+
 pkg_setup() {
-	if use kernel_linux && use usb && linux_config_exists; then
+	if use kernel_linux && use usb && linux_config_exists ; then
 		check_extra_config
 	fi
 }
 
-src_prepare() {
-	epatch "${FILESDIR}/${PN}-3.14.9-aliasing.patch"
-}
-
 src_configure() {
 	local myconf
+
 	use cgi && myconf="${myconf} --enable-cgi --with-cgi-bin=/usr/libexec/${PN}/cgi-bin"
-	if use usb; then
-		myconf="${myconf} --with-upstype=usb --with-upscable=usb --enable-usb --with-dev= "
+
+	if use usb ; then
+		myconf="${myconf} --with-upstype=usb --with-upscable=usb --enable-usb --with-dev="
+		use modbus && myconf="${myconf} --enable-modbus-usb"
 	else
 		myconf="${myconf} --with-upstype=apcsmart --with-upscable=smart --disable-usb"
+		use modbus || myconf="${myconf} --disable-modbus"
 	fi
 
 	# We force the DISTNAME to gentoo so it will use gentoo's layout also
@@ -61,10 +74,10 @@ src_configure() {
 		--with-nis-port=3551 \
 		--enable-net --enable-pcnet \
 		--with-distname=gentoo \
-		$(use_enable snmp net-snmp) \
+		$(use_enable snmp) \
 		$(use_enable gnome gapcmon) \
 		${myconf} \
-		APCUPSD_MAIL=/bin/mail
+		APCUPSD_MAIL=$(type -p mail)
 }
 
 src_compile() {
@@ -72,34 +85,33 @@ src_compile() {
 	# the text files in the distribution, but I wouldn't count on them
 	# doing that anytime soon.
 	MANPAGER=$(type -p cat) \
-		emake
+		emake VERBOSE=2
 }
 
 src_install() {
-	emake DESTDIR="${D}" install
-	rm -f "${D}"/etc/init.d/halt
+	emake DESTDIR="${D}" VERBOSE=2 install
+	rm "${ED}"/etc/init.d/halt || die
 
 	insinto /etc/apcupsd
 	newins examples/safe.apccontrol safe.apccontrol
 	doins "${FILESDIR}"/apcupsd.conf
 
-	dodoc ChangeLog* ReleaseNotes
 	doman doc/*.8 doc/*.5
 
-	dohtml -r doc/manual/*
+	einstalldocs
 
-	rm "${D}"/etc/init.d/apcupsd
-	newinitd "${FILESDIR}/${PN}.init.4" "${PN}"
+	rm "${ED}"/etc/init.d/apcupsd || die
+	newinitd "${FILESDIR}/${PN}.init" "${PN}"
 	newinitd "${FILESDIR}/${PN}.powerfail.init" "${PN}".powerfail
 
 	systemd_dounit "${FILESDIR}"/${PN}.service
 	dotmpfiles "${FILESDIR}"/${PN}-tmpfiles.conf
 
-	# remove hal settings, we don't really want to have it around still.
-	rm -r "${D}"/usr/share/hal
+	# remove hal settings, we don't really want to have it still around.
+	rm -r "${D}"/usr/share/hal || die
 
 	# replace it with our udev rules if we're in Linux
-	if use kernel_linux; then
+	if use kernel_linux ; then
 		udev_newrules "${FILESDIR}"/apcupsd-udev.rules 60-${PN}.rules
 	fi
 
@@ -108,7 +120,7 @@ src_install() {
 pkg_postinst() {
 	tmpfiles_process ${PN}-tmpfiles.conf
 
-	if use cgi; then
+	if use cgi ; then
 		elog "The cgi-bin directory for ${PN} is /usr/libexec/${PN}/cgi-bin."
 		elog "Set up your ScriptAlias or symbolic links accordingly."
 	fi
