@@ -7,6 +7,6 @@ inherit acct-user
 
 DESCRIPTION="user for unbound-telemetry"
 ACCT_USER_ID=279
-ACCT_USER_GROUPS=( unbound-telemetry )
+ACCT_USER_GROUPS=( unbound-telemetry unbound )
 
 acct-user_add_deps
