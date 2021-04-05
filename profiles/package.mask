@@ -31,17 +31,15 @@
 ## app-misc/some-package
 
 #--- END OF EXAMPLES ---
+# Matthew Thode <mthode@mthode.org> (2021-04-04)
+# Removing more unneeded openstack packages
+dev-python/testrepository
+dev-python/os-testr
 
 # Michał Górny <mgorny@gentoo.org> (2021-04-04)
 # Reported to contain an unintentional ABI breakage leading to crashes
 # when loading extensions on 32-bit systems.
 =dev-lang/python-3.9.3
-
-# Andreas Sturmlechner <asturm@gentoo.org> (2021-04-04)
-# Package needs a real maintainer to fix broken IUSE=java and version bump.
-# Bug #778758 contains a version bump with java removed. Do pick it up.
-# Removal on 2021-05-04.
-www-apache/mod_jk
 
 # Mikle Kolyada <zlogene@gentoo.org> (2021-04-02)
 # TexLive 2021 mask
@@ -297,12 +295,6 @@ dev-ruby/pg:0
 # Masked for removal on 2021-04-06.
 sci-physics/herwig++
 
-# Conrad Kostecki <conikost@gentoo.org> (2021-03-07)
-# Upstream since 2004 gone, does not supportnon-English characters,
-# multiple bugs open and unmaintained.
-# Removal in 30 days.
-app-portage/splat
-
 # David Seifert <soap@gentoo.org> (2021-03-06)
 # Unmaintained, abandoned upstream, tests fail, broken USE=doc, no revdeps
 # in tree. Removal on 2021-04-03.  Bug #623488, #697804, #774447.
@@ -312,37 +304,6 @@ dev-libs/libgpuarray
 # Fails to build, multiple bugs, outdated, nontrival, unmaintained
 # Bug 729876 and several others; removal in 30days
 dev-libs/klibc
-
-# Conrad Kostecki <conikost@gentoo.org> (2021-03-05)
-# Deprecated by upstream and unsupported due EOL.
-# Multiple bugs open and unmaintained.
-# Removal in 30 days.
-sys-apps/newrelic-sysmond
-
-# Conrad Kostecki <conikost@gentoo.org> (2021-03-05)
-# Dead upstream, multiple bugs open and unmaintained.
-# Removal in 30 days.
-app-mobilephone/smsclient
-
-# Conrad Kostecki <conikost@gentoo.org> (2021-03-05)
-# Dead upstream, multiple bugs open and unmaintained.
-# Removal in 30 days.
-net-misc/capi4hylafax
-
-# Conrad Kostecki <conikost@gentoo.org> (2021-03-05)
-# Dead upstream and unmaintained.
-# Removal in 30 days.
-app-misc/towitoko
-
-# Conrad Kostecki <conikost@gentoo.org> (2021-03-04)
-# Dead upstream and unmaintained.
-# Removal in 30 days.
-app-misc/logserial
-
-# Conrad Kostecki <conikost@gentoo.org> (2021-03-04)
-# Dead upstream, open bugs and unmaintained.
-# Removal in 30 days.
-net-dns/sheerdns
 
 # Sam James <sam@gentoo.org> (2021-03-03)
 # Declared abandoned upstream and stuck
