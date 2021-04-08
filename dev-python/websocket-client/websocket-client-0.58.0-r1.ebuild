@@ -24,6 +24,11 @@ RDEPEND="
 
 distutils_enable_tests setup.py
 
+src_prepare() {
+	sed -i -e '1i#!/usr/bin/env python' bin/wsdump.py || die
+	distutils-r1_src_prepare
+}
+
 python_install_all() {
 	if use examples; then
 		docompress -x "/usr/share/doc/${PF}/examples"
