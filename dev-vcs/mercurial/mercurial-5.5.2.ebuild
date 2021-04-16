@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python3_7 python3_8 python3_9 )
 PYTHON_REQ_USE="threads(+)"
 DISTUTILS_USE_SETUPTOOLS=no
 
-inherit bash-completion-r1 elisp-common eutils distutils-r1 flag-o-matic
+inherit bash-completion-r1 elisp-common distutils-r1 flag-o-matic
 
 DESCRIPTION="Scalable distributed SCM"
 HOMEPAGE="https://www.mercurial-scm.org/"

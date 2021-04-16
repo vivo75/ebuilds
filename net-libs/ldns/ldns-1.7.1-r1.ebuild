@@ -3,7 +3,7 @@
 
 EAPI=6
 PYTHON_COMPAT=( python3_7 python3_8 python3_9 )
-inherit eutils ltprune multilib-minimal python-single-r1
+inherit epatch ltprune multilib-minimal python-single-r1
 
 DESCRIPTION="a library with the aim to simplify DNS programming in C"
 HOMEPAGE="http://www.nlnetlabs.nl/projects/ldns/"
@@ -68,7 +68,7 @@ multilib_src_configure() {
 		--enable-sha2 \
 		--without-drill \
 		--without-examples \
-		$dane_ta_usage \
+		${dane_ta_usage} \
 		--disable-rpath
 }
 

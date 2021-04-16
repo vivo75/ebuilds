@@ -4,7 +4,7 @@
 EAPI="6"
 PYTHON_COMPAT=( python3_7 python3_8 python3_9 )
 
-inherit autotools eutils linux-info ltprune python-any-r1 systemd
+inherit autotools linux-info ltprune python-any-r1 systemd
 
 DESCRIPTION="An enhanced multi-threaded syslogd with database support and more"
 HOMEPAGE="https://www.rsyslog.com/"
