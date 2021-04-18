@@ -136,6 +136,11 @@ PATCHES=(
 	"${FILESDIR}"/1.47.0-ignore-broken-and-non-applicable-tests.patch
 	"${FILESDIR}"/1.49.0-gentoo-musl-target-specs.patch
 	"${FILESDIR}"/1.51.0-bootstrap-panic.patch
+	"${FILESDIR}"/rustc-1.51.0-backport-pr81728.patch
+	"${FILESDIR}"/rustc-1.51.0-backport-pr81741.patch
+	"${FILESDIR}"/rustc-1.51.0-backport-pr82289.patch
+	"${FILESDIR}"/rustc-1.51.0-backport-pr82292.patch
+	"${FILESDIR}"/rustc-1.51.0-backport-pr83629.patch
 )
 
 S="${WORKDIR}/${MY_P}-src"
@@ -214,7 +219,7 @@ src_prepare() {
 		local rust_stage0="rust-${RUST_STAGE0_VERSION}-$(rust_abi)"
 
 		"${WORKDIR}/${rust_stage0}"/install.sh --disable-ldconfig \
-			--destdir="${rust_stage0_root}" --prefix=/ || die
+			--without=rust-docs --destdir="${rust_stage0_root}" --prefix=/ || die
 	fi
 
 	default
@@ -505,7 +510,7 @@ src_install() {
 	(
 	IFS=$'\n'
 	env $(cat "${S}"/config.env) DESTDIR="${D}" \
-		"${EPYTHON}" ./x.py install -vv --config="${S}"/config.toml || die
+		"${EPYTHON}" ./x.py install -vv --config="${S}"/config.toml -j$(makeopts_jobs) || die
 	)
 
 	# bug #689562, #689160
