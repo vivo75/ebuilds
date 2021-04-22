@@ -4,8 +4,6 @@
 EAPI=7
 
 PYTHON_COMPAT=( python3_{7..9} )
-DISTUTILS_USE_SETUPTOOLS=bdepend
-
 inherit distutils-r1
 
 DESCRIPTION="An Amazon S3 Transfer Manager"
