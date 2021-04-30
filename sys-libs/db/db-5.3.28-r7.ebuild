@@ -29,7 +29,7 @@ done
 
 LICENSE="Sleepycat"
 SLOT="$(ver_cut 1-2)"
-KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~m68k ppc ~ppc64 ~riscv ~s390 sparc x86"
+KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~m68k ppc ~ppc64 ~riscv ~s390 sparc x86"
 IUSE="doc java cxx tcl test"
 
 REQUIRED_USE="test? ( tcl )"
@@ -37,9 +37,9 @@ REQUIRED_USE="test? ( tcl )"
 # the entire testsuite needs the TCL functionality
 DEPEND="tcl? ( >=dev-lang/tcl-8.5.15-r1:0=[${MULTILIB_USEDEP}] )
 	test? ( >=dev-lang/tcl-8.5.15-r1:0=[${MULTILIB_USEDEP}] )
-	java? ( >=virtual/jdk-1.8 )"
+	java? ( >=virtual/jdk-1.7 )"
 RDEPEND="tcl? ( >=dev-lang/tcl-8.5.15-r1:0=[${MULTILIB_USEDEP}] )
-	java? ( >=virtual/jre-1.8 )"
+	java? ( >=virtual/jre-1.7 )"
 
 MULTILIB_WRAPPED_HEADERS=(
 	/usr/include/db${SLOT}/db.h
