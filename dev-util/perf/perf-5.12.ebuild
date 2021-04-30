@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_7 python3_8 python3_9 )
+PYTHON_COMPAT=( python3_{7,8,9} )
 inherit bash-completion-r1 estack llvm toolchain-funcs prefix python-r1 linux-info
 
 DESCRIPTION="Userland tools for Linux Performance Counters"
@@ -32,7 +32,7 @@ SRC_URI+=" https://www.kernel.org/pub/linux/kernel/v${LINUX_V}/${LINUX_SOURCES}"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~mips ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux"
-IUSE="audit clang crypt debug +demangle +doc gtk java libpfm lzma numa perl python slang systemtap unwind zlib"
+IUSE="audit babeltrace clang crypt debug +demangle +doc gtk java libpfm lzma numa perl python slang systemtap unwind zlib"
 # TODO babeltrace
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
@@ -46,9 +46,12 @@ BDEPEND="
 		app-text/sgml-common
 		app-text/xmlto
 		sys-process/time
-	)"
+	)
+	${PYTHON_DEPS}
+"
 
 RDEPEND="audit? ( sys-process/audit )
+	babeltrace? ( dev-util/babeltrace )
 	crypt? ( dev-libs/openssl:0= )
 	clang? (
 		<sys-devel/clang-10:*
@@ -88,6 +91,9 @@ pkg_pretend() {
 
 pkg_setup() {
 	use clang && LLVM_MAX_SLOT=9 llvm_pkg_setup
+	# We enable python unconditionally as libbpf always generates
+	# API headers using python script
+	python_setup
 }
 
 src_unpack() {
@@ -163,7 +169,6 @@ perf_make() {
 	local java_dir
 	use java && java_dir="${EPREFIX}/etc/java-config-2/current-system-vm"
 	# FIXME: NO_CORESIGHT
-	# FIXME: NO_LIBBABELTRACE
 	emake V=1 VF=1 \
 		HOSTCC="$(tc-getBUILD_CC)" HOSTLD="$(tc-getBUILD_LD)" \
 		CC="$(tc-getCC)" CXX="$(tc-getCXX)" AR="$(tc-getAR)" LD="$(tc-getLD)" NM="$(tc-getNM)" \
@@ -183,7 +188,7 @@ perf_make() {
 		feature-gtk2-infobar=$(usex gtk 1 "") \
 		NO_JVMTI=$(puse java) \
 		NO_LIBAUDIT=$(puse audit) \
-		NO_LIBBABELTRACE=1 \
+		NO_LIBBABELTRACE=$(puse babeltrace) \
 		NO_LIBBIONIC=1 \
 		NO_LIBBPF= \
 		NO_LIBCRYPTO=$(puse crypt) \
@@ -200,6 +205,7 @@ perf_make() {
 		WERROR=0 \
 		LIBDIR="/usr/libexec/perf-core" \
 		libdir="${EPREFIX}/usr/$(get_libdir)" \
+		plugindir="${EPREFIX}/usr/$(get_libdir)/perf/plugins" \
 		"$@"
 }
 
