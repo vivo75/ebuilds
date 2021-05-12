@@ -33,7 +33,7 @@ RDEPEND="
 	mongodb? ( >=dev-libs/mongo-c-driver-1.2.0 )
 	python? ( ${PYTHON_DEPS} )
 	redis? ( >=dev-libs/hiredis-0.11.0:= )
-	smtp? ( net-libs/libesmtp )
+	smtp? ( >=net-libs/libesmtp-1.0.6_p20200824:= )
 	snmp? ( net-analyzer/net-snmp:0= )
 	spoof-source? ( net-libs/libnet:1.1= )
 	systemd? ( sys-apps/systemd:= )
@@ -50,6 +50,7 @@ DOCS=( AUTHORS NEWS.md CONTRIBUTING.md contrib/syslog-ng.conf.{HP-UX,RedHat,SunO
 	"${T}/syslog-ng.logrotate.hardened" "${FILESDIR}/README.hardened" )
 PATCHES=(
 	"${FILESDIR}"/${PN}-3.28.1-net-snmp.patch
+	"${FILESDIR}"/${PN}-3.30.1-esmtp-pkgconfig.patch
 )
 
 pkg_setup() {
