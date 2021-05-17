@@ -23,7 +23,7 @@ app-crypt/pinentry gnome-keyring
 app-crypt/qca qt5 -qt4
 >=app-emulation/libcacard-2.5.1 static-libs
 app-emulation/lxc cgmanager python
-app-emulation/qemu -aio infiniband -iscsi nfs numa sdl sdl2 smartcard snappy spice ssh vde virtfs   static-user -alsa -bluetooth -gtk -opengl -pulseaudio
+app-emulation/qemu -aio -infiniband -iscsi nfs numa sdl sdl2 smartcard snappy spice ssh vde virtfs   static-user -alsa -bluetooth -gtk -opengl -pulseaudio
 >=app-emulation/spice-0.13.90 static-libs
 app-emulation/wine -mono
 app-eselect/eselect-php fpm
