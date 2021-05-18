@@ -226,6 +226,8 @@ EGO_SUM=(
 	"gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0="
 	"gopkg.in/errgo.v2 v2.1.0/go.mod h1:hNsd1EY+bozCKY1Ytp96fpM3vjJbqLJn88ws8XvfDNI="
 	"gopkg.in/inconshreveable/log15.v2 v2.0.0-20180818164646-67afb5ed74ec/go.mod h1:aPpfJ7XW+gOuirDoZ8gHhLh3kZ1B08FtV2bbmy7Jv3s="
+	"gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22 h1:VpOs+IwYnYBaFnrNAeB8UUWtL3vEUnzSCL1nVjPhqrw="
+	"gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22/go.mod h1:yeKp02qBN3iKW1OzL3MGk2IdtZzaj7SFntXj72NppTA="
 	"gopkg.in/natefinch/npipe.v2 v2.0.0-20160621034901-c1b8fa8bdcce h1:+JknDZhAj8YMt7GC73Ei8pv4MzjDUNPHgQWJdtMAaDU="
 	"gopkg.in/natefinch/npipe.v2 v2.0.0-20160621034901-c1b8fa8bdcce/go.mod h1:5AcXVHNjg+BDxry382+8OKon8SEWiKktQR07RKPsv1c="
 	"gopkg.in/yaml.v2 v2.2.2/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI="
@@ -513,12 +515,12 @@ src_install() {
 		doexe src/zabbix_java/bin/zabbix-java-gateway-${MY_PV}.jar
 		exeinto /${ZABBIXJAVA_BASE}/lib
 		doexe \
-			src/zabbix_java/lib/logback-classic-0.9.27.jar \
+			src/zabbix_java/lib/logback-classic-1.2.3.jar \
 			src/zabbix_java/lib/logback-console.xml \
-			src/zabbix_java/lib/logback-core-0.9.27.jar \
+			src/zabbix_java/lib/logback-core-1.2.3.jar \
 			src/zabbix_java/lib/logback.xml \
 			src/zabbix_java/lib/android-json-4.3_r3.1.jar \
-			src/zabbix_java/lib/slf4j-api-1.6.1.jar
+			src/zabbix_java/lib/slf4j-api-1.7.30.jar
 		newinitd "${FILESDIR}"/zabbix-jmx-proxy.init zabbix-jmx-proxy
 		newconfd "${FILESDIR}"/zabbix-jmx-proxy.conf zabbix-jmx-proxy
 	fi
