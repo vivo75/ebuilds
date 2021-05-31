@@ -3,7 +3,7 @@
 
 EAPI=6
 PYTHON_COMPAT=( python3_7 python3_8 python3_9 )
-inherit epatch ltprune multilib-minimal python-single-r1
+inherit epatch multilib-minimal python-single-r1
 
 DESCRIPTION="a library with the aim to simplify DNS programming in C"
 HOMEPAGE="http://www.nlnetlabs.nl/projects/ldns/"
@@ -97,7 +97,7 @@ multilib_src_install() {
 multilib_src_install_all() {
 	dodoc Changelog README*
 
-	prune_libtool_files --modules
+	find "${ED}" -name '*.la' -delete || die
 	use python && python_optimize
 
 	if use vim-syntax ; then
