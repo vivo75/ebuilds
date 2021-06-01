@@ -23,8 +23,8 @@
 # metadata/install-qa-check.d/60python-pyc
 # See bug #704286, bug #781878
 case "${EAPI:-0}" in
-	[0-4]) die "Unsupported EAPI=${EAPI:-0} (too old) for ${ECLASS}" ;;
-	[5-7]) ;;
+	[0-5]) die "Unsupported EAPI=${EAPI:-0} (too old) for ${ECLASS}" ;;
+	[6-7]) ;;
 	*)     die "Unsupported EAPI=${EAPI} (unknown) for ${ECLASS}" ;;
 esac
 
@@ -42,7 +42,7 @@ inherit toolchain-funcs
 # All supported Python implementations, most preferred last.
 _PYTHON_ALL_IMPLS=(
 	pypy3
-	python3_{7..10}
+	python3_{8..10}
 )
 readonly _PYTHON_ALL_IMPLS
 
@@ -54,7 +54,7 @@ _PYTHON_HISTORICAL_IMPLS=(
 	jython2_7
 	pypy pypy1_{8,9} pypy2_0
 	python2_{5..7}
-	python3_{1..6}
+	python3_{1..7}
 )
 readonly _PYTHON_HISTORICAL_IMPLS
 
