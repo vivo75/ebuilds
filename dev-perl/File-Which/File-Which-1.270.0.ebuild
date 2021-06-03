@@ -4,19 +4,20 @@
 EAPI=7
 
 DIST_AUTHOR=PLICEASE
-DIST_VERSION=1.23
+DIST_VERSION=1.27
 inherit perl-module
 
-DESCRIPTION="Perl module implementing 'which' internally"
+DESCRIPTION="Perl implementation of the which utility as an API"
 
 SLOT="0"
-KEYWORDS="~alpha amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
 IUSE="test pwhich"
 RESTRICT="!test? ( test )"
 
 # Was part of File::Which, but depends on File::Which
 # so this keeps legacy integrity in place.
 PDEPEND="pwhich? ( dev-perl/App-pwhich )"
+
 BDEPEND="
 	virtual/perl-ExtUtils-MakeMaker
 	test? ( >=virtual/perl-Test-Simple-0.470.0 )
