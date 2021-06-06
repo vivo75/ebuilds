@@ -28,6 +28,7 @@ src_prepare() {
 	epatch "${FILESDIR}"/${P}-gcc7.patch
 	sed -i '6i CFLAGS = @CFLAGS@' Makefile.am
 	sed -e "/_APPEND_COMPILE_FLAGS_ERROR(\[-fmudflapth\?\])/d" -i m4/ax_harden_compiler_flags.m4
+	eapply_user
 	eautoreconf
 }
 
