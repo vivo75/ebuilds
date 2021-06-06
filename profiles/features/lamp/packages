@@ -22,7 +22,6 @@ net-misc/memcached
 net-misc/socat
 dev-db/mariadb
 dev-db/mysql-connector-c
-www-misc/awstats
 www-servers/apache
 
 # php pecl additions (also used by Nextcloud)
