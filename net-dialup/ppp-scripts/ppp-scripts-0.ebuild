@@ -1,7 +1,7 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=5
 
 DESCRIPTION="Common set of scripts for various PPP implementations"
 HOMEPAGE="https://wiki.gentoo.org/wiki/No_homepage"

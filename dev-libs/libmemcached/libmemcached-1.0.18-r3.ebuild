@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=5
 
 WANT_AUTOMAKE=1.13
 
@@ -28,7 +28,6 @@ src_prepare() {
 	epatch "${FILESDIR}"/${P}-gcc7.patch
 	sed -i '6i CFLAGS = @CFLAGS@' Makefile.am
 	sed -e "/_APPEND_COMPILE_FLAGS_ERROR(\[-fmudflapth\?\])/d" -i m4/ax_harden_compiler_flags.m4
-	eapply_user
 	eautoreconf
 }
 

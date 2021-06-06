@@ -3,7 +3,7 @@
 
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
-EAPI="6"
+EAPI="5"
 
 inherit java-pkg-2 prefix
 

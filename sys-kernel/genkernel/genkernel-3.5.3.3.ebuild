@@ -4,7 +4,7 @@
 # genkernel-9999        -> latest Git branch "master"
 # genkernel-VERSION     -> normal genkernel release
 
-EAPI=6 # approved 2012.09.11, required by all profiles since 2014.03.12
+EAPI=5 # approved 2012.09.11, required by all profiles since 2014.03.12
 
 inherit bash-completion-r1 epatch
 
