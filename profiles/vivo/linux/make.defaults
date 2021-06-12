@@ -44,10 +44,6 @@ GRUB_PLATFORMS="efi-64 efi-32 pc qemu"
 # extra USE_EXPAND variables
 #USE_EXPAND="TEMPLATES"
 
-# python targets to build
-PYTHON_SINGLE_TARGET="-* python3_8"
-PYTHON_TARGETS="-* python3_8"
-
 # set videocards to dummy and qemu, will be unused most of the times
 VIDEO_CARDS="ast cirrus dummy qxl"
 

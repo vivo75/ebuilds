@@ -10,8 +10,4 @@ CMAKE_MAKEFILE_GENERATOR="ninja"
 # don't config protect /etc/mtab
 CONFIG_PROTECT_MASK="/etc/mtab"
 
-# python targets to build
-PYTHON_SINGLE_TARGET="-* python3_7"
-PYTHON_TARGETS="python2_7 python3_7"
-
 # vim: setlocal filetype=gentoo-make-conf :
