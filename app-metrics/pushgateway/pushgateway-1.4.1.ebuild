@@ -452,7 +452,7 @@ go-module_set_globals
 
 DESCRIPTION="Prometheus push acceptor for ephemeral and batch jobs"
 HOMEPAGE="https://github.com/prometheus/pushgateway"
-SRC_URI="https://github.com/prometheus/pushgateway/archive/V${PV}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/prometheus/pushgateway/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	${EGO_SUM_SRC_URI}"
 
 LICENSE="Apache-2.0 BSD BSD-2 MIT"
@@ -469,7 +469,7 @@ pkg_setup() {
 
 src_prepare() {
 	default
-	sed -i -e "s/\\(\\.Revision=\\).*/\\1${GIT_COMMIT}/" .promu.yml || die
+	sed -i -e 's|{{\.Revision}}|'${GIT_COMMIT}'|g' .promu.yml || die
 }
 
 src_compile() {
