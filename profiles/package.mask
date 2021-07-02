@@ -32,6 +32,46 @@
 
 #--- END OF EXAMPLES ---
 
+# Sergei Trofimovich <slyfox@gentoo.org> (2021-05-16)
+# Masked for removal in 30 days.
+media-sound/xmms2-scrobbler
+
+# David Seifert <soap@gentoo.org> (2021-07-01)
+# Berkeley DB slots that are long past EOL by Oracle,
+# maintenance burden, and no real path forward by Oracle.
+# Bug #792222, removal in 90 days.
+sys-libs/db:1
+sys-libs/db:3
+sys-libs/db:4.2
+sys-libs/db:4.3
+sys-libs/db:4.4
+sys-libs/db:4.5
+sys-libs/db:4.6
+sys-libs/db:4.7
+sys-libs/db:5.1
+
+# Matthias Maier <tamiko@gentoo.org> (2021-06-27)
+# Last release in 2013. Fails to build. No reverse dependencies.
+# Bugs #735260
+# Removal on 2021-07-27
+media-sound/loudness-scanner
+
+# Matt Turner <mattst88@gentoo.org> (2021-06-25)
+# Last release in 2015. Many open bugs. No reverse dependencies.
+# Bugs #312935, #341923, #629050, #739984, #775761, #777534
+# Removal on 2021-07-25
+media-gfx/ufraw
+
+# Marek Szuba <marecki@genoo.org> (2021-06-25)
+# Unslotted version conflicting with lua eclasses.
+# No revdeps left. EAPI 5. Removal in 30 days (Bug #798693)
+dev-lang/lua:0
+
+# Volkmar W. Pogatzki <gentoo@pogatzki.net> (2021-06-21)
+# library with no consumer, removal in 30 days
+# see https://bugs.gentoo.org/794562
+dev-java/bctsp
+
 # Michał Górny <mgorny@gentoo.org> (2021-06-24)
 # Package of huge complexity, given its premise.  Unmaintained
 # in Gentoo.  No revdeps.
@@ -80,10 +120,6 @@ dev-java/jibx-tools
 # Removal on 2021-07-19.  Bug #786279.
 app-misc/rq
 
-# John Helmert III <ajak@gentoo.org> (2021-06-19)
-# Unmaintained, open security bug.
-# Removal on 2021-07-19.  Bug #717794.
-net-misc/netkit-rsh
 
 # Michał Górny <mgorny@gentoo.org> (2021-06-19)
 # Conflicts with app-arch/brotli[python].  Discontinued in favor
@@ -295,10 +331,6 @@ dev-python/csv23
 # Unmask after unmasking proj-8
 >=sci-geosciences/qmapshack-1.16
 
-# Volkmar W. Pogatzki <gentoo@pogatzki.net> (2021-05-25)
-# dev-java/jakarta-activation-api-2.0.1 depends on masked >=virtual/{jdk,jre}-11
->=dev-java/jakarta-activation-api-2.0.1
-
 # Miroslav Šulc <fordfrog@gentoo.org> (2021-05-24)
 # it's just a demo project, not a real app, see disclaimer
 # at https://github.com/romainguy/jext
@@ -468,7 +500,7 @@ kde-apps/kdebase-meta:5
 # Patrick McLean <chutzpah@gentoo.org> (2020-02-07)
 # Mask until sys-libs/libxcrypt[system] is unmasked
 # (NOTE: Likely needs to be moved to musl + uclibc profiles, not dropped entirely)
->=virtual/libcrypt-2
+~virtual/libcrypt-2
 
 # Lars Wendler <polynomial-c@gentoo.org> (2019-11-14)
 # Breaks archives containing relative paths
