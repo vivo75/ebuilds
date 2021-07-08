@@ -16,7 +16,7 @@ else
 	MY_P=${MY_PN}-${MY_PV}
 	S=${WORKDIR}/${MY_P}
 	SRC_URI="https://github.com/systemd/${MY_PN}/archive/v${MY_PV}/${MY_P}.tar.gz"
-	#KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~riscv ~sparc ~x86"
+	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~riscv ~sparc ~x86"
 fi
 
 PYTHON_COMPAT=( python3_{7..9} )
@@ -142,9 +142,8 @@ BDEPEND="
 	app-arch/xz-utils:0
 	dev-util/gperf
 	>=dev-util/meson-0.46
-	>=dev-util/intltool-0.50
 	>=sys-apps/coreutils-8.16
-	sys-devel/m4
+	sys-devel/gettext
 	virtual/pkgconfig
 	test? ( sys-apps/dbus )
 	app-text/docbook-xml-dtd:4.2
