@@ -32,6 +32,19 @@
 
 #--- END OF EXAMPLES ---
 
+# Craig Andrews <candrews@gentoo.org> (2021-07-10)
+# Masked until November, 2021
+# This release adds enforcement of the Taproot protocol change to the Bitcoin
+# rules, beginning in November. Protocol changes require user consent to be
+# effective, and if enforced inconsistently within the community may compromise
+# your security or others! If you do not know what you are doing, learn more
+# before November. (You must make a decision either way - simply not upgrading
+# is insecure in all scenarios.)
+# To learn more, see https://bitcointaproot.cc
+>=net-p2p/bitcoind-0.21.1
+>=net-p2p/bitcoin-qt-0.21.1
+>=net-libs/libbitcoinconsensus-0.21.1
+
 # Lars Wendler <polynomial-c@gentoo.org> (2021-07-10)
 # Masked for testing
 >=mail-client/claws-mail-4.0.0
@@ -303,11 +316,6 @@ dev-python/pyls-black
 # DeprecatedDep jre-1.3, upstream dead,removal in 30 days
 # see bug: https://bugs.gentoo.org/787410
 media-gfx/povtree
-
-# Joonas Niilola <juippis@gentoo.org> (2021-06-12)
-# A library without consumers, old dep of tree-cleaned gnome-mplayer,
-# EAPI-5. Removal in ~30 days. #776898
-media-libs/gmtk
 
 # Sam James <sam@gentoo.org> (2021-06-12)
 # Masked until all reverse dependencies support
