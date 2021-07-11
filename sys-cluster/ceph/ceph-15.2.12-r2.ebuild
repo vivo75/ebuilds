@@ -36,6 +36,7 @@ IUSE+=" $(printf "cpu_flags_x86_%s\n" ${CPU_FLAGS_X86[@]})"
 DEPEND="
 	acct-group/ceph
 	acct-user/ceph
+	virtual/libcrypt:=
 	virtual/libudev:=
 	app-arch/bzip2:=
 	app-arch/lz4:=
