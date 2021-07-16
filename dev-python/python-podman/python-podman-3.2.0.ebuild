@@ -25,18 +25,20 @@ RDEPEND="
 	dev-python/requests[${PYTHON_USEDEP}]
 	dev-python/toml[${PYTHON_USEDEP}]
 	dev-python/urllib3[${PYTHON_USEDEP}]"
+BDEPEND="
+	test? (
+		dev-python/requests-mock[${PYTHON_USEDEP}]
+	)"
 
 distutils_enable_tests pytest
 
 python_test() {
 	local deselect=(
-		# integration tests require a workable podman server,
-		# and it doesn't seem to work in ebuild env
-		podman/tests/integration
-
 		# TODO
 		podman/tests/unit/test_volumesmanager.py::VolumesManagerTestCase::test_get_404
 	)
 
-	epytest ${deselect[@]/#/--deselect }
+	# integration tests require a workable podman server,
+	# and it doesn't seem to work in ebuild env
+	epytest podman/tests/unit ${deselect[@]/#/--deselect }
 }
