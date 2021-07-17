@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 PYTHON_COMPAT=( python3_{8..10} )
 inherit distutils-r1
@@ -17,7 +17,7 @@ if [[ "${PV}" == "9999" ]]; then
 	BOTOCORE_PV=${PV}
 else
 	SRC_URI="https://github.com/boto/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="amd64 arm arm64 ppc ppc64 sparc x86 ~amd64-linux ~x86-linux"
+	KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-linux ~x86-linux"
 
 	# botocore is x.(y+3).z
 	BOTOCORE_PV="$(ver_cut 1).$(( $(ver_cut 2) + 3)).$(ver_cut 3-)"
@@ -52,5 +52,6 @@ python_prepare_all() {
 }
 
 python_test() {
-	nosetests -v tests/unit/ tests/functional/ || die "test failed under ${EPYTHON}"
+	nosetests -v tests/unit/ tests/functional/ ||
+		die "test failed under ${EPYTHON}"
 }
