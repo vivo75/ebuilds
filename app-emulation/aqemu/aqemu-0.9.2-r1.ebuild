@@ -25,12 +25,16 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 
-#DOCS=( AUTHORS CHANGELOG README TODO )
-PATCHES=( "${FILESDIR}/${PN}-0.9.2-qtbindir.patch" )
+DOCS=( AUTHORS CHANGELOG README TODO )
+PATCHES=(
+	"${FILESDIR}/${PN}-0.9.2-qtbindir.patch"
+	"${FILESDIR}/${PN}-0.9.2-include.patch"
+	"${FILESDIR}/${PN}-0.9.2-docs.patch"
+)
 
 src_configure() {
 	local mycmakeargs=(
-		-DMAN_PAGE_COMPRESSOR=""
+		-DMAN_PAGE_COMPRESSOR=OFF
 		-DWITHOUT_EMBEDDED_DISPLAY=$(usex vnc OFF ON)
 	)
 
