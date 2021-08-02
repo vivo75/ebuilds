@@ -37,6 +37,8 @@ RDEPEND="${BDEPEND}
 [[ ${PV} == "9999" ]] && BDEPEND+=" >=sys-apps/texinfo-4.3"
 PDEPEND="emacs? ( app-emacs/autoconf-mode )"
 
+PATCHES=( "${FILESDIR}/${P}-time.patch" )
+
 src_prepare() {
 	# usr/bin/libtool is provided by binutils-apple, need gnu libtool
 	if [[ ${CHOST} == *-darwin* ]] ; then
@@ -58,6 +60,10 @@ src_prepare() {
 	# Restore timestamp to avoid makeinfo call
 	# We already have an up to date autoconf.info page at this point.
 	touch -r doc/{old_,}autoconf.texi || die
+}
+
+src_test() {
+	emake check
 }
 
 src_install() {
