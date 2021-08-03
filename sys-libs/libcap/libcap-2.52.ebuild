@@ -27,8 +27,7 @@ DEPEND="${RDEPEND}
 RESTRICT="test"
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-2.50-build-system-fixes.patch
-	"${FILESDIR}"/${PN}-2.50-install_capsh_again.patch #793026
+	"${FILESDIR}"/${PN}-2.52-build-system-fixes.patch
 	"${FILESDIR}"/${PN}-2.38-no_perl.patch
 	"${FILESDIR}"/${PN}-2.25-ignore-RAISE_SETFCAP-install-failures.patch
 	"${FILESDIR}"/${PN}-2.21-include.patch
@@ -48,15 +47,12 @@ run_emake() {
 		PAM_CAP="$(usex pam yes no)"
 		DYNAMIC=yes
 		GOLANG=no
-		CC="$(tc-getCC)"
-		AR="$(tc-getAR)"
-		RANLIB="$(tc-getRANLIB)"
 	)
 	emake "${args[@]}" "$@"
 }
 
 src_configure() {
-	tc-export AR CC RANLIB
+	tc-export AR CC OBJCOPY RANLIB
 	tc-export_build_env BUILD_CC
 	multilib-minimal_src_configure
 }
