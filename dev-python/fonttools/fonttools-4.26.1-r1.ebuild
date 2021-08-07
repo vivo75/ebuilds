@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{8..9} )
+PYTHON_COMPAT=( python3_{8..10} )
 PYTHON_REQ_USE="xml(+)"
 
 inherit distutils-r1 virtualx
@@ -19,6 +19,7 @@ KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~riscv ~sparc ~x86 ~
 RDEPEND=">=dev-python/fs-2.4.9[${PYTHON_USEDEP}]"
 BDEPEND="
 	${RDEPEND}
+	dev-python/cython[${PYTHON_USEDEP}]
 	test? (
 		app-arch/brotli[python,${PYTHON_USEDEP}]
 		app-arch/zopfli
@@ -42,7 +43,12 @@ python_prepare_all() {
 	distutils-r1_python_prepare_all
 }
 
+src_configure() {
+	DISTUTILS_ARGS=( --with-cython )
+}
+
 python_test() {
+	distutils_install_for_testing
 	# virtualx used when matplotlib is installed causing plot module tests to run
 	virtx epytest Tests fontTools
 }
