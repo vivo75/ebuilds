@@ -20,7 +20,7 @@ if [[ -z ${PV%%*9999} ]]; then
 else
 	MY_P="${P/_/.}"
 	SRC_URI="mirror://sourceforge/gnuplot/${MY_P}.tar.gz"
-	KEYWORDS="~alpha amd64 ~arm arm64 ~hppa ~ia64 ~ppc ~ppc64 ~s390 sparc x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~x64-solaris ~x86-solaris"
+	KEYWORDS="~alpha amd64 ~arm arm64 ~hppa ~ia64 ppc ppc64 ~s390 sparc x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~x64-solaris ~x86-solaris"
 fi
 
 S="${WORKDIR}/${MY_P}"
@@ -69,11 +69,11 @@ BDEPEND="
 		virtual/latex-base
 		dev-texlive/texlive-latexextra
 		dev-texlive/texlive-langgreek
+		dev-texlive/texlive-mathscience
 		app-text/ghostscript-gpl )
 	qt5? ( dev-qt/linguist-tools:5 )"
 
 GP_VERSION="${PV%.*}"
-E_SITEFILE="lisp/50${PN}-gentoo.el"
 TEXMF="${EPREFIX}/usr/share/texmf-site"
 
 PATCHES=(
