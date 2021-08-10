@@ -32,6 +32,11 @@
 
 #--- END OF EXAMPLES ---
 
+# Andreas Sturmlechner <asturm@gentoo.org> (2021-08-10)
+# EAPI-5, dead, unused; last consumer dropped in bug #352952
+# Removal on 2021-09-09.
+net-print/libgnomecups
+
 # Joshua Kinard <kumba@gentoo.org> (2021-08-09)
 # Dead upstream and has build issues in modern times.
 # See bugs #551786 and #715846.  Removal in 30 days.
@@ -359,11 +364,6 @@ dev-ruby/spork
 # Removal on 2021-08-13.  Bugs #755896, #781467.
 net-proxy/polipo
 
-# Marek Szuba <marecki@gentoo.org> (2021-07-14)
-# New, considerably refactored major version with a new build system.
-# Masked for further testing.
->=sci-libs/pastix-6.0.0
-
 # Marco Scardovi <marco@scardovi.vom> (2021-07-13)
 # These packages were only ported for netbox. Not useful for anything else
 # No revdeps. Removal in 30 days (Bug #801991)
@@ -427,16 +427,6 @@ dev-ruby/compass-import-once
 dev-lang/ruby:2.5
 =dev-ruby/rubygems-2.7*
 dev-ruby/did_you_mean:2.5
-
-# Pacho Ramos <pacho@gentoo.org> (2021-07-08)
-# Doesn't support Gnome 40, use gnome-shell-extension-desktop-icons-ng
-# instead. Removal in 30 days.
-gnome-extra/gnome-shell-extension-desktop-icons
-
-# Pacho Ramos <pacho@gentoo.org> (2021-07-08)
-# Doesn't support Gnome 40, use gnome-shell-extension-appindicator instead
-# (also supports legacy tray icons). Removal in 30 days.
-gnome-extra/gnome-shell-extensions-topicons-plus
 
 # Hans de Graaff <graaff@gentoo.org> (2021-07-07)
 # Security bug CVE-2015-9284, bug 761960. Use slot 2 instead.
