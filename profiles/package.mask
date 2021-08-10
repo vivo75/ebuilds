@@ -32,6 +32,11 @@
 
 #--- END OF EXAMPLES ---
 
+# Joshua Kinard <kumba@gentoo.org> (2021-08-09)
+# Dead upstream and has build issues in modern times.
+# See bugs #551786 and #715846.  Removal in 30 days.
+net-dialup/xc
+
 # Andreas Sturmlechner <asturm@gentoo.org> (2021-08-09)
 # EAPI-5, dead, unused; bug #776403. Removal on 2021-09-08.
 dev-perl/Goo-Canvas
@@ -401,13 +406,6 @@ dev-lang/lua:5.2
 # Masked for testing
 >=mail-client/claws-mail-4.0.0
 
-# Craig Andrews <candrews@gentoo.org> (2021-07-09)
-# deprecated; replaced by media-plugins/kodi-audiodecoder-sacd
-# No reverse dependencies
-# See https://bugs.gentoo.org/801406
-# Masked for removal in 30 days.
-media-plugins/kodi-vfs-sacd
-
 # Hans de Graaff <graaff@gentoo.org> (2021-07-09)
 # Last release in 2016. Tests fail with recent git versions.
 # No reverse dependencies, no maintainer.
@@ -480,41 +478,6 @@ dev-ruby/rash
 #     https://www.postgresql.org/support/versioning/#
 # Removal after 2021-08-04.
 dev-db/postgresql:9.5
-
-# Michał Górny <mgorny@gentoo.org> (2021-07-06)
-# Various Python 2-specific backports.  All the reverse dependencies
-# (except for deps between these packages) have been eliminated.
-# Removal on 2021-08-05.  Bug #800698.
-dev-python/contextlib2
-dev-python/linecache2
-dev-python/pathlib2
-dev-python/traceback2
-dev-python/unittest2
-
-# Georgy Yakovlev <gyakovlev@gentoo.org> (2021-07-04)
-# severely broken nfs
-# possibly depper problem due to bug in mm/page_alloc
-# https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ff4b2b4014cbffb3d32b22629252f4dc8616b0fe
-# feel free to unmask if required, but be aware of
-# possible silent data corruption
-=sys-kernel/gentoo-sources-5.13.0
-=sys-kernel/vanilla-sources-5.13.0
-
-# Matt Turner <mattst88@gentoo.org> (2021-07-04)
-# Not used by any package. Has not worked for a very long time
-# as far as I can tell.
-# Removal on 2021-08-04
-app-eselect/eselect-xvmc
-
-# Hans de Graaff <graaff@gentoo.org> (2021-07-04)
-# Last release in 2016, failing tests, no dependencies.
-# Masked for removal in 30 days.
-dev-ruby/shotgun
-
-# Hans de Graaff <graaff@gentoo.org> (2021-07-04)
-# Last release in 2012, no working tests, no dependencies.
-# Masked for removal in 30 days.
-dev-ruby/source_map
 
 # David Seifert <soap@gentoo.org> (2021-07-01)
 # Berkeley DB slots that are long past EOL by Oracle,

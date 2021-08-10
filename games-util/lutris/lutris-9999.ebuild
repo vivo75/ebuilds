@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{7..9} )
+PYTHON_COMPAT=( python3_{8..9} )
 PYTHON_REQ_USE="sqlite,threads(+)"
 DISTUTILS_SINGLE_IMPL="1"
 
@@ -16,30 +16,26 @@ if [[ ${PV} == *9999* ]] ; then
 	EGIT_REPO_URI="https://github.com/lutris/lutris.git"
 	inherit git-r3
 else
-	SRC_URI="https://lutris.net/releases/${P/-/_}.tar.xz"
-	KEYWORDS="~amd64 ~x86"
-	S="${WORKDIR}/${PN}"
+	if [[ ${PV} == *_beta* ]] ; then
+		SRC_URI="https://github.com/lutris/lutris/archive/refs/tags/v${PV/_/-}.tar.gz -> ${P}.tar.gz"
+		S="${WORKDIR}"/${P/_/-}
+	else
+		SRC_URI="https://lutris.net/releases/${P/-/_}.tar.xz"
+		S="${WORKDIR}/${PN}"
+
+		KEYWORDS="~amd64 ~x86"
+	fi
 fi
 
 LICENSE="GPL-3"
 SLOT="0"
 
-RESTRICT="!test? ( test )"
-
-BDEPEND="
-	test? (
-		$(python_gen_cond_dep '
-			dev-python/nose[${PYTHON_USEDEP}]
-		')
-	)
-"
 RDEPEND="
 	app-arch/cabextract
 	app-arch/p7zip
 	app-arch/unzip
 	$(python_gen_cond_dep '
 		dev-python/dbus-python[${PYTHON_USEDEP}]
-		dev-python/lxml[${PYTHON_USEDEP}]
 		dev-python/pillow[${PYTHON_USEDEP}]
 		dev-python/pygobject:3[${PYTHON_USEDEP}]
 		dev-python/python-evdev[${PYTHON_USEDEP}]
@@ -54,19 +50,30 @@ RDEPEND="
 	x11-apps/mesa-progs
 	x11-apps/xgamma
 	x11-apps/xrandr
-	x11-libs/libnotify[introspection]
 	x11-libs/gtk+:3[introspection]
-	x11-libs/gdk-pixbuf[jpeg]
+	x11-libs/libnotify[introspection]
 "
+
+distutils_enable_tests nose
+
+src_prepare() {
+	default
+
+	# Avoid test failure:
+	# "ERROR: Failure: OSError (data_path can't be found at : /usr/share/lutris)"
+	sed -i -e "s:sys.path\[0\]:\"${S}/share\":" lutris/util/datapath.py || die
+
+	distutils-r1_src_prepare
+}
+
+python_test() {
+	virtx nosetests -v
+}
 
 python_install_all() {
 	local DOCS=( AUTHORS README.rst docs/installers.rst )
 	distutils-r1_python_install_all
 	python_fix_shebang "${ED}"/usr/share/lutris/bin/lutris-wrapper #740048
-}
-
-python_test() {
-	virtx nosetests -v
 }
 
 pkg_postinst() {
