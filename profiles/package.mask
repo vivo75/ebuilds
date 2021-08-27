@@ -32,6 +32,10 @@
 
 #--- END OF EXAMPLES ---
 
+# Bernard Cafarelli <voyageur@gentoo.org> (2021-08-26)
+# Preparing for final 5.0.0 release
+>=app-text/tesseract-5.0.0_beta
+
 # Arthur Zamarin <arthurzam@gentoo.org> (2021-08-20)
 # Inactive upstream.
 # Fully superseded by dev-python/dnspython. All reverse dependencies support
@@ -123,12 +127,6 @@ x11-libs/goocanvas:0
 # failing tests with Python 3.10. Removal on 2021-09-06.
 dev-python/pydiff
 
-# Stephan Hartmann <sultan@gentoo.org> (2021-08-06)
-# Dev channel releases are only for people who
-# are developers or want more experimental features
-# and accept a more unstable release.
->=www-client/chromium-94
-
 # Ulrich Müller <ulm@gentoo.org> (2021-08-06)
 # Masked for removal in 30 days. Upstream has joined the
 # manpages-l10n project, so 5.06 was their ultimate release
@@ -157,11 +155,6 @@ dev-python/bareos
 app-eselect/eselect-audicle
 app-eselect/eselect-miniaudicle
 media-sound/audicle
-
-# Sam James <sam@gentoo.org> (2021-08-04)
-# Fails to build with GCC 11. No activity upstream since 2008.
-# bug #730692, bug #787866. Removal on 2021-09-04.
-dev-scheme/ypsilon
 
 # Sam James <sam@gentoo.org> (2021-08-04)
 # Fails to build with GCC 11. Library with no reverse-dependencies.
@@ -341,6 +334,7 @@ sys-libs/db:5.1
 >=dev-python/PyQt5-5.15.5_pre
 >=dev-python/PyQtWebEngine-5.15.5_pre
 >=dev-python/qscintilla-python-2.13
+>=app-text/calibre-5.25.0
 
 # Sam James <sam@gentoo.org> (2021-06-12)
 # Masked until all reverse dependencies support
