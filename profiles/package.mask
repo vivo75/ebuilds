@@ -32,6 +32,14 @@
 
 #--- END OF EXAMPLES ---
 
+# Michał Górny <mgorny@gentoo.org> (2021-08-28)
+# EOL kernel with known vulnerabilities.  Please move to 5.13 or one
+# of the LTS branches.  Bug #808990.
+=sys-kernel/gentoo-kernel-5.12*
+=sys-kernel/gentoo-kernel-bin-5.12*
+=sys-kernel/vanilla-kernel-5.12*
+=virtual/dist-kernel-5.12*
+
 # Anthony G. Basile <blueness@gentoo.org> (2021-08-27)
 # Masked for removal in 30 days.  Deprecated upstream.
 net-vpn/ipsec-tools
@@ -428,11 +436,6 @@ sys-libs/db:5.1
 # bug #729098
 >=sci-libs/proj-8.0.0
 >=sci-geosciences/qmapshack-1.16
-
-# Sam James <sam@gentoo.org> (2021-02-18)
-# 0.9.27 included a regression wrt deletes
-# bug #768948
-=dev-db/lmdb-0.9.27
 
 # Lars Wendler <polynomial-c@gentoo.org> (2021-02-15)
 # Mask development versions now that they were bumped...
