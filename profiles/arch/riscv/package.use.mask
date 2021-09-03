@@ -1,6 +1,10 @@
 # Copyright 2019-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
+# Jonathan Davies <jpds@protonmail.com> (2021-09-03)
+# Requires CPU with SSSE3 support
+net-analyzer/suricata hyperscan
+
 # Marek Szuba <marecki@gentoo.org> (2021-09-02)
 # dev-python/pebble not keyworded here due to failing tests.
 # That said, with pebble-4.6.3 installed manually
@@ -96,10 +100,6 @@ sci-libs/gdal mdb
 # Yixun Lan <dlan@gentoo.org> (2021-08-05)
 # Boost.Context can be built on riscv
 dev-libs/boost -context
-
-# Marek Szuba <marecki@gentoo.org> (2021-07-28)
-# app-cdr/cdrtools fails to compile on riscv
-dev-util/catalyst iso
 
 # Marek Szuba <marecki@gentoo.org> (2021-07-27)
 # dev-libs/boxfort does not support riscv yet, meaning
