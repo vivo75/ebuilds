@@ -19,8 +19,8 @@ sys-cluster/openmpi openmpi_fabrics_psm
 sys-fabric/ofed ofed_drivers_psm
 
 # Marek Szuba <marecki@gentoo.org> (2021-08-23)
-# sys-cluster/ceph keywording blocked by libatomic issues in dev-libs/rocksdb-6.14,
-# see Bug #809830.
+# sys-cluster/ceph not keyworded here yet due to several dependencies
+# failing tests
 net-analyzer/rrdtool rados
 
 # Marek Szuba <marecki@gentoo.org> (2021-08-22)
