@@ -32,6 +32,17 @@
 
 #--- END OF EXAMPLES ---
 
+# Andreas Sturmlechner <asturm@gentoo.org> (2021-09-04)
+# EAPI-5, dead, unused, bug 808213; Removal on 2021-10-04.
+x11-libs/mx
+
+# David Seifert <soap@gentoo.org> (2021-09-04)
+# Last upstream release over 2.5 years ago, removed by Fedora,
+# unresponsive maintainer in Gentoo, broken with linux-headers-5.13,
+# relies on glibc implementation details.
+# Bug #717114, #801457, removal in 30 days.
+dev-util/trinity
+
 # Ionen Wolkens <ionen@gentoo.org> (2021-09-03)
 # Currently may not function with kde-plasma/kwin (black screen),
 # so keeping masked for testing due to being a primary consumer.
@@ -182,7 +193,6 @@ app-i18n/man-pages-it
 # (If you hit blockers, please run:
 # $ emerge --deselect dev-util/pkgconfig
 # This is necessary as your world file should not contain dependencies.)
-# Bug #245228, #632124, #691268, #767853, removal in 30 days.
 dev-util/pkgconfig
 
 # Andreas Sturmlechner <asturm@gentoo.org> (2021-08-02)
@@ -194,18 +204,6 @@ dev-qt/qtwebkit:5
 app-text/fb2edit
 mail-client/trojita
 <media-video/openshot-2.5.1_p20210228
-
-# Andreas K. Hüttel <dilfridge@gentoo.org> (2021-07-31)
-# Obsolete; all versions in current Perl core distributions
-# are newer, and no virtuals currently pull these packages.
-# Removal in 30 days.
-perl-core/ExtUtils-MakeMaker
-perl-core/ExtUtils-Manifest
-perl-core/File-Path
-perl-core/Getopt-Long
-perl-core/HTTP-Tiny
-perl-core/JSON-PP
-perl-core/libnet
 
 # Joonas Niilola <juippis@gentoo.org> (2021-07-29)
 # Upstream provided migration instructions from 2. -> 3. update,
@@ -364,18 +362,6 @@ sys-libs/db:5.1
 # Bug #729672.
 media-plugins/kodi-game-libretro-nestopia
 media-plugins/kodi-game-libretro-dosbox
-
-# Andreas Sturmlechner <asturm@gentoo.org> (2020-10-26)
-# Historical metapackage that exists in slot 5 only for transition from KDE SC4.
-# Masked for removal on 2021-08-31. Replaced by:
-# emerge --noreplace kde-plasma/plasma-meta kde-apps/kde-apps-meta
-kde-apps/kde-meta:5
-
-# Andreas Sturmlechner <asturm@gentoo.org> (2020-10-26)
-# Historical metapackage that exists in slot 5 only for transition from KDE SC4.
-# Masked for removal on 2021-08-31. Replaced by:
-# emerge --noreplace kde-plasma/plasma-meta kde-apps/kdecore-meta
-kde-apps/kdebase-meta:5
 
 # Sam James <sam@gentoo.org> (2020-10-05)
 # Masked for testing. New major versions of Guile
