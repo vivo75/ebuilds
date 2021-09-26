@@ -33,6 +33,16 @@
 
 #--- END OF EXAMPLES ---
 
+# Joonas Niilola <juippis@gentoo.org> (2021-09-26)
+# A library without revdeps, EAPI-5. #776901
+# Removal in ~30 days.
+media-libs/libyami
+
+# Brian Evans <grknight@gentoo.org> (2021-09-26)
+# Mask for 8.1 RC
+dev-lang/php:8.1
+virtual/httpd-php:8.1
+
 # Jakov Smolić <jsmolic@gentoo.org> (2021-09-25)
 # Upstream renamed the Theano project and continued as dev-python/aesara.
 # No reverse dependencies.
@@ -241,11 +251,11 @@ sci-biology/mira
 # Homepage dead, uses gtk2, fails to build, https://bugs.gentoo.org/711344
 games-puzzle/gnudoku
 
-# Stephan Hartmann <sultan@gentoo.org> (2021-08-28)
+# Stephan Hartmann <sultan@gentoo.org> (2021-09-25)
 # Dev channel releases are only for people who
 # are developers or want more experimental features
 # and accept a more unstable release.
->=www-client/chromium-95
+>=www-client/chromium-96
 
 # Anthony G. Basile <blueness@gentoo.org> (2021-08-27)
 # Masked for removal in 30 days.  Deprecated upstream.
@@ -504,7 +514,7 @@ virtual/jre:11
 # switch the compiler / the binutils) ASAP. If you need them for a specific
 # (isolated) use case, feel free to unmask them on your system.
 <sys-libs/glibc-2.33
-<sys-devel/binutils-2.35.2
+<sys-devel/binutils-2.36.1-r2
 
 # Michael Orlitzky <mjo@gentoo.org> (2017-01-07)
 # This package has some dangerous quality and security issues, but
