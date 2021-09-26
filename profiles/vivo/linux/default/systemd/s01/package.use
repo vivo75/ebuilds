@@ -25,7 +25,6 @@ net-misc/curl ssl
 net-misc/iputils arping caps filecaps clockdiff idn rarpd rdisc tracepath
 net-misc/openssh X509
 net-vpn/openvpn inotify lz4
-sys-apps/busybox static
 sys-apps/util-linux tty-helpers
 sys-fs/lvm2 -thin
 sys-fs/squashfs-tools lz4 lzma
