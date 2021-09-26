@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python3_{8..9} )
 # NEED_BOOTSTRAP is for developers to quickly generate a tarball
 # for publishing to the tree.
 NEED_BOOTSTRAP="no"
-inherit multibuild python-any-r1 multilib-minimal
+inherit multibuild multilib python-any-r1 multilib-minimal
 
 DESCRIPTION="Extended crypt library for descrypt, md5crypt, bcrypt, and others"
 HOMEPAGE="https://github.com/besser82/libxcrypt"
@@ -21,7 +21,7 @@ fi
 LICENSE="LGPL-2.1+ public-domain BSD BSD-2"
 SLOT="0/1"
 KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~mips ppc ppc64 ~riscv ~s390 sparc x86"
-IUSE="+compat split-usr +static-libs system test"
+IUSE="+compat split-usr static-libs system test"
 REQUIRED_USE="split-usr? ( system )"
 RESTRICT="!test? ( test )"
 

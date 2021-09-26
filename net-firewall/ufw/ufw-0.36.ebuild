@@ -15,7 +15,7 @@ SRC_URI="https://launchpad.net/ufw/${PV}/${PV}/+download/${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 ~arm ~arm64 ~ia64 ppc ppc64 sparc x86"
+KEYWORDS="amd64 ~arm arm64 ~ia64 ppc ppc64 ~riscv sparc x86"
 IUSE="examples ipv6"
 
 RDEPEND=">=net-firewall/iptables-1.4[ipv6?]
@@ -166,8 +166,29 @@ pkg_postinst() {
 	local print_check_req_warn
 	print_check_req_warn=false
 
+	local found=()
+	local apps=( "net-firewall/arno-iptables-firewall"
+		"net-firewall/ferm"
+		"net-firewall/firehol"
+		"net-firewall/firewalld"
+		"net-firewall/ipkungfu" )
+
+	for exe in "${apps[@]}"
+	do
+		if has_version "${exe}"; then
+			found+=( "${exe}" )
+		fi
+	done
+
+	if [[ -n ${found} ]]; then
+		echo ""
+		ewarn "WARNING: Detected other firewall applications:"
+		ewarn "${found[@]}"
+		ewarn "If enabled, these applications may interfere with ufw!"
+	fi
+
 	if [[ -z "${REPLACING_VERSIONS}" ]]; then
-		echo
+		echo ""
 		elog "To enable ufw, add it to boot sequence and activate it:"
 		elog "-- # rc-update add ufw boot"
 		elog "-- # /etc/init.d/ufw start"

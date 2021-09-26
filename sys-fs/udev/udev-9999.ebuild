@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python3_{8..9} )
+PYTHON_COMPAT=( python3_{8..10} )
 
 inherit bash-completion-r1 flag-o-matic linux-info meson-multilib ninja-utils python-any-r1 toolchain-funcs udev usr-ldscript
 
@@ -37,7 +37,7 @@ HOMEPAGE="https://www.freedesktop.org/wiki/Software/systemd"
 
 LICENSE="LGPL-2.1 MIT GPL-2"
 SLOT="0"
-IUSE="acl +kmod selinux static-libs test"
+IUSE="acl +kmod selinux test"
 RESTRICT="!test? ( test )"
 
 BDEPEND="
@@ -128,7 +128,6 @@ multilib_src_configure() {
 		-Dlink-udev-shared=false
 		-Dsplit-usr=true
 		-Drootlibdir="${EPREFIX}/usr/$(get_libdir)"
-		$(meson_use static-libs static-libudev)
 
 		# Prevent automagic deps
 		-Dgcrypt=false
@@ -169,9 +168,6 @@ multilib_src_compile() {
 		${libudev}
 		src/libudev/libudev.pc
 	)
-	if use static-libs; then
-		targets+=( libudev.a )
-	fi
 	if multilib_is_native_abi; then
 		targets+=(
 			udevadm
@@ -195,32 +191,30 @@ multilib_src_compile() {
 	eninja "${targets[@]}"
 }
 
-multilib_src_test() {
+src_test() {
 	# The testsuite is *very* finicky. Don't try running it in
 	# containers or anything but a full VM or on bare metal.
 	# udev calls 'mknod' a number of times, and this interacts
 	# badly with kernel namespaces.
 
-	if [[ ${EUID} -ne 0 ]]; then
-		ewarn "udev tests need to run under uid 0"
-		ewarn "Skipping tests"
-	elif has sandbox ${FEATURES}; then
-		ewarn "\'FEATURES=sandbox\' detected"
+	if [[ ! -w /dev ]]; then
 		ewarn "udev tests needs full access to /dev"
 		ewarn "Skipping tests"
 	else
-		einfo Running tests
-
-		# two binaries required by udev-test.pl
-		eninja systemd-detect-virt test-udev
-		local -x PATH="${PWD}:${PATH}"
-
-		# prepare ${BUILD_DIR}/test/sys, required by udev-test.pl
-		"${EPYTHON}" "${S}"/test/sys-script.py test || die
-
-		# the perl script contains all the udev tests
-		"${S}"/test/udev-test.pl || die
+		meson-multilib_src_test
 	fi
+}
+
+multilib_src_test() {
+	# two binaries required by udev-test.pl
+	eninja systemd-detect-virt test-udev
+	local -x PATH="${PWD}:${PATH}"
+
+	# prepare ${BUILD_DIR}/test/sys, required by udev-test.pl
+	"${EPYTHON}" "${S}"/test/sys-script.py test || die
+
+	# the perl script contains all the udev tests
+	"${S}"/test/udev-test.pl || die
 }
 
 multilib_src_install() {
@@ -228,7 +222,6 @@ multilib_src_install() {
 
 	dolib.so {${libudev},libudev.so.1,libudev.so}
 	gen_usr_ldscript -a udev
-	use static-libs && dolib.a libudev.a
 
 	insinto "/usr/$(get_libdir)/pkgconfig"
 	doins src/libudev/libudev.pc

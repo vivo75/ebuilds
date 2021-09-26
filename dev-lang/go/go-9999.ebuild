@@ -38,6 +38,9 @@ BDEPEND="|| (
 		dev-lang/go-bootstrap )"
 RDEPEND="!<dev-go/go-tools-0_pre20150902"
 
+# the *.syso files have writable/executable stacks
+QA_EXECSTACK='*.syso'
+
 # Do not complain about CFLAGS, etc, since Go doesn't use them.
 QA_FLAGS_IGNORED='.*'
 
@@ -182,13 +185,13 @@ src_install() {
 
 pkg_postinst() {
 	[[ -z ${REPLACING_VERSIONS} ]] && return
-	einfo "After ${CATEGORY}/${PN} is updated it is recommended to rebuild"
-	einfo "all packages compiled with previous versions of ${CATEGORY}/${PN}"
-	einfo "due to the static linking nature of go."
-	einfo "If this is not done, the packages compiled with the older"
-	einfo "version of the compiler will not be updated until they are"
-	einfo "updated individually, which could mean they will have"
-	einfo "vulnerabilities."
-	einfo "Run 'emerge @golang-rebuild' to rebuild all 'go' packages"
-	einfo "See https://bugs.gentoo.org/752153 for more info"
+	elog "After ${CATEGORY}/${PN} is updated it is recommended to rebuild"
+	elog "all packages compiled with previous versions of ${CATEGORY}/${PN}"
+	elog "due to the static linking nature of go."
+	elog "If this is not done, the packages compiled with the older"
+	elog "version of the compiler will not be updated until they are"
+	elog "updated individually, which could mean they will have"
+	elog "vulnerabilities."
+	elog "Run 'emerge @golang-rebuild' to rebuild all 'go' packages"
+	elog "See https://bugs.gentoo.org/752153 for more info"
 }

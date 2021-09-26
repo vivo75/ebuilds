@@ -5,9 +5,9 @@ EAPI=7
 
 DISTUTILS_OPTIONAL=1
 DISTUTILS_USE_SETUPTOOLS=manual
-PYTHON_COMPAT=( python3_{7,8,9} )
+PYTHON_COMPAT=( python3_{8,9,10} )
 
-inherit autotools bash-completion-r1 dist-kernel-utils distutils-r1 flag-o-matic linux-info pam systemd toolchain-funcs udev usr-ldscript
+inherit autotools bash-completion-r1 dist-kernel-utils distutils-r1 flag-o-matic linux-info pam systemd udev usr-ldscript
 
 DESCRIPTION="Userland utilities for ZFS Linux kernel module"
 HOMEPAGE="https://github.com/openzfs/zfs"
@@ -25,7 +25,7 @@ else
 	S="${WORKDIR}/${P%_rc?}"
 
 	if [[ ${PV} != *_rc* ]]; then
-		KEYWORDS="~amd64 ~arm64 ~ppc64"
+		KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv"
 	fi
 fi
 
@@ -34,14 +34,14 @@ LICENSE="BSD-2 CDDL MIT"
 # possible candidates: libuutil, libzpool, libnvpair. Those do not provide stable abi, but are considered.
 # see libsoversion_check() below as well
 SLOT="0/5"
-IUSE="custom-cflags debug dist-kernel kernel-builtin minimal nls pam python +rootfs test-suite static-libs"
+IUSE="custom-cflags debug dist-kernel kernel-builtin minimal nls pam python +rootfs test-suite"
 
 DEPEND="
-	net-libs/libtirpc[static-libs?]
-	sys-apps/util-linux[static-libs?]
-	sys-libs/zlib[static-libs(+)?]
-	virtual/libudev[static-libs(-)?]
-	dev-libs/openssl:0=[static-libs?]
+	net-libs/libtirpc
+	sys-apps/util-linux
+	sys-libs/zlib
+	virtual/libudev:=
+	dev-libs/openssl:0=
 	!minimal? ( ${PYTHON_DEPS} )
 	pam? ( sys-libs/pam )
 	python? (
@@ -130,7 +130,6 @@ pkg_setup() {
 }
 
 libsoversion_check() {
-
 	local bugurl libzfs_sover
 	bugurl="https://bugs.gentoo.org/enter_bug.cgi?form_name=enter_bug&product=Gentoo+Linux&component=Current+packages"
 
@@ -183,7 +182,6 @@ src_configure() {
 	local myconf=(
 		--bindir="${EPREFIX}/bin"
 		--enable-shared
-		--enable-systemd
 		--enable-sysvinit
 		--localstatedir="${EPREFIX}/var"
 		--sbindir="${EPREFIX}/sbin"
@@ -197,11 +195,15 @@ src_configure() {
 		--with-systemdunitdir="$(systemd_get_systemunitdir)"
 		--with-systemdpresetdir="${EPREFIX}/lib/systemd/system-preset"
 		--with-vendor=gentoo
+		# Building zfs-mount-generator.c on musl breaks as strndupa
+		# isn't available. But systemd doesn't support musl anyway, so
+		# just disable building it.
+		$(use_enable !elibc_musl systemd)
 		$(use_enable debug)
 		$(use_enable nls)
 		$(use_enable pam)
 		$(use_enable python pyzfs)
-		$(use_enable static-libs static)
+		--disable-static
 		$(usex minimal --without-python --with-python="${EPYTHON}")
 	)
 
@@ -224,11 +226,9 @@ src_install() {
 
 	use pam && { rm -rv "${ED}/unwanted_files" || die ; }
 
-	use test-suite || { rm -r "${ED}/usr/share/zfs" || die ; }
+	use test-suite || { rm -r "${ED}"/usr/share/zfs/{test-runner,zfs-tests,runfiles,*sh} || die ; }
 
-	if ! use static-libs; then
-		find "${ED}" -name '*.la' -delete || die
-	fi
+	find "${ED}" -name '*.la' -delete || die
 
 	dobashcomp contrib/bash_completion.d/zfs
 	bashcomp_alias zfs zpool

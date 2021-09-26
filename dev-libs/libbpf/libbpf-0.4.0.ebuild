@@ -10,7 +10,7 @@ if [[ ${PV} =~ [9]{4,} ]]; then
 	EGIT_REPO_URI="https://github.com/libbpf/libbpf.git"
 else
 	SRC_URI="https://github.com/libbpf/libbpf/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86"
+	KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~m68k ~mips ppc ppc64 ~riscv ~s390 sparc x86"
 fi
 S="${WORKDIR}/${P}/src"
 
@@ -33,7 +33,7 @@ RDEPEND="
 "
 
 PATCHES=(
-	"${FILESDIR}/libbpf-0.3.0-paths.patch"
+	"${FILESDIR}/libbpf-9999-paths.patch"
 )
 
 src_compile() {

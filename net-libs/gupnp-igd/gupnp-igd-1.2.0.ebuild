@@ -10,7 +10,7 @@ HOMEPAGE="http://gupnp.org https://gitlab.gnome.org/GNOME/gupnp-igd"
 
 LICENSE="LGPL-2.1+"
 SLOT="0/1.2" # pkg-config file links in gupnp API, so some consumers of gupnp-igd need to be relinked for it
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~riscv ~sparc ~x86"
 IUSE="gtk-doc +introspection"
 
 RDEPEND="
@@ -24,7 +24,8 @@ BDEPEND="
 	dev-util/glib-utils
 	sys-devel/gettext
 	virtual/pkgconfig
-	gtk-doc? ( dev-util/gtk-doc )
+	gtk-doc? ( dev-util/gtk-doc
+		app-text/docbook-xml-dtd:4.1.2 )
 "
 
 # The only existing test is broken

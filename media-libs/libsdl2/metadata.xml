@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="project">
 		<email>games@gentoo.org</email>
@@ -32,6 +32,7 @@
 		<flag name="joystick">Control joystick support (disable at your own risk)</flag>
 		<flag name="kms">Build the KMSDRM video driver</flag>
 		<flag name="sndio">Enable support for the <pkg>media-sound/sndio</pkg> backend</flag>
+		<flag name="pipewire">Enable support for the <pkg>media-video/pipewire</pkg> audio backend</flag>
 		<flag name="sound">Control audio support (disable at your own risk)</flag>
 		<flag name="video">Control video support (disable at your own risk)</flag>
 		<flag name="vulkan">Enable Vulkan support</flag>
