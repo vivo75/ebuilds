@@ -8,7 +8,6 @@ app-admin/tmpreaper
 app-arch/cabextract
 app-arch/deb2targz
 app-arch/duff
-app-arch/hardlink
 app-arch/lzop
 app-arch/p7zip
 app-arch/pigz
