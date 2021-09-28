@@ -248,11 +248,12 @@ src_install() {
 		OS=$(usex kernel_FreeBSD BSD Linux) \
 		DESTDIR="${ED}" \
 		install
-	dodoc ChangeLog
 
 	# need the makefile in pkg_preinst
 	insinto /usr/share/${PN}
 	doins Makefile
+
+	dodoc ChangeLog
 }
 
 pkg_postinst() {
