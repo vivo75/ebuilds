@@ -25,7 +25,7 @@ else
 	S="${WORKDIR}/${P%_rc?}"
 
 	if [[ ${PV} != *_rc* ]]; then
-		KEYWORDS="~amd64 ~arm64 ~ppc64"
+		KEYWORDS="amd64 arm64 ppc64"
 	fi
 fi
 
@@ -82,6 +82,12 @@ RDEPEND="${DEPEND}
 		sys-fs/mdadm
 		sys-process/procps
 	)
+"
+
+# temporary block new coreutils
+# https://github.com/openzfs/zfs/issues/11900
+RDEPEND+="
+	<sys-apps/coreutils-9
 "
 
 REQUIRED_USE="
