@@ -1,5 +1,5 @@
 #!/sbin/openrc-run
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 VPN="${RC_SVCNAME#*.}"
@@ -29,20 +29,6 @@ checkconfig() {
 		eerror "/etc/init.d/openconnect.vpn0 start"
 		return 1
 	fi
-	if [ ! -f "${VPNCONF}" ]; then
-	ewarn "The configuration file for ${VPN} does not exist."
-	ewarn "Please create ${VPNCONF}"
-	ewarn "This will become a fatal error in a future release."
-	fi
-	local server vpnopts password
-	eval server=\$server_${VPN}
-	eval vpnopts=\$vpnopts_${VPN}
-	eval password=\$password_${VPN}
-	if [ -n "$server" ] || [ -n "$vpnopts" ] || [ -n "password" ]; then
-	ewarn "server_${VPN}, vpnopts${VPN} and password_${VPN} are deprecated"
-	ewarn"Please move them to the appropriate settings in ${VPNCONF}"
-	ewarn "They will be ignored in the future."
-	fi
 	return 0
 }
 
@@ -69,25 +55,43 @@ start_pre() {
 	run_hook "${VPNDIR}/preup.sh"
 }
 
+ssd_helper() {
+	if [ -n "${password}" ]; then
+		start-stop-daemon "$@" <<EOF
+${password}
+EOF
+	else
+		start-stop-daemon "$@"
+	fi
+}
+
 start() {
 	local server vpnopts password
 	eval server=\$server_${VPN}
 	eval vpnopts=\$vpnopts_${VPN}
 	eval password=\$password_${VPN}
 
+	local config=
+	if [ -e "${VPNCONF}" ]; then
+		config="--config=${VPNCONF}"
+	fi
+
+	# Allow quoted whitespace in vpnopts.
+	eval set -- ${vpnopts}
+
 	ebegin "Starting ${name}"
-	start-stop-daemon --start --exec "${command}" -- \
+	ssd_helper --start \
+		--exec "${command}" \
+		--pidfile "${pidfile}" \
+		-- \
 		--background \
-		--config="${VPNCONF:-/dev/null}" \
+		${config} \
 		--interface="${VPN}" \
 		--pid-file="${pidfile}" \
-		${vpnopts} \
+		"$@" \
 		"${server}" \
 		>> "${VPNLOGFILE}" \
-		2>> "${VPNERRFILE}" \
-		<<EOF
-${password}
-EOF
+		2>> "${VPNERRFILE}"
 	eend $?
 }
 

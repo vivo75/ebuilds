@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{8,9} )
+PYTHON_COMPAT=( python3_{8..10} )
 PYTHON_REQ_USE="xml"
 
 inherit linux-info python-any-r1
@@ -12,12 +12,9 @@ if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://gitlab.com/openconnect/openconnect.git"
 	inherit git-r3 autotools
 else
-	ARCHIVE_URI="ftp://ftp.infradead.org/pub/${PN}/${P}.tar.gz"
+	SRC_URI="ftp://ftp.infradead.org/pub/${PN}/${P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
 fi
-VPNC_VER=20200930
-SRC_URI="${ARCHIVE_URI}
-	ftp://ftp.infradead.org/pub/vpnc-scripts/vpnc-scripts-${VPNC_VER}.tar.gz"
 
 DESCRIPTION="Free client for Cisco AnyConnect SSL VPN software"
 HOMEPAGE="http://www.infradead.org/openconnect.html"
@@ -50,6 +47,7 @@ DEPEND="
 "
 RDEPEND="${DEPEND}
 	sys-apps/iproute2
+	net-vpn/vpnc-scripts
 "
 BDEPEND="
 	virtual/pkgconfig
@@ -107,7 +105,7 @@ src_configure() {
 		$(use_with gssapi)
 		$(use_with smartcard libpcsclite)
 		$(use_with stoken)
-		--with-vpnc-script="${EPREFIX}/etc/openconnect/openconnect.sh"
+		--with-vpnc-script="${EPREFIX}/etc/vpnc-scripts/vpnc-script"
 		--without-java
 	)
 
@@ -131,23 +129,13 @@ src_install() {
 	default
 	find "${ED}" -name '*.la' -delete || die
 
-	exeinto /etc/openconnect
-	newexe "${WORKDIR}"/vpnc-scripts-${VPNC_VER}/vpnc-script openconnect.sh
-
-	newinitd "${FILESDIR}"/openconnect.initd.${PV} openconnect
 	dodoc "${FILESDIR}"/README.OpenRC
+
+	newconfd "${FILESDIR}"/openconnect.conf.in openconnect
+	newinitd "${FILESDIR}"/openconnect.initd openconnect
+
 	insinto /etc/logrotate.d
 	newins "${FILESDIR}"/openconnect.logrotate openconnect
 
 	keepdir /var/log/openconnect
-}
-
-pkg_postinst() {
-	local v
-	for v in ${REPLACING_VERSIONS}; do
-		ver_test $v -ge 8.10-r1 && continue
-		ewarn "openconnect tunnel-specific configurations stored in ${EROOT}/etc/conf.d"
-		ewarn "should be migrated to ${EROOT}/etc/openconnect/<tunnel>.conf"
-		ewarn "For more information see ${EROOT}/usr/share/doc/${PF}/README.OpenRC"
-	done
 }
