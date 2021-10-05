@@ -19,7 +19,7 @@ SRC_URI="https://download.redis.io/releases/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="amd64 arm arm64 ~hppa ppc ppc64 sparc x86 ~amd64-linux ~x86-linux ~x86-solaris"
+KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~riscv ~sparc ~x86 ~amd64-linux ~x86-linux ~x86-solaris"
 IUSE="+jemalloc ssl systemd tcmalloc test"
 RESTRICT="!test? ( test )"
 
@@ -54,10 +54,10 @@ REQUIRED_USE="?? ( jemalloc tcmalloc )
 	${LUA_REQUIRED_USE}"
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-3.2.3-config.patch
+	"${FILESDIR}"/${PN}-6.2.1-config.patch
 	"${FILESDIR}"/${PN}-5.0-shared.patch
-	"${FILESDIR}"/${PN}-6.0.12-sharedlua.patch
-	"${FILESDIR}"/${PN}-5.0.8-ppc-atomic.patch
+	"${FILESDIR}"/${PN}-6.2.1-sharedlua.patch
+	"${FILESDIR}"/${PN}-6.2.3-ppc-atomic.patch
 	"${FILESDIR}"/${PN}-sentinel-5.0-config.patch
 )
 
