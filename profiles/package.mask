@@ -42,7 +42,6 @@
 # Old obsolete slots. Use a newer slot instead.
 # Masked for removal in 30 days.
 dev-ruby/hashie:0
-dev-ruby/hashie:3
 dev-ruby/thor:0
 
 # Joonas Niilola <juippis@gentoo.org> (2021-10-02)
@@ -347,6 +346,7 @@ games-puzzle/gnudoku
 
 # Lars Wendler <polynomial-c@gentoo.org> (2021-07-10)
 # Masked for testing
+# bug #802186
 >=mail-client/claws-mail-4.0.0
 
 # Michał Górny <mgorny@gentoo.org> (2021-07-06)
@@ -362,10 +362,10 @@ games-puzzle/gnudoku
 
 # Sam James <sam@gentoo.org> (2021-06-12)
 # Masked until all reverse dependencies support
-# OCaml 4.12.
-# bug #795138
->=dev-lang/ocaml-4.12
-=dev-ml/camlp4-4.12
+# OCaml 4.13.
+# bug #816498
+>=dev-lang/ocaml-4.13
+>=dev-ml/camlp4-4.13
 
 # Bernard Cafarelli <voyageur@gentoo.org> (2021-06-04)
 # Alpha versions of fetchmail 7
@@ -416,6 +416,7 @@ games-puzzle/gnudoku
 
 # Lars Wendler <polynomial-c@gentoo.org> (2021-04-08)
 # Masked for testing
+# bug #790248
 >=app-crypt/gnupg-2.3.0
 
 # Sam James <sam@gentoo.org> (2021-03-30)
@@ -516,6 +517,7 @@ app-office/texmacs
 # Java 11 is not yet fully supported on Gentoo. Packages cannot depend
 # on it so these virtuals are not yet required. If you wish to use
 # Java 11 then install openjdk-(jdk|jre)-bin directly.
+# bug #697014
 virtual/jdk:11
 virtual/jre:11
 
