@@ -12,7 +12,7 @@ HOMEPAGE="https://www.gimp.org/"
 SRC_URI="mirror://gimp/v2.10/${P}.tar.bz2"
 LICENSE="GPL-3 LGPL-3"
 SLOT="0/2"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~x86"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~riscv ~x86"
 
 IUSE="aalib alsa aqua debug doc gnome heif jpeg2k mng openexr postscript udev unwind vector-icons webp wmf xpm cpu_flags_ppc_altivec cpu_flags_x86_mmx cpu_flags_x86_sse"
 
@@ -28,12 +28,12 @@ COMMON_DEPEND="
 	dev-libs/libxslt
 	>=gnome-base/librsvg-2.40.6:2
 	>=media-gfx/mypaint-brushes-2.0.2:=
-	>=media-libs/babl-0.1.86
+	>=media-libs/babl-0.1.88
 	>=media-libs/fontconfig-2.12.4
 	>=media-libs/freetype-2.1.7
-	>=media-libs/gegl-0.4.30:0.4[cairo]
+	>=media-libs/gegl-0.4.32:0.4[cairo]
 	>=media-libs/gexiv2-0.10.6
-	>=media-libs/harfbuzz-0.9.19
+	>=media-libs/harfbuzz-0.9.19:=
 	>=media-libs/lcms-2.8:2
 	>=media-libs/libmypaint-1.6.1:=
 	>=media-libs/libpng-1.6.25:0=

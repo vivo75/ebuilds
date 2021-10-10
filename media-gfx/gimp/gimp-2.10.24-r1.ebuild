@@ -12,7 +12,7 @@ HOMEPAGE="https://www.gimp.org/"
 SRC_URI="mirror://gimp/v2.10/${P}.tar.bz2"
 LICENSE="GPL-3 LGPL-3"
 SLOT="0/2"
-KEYWORDS="~alpha amd64 ~arm arm64 ~hppa ~ia64 ~ppc ppc64 x86"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~x86"
 
 IUSE="aalib alsa aqua debug doc gnome heif jpeg2k mng openexr postscript udev unwind vector-icons webp wmf xpm cpu_flags_ppc_altivec cpu_flags_x86_mmx cpu_flags_x86_sse"
 
@@ -28,13 +28,12 @@ COMMON_DEPEND="
 	dev-libs/libxslt
 	>=gnome-base/librsvg-2.40.6:2
 	>=media-gfx/mypaint-brushes-2.0.2:=
-	>=media-libs/babl-0.1.78
+	>=media-libs/babl-0.1.86
 	>=media-libs/fontconfig-2.12.4
 	>=media-libs/freetype-2.1.7
-	>=media-libs/gegl-0.4.26:0.4[cairo]
-	<media-libs/gegl-0.4.28:0.4
+	>=media-libs/gegl-0.4.30:0.4[cairo]
 	>=media-libs/gexiv2-0.10.6
-	>=media-libs/harfbuzz-0.9.19
+	>=media-libs/harfbuzz-0.9.19:=
 	>=media-libs/lcms-2.8:2
 	>=media-libs/libmypaint-1.6.1:=
 	>=media-libs/libpng-1.6.25:0=
@@ -50,7 +49,7 @@ COMMON_DEPEND="
 	aalib? ( media-libs/aalib )
 	alsa? ( >=media-libs/alsa-lib-1.0.0 )
 	aqua? ( >=x11-libs/gtk-mac-integration-2.0.0 )
-	heif? ( >=media-libs/libheif-1.3.2:= )
+	heif? ( >=media-libs/libheif-1.9.1:= )
 	jpeg2k? ( >=media-libs/openjpeg-2.1.0:2= )
 	mng? ( media-libs/libmng:= )
 	openexr? ( >=media-libs/openexr-1.6.1:= )
@@ -85,7 +84,6 @@ DOCS=( "AUTHORS" "ChangeLog" "HACKING" "NEWS" "README" "README.i18n" )
 # Bugs 685210 (and duplicate 691070)
 PATCHES=(
 	"${FILESDIR}/${PN}-2.10_fix_test-appdata.patch"
-	"${FILESDIR}/${PN}-2.99.2_fix_autoconf-2.70.patch"
 )
 
 src_prepare() {
@@ -137,6 +135,7 @@ src_configure() {
 		$(use_enable cpu_flags_ppc_altivec altivec)
 		$(use_enable cpu_flags_x86_mmx mmx)
 		$(use_enable cpu_flags_x86_sse sse)
+		$(use_enable debug)
 		$(use_enable vector-icons)
 		$(use_with aalib aa)
 		$(use_with alsa)
