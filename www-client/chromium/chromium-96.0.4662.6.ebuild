@@ -1,7 +1,7 @@
 # Copyright 2009-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 PYTHON_COMPAT=( python3_{8,9} )
 PYTHON_REQ_USE="xml"
 
@@ -20,8 +20,8 @@ SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${P}
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="amd64 arm64 ~x86"
-IUSE="component-build cups cpu_flags_arm_neon debug +hangouts headless +js-type-check kerberos official pic +proprietary-codecs pulseaudio screencast selinux +suid +system-ffmpeg +system-harfbuzz +system-icu vaapi wayland widevine"
+KEYWORDS="~amd64 ~arm64 ~x86"
+IUSE="component-build cups cpu_flags_arm_neon debug +hangouts headless +js-type-check kerberos +official pic +proprietary-codecs pulseaudio screencast selinux +suid +system-ffmpeg +system-harfbuzz +system-icu vaapi wayland widevine"
 REQUIRED_USE="
 	component-build? ( !suid )
 	screencast? ( wayland )
@@ -231,8 +231,8 @@ src_prepare() {
 
 	local PATCHES=(
 		"${WORKDIR}/patches"
-		"${FILESDIR}/chromium-93-EnumTable-crash.patch"
 		"${FILESDIR}/chromium-93-InkDropHost-crash.patch"
+		"${FILESDIR}/chromium-96-EnumTable-crash.patch"
 		"${FILESDIR}/chromium-use-oauth2-client-switches-as-default.patch"
 		"${FILESDIR}/chromium-shim_headers.patch"
 	)
@@ -324,6 +324,7 @@ src_prepare() {
 		third_party/devtools-frontend/src/front_end/third_party/wasmparser
 		third_party/devtools-frontend/src/test/unittests/front_end/third_party/i18n
 		third_party/devtools-frontend/src/third_party
+		third_party/distributed_point_functions
 		third_party/dom_distiller_js
 		third_party/eigen3
 		third_party/emoji-segmenter
@@ -378,6 +379,9 @@ src_prepare() {
 		third_party/lss
 		third_party/lzma_sdk
 		third_party/mako
+		third_party/maldoca
+		third_party/maldoca/src/third_party/tensorflow_protos
+		third_party/maldoca/src/third_party/zlibwrapper
 		third_party/markupsafe
 		third_party/mesa
 		third_party/metrics_proto
@@ -438,7 +442,6 @@ src_prepare() {
 		third_party/tflite
 		third_party/tflite/src/third_party/eigen3
 		third_party/tflite/src/third_party/fft2d
-		third_party/tflite-support
 		third_party/ruy
 		third_party/six
 		third_party/ukey2
@@ -579,9 +582,7 @@ src_configure() {
 	# Use system-provided libraries.
 	# TODO: freetype -- remove sources (https://bugs.chromium.org/p/pdfium/issues/detail?id=733).
 	# TODO: use_system_hunspell (upstream changes needed).
-	# TODO: use_system_libsrtp (bug #459932).
 	# TODO: use_system_protobuf (bug #525560).
-	# TODO: use_system_ssl (http://crbug.com/58087).
 	# TODO: use_system_sqlite (http://crbug.com/22208).
 
 	# libevent: https://bugs.gentoo.org/593458
@@ -627,7 +628,7 @@ src_configure() {
 	myconf_gn+=" use_kerberos=$(usex kerberos true false)"
 	myconf_gn+=" use_pulseaudio=$(usex pulseaudio true false)"
 	myconf_gn+=" use_vaapi=$(usex vaapi true false)"
-	myconf_gn+=" rtc_use_pipewire=$(usex screencast true false) rtc_pipewire_version=\"0.3\""
+	myconf_gn+=" rtc_use_pipewire=$(usex screencast true false)"
 
 	# TODO: link_pulseaudio=true for GN.
 
@@ -755,6 +756,7 @@ src_configure() {
 	# Enable ozone wayland and/or headless support
 	myconf_gn+=" use_ozone=true ozone_auto_platforms=false"
 	myconf_gn+=" ozone_platform_headless=true"
+	myconf_gn+=" ozone_platform_x11=$(usex headless false true)"
 	if use wayland || use headless; then
 		if use headless; then
 			myconf_gn+=" ozone_platform=\"headless\""
@@ -766,6 +768,8 @@ src_configure() {
 			myconf_gn+=" use_xkbcommon=true"
 			myconf_gn+=" ozone_platform=\"wayland\""
 		fi
+	else
+		myconf_gn+=" ozone_platform=\"x11\""
 	fi
 
 	# Enable official builds
@@ -848,12 +852,14 @@ src_install() {
 	doexe out/Release/chromedriver
 	doexe out/Release/chrome_crashpad_handler
 
+	ozone_auto_session () {
+		use wayland && ! use headless && echo true || echo false
+	}
 	local sedargs=( -e
 			"s:/usr/lib/:/usr/$(get_libdir)/:g;
-			s:@@OZONE_AUTO_SESSION@@:$(usex wayland true false):g;
-			s:@@FORCE_OZONE_PLATFORM@@:$(usex headless true false):g"
+			s:@@OZONE_AUTO_SESSION@@:$(ozone_auto_session):g"
 	)
-	sed "${sedargs[@]}" "${FILESDIR}/chromium-launcher-r6.sh" > chromium-launcher.sh || die
+	sed "${sedargs[@]}" "${FILESDIR}/chromium-launcher-r7.sh" > chromium-launcher.sh || die
 	doexe chromium-launcher.sh
 
 	# It is important that we name the target "chromium-browser",
