@@ -6,7 +6,6 @@ sys-kernel/dracut crypt mdraid syslog
 
 # modules are built in a different container
 virtual/wireguard -module
-dev-util/sysdig -modules
 sys-fs/zfs kernel-builtin
 
 # for backups
