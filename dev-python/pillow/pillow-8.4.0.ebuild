@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 PYTHON_COMPAT=( python3_{8..10} pypy3 )
 PYTHON_REQ_USE='tk?,threads(+)'
@@ -18,7 +18,7 @@ S="${WORKDIR}/${MY_P}"
 
 LICENSE="HPND"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~arm arm64 ~hppa ~ia64 ~ppc ~ppc64 ~riscv sparc x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~riscv ~sparc ~x86 ~amd64-linux ~x86-linux"
 IUSE="examples imagequant +jpeg jpeg2k lcms test tiff tk truetype webp xcb zlib"
 REQUIRED_USE="test? ( jpeg jpeg2k tiff truetype )"
 RESTRICT="!test? ( test )"
@@ -50,7 +50,7 @@ BDEPEND="
 python_configure_all() {
 	# It's important that these flags are also passed during the install phase
 	# as well. Make sure of that if you change the lines below. See bug 661308.
-	mydistutilsargs=(
+	DISTUTILS_ARGS=(
 		build_ext
 		--disable-platform-guessing
 		$(use_enable truetype freetype)
