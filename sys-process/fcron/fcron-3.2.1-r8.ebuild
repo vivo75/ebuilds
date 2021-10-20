@@ -5,7 +5,7 @@ EAPI=7
 
 WANT_AUTOMAKE="none"
 
-inherit autotools cron flag-o-matic pam systemd
+inherit autotools cron flag-o-matic pam systemd user-info
 
 DESCRIPTION="A command scheduler with extended capabilities over cron and anacron"
 HOMEPAGE="http://fcron.free.fr/"
@@ -206,7 +206,7 @@ pkg_postinst() {
 	else
 		local v
 		for v in ${REPLACING_VERSIONS}; do
-			if ! version_is_at_least "3.2.1" ${v}; then
+			if ver_test "3.2.1" -gt ${v}; then
 				# This is an upgrade
 
 				elog "fcron's default systab was updated since your last installation."
