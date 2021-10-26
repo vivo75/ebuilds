@@ -36,11 +36,10 @@ IUSE+=" $(printf "cpu_flags_x86_%s\n" ${CPU_FLAGS_X86[@]})"
 DEPEND="
 	acct-group/ceph
 	acct-user/ceph
-	virtual/libcrypt:=
 	virtual/libudev:=
 	app-arch/bzip2:=
 	app-arch/lz4:=
-	app-arch/snappy:=
+	>=app-arch/snappy-1.1.9:=
 	app-arch/zstd:=
 	app-shells/bash:0
 	app-misc/jq:=
@@ -70,6 +69,7 @@ DEPEND="
 	sys-libs/ncurses:0=
 	sys-libs/zlib:=
 	sys-process/numactl:=
+	virtual/libcrypt:=
 	x11-libs/libpciaccess:=
 	babeltrace? ( dev-util/babeltrace )
 	fuse? ( sys-fs/fuse:0= )
@@ -99,7 +99,7 @@ BDEPEND="
 	x86? ( dev-lang/yasm )
 	app-arch/cpio
 	>=dev-util/cmake-3.5.0
-	dev-python/cython[${PYTHON_USEDEP}]
+	<=dev-python/cython-0.29.24[${PYTHON_USEDEP}]
 	dev-python/sphinx
 	dev-util/cunit
 	dev-util/gperf
@@ -182,17 +182,16 @@ PATCHES=(
 	"${FILESDIR}/ceph-14.2.0-cflags.patch"
 	"${FILESDIR}/ceph-12.2.4-boost-build-none-options.patch"
 	"${FILESDIR}/ceph-13.2.0-cflags.patch"
-	"${FILESDIR}/ceph-15.2.0-no-virtualenvs.patch"
+	"${FILESDIR}/ceph-15.2.15-no-virtualenvs.patch"
 	"${FILESDIR}/ceph-13.2.2-dont-install-sysvinit-script.patch"
 	"${FILESDIR}/ceph-14.2.0-dpdk-cflags.patch"
-	"${FILESDIR}/ceph-14.2.0-link-crc32-statically.patch"
 	"${FILESDIR}/ceph-14.2.0-cython-0.29.patch"
 	"${FILESDIR}/ceph-15.2.0-rocksdb-cmake.patch"
 	"${FILESDIR}/ceph-15.2.2-systemd-unit.patch"
 	"${FILESDIR}/ceph-15.2.3-spdk-compile.patch"
 	"${FILESDIR}/ceph-15.2.4-system-uring.patch"
-	"${FILESDIR}/ceph-15.2.5-missing-includes.patch"
 	"${FILESDIR}/ceph-15.2.9-dont-compile-isal_compress-if-don-t-have-SSE4_1.patch"
+	"${FILESDIR}/ceph-15.2.15-snappy-1.1.9.patch"
 )
 
 check-reqs_export_vars() {
