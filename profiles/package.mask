@@ -33,6 +33,11 @@
 
 #--- END OF EXAMPLES ---
 
+# Georgy Yakovlev <gyakovlev@gentoo.org> (2021-11-05)
+# 'btrfs filesystem usage' reports incorecct values
+# https://github.com/kdave/btrfs-progs/issues/422
+=sys-fs/btrfs-progs-5.15*
+
 # Andreas K. Huettel <dilfridge@gentoo.org> (2021-11-04)
 # Unused and outdated packages; the version in core Perl is
 # newer. Removal in 30 days.
@@ -767,11 +772,6 @@ media-plugins/kodi-game-libretro-dosbox
 # few years. Bug #436400
 app-office/texmacs
 <dev-scheme/guile-2
-
-# Robin H. Johnson <robbat2@gentoo.org> (2019-07-08)
-# Needs LOTS of testing, broke boot on my laptop in early attempts, maybe needs
-# matching genkernel work?
->=sys-fs/lvm2-2.03
 
 # Andreas Sturmlechner <asturm@gentoo.org> (2018-11-25)
 # Masked per security vulnerability CVE-2018-14345, bug #661510
