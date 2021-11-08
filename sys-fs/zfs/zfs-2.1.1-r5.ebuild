@@ -63,7 +63,7 @@ fi
 
 # awk is used for some scripts, completions, and the Dracut module
 RDEPEND="${DEPEND}
-	!kernel-builtin? ( ~sys-fs/zfs-kmod-${PV}:=[dist-kernel?] )
+	!kernel-builtin? ( ~sys-fs/zfs-kmod-${PV}:= )
 	!prefix? ( virtual/udev )
 	sys-fs/udev-init-scripts
 	virtual/awk
@@ -84,6 +84,10 @@ RDEPEND="${DEPEND}
 	)
 "
 
+# PDEPEND in this form is needed to trick portage suggest
+# enabling dist-kernel if only 1 package have it set, without suggesting to disable
+PDEPEND="dist-kernel? ( ~sys-fs/zfs-kmod-${PV}[dist-kernel] )"
+
 # temporary block new coreutils
 # https://github.com/openzfs/zfs/issues/11900
 RDEPEND+="
@@ -98,7 +102,9 @@ REQUIRED_USE="
 
 RESTRICT="test"
 
-PATCHES=( "${FILESDIR}/2.0.4-scrub-timers.patch" )
+PATCHES=(
+	"${FILESDIR}/2.0.4-scrub-timers.patch"
+)
 
 pkg_pretend() {
 	use rootfs || return 0
