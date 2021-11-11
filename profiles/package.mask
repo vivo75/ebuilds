@@ -52,12 +52,6 @@ net-irc/cgiirc
 net-libs/obby
 net-misc/sobby
 
-# Jakov Smolić <jsmolic@gentoo.org> (2021-11-10)
-# Current version is outdated, uses EAPI 5, has multiple
-# bug reported. No revdeps.
-# Removal on 2021-12-10. Bug #819306.
-net-misc/clusterssh
-
 # Jakov Smolić <jsmolic@gentoo.org> (2021-11-09)
 # Uses EAPI 5, no maintainer in Gentoo, no other
 # distro is packaging this.
@@ -100,6 +94,12 @@ app-misc/rundeck-bin
 # Replaced by dev-db/mytop.
 # Removal on 2021-12-07. Bug #819675.
 dev-db/mtop
+
+# Volkmar W. Pogatzki <gentoo@pogatzki.net> (2021-11-06)
+# Libraries with no other consumers. Removal in 30 days.
+dev-java/mina-core
+dev-java/jnr-unixsocket
+dev-java/jnr-enxio
 
 # Jakov Smolić <jsmolic@gentoo.org> (2021-11-06)
 # Dead upstream, multiple open bugs, no maintainer,
