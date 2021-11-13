@@ -17,7 +17,7 @@ if [[ "${PV}" == "9999" ]]; then
 	BOTOCORE_PV=${PV}
 else
 	SRC_URI="https://github.com/boto/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="amd64 arm arm64 ppc ppc64 sparc x86 ~amd64-linux ~x86-linux"
+	KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-linux ~x86-linux"
 
 	# botocore is x.(y+3).z
 	BOTOCORE_PV="$(ver_cut 1).$(( $(ver_cut 2) + 3)).$(ver_cut 3-)"
@@ -44,6 +44,12 @@ python_prepare_all() {
 		-e '/jmespath/ d' \
 		-e '/s3transfer/ d' \
 		-i setup.py || die
+
+	# do not rely on bundled deps in botocore (sic!)
+	find -name '*.py' -exec sed -i \
+		-e 's:from botocore[.]vendored import:import:' \
+		-e 's:from botocore[.]vendored[.]:from :' \
+		{} + || die
 
 	distutils-r1_python_prepare_all
 }
