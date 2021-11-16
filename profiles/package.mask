@@ -33,6 +33,18 @@
 
 #--- END OF EXAMPLES ---
 
+# Jakov Smolić <jsmolic@gentoo.org> (2021-11-16)
+# Outdated java package, uses EAPI 5, no revdeps,
+# no other distro is packaging this.
+# Removal on 2021-12-16. Bug #819420.
+media-video/google2srt
+
+# Uses EAPI 5, multiple bugs reported, fails to compile,
+# no revdeps, upstream doesn't do regular releases,
+# no other distro is packaging this
+# Removal on 2021-12-16. Bug #770610. Bug #813873. Bug #810682.
+net-libs/onion
+
 # Volkmar W. Pogatzki <gentoo@pogatzki.net> (2021-11-15)
 # Library without consumers,
 # bug #771693 (multiple CVEs); Removal in 30 days.
@@ -756,10 +768,6 @@ media-plugins/kodi-game-libretro-dosbox
 >=dev-java/ant-eclipse-ecj-4.10
 >=dev-java/eclipse-ecj-4.10
 >=www-servers/tomcat-9
-
-# Stefan Strogin <steils@gentoo.org> (2020-02-12)
-# Mask for testing revdeps.
->=dev-games/mygui-3.4.0
 
 # Lars Wendler <polynomial-c@gentoo.org> (2019-11-14)
 # Breaks archives containing relative paths
