@@ -23,10 +23,9 @@ DEPEND="${PDEPEND}
 BDEPEND="tools? ( dev-lang/go )"
 
 PATCHES=(
-	# Backported patch, drop on > 2.57
-	"${FILESDIR}"/${PN}-2.57-parallel-make.patch
 	"${FILESDIR}"/${PN}-2.38-no_perl.patch
 	"${FILESDIR}"/${PN}-2.25-ignore-RAISE_SETFCAP-install-failures.patch
+	"${FILESDIR}"/${PN}-2.60-libcap-alignment.patch
 )
 
 QA_FLAGS_IGNORED="sbin/captree" # go binaries don't use LDFLAGS
