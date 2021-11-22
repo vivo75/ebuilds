@@ -3,18 +3,18 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{7..9} )
+PYTHON_COMPAT=( python3_{7..10} )
 
 inherit autotools elisp-common python-single-r1 tmpfiles
 
-SRC_URI="https://download.gluster.org/pub/gluster/${PN}/$(ver_cut 1)/${PV}/${P}.tar.gz"
-KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~x86"
-
 DESCRIPTION="GlusterFS is a powerful network/cluster filesystem"
 HOMEPAGE="https://www.gluster.org/ https://github.com/gluster/glusterfs/"
+SRC_URI="https://download.gluster.org/pub/gluster/${PN}/$(ver_cut 1)/${PV}/${P}.tar.gz"
 
 LICENSE="|| ( GPL-2 LGPL-3+ )"
 SLOT="0/${PV%%.*}"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~x86"
+
 IUSE="debug emacs +fuse +georeplication ipv6 +libtirpc rsyslog static-libs +syslog test +xml"
 
 REQUIRED_USE="georeplication? ( ${PYTHON_REQUIRED_USE} xml )
@@ -148,7 +148,7 @@ src_install() {
 	chmod 0755 "${ED}"/usr/share/glusterfs/scripts/*.sh || die
 
 	newinitd "${FILESDIR}/${PN}-r1.initd" glusterfsd
-	newinitd "${FILESDIR}/glusterd-r3.initd" glusterd
+	newinitd "${FILESDIR}/glusterd-r4.initd" glusterd
 	newconfd "${FILESDIR}/${PN}.confd" glusterfsd
 
 	keepdir /var/log/${PN}
