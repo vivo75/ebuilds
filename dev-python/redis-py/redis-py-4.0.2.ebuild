@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{9..10} pypy3 )
+PYTHON_COMPAT=( python3_{8..10} pypy3 )
 inherit distutils-r1
 
 MY_PN="redis"
@@ -23,12 +23,22 @@ RDEPEND="
 BDEPEND="
 	test? (
 		dev-db/redis
+		dev-python/pytest-timeout[${PYTHON_USEDEP}]
 	)
 "
 
 distutils_enable_tests pytest
 
 python_test() {
+	local EPYTEST_DESELECT=(
+		# flaky test
+		tests/test_pubsub.py::TestPubSubDeadlock::test_pubsub_deadlock
+	)
+
+	epytest -k "not redismod"
+}
+
+src_test() {
 	local redis_pid="${T}"/redis.pid
 	local redis_port=6379
 	local redis_test_config="
@@ -41,21 +51,13 @@ python_test() {
 	# Spawn Redis itself for testing purposes
 	# NOTE: On sam@'s machine, spawning Redis can hang in the sandbox.
 	# I'm not restricting tests yet because this doesn't happen for anyone else AFAICT.
-	elog "Spawning Redis"
-	elog "NOTE: Port ${redis_port} must be free"
+	einfo "Spawning Redis"
+	einfo "NOTE: Port ${redis_port} must be free"
 	"${EPREFIX}"/usr/sbin/redis-server - <<< "${redis_test_config}" || die
 
 	# Run the tests
-	epytest -k "not redismod"
+	distutils-r1_src_test
 
 	# Clean up afterwards
-	local pid=$(<"${redis_pid}")
-	kill "${pid}" || die
-	local retries=10
-	while [[ -f ${redis_pid} ]]; do
-		sleep 1
-		if [[ $(( retries-- )) -eq 0 ]]; then
-			die "redis did not stop"
-		fi
-	done
+	kill "$(<"${redis_pid}")" || die
 }
