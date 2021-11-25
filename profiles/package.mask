@@ -33,6 +33,18 @@
 
 #--- END OF EXAMPLES ---
 
+# Hans de Graaff <graaff@gentoo.org> (2021-11-25)
+# Old slot that no longer has reverse dependencies. Last release in
+# 2013. Use minitest 5.x instead.
+# Masked for removal in 30 days.
+dev-ruby/minitest:0
+
+# Hans de Graaff <graaff@gentoo.org> (2021-11-25)
+# Last upstream release in 2012 and upstream itself is no longer
+# available. Unlikely to still work correctly. No reverse dependencies.
+# Masked for removal in 30 days.
+dev-ruby/aws-s3
+
 # Marek Szuba <marecki@gentoo.org> (2021-11-23)
 # No new releases since July 2013, no commits to upstream Git repository
 # since May 2019, long list of known issues (including Bug #681520),
@@ -353,14 +365,6 @@ sci-libs/libbufr
 # Fails to build with glibc-2.34, uses EAPI 5.
 # Removal on 2021-11-25. Bug #806577.
 sys-fabric/dapl
-
-# Hans de Graaff <graaff@gentoo.org> (2021-10-26)
-# New rubygems versions check extension installation and will
-# fail to find gems when extensions are not installed correctly.
-# Not all packages in the tree have been updated for this yet.
-# Also Gentoo defaults need to be updated for this to work correctly.
-# Masked pending fixes in dev-ruby packages.
->=dev-ruby/rubygems-3.2.22
 
 # Sam James <sam@gentoo.org> (2021-10-25)
 # Fails to build with glibc-2.34 and binutils-2.34+. Not many other
