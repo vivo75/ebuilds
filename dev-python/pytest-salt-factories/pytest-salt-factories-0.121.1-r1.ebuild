@@ -22,10 +22,9 @@ RDEPEND="
 	dev-python/psutil[${PYTHON_USEDEP}]
 	dev-python/pyzmq[${PYTHON_USEDEP}]
 	dev-python/msgpack[${PYTHON_USEDEP}]
+	>=app-admin/salt-3001.0[${PYTHON_USEDEP}]
 "
-BDEPEND="${RDEPEND}
-	test? ( >=app-admin/salt-3001.0[${PYTHON_USEDEP}] )
-"
+BDEPEND="${RDEPEND}"
 
 PATCHES=(
 	"${FILESDIR}/pytest-salt-factories-0.121.1-tests.patch"
@@ -37,7 +36,7 @@ python_prepare_all() {
 	sed -r -e "s:use_scm_version=True:version='${PV}', name='${PN//-/.}':" -i setup.py || die
 	sed -r -e '/(setuptools|setup_requires)/ d' -i setup.cfg || die
 
-	sed -i 's:[tool.setuptools_scm]:[tool.disabled]:' pyproject.toml || die
+	sed -i 's:tool.setuptools_scm:tool.disabled:' pyproject.toml || die
 	printf '__version__ = "%s"\n' "${PV}" > saltfactories/version.py || die
 	distutils-r1_python_prepare_all
 }
