@@ -33,6 +33,33 @@
 
 #--- END OF EXAMPLES ---
 
+# Volkmar W. Pogatzki <gentoo@pogatzki.net> (2021-11-28)
+# Libraries without consumers. Removal in 30 days.
+dev-java/commons-pool
+dev-java/dict4j
+dev-java/felix-gogo-command
+dev-java/jama
+dev-java/janino
+dev-java/jchardet
+dev-java/jcommon
+dev-java/jdynamite
+dev-java/jfreesvg
+dev-java/jgrapht
+dev-java/jmdns
+dev-java/jsr225
+dev-java/jsr311-api
+dev-java/jsr322
+dev-java/jung
+dev-java/mojarra
+dev-java/neuroph
+dev-java/ognl
+dev-java/piccolo
+dev-java/portletapi
+dev-java/vldocking
+dev-java/ws-commons-util
+dev-java/xml-security
+dev-java/xmpcore
+
 # Marek Szuba <marecki@gentoo.org> (2021-11-27)
 # XXV has been outdated and unmaintained in Gentoo for years.
 # EAPI 5, numerous QA violations.
@@ -431,41 +458,6 @@ sys-apps/frandom
 # Masked for removal in 30 days.
 dev-ruby/rmagick:0
 dev-ruby/rbnacl:4
-
-# Jakov Smolić <jsmolic@gentoo.org> (2021-10-30)
-# 9999-only ebuild, hasn't been updated in years,
-# uses EAPI 5, no revdeps.
-# Removal on 2021-11-29. Bug #819258.
-net-wireless/btcrack
-
-# Jakov Smolić <jsmolic@gentoo.org> (2021-10-30)
-# EAPI 5, no revdeps, replaced by sci-libs/eccodes
-# Removal on 2021-11-29. Bug #819111.
-sci-libs/libbufr
-
-# Jakov Smolić <jsmolic@gentoo.org> (2021-10-26)
-# Fails to build with glibc-2.34, uses EAPI 5.
-# Removal on 2021-11-25. Bug #806577.
-sys-fabric/dapl
-
-# Sam James <sam@gentoo.org> (2021-10-25)
-# Fails to build with glibc-2.34 and binutils-2.34+. Not many other
-# distros packaging this and no upstream commits since 2011. No reverse
-# dependencies.
-# bug #707848, bug #806476. Removal on 2021-11-25.
-dev-util/mutrace
-
-# Sam James <sam@gentoo.org> (2021-10-25)
-# Fails to build with glibc-2.33 and no activity upstream; seems like
-# a new fork should be packaged.
-# bug #775962. Removal on 2021-11-25.
-sys-apps/mtree
-
-# Sam James <sam@gentoo.org> (2021-10-25)
-# Fails to build with glibc-2.30(!) and was abandoned upstream
-# a few years ago. No reverse dependencies in tree.
-# bug #728556. Removal on 2021-11-25.
-dev-perl/MongoDB
 
 # Sam James <sam@gentoo.org> (2021-10-10)
 # Needs upstream build system fixes (currently in progress).
