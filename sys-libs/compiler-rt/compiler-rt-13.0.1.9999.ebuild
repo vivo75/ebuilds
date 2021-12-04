@@ -3,10 +3,8 @@
 
 EAPI=7
 
-MULTILIB_COMPAT=( abi_x86_{32,64} )
 PYTHON_COMPAT=( python3_{8..10} )
-inherit cmake flag-o-matic llvm llvm.org multilib-build python-any-r1 \
-	toolchain-funcs
+inherit cmake flag-o-matic llvm llvm.org python-any-r1 toolchain-funcs
 
 DESCRIPTION="Compiler runtime library for clang (built-in part)"
 HOMEPAGE="https://llvm.org/"
@@ -14,7 +12,7 @@ HOMEPAGE="https://llvm.org/"
 LICENSE="Apache-2.0-with-LLVM-exceptions || ( UoI-NCSA MIT )"
 SLOT="$(ver_cut 1-3)"
 KEYWORDS=""
-IUSE="+clang debug test"
+IUSE="+abi_x86_32 abi_x86_64 +clang debug test"
 RESTRICT="!test? ( test ) !clang? ( test )"
 
 CLANG_SLOT=${SLOT%%.*}
@@ -28,7 +26,9 @@ BDEPEND="
 		$(python_gen_any_dep ">=dev-python/lit-9.0.1[\${PYTHON_USEDEP}]")
 		=sys-devel/clang-${PV%_*}*:${CLANG_SLOT}
 	)
-	${PYTHON_DEPS}"
+	!test? (
+		${PYTHON_DEPS}
+	)"
 
 LLVM_COMPONENTS=( compiler-rt )
 LLVM_PATCHSET=9999-1

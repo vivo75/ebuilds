@@ -11,30 +11,25 @@ SRC_URI="http://www.nlnetlabs.nl/downloads/${PN}/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0/3"
-KEYWORDS="~alpha amd64 arm ~arm64 ~hppa ~ia64 ~m68k ~mips ppc ppc64 ~riscv ~s390 sparc x86 ~ppc-macos ~x64-macos ~x64-solaris"
-IUSE="+dane doc +ecdsa ed25519 ed448 gost python static-libs vim-syntax"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~ppc-macos ~x64-macos ~x64-solaris"
+IUSE="+dane doc +ecdsa ed25519 ed448 examples gost python static-libs vim-syntax"
 
 # configure will die if ecdsa is enabled and ssl is not
 REQUIRED_USE="
 	python? ( ${PYTHON_REQUIRED_USE} )
 "
 
-RDEPEND="
+COMMON_DEPEND="
 	python? ( ${PYTHON_DEPS} )
-	ecdsa? (
-		>=dev-libs/openssl-1.0.1e:0=[-bindist(-),${MULTILIB_USEDEP}]
-	)
-	ed25519? (
-		>=dev-libs/openssl-1.1.0:0=[-bindist(-),${MULTILIB_USEDEP}]
-	)
-	ed448? (
-		>=dev-libs/openssl-1.1.1:0=[-bindist(-),${MULTILIB_USEDEP}]
-	)
 	>=dev-libs/openssl-1.0.1e:0=[${MULTILIB_USEDEP}]
+	examples? ( net-libs/libpcap )
 "
-DEPEND="${RDEPEND}
+DEPEND="${COMMON_DEPEND}
 	python? ( dev-lang/swig )
 	doc? ( app-doc/doxygen )
+"
+RDEPEND="${COMMON_DEPEND}
+	!net-dns/ldns-utils
 "
 
 RESTRICT="test" # 1.6.9 has no test directory
@@ -67,8 +62,8 @@ multilib_src_configure() {
 		$(multilib_native_use_with python pyldnsx) \
 		--with-ssl="${EPREFIX}"/usr \
 		--enable-sha2 \
-		--without-drill \
-		--without-examples \
+		$(multilib_native_with drill) \
+		$(multilib_native_use_with examples) \
 		${dane_ta_usage} \
 		--disable-rpath
 }
@@ -116,8 +111,4 @@ multilib_src_install_all() {
 		insinto /usr/share/vim/vimfiles/ftdetect
 		doins libdns.vim
 	fi
-
-	einfo
-	elog "Install net-dns/ldns-utils if you want drill and examples"
-	einfo
 }
