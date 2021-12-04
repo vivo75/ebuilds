@@ -2,5 +2,4 @@ sys-fs/zfs-auto-snapshot
 app-crypt/certbot-apache
 app-emulation/libvirt
 dev-db/mariadb
-net-dns/ldns-utils
 net-misc/netifrc
