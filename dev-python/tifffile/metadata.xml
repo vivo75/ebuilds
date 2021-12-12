@@ -4,8 +4,8 @@
 	<maintainer type="project">
 		<email>python@gentoo.org</email>
 	</maintainer>
-	<stabilize-allarches/>
 	<upstream>
-		<remote-id type="github">pavlov99/ajsonrpc</remote-id>
+		<remote-id type="pypi">tifffile</remote-id>
+		<remote-id type="github">cgohlke/tifffile</remote-id>
 	</upstream>
 </pkgmetadata>
