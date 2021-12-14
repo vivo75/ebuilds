@@ -33,6 +33,16 @@
 
 #--- END OF EXAMPLES ---
 
+# Marco Scardovi <marco@scardovi.com> (2021-12-13)
+# Outdated, we are the only one who still have a package for it.
+# Docker can mount these NFS, AWS EFS, Ceph & Samba/CIFS volumes
+# by itself now. Removal in 30 days. Bug #829068
+net-fs/docker-volume-netshare
+
+# Bernd Waibel <waebbl-gentoo@posteo.net> (2021-12-07)
+# Masked for testing
+~sci-libs/vtk-9.1.0
+
 # Michał Górny <mgorny@gentoo.org> (2021-12-13)
 # Unmaintained in Gentoo.  Requires media-libs/libpng[apng].
 # Removal on 2022-01-12.  Bug #824830.
@@ -441,15 +451,6 @@ net-libs/libsoup:3.0
 # Requires OpenSSL >= 3.0.0
 # Masked until dev-libs/openssl-3.0* is unmasked
 =dev-libs/gost-engine-3.0*
-
-# Ionen Wolkens <ionen@gentoo.org> (2021-09-03)
-# Known to break plasma, and several other applications on EGLStream
-# wayland, and egl-wayland-1.1.7-r1 is still usable with newer drivers.
-# While it does not prevent using wlroots-based compositors with GBM,
-# it's needed to use some features with it (unmask if wanted).
-# https://github.com/NVIDIA/egl-wayland/issues/40
-# https://github.com/NVIDIA/egl-wayland/issues/41
->=gui-libs/egl-wayland-1.1.8
 
 # Bernard Cafarelli <voyageur@gentoo.org> (2021-08-26)
 # Preparing for final 5.0.0 release
