@@ -19,9 +19,15 @@ DEPEND="test? ( dev-qt/qttest:5 )"
 BDEPEND="${PYTHON_DEPS}
 	$(python_gen_any_dep 'dev-python/lxml[${PYTHON_USEDEP}]')
 	dev-qt/qtcore:5
+	>=dev-util/cmake-3.21
 	>=kde-frameworks/extra-cmake-modules-${PVCUT}:5
 	test? ( app-misc/fdupes )
 "
+
+PATCHES=(
+	"${FILESDIR}"/${P}-improv-install-of-light-fallback-icons.patch
+	"${FILESDIR}"/${P}-fix-icon_files-list.patch
+)
 
 python_check_deps() {
 	has_version "dev-python/lxml[${PYTHON_USEDEP}]"
