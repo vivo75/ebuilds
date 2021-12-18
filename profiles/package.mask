@@ -33,6 +33,26 @@
 
 #--- END OF EXAMPLES ---
 
+# Mart Raudsepp <leio@gentoo.org> (2021-12-18)
+# GNOME 42 mask
+>=gui-libs/libhandy-1.5.0
+
+# Michał Górny <mgorny@gentoo.org> (2021-12-18)
+# EOL kernel with known vulnerabilities.  Please move to one of the LTS
+# branches.  Bug #829491.
+=sys-kernel/gentoo-kernel-5.14*
+=sys-kernel/gentoo-kernel-bin-5.14*
+=sys-kernel/vanilla-kernel-5.14*
+=virtual/dist-kernel-5.14*
+
+# Volkmar W. Pogatzki <gentoo@pogatzki.net> (2021-12-18)
+# Package without consumers. Bug #829517 Bug_#614480.  Removal in 30 days.
+dev-java/libreadline-java
+
+# Volkmar W. Pogatzki <gentoo@pogatzki.net> (2021-12-18)
+# Package without consumers. Bug_#736880. Removal in 30 days.
+dev-java/jrrd
+
 # Michał Górny <mgorny@gentoo.org> (2021-12-17)
 # Annoying package with deps pinned to old versions of packages.
 # All revdeps were eliminated.
@@ -73,6 +93,12 @@ net-fs/docker-volume-netshare
 # Removal on 2022-01-12.  Bug #824830.
 media-gfx/apngasm
 
+# Volkmar W. Pogatzki <gentoo@pogatzki.net> (2021-12-13)
+# Blocks removal of dev-java/log4j:0 bug #828657.
+# Java packages with no active consumer. Removal in 30 days.
+dev-java/slf4j-log4j12
+dev-java/jibx
+
 # Andreas K. Hüttel <dilfridge@gentoo.org> (2021-12-13)
 # Outdated, all versions in core Perl are newer. Removal in 30 days.
 perl-core/IO-Zlib
@@ -88,6 +114,10 @@ perl-core/version
 # log4j-2.15.0 depends on masked >=virtual/{jdk,jre}-11
 >=dev-java/log4j-api-java9-2.15.0
 >=dev-java/log4j-api-2.15.0
+
+# Volkmar W. Pogatzki <gentoo@pogatzki.net> (2021-12-11)
+# Package without consumers. Bug #732792.  Removal in 30 days.
+app-arch/fastjar
 
 # Andrew Ammerlaan <andrewammerlaan@gentoo.org> (2021-12-10)
 # As of MultiMC version 0.6.14 source built versions of MultiMC are no longer
@@ -271,13 +301,6 @@ dev-ruby/aws-s3
 # Removal in 30 days. Bug #826470
 dev-util/yuicompressor
 
-# Lars Wendler <polynomial-c@gentoo.org> (2021-11-24)
-# No real development since Q1 2020. Last release from 2016.
-# Users should switch over to media-sound/strawberry which is an actively
-# developed fork.
-# Masked for removal in 30 days.
-media-sound/clementine
-
 # Hans de Graaff <graaff@gentoo.org> (2021-11-23)
 # Obsolete slot, last release in 2017, uses EAPI 5.
 # Use one of the newer slots.
@@ -411,14 +434,6 @@ x11-drivers/nvidia-drivers:0/vulkan
 media-libs/libpulse
 media-sound/pulseaudio-daemon
 >=media-sound/pulseaudio-15.0-r100
-
-# Michał Górny <mgorny@gentoo.org> (2021-08-28)
-# EOL kernel with known vulnerabilities.  Please move to 5.14 or one
-# of the LTS branches.  Bug #814464.
-=sys-kernel/gentoo-kernel-5.13*
-=sys-kernel/gentoo-kernel-bin-5.13*
-=sys-kernel/vanilla-kernel-5.13*
-=virtual/dist-kernel-5.13*
 
 # Mart Raudsepp <leio@gentoo.org> (2021-09-23)
 # Incompatible with c++17 abseil-cpp, no in-tree consumers yet
