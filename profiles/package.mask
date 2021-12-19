@@ -33,6 +33,11 @@
 
 #--- END OF EXAMPLES ---
 
+# Zac Medico <zmedico@gentoo.org> (2021-12-18)
+# Fails to compile and has no reverse dependencies.
+# Removal in 30 days. Bug #800141
+dev-go/go-text
+
 # Mart Raudsepp <leio@gentoo.org> (2021-12-18)
 # GNOME 42 mask
 >=gui-libs/libhandy-1.5.0
@@ -378,10 +383,6 @@ dev-ruby/rack-ssl
 # to python 3.9 and 3.10. No upstream activity for 7 years.
 # Removal on 2021-12-19.  Bug #825038.
 app-mobilephone/adb-sync
-
-# Volkmar W. Pogatzki <gentoo@pogatzki.net> (2021-11-18)
-# Library without consumers, Removal in 30 days.
-dev-java/piccolo2d
 
 # Mike Pagano <mpagano@gentoo.org> (2021-11-18)
 # Bug introduced in this version that can
