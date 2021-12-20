@@ -1,8 +1,8 @@
 <app-crypt/cfssl-9999 amd64
-<app-emulation/containerd-9999 amd64
+<app-containers/containerd-9999 amd64
 <app-emulation/cri-tools-9999 amd64
 <app-emulation/docker-credential-helpers-9999 amd64
-<app-emulation/docker-proxy-9999 amd64
+<app-containers/docker-proxy-9999 amd64
 <app-emulation/docker-registry-9999 amd64
 <dev-db/etcd-9999 amd64
 <dev-python/docker-py-9999 amd64

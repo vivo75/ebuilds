@@ -1,11 +1,9 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-
-CONTAINERD_COMMIT=5b46e404f6b9f661a205e28d59c982d3634148f8
-EGO_PN="github.com/containerd/${PN}"
-inherit golang-vcs-snapshot
+GIT_REVISION=8686ededfc90076914c5238eb96c883ea093a8ba
+inherit go-module systemd
 
 DESCRIPTION="A daemon to control runC"
 HOMEPAGE="https://containerd.io/"
@@ -13,7 +11,7 @@ SRC_URI="https://github.com/containerd/containerd/archive/v${PV}.tar.gz -> ${P}.
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="amd64 ~arm arm64 ppc64 ~x86"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
 IUSE="apparmor btrfs device-mapper +cri hardened +seccomp selinux test"
 
 DEPEND="
@@ -24,27 +22,26 @@ DEPEND="
 # recommended version of runc is found in script/setup/runc-version
 RDEPEND="
 	${DEPEND}
-	~app-emulation/runc-1.0.2
+	~app-containers/runc-1.0.2
 "
 
 BDEPEND="
 	dev-go/go-md2man
 	virtual/pkgconfig
-	test? ( ${RDEPEND} )
 "
 
 # tests require root or docker
 # upstream does not recommend stripping binary
 RESTRICT+=" strip test"
 
-S="${WORKDIR}/${P}/src/${EGO_PN}"
-
 src_prepare() {
 	default
-	sed -i -e "s/git describe --match.*$/echo ${PV})/"\
-		-e "s/git rev-parse HEAD.*$/echo ${CONTAINERD_COMMIT})/"\
+	sed -i \
 		-e "s/-s -w//" \
 		Makefile || die
+	sed -i \
+		-e "s:/usr/local:/usr:" \
+		containerd.service || die
 }
 
 src_compile() {
@@ -60,25 +57,28 @@ src_compile() {
 	myemakeargs=(
 		BUILDTAGS="${options[*]}"
 		LDFLAGS="$(usex hardened '-extldflags -fno-PIC' '')"
+		REVISION="${GIT_REVISION}"
+		VERSION=v${PV}
 	)
 
-	export GOPATH="${WORKDIR}/${P}" # ${PWD}/vendor
-	export GOFLAGS="-v -x -mod=vendor"
 	# race condition in man target https://bugs.gentoo.org/765100
+	# we need to explicitly specify GOFLAGS for "go run" to use vendor source
 	emake "${myemakeargs[@]}" man -j1 #nowarn
 	emake "${myemakeargs[@]}" all
+
 }
 
 src_install() {
 	dobin bin/*
 	doman man/*
 	newinitd "${FILESDIR}"/${PN}.initd "${PN}"
+	systemd_dounit containerd.service
 	keepdir /var/lib/containerd
 
 	# we already installed manpages, remove markdown source
 	# before installing docs directory
 	rm -r docs/man || die
 
-	local DOCS=( README.md PLUGINS.md docs/. )
+	local DOCS=( ADOPTERS.md README.md RELEASES.md ROADMAP.md SCOPE.md docs/. )
 	einstalldocs
 }
