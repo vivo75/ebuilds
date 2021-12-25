@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/jthornber/thin-provisioning-tools"
 
 if [[ ${PV} != *9999 ]]; then
 	SRC_URI="https://github.com/jthornber/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~mips ppc ~ppc64 ~riscv ~s390 sparc x86 ~amd64-linux ~x86-linux"
+	KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~mips ppc ~ppc64 ~riscv ~s390 sparc x86 ~amd64-linux ~x86-linux"
 else
 	inherit git-r3
 	EGIT_REPO_URI='https://github.com/jthornber/thin-provisioning-tools.git'
@@ -40,6 +40,7 @@ DEPEND="${RDEPEND}
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-0.7.0-build-fixes.patch
+	"${FILESDIR}"/0.9.0-remove-boost_iostreams.patch
 )
 
 src_prepare() {
@@ -59,15 +60,14 @@ src_configure() {
 }
 
 src_compile() {
-	MAKEOPTS+=" V="
-	default
+	emake V=
 }
 
 src_test() {
-	emake unit-test
+	emake V= unit-test
 }
 
 src_install() {
-	emake DESTDIR="${D}" DATADIR="${ED}/usr/share" install
+	emake V= DESTDIR="${D}" DATADIR="${ED}/usr/share" install
 	dodoc README.md TODO.org
 }

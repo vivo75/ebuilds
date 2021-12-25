@@ -34,7 +34,7 @@ S="${WORKDIR}/${PARCH}"
 
 LICENSE="BSD GPL-2"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~x64-cygwin ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
+KEYWORDS="~alpha ~amd64 arm arm64 ~hppa ~ia64 ~m68k ~mips ppc ppc64 ~riscv ~s390 ~sparc ~x86 ~x64-cygwin ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
 # Probably want to drop ssl defaulting to on in a future version.
 IUSE="abi_mips_n32 audit debug hpn kerberos kernel_linux ldns libedit livecd pam +pie +scp sctp security-key selinux +ssl static test X X509 xmss"
 
@@ -318,34 +318,19 @@ src_configure() {
 }
 
 src_test() {
-	local t skipped=() failed=() passed=()
-	local tests=( interop-tests compat-tests )
-
+	local tests=( compat-tests )
 	local shell=$(egetshell "${UID}")
 	if [[ ${shell} == */nologin ]] || [[ ${shell} == */false ]] ; then
-		elog "Running the full OpenSSH testsuite requires a usable shell for the 'portage'"
-		elog "user, so we will run a subset only."
-		skipped+=( tests )
+		ewarn "Running the full OpenSSH testsuite requires a usable shell for the 'portage'"
+		ewarn "user, so we will run a subset only."
+		tests+=( interop-tests )
 	else
 		tests+=( tests )
 	fi
 
-	# It will also attempt to write to the homedir .ssh.
-	local sshhome=${T}/homedir
-	mkdir -p "${sshhome}"/.ssh
-	for t in "${tests[@]}" ; do
-		# Some tests read from stdin ...
-		HOMEDIR="${sshhome}" HOME="${sshhome}" TMPDIR="${T}" \
-			SUDO="" SSH_SK_PROVIDER="" \
-			TEST_SSH_UNSAFE_PERMISSIONS=1 \
-			emake -k -j1 ${t} </dev/null \
-				&& passed+=( "${t}" ) \
-				|| failed+=( "${t}" )
-	done
-
-	einfo "Passed tests: ${passed[*]}"
-	[[ ${#skipped[@]} -gt 0 ]] && ewarn "Skipped tests: ${skipped[*]}"
-	[[ ${#failed[@]}  -gt 0 ]] && die "Some tests failed: ${failed[*]}"
+	local -x SUDO= SSH_SK_PROVIDER= TEST_SSH_UNSAFE_PERMISSIONS=1
+	mkdir -p "${HOME}"/.ssh || die
+	emake -j1 "${tests[@]}" </dev/null
 }
 
 # Gentoo tweaks to default config files.
