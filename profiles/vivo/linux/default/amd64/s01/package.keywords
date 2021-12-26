@@ -22,9 +22,9 @@
 <sys-fs/zfs-9999 amd64
 
 <sys-apps/lm-sensors-3.7 amd64
-<app-emulation/lxc-4 amd64
+<app-containers/lxc-4 amd64
 <dev-python/python3-lxc-4 amd64
-<app-emulation/lxd-4 amd64
+<app-containers/lxd-4 amd64
 <dev-db/mariadb-10.5 amd64
 <sys-block/nbd-3.999 amd64
 <sys-apps/iproute2-5.5 amd64

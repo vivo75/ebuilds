@@ -1,4 +1,4 @@
-app-emulation/lxc cgmanager python
+app-containers/lxc cgmanager python
 
 # compile with static use require to abandon snappy support
 # vde and rbd deps require python2
