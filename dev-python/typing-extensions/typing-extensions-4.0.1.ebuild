@@ -21,10 +21,9 @@ LICENSE="PSF-2"
 SLOT="0"
 KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~m68k ~mips ppc ppc64 ~riscv ~s390 sparc x86 ~amd64-linux ~x86-linux ~x64-macos ~x64-solaris"
 
-BDEPEND="
-	>=dev-python/pyproject2setuppy-21[${PYTHON_USEDEP}]"
+BDEPEND=">=dev-python/pyproject2setuppy-22[${PYTHON_USEDEP}]"
 
 python_test() {
-	cd "${S}"/src_py3 || die
+	cd "${S}"/src || die
 	"${EPYTHON}" test_typing_extensions.py -v || die "tests failed under ${EPYTHON}"
 }
