@@ -1,9 +1,9 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=8
+EAPI=7
 
-PYTHON_COMPAT=( python3_{8..10} )
+PYTHON_COMPAT=( python3_{7..9} )
 PYTHON_REQ_USE='sqlite?,threads(+)'
 
 inherit bash-completion-r1 distutils-r1 optfeature verify-sig
@@ -22,17 +22,15 @@ LICENSE+=" Apache-2.0"
 # admin icons, jquery, xregexp.js
 LICENSE+=" MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~riscv ~sparc ~x86 ~x64-macos"
+KEYWORDS="amd64 arm arm64 ~ppc ~ppc64 x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos"
 IUSE="doc sqlite test"
 RESTRICT="!test? ( test )"
 
 RDEPEND="
-	>=dev-python/asgiref-3.4.1[${PYTHON_USEDEP}]
-	>=dev-python/sqlparse-0.2.2[${PYTHON_USEDEP}]
-	$(python_gen_cond_dep '
-		dev-python/backports-zoneinfo[${PYTHON_USEDEP}]
-	' python3_8 pypy3)"
+	dev-python/pytz[${PYTHON_USEDEP}]
+	>=dev-python/sqlparse-0.2.2[${PYTHON_USEDEP}]"
 BDEPEND="
+	doc? ( dev-python/sphinx[${PYTHON_USEDEP}] )
 	test? (
 		$(python_gen_impl_dep sqlite)
 		${RDEPEND}
@@ -44,14 +42,12 @@ BDEPEND="
 		dev-python/selenium[${PYTHON_USEDEP}]
 		dev-python/tblib[${PYTHON_USEDEP}]
 		sys-devel/gettext
-		!!<dev-python/ipython-7.21.0-r1
-		!!=dev-python/ipython-7.22.0-r0
 	)
-	verify-sig? ( >=sec-keys/openpgp-keys-django-20201201 )
+	verify-sig? ( sec-keys/openpgp-keys-django )
 "
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-4.0-bashcomp.patch
+	"${FILESDIR}"/${PN}-2.0.7-bashcomp.patch
 )
 
 distutils_enable_sphinx docs --no-autodoc
@@ -67,13 +63,6 @@ src_unpack() {
 	fi
 
 	default
-}
-
-python_prepare_all() {
-	# Fails because of warnings
-	sed -i 's/test_dumpdata_proxy_with_concrete/_&/' tests/fixtures/tests.py
-
-	distutils-r1_python_prepare_all
 }
 
 python_test() {
