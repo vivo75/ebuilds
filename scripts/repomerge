@@ -42,7 +42,8 @@ def make_known_path(path):
 
 
 # Some categories are special and got copied differently
-__CATEGORIES = ['virtual', 'acct-group', 'acct-user', ]
+# keep in sync with .ini [sources] section
+__CATEGORIES = ['virtual', 'acct-group', 'acct-user', 'sec-keys', ]
 def add_category(cat):
     global __CATEGORIES
     if not cat in __CATEGORIES:
