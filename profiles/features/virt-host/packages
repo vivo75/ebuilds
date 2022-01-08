@@ -1,4 +1,4 @@
-app-containers/lxc
+app-emulation/lxc
 dev-python/python3-lxc
 app-containers/lxd
 app-emulation/qemu

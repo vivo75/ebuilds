@@ -1,10 +1,10 @@
 # Kubernetes & co
 app-crypt/cfssl
-app-containers/containerd
 app-containers/cri-tools
 app-containers/docker-credential-helpers
 app-containers/docker-proxy
 app-containers/docker-registry
+app-emulation/containerd
 dev-db/etcd
 dev-python/docker-py
 dev-python/dockerpty
