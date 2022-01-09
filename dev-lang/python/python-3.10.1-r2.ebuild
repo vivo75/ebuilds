@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="7"
@@ -7,7 +7,7 @@ WANT_LIBTOOL="none"
 inherit autotools check-reqs flag-o-matic multiprocessing pax-utils \
 	python-utils-r1 toolchain-funcs verify-sig
 
-MY_PV=${PV/_alpha/a}
+MY_PV=${PV/_rc/rc}
 MY_P="Python-${MY_PV%_p*}"
 PYVER=$(ver_cut 1-2)
 PATCHSET="python-gentoo-patches-${MY_PV}"
@@ -16,7 +16,6 @@ DESCRIPTION="An interpreted, interactive, object-oriented programming language"
 HOMEPAGE="https://www.python.org/"
 SRC_URI="https://www.python.org/ftp/python/${PV%%_*}/${MY_P}.tar.xz
 	https://dev.gentoo.org/~mgorny/dist/python/${PATCHSET}.tar.xz
-	https://dev.gentoo.org/~sam/distfiles/${CATEGORY}/${PN}/${PATCHSET}.tar.xz
 	verify-sig? (
 		https://www.python.org/ftp/python/${PV%%_*}/${MY_P}.tar.xz.asc
 	)"
@@ -35,6 +34,7 @@ RESTRICT="!test? ( test )"
 
 RDEPEND="app-arch/bzip2:=
 	app-arch/xz-utils:=
+	dev-lang/python-exec[python_targets_python3_10(-)]
 	dev-libs/libffi:=
 	sys-apps/util-linux:=
 	>=sys-libs/zlib-1.1.3:=
@@ -221,7 +221,7 @@ src_compile() {
 		local -x COLUMNS=80
 		local -x PYTHONDONTWRITEBYTECODE=
 
-		addpredict /usr/lib/python3.11/site-packages
+		addpredict /usr/lib/python3.10/site-packages
 	fi
 
 	emake CPPFLAGS= CFLAGS= LDFLAGS=
@@ -248,13 +248,10 @@ src_test() {
 		mv "${S}"/Lib/test/test_${test}.py "${T}"
 	done
 
-	# Expects to find skipped tests and fails
-	mv "${S}"/Lib/test/test_tools/test_freeze.py "${T}" || die
-
 	# bug 660358
 	local -x COLUMNS=80
 	local -x PYTHONDONTWRITEBYTECODE=
-	addpredict /usr/lib/python3.11/site-packages
+	addpredict /usr/lib/python3.10/site-packages
 
 	local jobs=$(makeopts_jobs "${MAKEOPTS}" "$(get_nproc)")
 
@@ -265,8 +262,6 @@ src_test() {
 	for test in ${skipped_tests}; do
 		mv "${T}/test_${test}.py" "${S}"/Lib/test
 	done
-
-	mv "${T}"/test_freeze.py "${S}"/Lib/test/test_tools/test_freeze.py || die
 
 	elog "The following tests have been skipped:"
 	for test in ${skipped_tests}; do
@@ -315,7 +310,7 @@ src_install() {
 		pax-mark m "${ED}/usr/bin/${abiver}"
 	fi
 
-	use sqlite || rm -r "${libdir}/"sqlite3 || die
+	use sqlite || rm -r "${libdir}/"{sqlite3,test/test_sqlite*} || die
 	use tk || rm -r "${ED}/usr/bin/idle${PYVER}" "${libdir}/"{idlelib,tkinter,test/test_tk*} || die
 
 	dodoc Misc/{ACKS,HISTORY,NEWS}
