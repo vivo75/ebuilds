@@ -1,5 +1,5 @@
 <app-crypt/cfssl-9999 amd64
-<app-emulation/containerd-9999 amd64
+<app-containers/containerd-9999 amd64
 <app-containers/cri-tools-9999 amd64
 <app-containers/docker-credential-helpers-9999 amd64
 <app-containers/docker-proxy-9999 amd64
