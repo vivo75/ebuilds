@@ -34,6 +34,14 @@
 #--- END OF EXAMPLES ---
 
 # Jakov Smolić <jsmolic@gentoo.org> (2022-01-12)
+# Outdated, using EAPI 5, multiple open bugs, compile
+# and test failures. No other major distro is packaging this.
+# Removal on 2022-02-11. Bug #828706. Bug #828701.
+sci-biology/repeatmasker
+sci-biology/repeatmasker-libraries
+sci-biology/rmblast
+
+# Jakov Smolić <jsmolic@gentoo.org> (2022-01-12)
 # Upstream gone, uses EAPI 5, no revdeps, no other
 # distro is packaging this.
 # Removal on 2022-02-11. Bug #828708.
@@ -62,11 +70,6 @@ net-analyzer/jmx2munin
 # Please use version 2.1.53
 # Removal on 2021-02-10 bug #762958
 =app-misc/mime-types-9
-
-# Marek Szuba <marecki@gentoo.org> (2022-01-10)
-# New versions of easyeffects require libadwaita,
-# which is currently not in the tree (but is expected soon)
->=media-sound/easyeffects-6.2.0
 
 # Andreas Sturmlechner <asturm@gentoo.org> (2022-01-09)
 # No more revdeps after sys-cluster/mpe2 last-rites was initiated.
@@ -274,11 +277,11 @@ sci-biology/gibbs
 # Blocks (CVE-2018-11797, CVE-2021-{27807,27906,31811,31812})
 dev-tex/pdfannotextractor
 
-# Stephan Hartmann <sultan@gentoo.org> (2021-11-22)
+# Stephan Hartmann <sultan@gentoo.org> (2022-01-12)
 # Dev channel releases are only for people who
 # are developers or want more experimental features
 # and accept a more unstable release.
->=www-client/chromium-98
+>=www-client/chromium-99
 
 # Mike Pagano <mpagano@gentoo.org> (2021-11-18)
 # Bug introduced in this version that can
