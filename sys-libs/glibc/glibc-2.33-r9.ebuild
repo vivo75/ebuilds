@@ -23,7 +23,7 @@ SLOT="2.2"
 EMULTILIB_PKG="true"
 
 # Gentoo patchset (ignored for live ebuilds)
-PATCH_VER=6
+PATCH_VER=7
 PATCH_DEV=dilfridge
 
 if [[ ${PV} == 9999* ]]; then
@@ -1532,7 +1532,7 @@ glibc_sanity_check() {
 
 	# first let's find the actual dynamic linker here
 	# symlinks may point to the wrong abi
-	local newldso=$(find . -maxdepth 1 -name 'ld*so.?' -type f -print -quit)
+	local newldso=$(find . -maxdepth 1 -name 'ld-*so' -type f -print -quit)
 
 	einfo Last-minute run tests with ${newldso} in /$(get_libdir) ...
 
