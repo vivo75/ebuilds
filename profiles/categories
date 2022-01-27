@@ -7,10 +7,12 @@ app-arch
 app-backup
 app-benchmarks
 app-cdr
+app-containers
 app-crypt
 app-dicts
 app-doc
 app-editors
+app-emulation
 app-eselect
 app-forensics
 app-i18n
