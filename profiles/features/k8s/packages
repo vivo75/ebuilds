@@ -2,14 +2,7 @@
 app-crypt/cfssl
 app-containers/containerd
 app-containers/cri-tools
-app-containers/docker-credential-helpers
-app-containers/docker-proxy
-app-containers/docker-registry
 dev-db/etcd
-dev-python/docker-py
-dev-python/dockerpty
-dev-util/docker-distribution-pruner
-dev-util/docker-ls
 net-misc/cni-plugins
 sys-apps/most
 sys-cluster/kubeadm
