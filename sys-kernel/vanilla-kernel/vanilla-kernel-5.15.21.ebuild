@@ -7,14 +7,13 @@ inherit kernel-build toolchain-funcs verify-sig
 
 MY_P=linux-${PV}
 # https://koji.fedoraproject.org/koji/packageinfo?packageID=8
-CONFIG_VER=5.10.12
-CONFIG_HASH=836165dd2dff34e4f2c47ca8f9c803002c1e6530
+CONFIG_VER=5.15.14
+CONFIG_HASH=8cc461d9cfb256bb831225bb38e29fa944bd890f
 GENTOO_CONFIG_VER=5.15.5
 
 DESCRIPTION="Linux kernel built from vanilla upstream sources"
 HOMEPAGE="https://www.kernel.org/"
-SRC_URI+="
-	https://cdn.kernel.org/pub/linux/kernel/v$(ver_cut 1).x/${MY_P}.tar.xz
+SRC_URI+=" https://cdn.kernel.org/pub/linux/kernel/v$(ver_cut 1).x/${MY_P}.tar.xz
 	https://github.com/mgorny/gentoo-kernel-config/archive/v${GENTOO_CONFIG_VER}.tar.gz
 		-> gentoo-kernel-config-${GENTOO_CONFIG_VER}.tar.gz
 	verify-sig? (
@@ -39,7 +38,7 @@ SRC_URI+="
 S=${WORKDIR}/${MY_P}
 
 LICENSE="GPL-2"
-KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~x86"
+KEYWORDS="~arm64"
 IUSE="debug hardened"
 REQUIRED_USE="arm? ( savedconfig )"
 
