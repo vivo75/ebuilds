@@ -26,7 +26,7 @@ EBUILDS_REPO_PATH = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '
     #'games-roguelike', 'games-rpg', 'games-simulation', 'games-sports', 'games-util', 'gnustep-apps', 'gnustep-base',
     #'gnustep-libs', 'gui-apps', 'gui-libs', 'gui-wm', 'mate-base', 'mate-extra', 'media-radio', 'media-tv',
     #'net-news', 'net-nntp', 'net-p2p', 'net-voip', 'ros-meta', 'sci-astronomy', 'sci-biology', 'sci-calculators',
-    #'sci-chemistry', 'sci-electronics', 'sci-misc', 'sci-physics', 'sec-policy', 'sys-freebsd', 'xfce-base',
+    #'sci-chemistry', 'sci-electronics', 'sci-physics', 'sec-policy', 'sys-freebsd', 'xfce-base',
     #'xfce-extra',
     #)
 __CACHE_MKDIRS = []
