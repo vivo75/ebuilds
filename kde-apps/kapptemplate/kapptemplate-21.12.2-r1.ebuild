@@ -1,11 +1,11 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 ECM_HANDBOOK="forceoptional"
 ECM_TEST="forceoptional"
-KFMIN=5.84.0
+KFMIN=5.88.0
 QTMIN=5.15.2
 inherit ecm kde.org
 
@@ -14,7 +14,7 @@ HOMEPAGE="https://apps.kde.org/kapptemplate/"
 
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="5"
-KEYWORDS="amd64 arm64 ~ppc64 ~riscv x86"
+KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
 IUSE=""
 
 DEPEND="
@@ -30,3 +30,6 @@ DEPEND="
 	>=kde-frameworks/kwidgetsaddons-${KFMIN}:5
 "
 RDEPEND="${DEPEND}"
+
+# https://mail.kde.org/pipermail/distributions/2022-February/001124.html
+PATCHES=( "${FILESDIR}/${PN}-21.08.3-fix-ProvidersUrl.patch" )
