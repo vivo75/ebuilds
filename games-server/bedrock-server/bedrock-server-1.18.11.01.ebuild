@@ -1,7 +1,7 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 DESCRIPTION="The official bedrock (non-java) based server for the sandbox video game"
 HOMEPAGE="https://www.minecraft.net/"
@@ -10,14 +10,13 @@ S="${WORKDIR}"
 
 LICENSE="Mojang"
 SLOT="0"
-KEYWORDS="-* amd64"
+KEYWORDS="-* ~amd64"
 
 RDEPEND="
 	acct-group/bedrock
 	acct-user/bedrock
 	app-misc/dtach
 	dev-libs/openssl:0/1.1
-	net-misc/curl[ssl]
 	sys-libs/zlib
 "
 
@@ -41,7 +40,7 @@ src_install() {
 	doexe bedrock_server
 
 	insinto /opt/bedrock-server
-	doins {permissions,whitelist}.json server.properties
+	doins {allowlist,permissions}.json server.properties
 	doins -r {behavior,resource}_packs definitions structures
 
 	dodir /opt/bin

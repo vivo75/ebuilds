@@ -1,13 +1,14 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit readme.gentoo-r1
 
 DESCRIPTION="This is the command-line version of the Steam client for dedicated servers"
 HOMEPAGE="https://developer.valvesoftware.com/wiki/SteamCMD"
 SRC_URI="https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz -> ${P}.tar.gz"
+S="${WORKDIR}"
 
 LICENSE="LGPL-2.1+ Steam"
 SLOT="0"
@@ -20,8 +21,6 @@ RDEPEND="
 "
 
 RESTRICT="bindist mirror"
-
-S="${WORKDIR}"
 
 QA_PREBUILT="
 	opt/steamcmd/linux32/libstdc++.so.6
