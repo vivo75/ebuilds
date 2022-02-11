@@ -3,7 +3,7 @@
 
 EAPI=8
 
-KDE_ORG_COMMIT=b092b19a18d14e70beae6afebc6bde5d83e9eed7
+KDE_ORG_COMMIT=d8d6b14b9907adbc6ce307d52be34aaa761a58fa
 inherit qt5-build
 
 DESCRIPTION="Set of next generation Qt Quick controls for the Qt5 framework"
