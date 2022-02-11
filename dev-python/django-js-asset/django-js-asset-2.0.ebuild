@@ -1,8 +1,9 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
+DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{8..10} )
 inherit distutils-r1
 
@@ -19,15 +20,11 @@ KEYWORDS="~amd64"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-RDEPEND=">=dev-python/django-1.17[${PYTHON_USEDEP}]"
+RDEPEND=">=dev-python/django-2.2[${PYTHON_USEDEP}]"
 BDEPEND="test? ( ${RDEPEND} )"
-
-PATCHES=(
-	"${FILESDIR}/${P}-fix-django3.patch"
-)
 
 python_test() {
 	cd tests || die
 	local -x DJANGO_SETTINGS_MODULE=testapp.settings
-	django-admin test -v 2 || die
+	"${EPYTHON}" manage.py test -v 2 || die "Tests failed with ${EPYTHON}"
 }
