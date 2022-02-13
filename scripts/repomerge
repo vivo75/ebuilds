@@ -49,6 +49,7 @@ __CATEGORIES = [
                'app-containers',
                'app-emulation',
                'dev-qt',
+               'kde-apps',
                'sec-keys',
                'virtual',
                ]
