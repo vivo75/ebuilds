@@ -37,7 +37,6 @@ app-portage/gentoolkit
 app-portage/gentoopm
 app-portage/layman
 app-portage/repoman
-app-shells/bash-completion
 app-text/catdoc
 app-text/flpsed
 app-text/master-pdf-editor
