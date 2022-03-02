@@ -33,6 +33,16 @@
 
 #--- END OF EXAMPLES ---
 
+# Andreas Sturmlechner <asturm@gentoo.org> (2022-03-01)
+# Dead upstream, blocks cleanup of dependencies.
+# Bug #773175. Removal on 2022-03-31.
+sci-chemistry/votca-ctp
+
+# Andreas Sturmlechner <asturm@gentoo.org> (2022-03-01)
+# No revdeps since 2020-11-28, still EAPI-6 and uses cmake-utils.eclass.
+# Bug #834317. Removal on 2022-03-31.
+dev-libs/injeqt
+
 # Sam James <sam@gentoo.org> (2022-02-27)
 # Fails to build with modern GCC, stuck on cmake-utils.eclass too.
 # bug #723194, bug #834301. Removal on 2022-03-27.
@@ -466,6 +476,8 @@ app-office/texmacs
 
 # Andreas Sturmlechner <asturm@gentoo.org> (2018-10-07)
 # Masked for more testing especially of reverse-deps.
+# ogre 1.11/1.12 breakage: bug #834468
+# ogre 2.x breakage: bug #740424
 >=dev-games/ogre-1.11.2
 
 # Andreas K. Hüttel <dilfridge@gentoo.org> (2018-09-11)

@@ -6,20 +6,16 @@ EAPI=8
 inherit cmake
 
 # Check https://proj.org/download.html for latest data tarball
-PROJ_DATA="proj-data-1.8.tar.gz"
+PROJ_DATA="proj-data-1.9.tar.gz"
 DESCRIPTION="PROJ coordinate transformation software"
 HOMEPAGE="https://proj.org/"
 SRC_URI="https://download.osgeo.org/proj/${P}.tar.gz
 	https://download.osgeo.org/proj/${PROJ_DATA}"
 
 LICENSE="MIT"
-# SONAME in 8.1.1 is actually 23 (in 8.1.0, was 22)
-# ... and now 8.2.0 is back to 22 again.
-# Please increment to 25 on the next SONAME bump, even if it's not
-# going to correspond...
-# It's far less confusing to just increment it again here (so N+1)
-SLOT="0/24"
-KEYWORDS="amd64 ~arm ~arm64 ~ia64 ~ppc ppc64 ~riscv ~s390 ~sparc x86 ~amd64-linux ~x86-linux ~ppc-macos"
+# Changes on every major release
+SLOT="0/$(ver_cut 1)"
+KEYWORDS="~amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos"
 IUSE="curl test +tiff"
 
 RESTRICT="!test? ( test )"
@@ -51,6 +47,16 @@ src_configure() {
 	use test && mycmakeargs+=( -DUSE_EXTERNAL_GTEST=ON )
 
 	cmake_src_configure
+}
+
+src_test() {
+	local myctestargs=(
+		# proj_test_cpp_api: https://lists.osgeo.org/pipermail/proj/2019-September/008836.html
+		# testprojinfo: Also related to map data?
+		-E "(proj_test_cpp_api|testprojinfo)"
+	)
+
+	cmake_src_test
 }
 
 src_install() {
