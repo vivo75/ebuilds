@@ -1,7 +1,8 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=8
+# please keep this ebuild at EAPI 7 -- sys-apps/portage dep
+EAPI=7
 
 DISTUTILS_USE_PEP517=flit
 PYTHON_COMPAT=( python3_{8..10} pypy3 )
@@ -34,4 +35,11 @@ src_configure() {
 		version = "${PV}"
 		description = "Context managers by jaraco"
 	EOF
+}
+
+python_install() {
+	distutils-r1_python_install
+	# rename to workaround a bug in pkg_resources
+	# https://bugs.gentoo.org/834522
+	mv "${D}$(python_get_sitedir)"/jaraco{_,.}context-${PV}.dist-info || die
 }
