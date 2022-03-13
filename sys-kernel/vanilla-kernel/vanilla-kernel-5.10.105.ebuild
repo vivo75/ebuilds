@@ -7,13 +7,14 @@ inherit kernel-build toolchain-funcs verify-sig
 
 MY_P=linux-${PV}
 # https://koji.fedoraproject.org/koji/packageinfo?packageID=8
-CONFIG_VER=5.16.8
-CONFIG_HASH=f38101bdd0124e3ae7c3116b66f7fd1cd76e5601
+CONFIG_VER=5.10.12
+CONFIG_HASH=836165dd2dff34e4f2c47ca8f9c803002c1e6530
 GENTOO_CONFIG_VER=5.15.5
 
 DESCRIPTION="Linux kernel built from vanilla upstream sources"
 HOMEPAGE="https://www.kernel.org/"
-SRC_URI+=" https://cdn.kernel.org/pub/linux/kernel/v$(ver_cut 1).x/${MY_P}.tar.xz
+SRC_URI+="
+	https://cdn.kernel.org/pub/linux/kernel/v$(ver_cut 1).x/${MY_P}.tar.xz
 	https://github.com/mgorny/gentoo-kernel-config/archive/v${GENTOO_CONFIG_VER}.tar.gz
 		-> gentoo-kernel-config-${GENTOO_CONFIG_VER}.tar.gz
 	verify-sig? (
@@ -34,7 +35,8 @@ SRC_URI+=" https://cdn.kernel.org/pub/linux/kernel/v$(ver_cut 1).x/${MY_P}.tar.x
 	x86? (
 		https://src.fedoraproject.org/rpms/kernel/raw/${CONFIG_HASH}/f/kernel-i686-fedora.config
 			-> kernel-i686-fedora.config.${CONFIG_VER}
-	)"
+	)
+"
 S=${WORKDIR}/${MY_P}
 
 LICENSE="GPL-2"
@@ -44,9 +46,11 @@ REQUIRED_USE="arm? ( savedconfig )"
 
 BDEPEND="
 	debug? ( dev-util/pahole )
-	verify-sig? ( sec-keys/openpgp-keys-kernel )"
+	verify-sig? ( sec-keys/openpgp-keys-kernel )
+"
 PDEPEND="
-	>=virtual/dist-kernel-${PV}"
+	>=virtual/dist-kernel-${PV}
+"
 
 VERIFY_SIG_OPENPGP_KEY_PATH=${BROOT}/usr/share/openpgp-keys/kernel.org.asc
 
