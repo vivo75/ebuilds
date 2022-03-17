@@ -18,7 +18,7 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~arm arm64 ~hppa ~m68k ~mips ppc ~ppc64 ~riscv sparc x86"
+KEYWORDS="~amd64"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
@@ -26,6 +26,7 @@ RDEPEND="
 	>=dev-python/appdirs-1.4.4-r2[${PYTHON_USEDEP}]
 	>=dev-python/jaraco-text-3.7.0-r1[${PYTHON_USEDEP}]
 	>=dev-python/more-itertools-8.12.0-r1[${PYTHON_USEDEP}]
+	dev-python/nspektr[${PYTHON_USEDEP}]
 	>=dev-python/ordered-set-4.0.2-r1[${PYTHON_USEDEP}]
 	>=dev-python/packaging-21.3-r2[${PYTHON_USEDEP}]
 	$(python_gen_cond_dep '
@@ -92,6 +93,7 @@ python_test() {
 
 	local EPYTEST_DESELECT=(
 		# network
+		# TODO: see if PRE_BUILT_SETUPTOOLS_* helps
 		setuptools/tests/integration/test_pip_install_sdist.py::test_install_sdist
 		setuptools/tests/test_distutils_adoption.py
 		setuptools/tests/test_virtualenv.py::test_clean_env_install
