@@ -44,7 +44,6 @@ dev-java/invokebinder
 dev-java/java-apicheck
 dev-java/jboss-marshalling-river
 dev-java/jboss-marshalling-serial
-dev-java/jrobin
 
 # David Seifert <soap@gentoo.org> (2022-03-21)
 # EAPI 5, last release 15 years ago, QA permission issues, no other
@@ -377,12 +376,6 @@ dev-python/socketpool
 <sci-electronics/kicad-templates-6.0.2
 <app-doc/kicad-doc-6.0.2
 
-# Brian Evans <grknight@gentoo.org> (2022-02-17)
-# Ancient version which likely does not work with modern software
-# New upstream exists but php team does not want to maintain
-# No revdeps. Removal in 30 days. Bug 833537
-dev-php/php-codebrowser
-
 # Volkmar W. Pogatzki <gentoo@pogatzki.net> (2022-02-15)
 # Java libraries without consumers. Removal in 30 days.
 dev-java/upnplib
@@ -454,11 +447,6 @@ app-misc/emelfm2
 # Alpha version
 =app-editors/ghex-4.0.0_alpha
 
-# Mart Raudsepp <leio@gentoo.org> (2021-12-18)
-# GNOME 42 mask, bug #835448
->=gui-libs/gtksourceview-5.3
->=app-editors/gnome-text-editor-42_alpha
-
 # Michał Górny <mgorny@gentoo.org> (2021-12-18)
 # EOL kernel with known vulnerabilities.  Please move to one of the LTS
 # branches.  Bug #829491.
@@ -508,6 +496,7 @@ dev-tex/pdfannotextractor
 # Needs testing to ensure valac-0.54 works for existing packages
 >=dev-libs/vala-common-0.53
 dev-lang/vala:0.54
+dev-lang/vala:0.56
 
 # Sam James <sam@gentoo.org> (2021-11-03)
 # Known issues with YAMA (kernel.yama.ptrace_scope=1) which is on by default
