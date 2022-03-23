@@ -15,7 +15,7 @@ if [[ "${PV}" != *9999 ]] ; then
 	else
 		#SRC_URI="https://github.com/keepassxreboot/keepassxc/archive/${PV}.tar.gz -> ${P}.tar.gz"
 		SRC_URI="https://github.com/keepassxreboot/keepassxc/releases/download/${PV}/${P}-src.tar.xz"
-		KEYWORDS="~amd64 ~arm64 ~ppc64 ~x86"
+		KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
 	fi
 else
 	inherit git-r3
@@ -30,6 +30,7 @@ IUSE="autotype browser ccache doc keeshare +network test yubikey"
 RESTRICT="!test? ( test )"
 
 RDEPEND="
+	app-crypt/argon2:=
 	dev-libs/botan:2
 	dev-qt/qtconcurrent:5
 	dev-qt/qtcore:5
@@ -38,11 +39,11 @@ RDEPEND="
 	dev-qt/qtnetwork:5
 	dev-qt/qtsvg:5
 	dev-qt/qtwidgets:5
+	dev-qt/qtx11extras:5
 	media-gfx/qrencode:=
 	sys-libs/readline:0=
 	sys-libs/zlib:=
 	autotype? (
-		dev-qt/qtx11extras:5
 		x11-libs/libX11
 		x11-libs/libXtst
 	)
