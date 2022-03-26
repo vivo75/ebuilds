@@ -68,14 +68,14 @@ COMMON_DEPEND="
 		>=sys-fs/e2fsprogs-1.46.4-r51[${MULTILIB_USEDEP}]
 		sys-libs/e2fsprogs-libs[${MULTILIB_USEDEP}]
 	)
-	>=sys-libs/ldb-2.5.0[ldap(+)?,${MULTILIB_USEDEP}]
-	<sys-libs/ldb-2.6.0[ldap(+)?,${MULTILIB_USEDEP}]
+	>=sys-libs/ldb-2.4.2[ldap(+)?,${MULTILIB_USEDEP}]
+	<sys-libs/ldb-2.5.0[ldap(+)?,${MULTILIB_USEDEP}]
 	sys-libs/libcap[${MULTILIB_USEDEP}]
 	sys-libs/liburing:=[${MULTILIB_USEDEP}]
 	sys-libs/ncurses:0=
 	sys-libs/readline:0=
 	>=sys-libs/talloc-2.3.3[${MULTILIB_USEDEP}]
-	>=sys-libs/tdb-1.4.6[${MULTILIB_USEDEP}]
+	>=sys-libs/tdb-1.4.4[${MULTILIB_USEDEP}]
 	>=sys-libs/tevent-0.11.0[${MULTILIB_USEDEP}]
 	sys-libs/zlib[${MULTILIB_USEDEP}]
 	virtual/libcrypt:=[${MULTILIB_USEDEP}]
@@ -109,7 +109,7 @@ COMMON_DEPEND="
 	)
 	snapper? ( sys-apps/dbus )
 	system-heimdal? ( >=app-crypt/heimdal-1.5[-ssl,${MULTILIB_USEDEP}] )
-	system-mitkrb5? ( >=app-crypt/mit-krb5-1.15.1[${MULTILIB_USEDEP}] )
+	system-mitkrb5? ( >=app-crypt/mit-krb5-1.19[${MULTILIB_USEDEP}] )
 	systemd? ( sys-apps/systemd:0= )
 	zeroconf? ( net-dns/avahi[dbus] )
 "
