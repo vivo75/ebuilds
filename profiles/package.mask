@@ -33,6 +33,38 @@
 
 #--- END OF EXAMPLES ---
 
+# Matt Turner <mattst88@gentoo.org> (2022-03-27)
+# Dead package. No reverse dependencies.
+# Removal on 2022-04-27
+dev-util/fix-la-relink-command
+
+# Matt Turner <mattst88@gentoo.org> (2022-03-27)
+# Dead package. No reverse dependencies since 2017.
+# Removal on 2022-04-27
+dev-libs/gtx
+
+# Matt Turner <mattst88@gentoo.org> (2022-03-27)
+# Dead package. See https://blogs.gnome.org/hughsie/2014/10/30/appdata-tools-is-dead/
+# Bug #680552
+# Removal on 2022-04-27
+dev-util/appdata-tools
+
+# Matt Turner <mattst88@gentoo.org> (2022-03-27)
+# GNOME 2 era packages. No reverse dependencies.
+# Removal on 2022-04-27
+dev-perl/gnome2-canvas
+dev-perl/Gtk2-Ex-PodViewer
+dev-perl/Gtk2-Ex-PrintDialog
+dev-perl/Gtk2-Ex-Simple-List
+dev-perl/Gtk2-ImageView
+
+# Conrad Kostecki <conikost@gentoo.org> (2022-03-27)
+# Long abandoned upstream, multiple bugs open,
+# no other major distro carries this anymore and
+# depends on deprecated jabber-base.
+# Bug #632622, #655566, #716850, removal on 2022-04-27.
+net-im/gg-transport
+
 # David Seifert <soap@gentoo.org> (2022-03-27)
 # Long abandoned upstreams, segfaults, bunch of tests fail,
 # no other major distro carries this anymore.
@@ -294,12 +326,6 @@ dev-libs/device-atlas-api-c
 # if still needed. Removal on 2022-04-07.
 dev-lang/python:3.6
 
-# Conrad Kostecki <conikost@gentoo.org> (2022-03-06)
-# Since prelink has been already last-rited,
-# this package has no more use and can be removed.
-# Removal in 14 days, after 2022-03-22.
-sec-policy/selinux-prelink
-
 # Stephan Hartmann <sultan@gentoo.org> (2022-03-06)
 # Dev channel releases are only for people who
 # are developers or want more experimental features
@@ -325,29 +351,6 @@ sci-chemistry/votca-ctp
 # Bug #834317. Removal on 2022-03-31.
 dev-libs/injeqt
 
-# Sam James <sam@gentoo.org> (2022-02-27)
-# Fails to build with modern GCC, stuck on cmake-utils.eclass too.
-# bug #723194, bug #834301. Removal on 2022-03-27.
-sci-chemistry/mm-align
-
-# David Seifert <soap@gentoo.org> (2022-02-27)
-# Last release 10 years ago, no other distro packages this,
-# stuck on cmake-utils.eclass and QA issues.
-# Bug #711880, #774519, removal on 2022-03-27.
-net-fs/smbtad
-
-# Sam James <sam@gentoo.org> (2022-02-27)
-# EAPI=6 consumer of deprecated cmake-utils.eclass. No reverse
-# dependencies and will soon be unbuildable with new CMake.
-# bug #774495. Dead HOMEPAGE. Removal on 2022-03-27.
-dev-libs/smack
-
-# Andreas K. Hüttel <dilfridge@gentoo.org> (2022-02-27)
-# Outdated, fails to build with glibc-2.34, bug 806755
-# Has been integrated into net-fs/nfs-utils, please use that instead.
-# Removal in 30 days.
-net-libs/libnfsidmap
-
 # Andreas Sturmlechner <asturm@gentoo.org> (2022-02-27)
 # No revdeps since begin of gentoo.git history, outdated and unmaintained.
 # Bug #834307. Removal on 2022-03-29.
@@ -361,19 +364,6 @@ x11-libs/libyui-qt
 # Clang toolchain available to test with
 # Removal on 2022-03-29.  Bug #834306
 sys-libs/tapi
-
-# Michał Górny <mgorny@gentoo.org> (2022-02-26)
-# The original Midori browser has been discontinued, and the new
-# Electron-based "Midori" (sic!) does not seem worth the effort
-# of packaging it.
-# Removal on 2022-03-28.  Bug #834120.
-www-client/midori
-
-# Sam James <sam@gentoo.org> (2022-02-24)
-# Obsolete, ex-dependency of xfsprogs. Fails to build on 32-bit arches.
-# No reverse dependencies. Discontinued upstream. Removal on 2022-03-24.
-# bug #811891
-sys-apps/dmapi
 
 # Anton Fischl <github@fischl-online.de> (2022-02-23)
 # Version 2.5.* is not meant for production according to upstream
@@ -478,13 +468,6 @@ app-misc/emelfm2
 # Masked for testing
 ~sci-libs/vtk-9.1.0
 
-# Conrad Kostecki <conikost@gentoo.org> (2021-12-04)
-# Masking newer versions for both packages,
-# as they cannot be compiled due upstream change.
-# See bug #827651 for more information.
->=dev-libs/intel-compute-runtime-21.47.21710
->=dev-util/intel-graphics-compiler-1.0.9389
-
 # Sam James <sam@gentoo.org> (2021-12-01)
 # OSL 12 is a development release (for now).
 # Doesn't work with LLVM 13 yet; mask to help
@@ -516,12 +499,6 @@ dev-lang/vala:0.56
 # to cause hangs in some situations. Mask for now to avoid duplicate reports.
 # bug #821532, bug #821523 (and bug #821403 but shouldn't be in 3.1+).
 >=sys-apps/sandbox-3.0
-
-# Sam James <sam@gentoo.org> (2021-10-10)
-# Needs upstream build system fixes (currently in progress).
-# Python toggles don't work correctly right now.
-# Masking this development release for now.
-=media-libs/gexiv2-0.13.0
 
 # Ionen Wolkens <ionen@gentoo.org> (2021-10-09)
 # Vulkan beta driver branch aimed at Vulkan developers for testing
