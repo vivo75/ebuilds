@@ -166,7 +166,6 @@ media-video/mplayer-sh
 ~dev-qt/qtwayland-5.15.3
 ~dev-qt/qtwaylandscanner-5.15.3
 ~dev-qt/qtwebchannel-5.15.3
-~dev-qt/qtwebengine-5.15.3_p20220310
 ~dev-qt/qtwebengine-5.15.3_p20220329
 ~dev-qt/qtwebsockets-5.15.3
 ~dev-qt/qtwebview-5.15.3
@@ -351,14 +350,6 @@ sci-chemistry/votca-ctp
 # No revdeps since 2020-11-28, still EAPI-6 and uses cmake-utils.eclass.
 # Bug #834317. Removal on 2022-03-31.
 dev-libs/injeqt
-
-# Andreas Sturmlechner <asturm@gentoo.org> (2022-02-27)
-# No revdeps since begin of gentoo.git history, outdated and unmaintained.
-# Bug #834307. Removal on 2022-03-29.
-x11-libs/libyui
-x11-libs/libyui-gtk
-x11-libs/libyui-ncurses
-x11-libs/libyui-qt
 
 # Anton Fischl <github@fischl-online.de> (2022-02-23)
 # Version 2.5.* is not meant for production according to upstream
