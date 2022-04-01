@@ -18,17 +18,15 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86"
 
 RDEPEND="
-	>=dev-python/debugpy-1.0.0[${PYTHON_USEDEP}]
-	<dev-python/debugpy-2.0[${PYTHON_USEDEP}]
+	>=dev-python/debugpy-1.0[${PYTHON_USEDEP}]
 	>=dev-python/ipython-7.23.1[${PYTHON_USEDEP}]
 	>=dev-python/traitlets-5.1.0[${PYTHON_USEDEP}]
-	<dev-python/traitlets-6.0[${PYTHON_USEDEP}]
-	<dev-python/jupyter_client-8.0[${PYTHON_USEDEP}]
-	>=www-servers/tornado-4.2[${PYTHON_USEDEP}]
-	<www-servers/tornado-7.0[${PYTHON_USEDEP}]
-	>=dev-python/matplotlib-inline-0.1.0[${PYTHON_USEDEP}]
-	<dev-python/matplotlib-inline-0.2.0[${PYTHON_USEDEP}]
+	>=dev-python/jupyter_client-6.1.12[${PYTHON_USEDEP}]
+	>=www-servers/tornado-6.1[${PYTHON_USEDEP}]
+	>=dev-python/matplotlib-inline-0.1[${PYTHON_USEDEP}]
 	dev-python/nest_asyncio[${PYTHON_USEDEP}]
+	dev-python/psutil[${PYTHON_USEDEP}]
+	>=dev-python/setuptools-60[${PYTHON_USEDEP}]
 "
 # RDEPEND seems specifically needed in BDEPEND, at least jupyter
 # bug #816486
@@ -36,14 +34,10 @@ BDEPEND="
 	${RDEPEND}
 	test? (
 		dev-python/flaky[${PYTHON_USEDEP}]
-		dev-python/nose[${PYTHON_USEDEP}]
-		dev-python/nose_warnings_filters[${PYTHON_USEDEP}]
+		dev-python/pytest-timeout[${PYTHON_USEDEP}]
 		dev-python/ipyparallel[${PYTHON_USEDEP}]
-	)"
-
-PATCHES=(
-	"${FILESDIR}"/${PN}-6.5.0-drop-pytest-cov.patch
-)
+	)
+"
 
 distutils_enable_tests pytest
 
