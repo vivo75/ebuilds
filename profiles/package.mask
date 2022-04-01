@@ -33,10 +33,10 @@
 
 #--- END OF EXAMPLES ---
 
-# Ulrich Müller <ulm@gentoo.org> (2022-03-30)
-# Illegal instruction errors seen by several users,
-# presumably related to libcef.so. (bug #835930)
-~net-im/zoom-5.10.0.2450
+# Ulrich Müller <ulm@gentoo.org> (2022-04-01)
+# Illegal instruction errors seen by several users.
+# Masked for testing. (bug #835930)
+>=net-im/zoom-5.10
 
 # Matt Turner <mattst88@gentoo.org> (2022-03-27)
 # Dead package. No reverse dependencies.
