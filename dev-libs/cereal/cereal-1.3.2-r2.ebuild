@@ -25,6 +25,9 @@ src_prepare() {
 
 	# remove bundled rapidjson
 	rm -r include/cereal/external/rapidjson || die 'could not remove bundled rapidjson'
+	sed -e '/rapidjson/s|cereal/external/||' \
+		-e 's/CEREAL_RAPIDJSON_NAMESPACE/rapidjson/g' \
+		-i include/cereal/archives/json.hpp || die
 
 	cmake_src_prepare
 }
@@ -40,6 +43,9 @@ src_configure() {
 
 		-DWITH_WERROR=OFF
 	)
+
+	# TODO: Enable if multilib?
+	use test && mycmakeargs+=( -DSKIP_PORTABILITY_TEST=ON )
 
 	cmake_src_configure
 }
