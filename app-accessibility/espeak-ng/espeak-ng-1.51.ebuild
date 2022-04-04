@@ -7,12 +7,11 @@ inherit autotools
 
 DESCRIPTION="Software speech synthesizer for English, and some other languages"
 HOMEPAGE="https://github.com/espeak-ng/espeak-ng"
-SRC_URI="https://github.com/espeak-ng/espeak-ng/archive/${PV}.tar.gz -> ${P}.tar.gz
-	https://dev.gentoo.org/~ulm/distfiles/${P}-ieee80.patch.xz"
+SRC_URI="https://github.com/espeak-ng/espeak-ng/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3+ unicode"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~riscv ~sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~riscv ~sparc ~x86"
 IUSE="+async +klatt l10n_ru l10n_zh man mbrola +sound"
 
 COMMON_DEPEND="
@@ -29,8 +28,6 @@ BDEPEND="
 	man? ( || ( app-text/ronn-ng app-text/ronn ) )
 "
 
-PATCHES=( "${WORKDIR}"/${P}-ieee80.patch )
-
 DOCS=( CHANGELOG.md README.md docs )
 
 src_prepare() {
@@ -43,24 +40,25 @@ src_prepare() {
 		-e "/translate.check/d" \
 		Makefile.am || die
 
-	# https://github.com/espeak-ng/espeak-ng/issues/699
-	# fixed in master
-	sed -i -e "s/int samplerate;/static int samplerate;/" src/espeak-ng.c || die
-
 	eautoreconf
 }
 
 src_configure() {
 	local econf_args
+
+	# https://bugs.gentoo.org/836646
+	export PULSE_SERVER=""
+
 	econf_args=(
 		$(use_with async)
 		$(use_with klatt)
 		$(use_with l10n_ru extdict-ru)
-		$(use_with l10n_zh extdict-zh)
-		$(use_with l10n_zh extdict-zhy)
+		$(use_with l10n_zh extdict-cmn)
+		$(use_with l10n_zh extdict-yue)
 		$(use_with mbrola)
 		$(use_with sound pcaudiolib)
 		--without-libfuzzer
+		--without-speechplayer
 		--without-sonic
 		--disable-rpath
 		--disable-static
@@ -69,17 +67,14 @@ src_configure() {
 }
 
 src_compile() {
-	# see docs/building.md
-	# The -j1s from compile/test/install may be droppable in next release
-	# (after 1.50). Several bugs have been fixed upstream in git.
-	emake -j1
+	emake
 }
 
 src_test() {
-	emake check -j1
+	emake check
 }
 
 src_install() {
-	emake DESTDIR="${D}" VIMDIR=/usr/share/vimfiles install -j1
-	rm "${ED}"/usr/lib*/*.la || die
+	emake DESTDIR="${D}" VIMDIR=/usr/share/vim/vimfiles install -j1
+	find "${ED}" -name '*.la' -delete  || die
 }
