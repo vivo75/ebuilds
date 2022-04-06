@@ -3,22 +3,26 @@
 
 EAPI=8
 
+GO_OPTIONAL="yes"
 # needed to make webapp-config dep optional
 WEBAPP_OPTIONAL="yes"
-inherit webapp java-pkg-opt-2 systemd toolchain-funcs tmpfiles user-info
+inherit webapp java-pkg-opt-2 systemd tmpfiles toolchain-funcs go-module user-info
 
 DESCRIPTION="ZABBIX is software for monitoring of your applications, network and servers"
 HOMEPAGE="https://www.zabbix.com/"
 MY_P=${P/_/}
 MY_PV=${PV/_/}
-SRC_URI="https://cdn.zabbix.com/${PN}/sources/stable/4.0/${P}.tar.gz"
+SRC_URI="https://cdn.zabbix.com/${PN}/sources/stable/$(ver_cut 1-2)/${P}.tar.gz
+	agent2? ( https://dev.gentoo.org/~fordfrog/distfiles/${P}-go-deps.tar.xz )
+"
+
 LICENSE="GPL-2"
 SLOT="0/$(ver_cut 1-2)"
 WEBAPP_MANUAL_SLOT="yes"
-KEYWORDS="amd64 x86"
-IUSE="+agent curl frontend gnutls ipv6 java ldap libxml2 mbedtls mysql odbc openipmi +openssl oracle +postgres proxy server snmp sqlite ssh static xmpp"
-REQUIRED_USE="|| ( agent frontend proxy server )
-	?? ( gnutls mbedtls openssl )
+KEYWORDS="~amd64 ~x86"
+IUSE="agent +agent2 curl frontend gnutls ipv6 java ldap libxml2 mysql odbc openipmi +openssl oracle +pcre2 +postgres proxy server snmp sqlite ssh static"
+REQUIRED_USE="|| ( agent agent2 frontend proxy server )
+	?? ( gnutls openssl )
 	proxy? ( ^^ ( mysql oracle postgres sqlite ) )
 	server? ( ^^ ( mysql oracle postgres ) !sqlite )
 	static? ( !oracle !snmp )"
@@ -33,7 +37,6 @@ COMMON_DEPEND="
 		net-nds/openldap:=
 	)
 	libxml2? ( dev-libs/libxml2 )
-	mbedtls? ( net-libs/mbedtls:0= )
 	mysql? ( dev-db/mysql-connector-c:= )
 	odbc? ( dev-db/unixODBC )
 	openipmi? ( sys-libs/openipmi )
@@ -48,7 +51,6 @@ COMMON_DEPEND="
 	snmp? ( net-analyzer/net-snmp:= )
 	sqlite? ( dev-db/sqlite )
 	ssh? ( net-libs/libssh2 )
-	xmpp? ( dev-libs/iksemel )
 "
 
 RDEPEND="${COMMON_DEPEND}
@@ -60,7 +62,8 @@ RDEPEND="${COMMON_DEPEND}
 	server? (
 		app-admin/webapp-config
 		dev-libs/libevent
-		dev-libs/libpcre
+		!pcre2? ( dev-libs/libpcre )
+		pcre2? ( dev-libs/libpcre2:= )
 		net-analyzer/fping[suid]
 	)
 	frontend? (
@@ -93,11 +96,19 @@ DEPEND="${COMMON_DEPEND}
 "
 BDEPEND="
 	virtual/pkgconfig
+	agent2? (
+		>=dev-lang/go-1.12
+		app-arch/unzip
+	)
 "
+
+# upstream tests fail for agent2
+RESTRICT="test"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-4.0.18-modulepathfix.patch"
 	"${FILESDIR}/${PN}-3.0.30-security-disable-PidFile.patch"
+	"${FILESDIR}/${PN}-6.0.3-system.sw.packages.patch"
 )
 
 S=${WORKDIR}/${MY_P}
@@ -128,28 +139,37 @@ src_prepare() {
 }
 
 src_configure() {
-	econf \
-		$(use_enable agent) \
-		$(use_enable ipv6) \
-		$(use_enable java) \
-		$(use_enable proxy) \
-		$(use_enable server) \
-		$(use_enable static) \
-		$(use_with curl libcurl) \
-		$(use_with gnutls) \
-		$(use_with ldap) \
-		$(use_with libxml2) \
-		$(use_with mbedtls) \
-		$(use_with mysql) \
-		$(use_with odbc unixodbc) \
-		$(use_with openipmi openipmi) \
-		$(use_with openssl) \
-		$(use_with oracle) \
-		$(use_with postgres postgresql) \
-		$(use_with snmp net-snmp) \
-		$(use_with sqlite sqlite3) \
-		$(use_with ssh ssh2) \
-		$(use_with xmpp jabber)
+	local econf_args=(
+		"$(use_enable agent)"
+		"$(use_enable agent2)"
+		"$(use_enable ipv6)"
+		"$(use_enable java)"
+		"$(use_enable proxy)"
+		"$(use_enable server)"
+		"$(use_enable static)"
+		"$(use_with curl libcurl)"
+		"$(use_with gnutls)"
+		"$(use_with ldap)"
+		"$(use_with libxml2)"
+		"$(use_with mysql)"
+		"$(use_with odbc unixodbc)"
+		"$(use_with openipmi openipmi)"
+		"$(use_with openssl)"
+		"$(use_with oracle)"
+		"$(use_with postgres postgresql)"
+		"$(use_with snmp net-snmp)"
+		"$(use_with sqlite sqlite3)"
+		"$(use_with ssh ssh2)"
+	)
+
+	if use pcre2; then
+		econf_args+=( --with-libpcre2 )
+	else
+		# If pcre2 is not enabled, then use the old pcre library.
+		econf_args+=( --with-libpcre )
+	fi
+
+	econf ${econf_args[@]}
 }
 
 src_compile() {
@@ -224,6 +244,19 @@ src_install() {
 		systemd_dounit "${FILESDIR}"/zabbix-agentd.service
 		newtmpfiles "${FILESDIR}"/zabbix-agentd.tmpfiles zabbix-agentd.conf
 	fi
+	if use agent2; then
+		insinto /etc/zabbix
+		doins "${S}"/src/go/conf/zabbix_agent2.conf
+		fperms 0640 /etc/zabbix/zabbix_agent2.conf
+		fowners root:zabbix /etc/zabbix/zabbix_agent2.conf
+
+		newinitd "${FILESDIR}"/zabbix-agent2.init zabbix-agent2
+
+		dosbin src/go/bin/zabbix_agent2
+
+		systemd_dounit "${FILESDIR}"/zabbix-agent2.service
+		newtmpfiles "${FILESDIR}"/zabbix-agent2.tmpfiles zabbix-agent2.conf
+	fi
 
 	fowners root:zabbix /etc/zabbix
 	fowners zabbix:zabbix \
@@ -251,7 +284,7 @@ src_install() {
 
 	if use frontend; then
 		webapp_src_preinst
-		cp -R frontends/php/* "${D}/${MY_HTDOCSDIR}"
+		cp -R ui/* "${D}/${MY_HTDOCSDIR}"
 		webapp_configfile \
 			"${MY_HTDOCSDIR}"/include/db.inc.php \
 			"${MY_HTDOCSDIR}"/include/config.inc.php
@@ -265,7 +298,7 @@ src_install() {
 			/${ZABBIXJAVA_BASE}/lib
 		keepdir /${ZABBIXJAVA_BASE}
 		exeinto /${ZABBIXJAVA_BASE}/bin
-		doexe src/zabbix_java/bin/zabbix-java-gateway-${MY_PV}.jar
+		doexe src/zabbix_java/bin/zabbix-java-gateway-"${MY_PV}".jar
 		exeinto /${ZABBIXJAVA_BASE}/lib
 		doexe \
 			src/zabbix_java/lib/logback-classic-1.2.9.jar \
@@ -288,15 +321,14 @@ pkg_postinst() {
 
 		zabbix_homedir=$(egethome zabbix)
 		if [ -n "${zabbix_homedir}" ] && \
-		   [ "${zabbix_homedir}" != "/var/lib/zabbix/home" ]; then
+			[ "${zabbix_homedir}" != "/var/lib/zabbix/home" ]; then
 			ewarn
 			ewarn "The user 'zabbix' should have his homedir changed"
 			ewarn "to /var/lib/zabbix/home if you want to use"
 			ewarn "custom alert scripts."
 			ewarn
 			ewarn "A real homedir might be needed for configfiles"
-			ewarn "for custom alert scripts (e.g. ~/.sendxmpprc when"
-			ewarn "using sendxmpp for Jabber alerts)."
+			ewarn "for custom alert scripts."
 			ewarn
 			ewarn "To change the homedir use:"
 			ewarn "  usermod -d /var/lib/zabbix/home zabbix"
@@ -315,6 +347,12 @@ pkg_postinst() {
 		elog "This will convert database data for use with Node ID"
 		elog "and also adds a local node."
 		elog
+
+		if ! use pcre2; then
+			ewarn "You are using zabbix with dev-libs/libpcre which is deprecated."
+			ewarn "Consider switching to dev-libs/libpcre2 (USE=pcre2) as soon as possible."
+			ewarn "See https://www.zabbix.com/documentation/6.0/en/manual/installation/upgrade_notes_600#pcre2-support"
+		fi
 	fi
 
 	if use proxy; then
@@ -323,6 +361,10 @@ pkg_postinst() {
 
 	if use agent; then
 		tmpfiles_process zabbix-agentd.conf
+	fi
+
+	if use agent2; then
+		tmpfiles_process zabbix-agent2.conf
 	fi
 
 	elog "--"
