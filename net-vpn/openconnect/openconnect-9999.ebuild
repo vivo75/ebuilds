@@ -1,7 +1,7 @@
 # Copyright 2011-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 PYTHON_COMPAT=( python3_{8..10} )
 PYTHON_REQ_USE="xml"
@@ -31,6 +31,10 @@ DEPEND="
 	!gnutls? (
 		>=dev-libs/openssl-1.0.1h:0=
 		dev-libs/libp11
+		test? ( || (
+			>=dev-libs/openssl-1.1.0:0[weak-ssl-ciphers(-)]
+			<dev-libs/openssl-1.1.0:0
+		) )
 	)
 	gnutls? (
 		app-crypt/trousers
@@ -119,7 +123,7 @@ src_configure() {
 
 src_test() {
 	local charset
-	for charset in UTF-8 ISO8859-2; do
+	for charset in UTF-8 ISO-8859-2; do
 		if [[ $(LC_ALL=cs_CZ.${charset} locale charmap 2>/dev/null) != ${charset} ]]; then
 			# If we don't have valid cs_CZ locale data, auth-nonascii will fail.
 			# Force a test skip by exiting with status 77.
