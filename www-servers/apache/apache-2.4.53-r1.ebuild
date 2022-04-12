@@ -37,7 +37,7 @@ brotli cache cache_disk cache_socache cern_meta charset_lite cgi cgid dav dav_fs
 dbd deflate dir dumpio env expires ext_filter file_cache filter headers http2
 ident imagemap include info lbmethod_byrequests lbmethod_bytraffic lbmethod_bybusyness
 lbmethod_heartbeat log_config log_forensic logio lua macro md mime mime_magic negotiation
-proxy proxy_ajp proxy_balancer proxy_connect proxy_ftp proxy_html proxy_http proxy_scgi
+proxy proxy_ajp proxy_balancer proxy_connect proxy_ftp proxy_hcheck proxy_html proxy_http proxy_scgi
 proxy_http2 proxy_fcgi proxy_uwsgi proxy_wstunnel rewrite ratelimit remoteip reqtimeout
 session session_cookie session_crypto session_dbd setenvif slotmem_shm socache_memcache
 socache_shmcb speling status substitute systemd unique_id userdir usertrack
@@ -74,6 +74,8 @@ MODULE_DEPENDS="
 	proxy_balancer:slotmem_shm
 	proxy_connect:proxy
 	proxy_ftp:proxy
+	proxy_hcheck:proxy
+	proxy_hcheck:watchdog
 	proxy_html:proxy
 	proxy_html:xml2enc
 	proxy_http:proxy
@@ -112,6 +114,7 @@ MODULE_DEFINES="
 	proxy_ftp:PROXY
 	proxy_html:PROXY
 	proxy_http:PROXY
+	proxy_hcheck:PROXY
 	proxy_fcgi:PROXY
 	proxy_scgi:PROXY
 	proxy_wstunnel:PROXY
@@ -141,7 +144,7 @@ HOMEPAGE="https://httpd.apache.org/"
 # some helper scripts are Apache-1.1, thus both are here
 LICENSE="Apache-2.0 Apache-1.1"
 SLOT="2"
-KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~mips ppc ppc64 ~riscv ~s390 sparc x86 ~amd64-linux ~x64-macos ~sparc64-solaris ~x64-solaris"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x64-macos ~sparc64-solaris ~x64-solaris"
 
 pkg_setup() {
 	# dependend critical modules which are not allowed in global scope due
