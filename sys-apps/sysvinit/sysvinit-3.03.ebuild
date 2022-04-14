@@ -34,15 +34,13 @@ RDEPEND="${COMMON_DEPEND}
 	selinux? ( sec-policy/selinux-shutdown )"
 # po4a is for man page translations
 BDEPEND="nls? ( app-text/po4a )
-	verify-sig? ( sec-keys/openpgp-keys-sysvinit )"
+	verify-sig? ( >=sec-keys/openpgp-keys-sysvinit-20220413 )"
 
 PATCHES=(
 	# bug #80220
 	"${FILESDIR}/${PN}-2.86-kexec.patch"
 	# bug #158615
 	"${FILESDIR}/${PN}-2.94_beta-shutdown-single.patch"
-	# bug #836602
-	"${FILESDIR}/${PN}-3.02-musl-limits.patch"
 )
 
 src_prepare() {

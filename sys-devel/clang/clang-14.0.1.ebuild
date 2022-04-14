@@ -51,13 +51,13 @@ LLVM_COMPONENTS=(
 	clang clang-tools-extra cmake
 	llvm/lib/Transforms/Hello
 )
-LLVM_MANPAGES=build
+LLVM_MANPAGES=pregenerated
 LLVM_TEST_COMPONENTS=(
 	llvm/lib/Testing/Support
 	llvm/utils/{lit,llvm-lit,unittest}
 	llvm/utils/{UpdateTestChecks,update_cc_test_checks.py}
 )
-LLVM_PATCHSET=9999-r3
+LLVM_PATCHSET=14.0.1
 LLVM_USE_TARGETS=llvm
 llvm.org_set_globals
 
