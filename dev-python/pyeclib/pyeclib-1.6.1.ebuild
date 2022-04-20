@@ -1,23 +1,30 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..9} )
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1 optfeature
 
 DESCRIPTION="Messaging API for RPC and notifications over different messaging transports"
-HOMEPAGE="https://pypi.org/project/PyECLib/"
-SRC_URI="mirror://pypi/p/pyeclib/pyeclib-${PV}.tar.gz"
-S="${WORKDIR}/pyeclib-${PV}"
+HOMEPAGE="
+	https://opendev.org/openstack/pyeclib/
+	https://pypi.org/project/pyeclib/
+"
+SRC_URI="mirror://pypi/${PN::1}/${PN}/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="amd64 ~arm64 x86"
+KEYWORDS="~amd64 ~arm64 ~x86"
 
-DEPEND="dev-libs/liberasurecode"
-RDEPEND="${DEPEND}"
+DEPEND="
+	dev-libs/liberasurecode
+"
+RDEPEND="
+	${DEPEND}
+"
 BDEPEND="
 	test? (
 		dev-python/six[${PYTHON_USEDEP}]
