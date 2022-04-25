@@ -3,9 +3,9 @@
 
 EAPI=7
 
-PATCH_VER="4"
+PATCH_VER="5"
 PATCH_GCC_VER="12.0.0"
-MUSL_VER="1"
+MUSL_VER="4"
 MUSL_GCC_VER="12.0.0"
 
 inherit toolchain
