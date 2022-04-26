@@ -33,7 +33,7 @@
 
 #--- END OF EXAMPLES ---
 
-# Alfredo Tupone <tupone@gentoo.org> (2022-04-25)
+# Alfredo Tupone <tupone@gentoo.org> (2022-04-26)
 # New release of janestreet packages need to tested
 dev-ml/sexplib0:0/0.15
 dev-ml/base:0/0.15
@@ -65,6 +65,19 @@ dev-ml/ppx_custom_printf:0/0.15
 dev-ml/ppx_disable_unused_warnings:0/0.15
 dev-ml/ppx_expect:0/0.15
 dev-ml/ppx_fixed_literal:0/0.15
+dev-ml/ppx_log:0/0.15
+dev-ml/ppx_module_timer:0/0.15
+dev-ml/ppx_optional:0/0.15
+dev-ml/ppx_stable:0/0.15
+dev-ml/ppx_string:0/0.15
+dev-ml/typerep:0/0.15
+dev-ml/ppx_typerep_conv:0/0.15
+dev-ml/variantslib:0/0.15
+dev-ml/ppx_variants_conv:0/0.15
+dev-ml/ppx_jane:0/0.15
+dev-ml/int_repr:0/0.15
+dev-ml/base_bigstring:0/0.15
+dev-ml/ppx_js_style:0/0.15
 
 # Hans de Graaff <graaff@gentoo.org> (2022-04-23)
 # Obsolete slots that are no longer used by current
