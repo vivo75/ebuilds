@@ -12,7 +12,7 @@ MUSL_GCC_VER="12.0.0"
 
 inherit toolchain
 # Needs to be after inherit (for now?), bug #830908
-EGIT_BRANCH=master
+EGIT_BRANCH=releases/gcc-12
 
 # Don't keyword live ebuilds
 #KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sh ~sparc ~x86"

@@ -19,7 +19,7 @@ else
 		SRC_URI="https://gitlab.freedesktop.org/${PN}/${PN}/-/archive/${PV}/${P}.tar.gz"
 	fi
 
-	KEYWORDS="amd64 arm ~arm64 ~ppc ppc64 ~riscv ~sparc x86"
+	KEYWORDS="amd64 arm arm64 ppc ppc64 ~riscv ~sparc x86"
 fi
 
 DESCRIPTION="Multimedia processing graphs"
@@ -256,6 +256,8 @@ multilib_src_install_all() {
 }
 
 pkg_postinst() {
+	use udev && udev_reload
+
 	elog "It is recommended to raise RLIMIT_MEMLOCK to 256 for users"
 	elog "using PipeWire. Do it either manually or add yourself"
 	elog "to the 'audio' group:"
