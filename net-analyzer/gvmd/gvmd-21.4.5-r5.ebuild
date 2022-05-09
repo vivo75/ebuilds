@@ -10,7 +10,7 @@ HOMEPAGE="https://www.greenbone.net https://github.com/greenbone/gvmd/"
 SRC_URI="https://github.com/greenbone/gvmd/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 SLOT="0"
-LICENSE="GPL-2+"
+LICENSE="AGPL-3+"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc test"
 RESTRICT="!test? ( test )"
@@ -24,12 +24,14 @@ DEPEND="
 	dev-libs/libical:=
 	>=net-analyzer/gvm-libs-21.4.4
 	net-libs/gnutls:=[tools]
-	doc?   (
-		app-text/xmlstarlet
-		dev-texlive/texlive-latexextra )
 "
+# gvmd (optionally) uses xml_split from XML-Twig at runtime. And texlive
+# and xmlstartlet are used for (PDF) report generator at runtime.
 RDEPEND="
 	${DEPEND}
+	app-text/xmlstarlet
+	dev-perl/XML-Twig
+	dev-texlive/texlive-latexextra
 	net-analyzer/ospd-openvas
 "
 BDEPEND="
@@ -72,6 +74,9 @@ src_prepare() {
 		-e 's/^RuntimeDirectory=gvm/RuntimeDirectory=gvmd/' \
 		-e 's/GVM_RUN_DIR/GVMD_RUN_DIR/' \
 		config/gvmd.service.in || die
+
+	# https://github.com/greenbone/gvmd/pull/1824
+	sed -i '/^install (DIRECTORY DESTINATION ${GVMD_RUN_DIR})/d' CMakeLists.txt || die
 }
 
 src_configure() {
@@ -81,6 +86,7 @@ src_configure() {
 		"-DLIBDIR=${EPREFIX}/usr/$(get_libdir)"
 		"-DSBINDIR=${EPREFIX}/usr/bin"
 		"-DSYSTEMD_SERVICE_DIR=$(systemd_get_systemunitdir)"
+		"-DGVM_DEFAULT_DROP_USER=gvm"
 	)
 	cmake_src_configure
 }
@@ -105,15 +111,19 @@ src_install() {
 
 	insinto /etc/gvm/sysconfig
 	doins "${FILESDIR}/${PN}-daemon.conf"
-
-	fowners -R gvm:gvm /etc/gvm
+	if ! use prefix; then
+		fowners -R gvm:gvm /etc/gvm
+	fi
 
 	newinitd "${FILESDIR}/${P}.init" "${PN}"
 	newconfd "${FILESDIR}/${PN}-daemon.conf" "${PN}"
 
 	# Set proper permissions on required files/directories
 	keepdir /var/lib/gvm/gvmd
-	fowners -R gvm:gvm /var/lib/gvm
+	if ! use prefix; then
+		fowners -R gvm:gvm /var/lib/gvm
+	fi
 
-	rm -r "${D}/run" || die
+	dosbin "${FILESDIR}"/gvm-sync-all
+	systemd_dounit "${FILESDIR}"/gvm-sync-all.{service,timer}
 }
