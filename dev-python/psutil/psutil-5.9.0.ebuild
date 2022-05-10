@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{8..10} pypy3 )
+PYTHON_COMPAT=( python3_{8..11} pypy3 )
 
 inherit distutils-r1
 
@@ -23,11 +23,6 @@ PATCHES=(
 )
 
 python_test() {
-	if [[ ${EPYTHON} == pypy* ]]; then
-		ewarn "Not running tests on ${EPYTHON} since they are broken"
-		return 0
-	fi
-
 	# since we are running in an environment a bit similar to CI,
 	# let's skip the tests that are disable for CI
 	local -x TRAVIS=1

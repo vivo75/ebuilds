@@ -79,8 +79,7 @@ BDEPEND="
 RDEPEND+="
 	!build? ( app-misc/mime-types )
 "
-# TODO: enable this after adding eclass support
-if [[ ${PV} != *_alpha* ]] && false; then
+if [[ ${PV} != *_alpha* ]]; then
 	RDEPEND+="
 		dev-lang/python-exec[python_targets_python${PYVER/./_}(-)]
 	"
@@ -330,7 +329,8 @@ src_test() {
 src_install() {
 	local libdir=${ED}/usr/lib/python${PYVER}
 
-	emake DESTDIR="${D}" altinstall
+	# -j1 hack for now for bug #843458
+	emake -j1 DESTDIR="${D}" altinstall
 
 	# Fix collisions between different slots of Python.
 	rm "${ED}/usr/$(get_libdir)/libpython3.so" || die
