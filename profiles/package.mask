@@ -33,6 +33,12 @@
 
 #--- END OF EXAMPLES ---
 
+# Matt Turner <mattst88@gentoo.org> (2022-05-17)
+# Dead packages. No reverse dependencies.
+# Removal on 2022-06-17
+dev-perl/Gtk2-SourceView2
+dev-perl/Gtk2-Unique
+
 # Michał Górny <mgorny@gentoo.org> (2022-05-16)
 # This was only added for dev-python/nptyping, and nptyping-2.0.0
 # no longer uses it.  No activity since Aug 2021.
@@ -285,19 +291,6 @@ dev-ruby/rqrcode_core:0
 # Unused java library. Removal on 2022-05-24.
 dev-java/jgraph
 
-# Michał Górny <mgorny@gentoo.org> (2022-04-22)
-# Obsolete namespace packages.  PEP 420 implicit namespaces are now
-# the preferred solution.  Upgrade the reverse dependencies to get
-# these packages unmerged.
-# Removal on 2022-05-09.
-dev-python/namespace-google
-dev-python/namespace-lazr
-dev-python/namespace-paste
-dev-python/namespace-repoze
-dev-python/namespace-ruamel
-dev-python/namespace-sphinxcontrib
-dev-python/namespace-zope
-
 # Hans de Graaff <graaff@gentoo.org> (2022-04-22)
 # Obsolete slots that are no longer used by current
 # dev-ruby/simplecov versions and have no use on their own.
@@ -315,20 +308,6 @@ dev-java/jempbox
 dev-java/microba
 dev-java/spin
 
-# Volkmar W. Pogatzki <gentoo@pogatzki.net> (2022-04-17)
-# Unused java libraries. Removal in 30 days.
-dev-java/boot-bin
-dev-java/eclipsito
-dev-java/gcj-jdk
-dev-java/japitools
-dev-java/jboss-marshalling
-dev-java/jdbc-mssqlserver
-dev-java/jsr250
-dev-java/maven-hawtjni-plugin
-dev-java/mimepull
-dev-java/oracle-javamail
-dev-java/xjavac
-
 # David Seifert <soap@gentoo.org> (2022-04-17)
 # Dead library, part of >=sys-fs/e2fsprogs-1.46.5 now, bug #806875,
 # removal on 2022-05-17.
@@ -336,12 +315,6 @@ dev-java/xjavac
 # $ emerge --deselect sys-libs/e2fsprogs-libs
 # This is necessary as your world file should not contain dependencies.)
 sys-libs/e2fsprogs-libs
-
-# Michał Górny <mgorny@gentoo.org> (2022-04-17)
-# Unmaintained in Gentoo.  Pending a bump since January.  Non-trivial
-# to test.  No revdeps.
-# Removal on 2022-05-17.  Bug #838895.
-dev-python/pymssql
 
 # Marek Szuba <marecki@gentoo.org> (2022-04-14)
 # Singularity has been renamed upstream to Apptainer. Therefore, up-to-date
@@ -595,15 +568,6 @@ app-office/texmacs
 # <glibc-2.26.
 ~net-libs/libnsl-0
 ~net-libs/rpcsvc-proto-0
-
-# James Le Cuirot <chewi@gentoo.org> (2017-12-17)
-# Georgy Yakovlev <gyakovlev@gentoo.org> (2021-10-16)
-# Java 11+ is not yet fully supported on Gentoo. Packages cannot depend
-# on it so these virtuals are not yet required. If you wish to use
-# Java 11+ then install openjdk-(jdk|jre)-bin directly.
-# bug #697014
-virtual/jdk:17
-virtual/jre:17
 
 # Nicolas Bock <nicolasbock@gentoo.org> (2017-10-31)
 # There are multiple unresolved upstream issues with >=jabref-bin-4.0 (#636036).
