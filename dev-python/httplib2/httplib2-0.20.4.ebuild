@@ -30,6 +30,7 @@ BDEPEND="
 	test? (
 		dev-libs/openssl
 		dev-python/pytest-timeout[${PYTHON_USEDEP}]
+		dev-python/six[${PYTHON_USEDEP}]
 	)
 "
 
@@ -39,6 +40,8 @@ PATCHES=( "${FILESDIR}"/${PN}-0.12.1-use-system-cacerts.patch )
 
 src_prepare() {
 	sed -i -e '/--cov/d' setup.cfg || die
+	# cryptography dep is entirely optional, and has a good fallback
+	sed -i -e 's:from cryptography.*:pass:' tests/__init__.py || die
 	distutils-r1_src_prepare
 }
 
