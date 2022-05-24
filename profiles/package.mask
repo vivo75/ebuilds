@@ -33,6 +33,11 @@
 
 #--- END OF EXAMPLES ---
 
+# Matt Turner <mattst88@gentoo.org> (2022-05-23)
+# Dead package upstream. Depends on dead app-misc/tracker:0.
+# Removal on 2022-06-23. Bug #846605
+gnome-extra/gnome-documents
+
 # Sam James <sam@gentoo.org> (2022-05-22)
 # Doesn't support Python 3.10, out of date, unmaintained in Gentoo.
 # Removal on 2022-06-22. bug #731674, bug #846158.
@@ -92,6 +97,12 @@ dev-python/dicttoxml
 ~virtual/perl-Encode-3.170.0
 ~virtual/perl-Exporter-5.770.0
 ~virtual/perl-ExtUtils-MakeMaker-7.640.0
+~virtual/perl-ExtUtils-ParseXS-3.450.0
+~virtual/perl-File-Spec-3.840.0
+~virtual/perl-HTTP-Tiny-0.80.0
+~virtual/perl-if-0.61.0
+~virtual/perl-IO-1.500.0
+~virtual/perl-IO-Compress-2.106.0
 
 # Michał Górny <mgorny@gentoo.org> (2022-05-21)
 # dev-python/mongoengine has had repeated test regressions, and this
