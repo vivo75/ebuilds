@@ -6,6 +6,7 @@ EAPI=8
 TOOLCHAIN_PATCH_DEV="sam"
 PATCH_GCC_VER="13.1.0"
 MUSL_GCC_VER="13.1.0"
+TOOLCHAIN_USE_GIT_PATCHES=yes
 
 if [[ $(ver_cut 3) == 9999 ]] ; then
 	MY_PV_2=$(ver_cut 2)
