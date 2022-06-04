@@ -1,7 +1,7 @@
 # Copyright 2007-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit autotools linux-info pam systemd
 
@@ -12,7 +12,7 @@ SRC_URI="https://github.com/vmware/open-vm-tools/releases/download/stable-${PV%_
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="X +deploypkg +dnet doc +fuse gtkmm +icu multimon pam +resolutionkms +ssl +vgauth"
 REQUIRED_USE="
 	multimon? ( X )

@@ -1,7 +1,7 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 PYTHON_COMPAT=( python3_{8..10} )
 PYTHON_REQ_USE="threads(+)"
@@ -19,7 +19,7 @@ if [[ ${PV} == *9999 ]]; then
 else
 	SRC_URI="https://nodejs.org/dist/v${PV}/node-v${PV}.tar.xz"
 	SLOT="0/$(ver_cut 1)"
-	KEYWORDS="amd64 arm arm64 ppc64 -riscv x86 ~amd64-linux ~x64-macos"
+	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86 ~amd64-linux ~x64-macos"
 	S="${WORKDIR}/node-v${PV}"
 fi
 
@@ -37,10 +37,7 @@ RDEPEND=">=app-arch/brotli-1.0.9:=
 	>=net-libs/nghttp2-1.41.0:=
 	sys-libs/zlib
 	system-icu? ( >=dev-libs/icu-67:= )
-	system-ssl? (
-		>=dev-libs/openssl-1.1.1:0=
-		<dev-libs/openssl-3.0.0_beta1:0=
-	)"
+	system-ssl? ( >=dev-libs/openssl-1.1.1:0= )"
 BDEPEND="${PYTHON_DEPS}
 	sys-apps/coreutils
 	virtual/pkgconfig
@@ -50,30 +47,13 @@ BDEPEND="${PYTHON_DEPS}
 DEPEND="${RDEPEND}"
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-10.3.0-global-npm-config.patch
-	"${FILESDIR}"/${PN}-12.22.1-jinja_collections_abc.patch
-	"${FILESDIR}"/${PN}-12.22.1-uvwasi_shared_libuv.patch
 	"${FILESDIR}"/${PN}-12.22.5-shared_c-ares_nameser_h.patch
-	"${FILESDIR}"/${PN}-14.15.0-fix_ppc64_crashes.patch
+	"${FILESDIR}"/${PN}-15.2.0-global-npm-config.patch
 )
 
 pkg_pretend() {
 	(use x86 && ! use cpu_flags_x86_sse2) && \
 		die "Your CPU doesn't support the required SSE2 instruction."
-
-	if [[ ${MERGE_TYPE} != "binary" ]]; then
-		if use lto; then
-			if tc-is-gcc; then
-				if [[ $(gcc-major-version) -ge 11 ]]; then
-					# Bug #787158
-					die "LTO builds of ${PN} using gcc-11+ currently fail tests and produce runtime errors. Either switch to gcc-10 or unset USE=lto for this ebuild"
-				fi
-			else
-				# configure.py will abort on this later if we do not
-				die "${PN} only supports LTO for gcc"
-			fi
-		fi
-	fi
 }
 
 src_prepare() {
@@ -105,7 +85,7 @@ src_prepare() {
 	fi
 
 	# We need to disable mprotect on two files when it builds Bug 694100.
-	use pax-kernel && PATCHES+=( "${FILESDIR}"/${PN}-13.8.0-paxmarking.patch )
+	use pax-kernel && PATCHES+=( "${FILESDIR}"/${PN}-18.0.0-paxmarking.patch )
 
 	# All this test does is check if the npm CLI produces warnings of any sort,
 	# failing if it does. Overkill, much? Especially given one possible warning
@@ -153,6 +133,7 @@ src_configure() {
 		amd64) myarch="x64";;
 		arm) myarch="arm";;
 		arm64) myarch="arm64";;
+		lp64*) myarch="riscv64";;
 		ppc64) myarch="ppc64";;
 		x32) myarch="x32";;
 		x86) myarch="ia32";;
@@ -192,17 +173,12 @@ src_install() {
 	fi
 
 	if use npm; then
-		dodir /etc/npm
+		keepdir /etc/npm
 
 		# Install bash completion for `npm`
-		# We need to temporarily replace default config path since
-		# npm otherwise tries to write outside of the sandbox
-		local npm_config="usr/$(get_libdir)/node_modules/npm/lib/config/core.js"
-		sed -i -e "s|'/etc'|'${ED}/etc'|g" "${ED}/${npm_config}" || die
 		local tmp_npm_completion_file="$(TMPDIR="${T}" mktemp -t npm.XXXXXXXXXX)"
 		"${ED}/usr/bin/npm" completion > "${tmp_npm_completion_file}"
 		newbashcomp "${tmp_npm_completion_file}" npm
-		sed -i -e "s|'${ED}/etc'|'/etc'|g" "${ED}/${npm_config}" || die
 
 		# Move man pages
 		doman "${LIBDIR}"/node_modules/npm/man/man{1,5,7}/*
