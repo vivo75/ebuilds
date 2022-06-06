@@ -1,6 +1,11 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
+# To create the go modules tarball:
+#   cd src/go
+#   GOMODCACHE="${PWD}"/go-mod go mod download -modcacherw
+#   tar -acf zabbix-${PV}-go-deps.tar.xz go-mod
+
 EAPI=8
 
 GO_OPTIONAL="yes"
@@ -19,8 +24,8 @@ SRC_URI="https://cdn.zabbix.com/${PN}/sources/stable/$(ver_cut 1-2)/${P}.tar.gz
 LICENSE="GPL-2"
 SLOT="0/$(ver_cut 1-2)"
 WEBAPP_MANUAL_SLOT="yes"
-KEYWORDS="amd64 x86"
-IUSE="+agent +agent2 curl frontend gnutls ipv6 java ldap libxml2 mysql odbc openipmi +openssl oracle +postgres proxy server snmp sqlite ssh static"
+KEYWORDS="~amd64 ~x86"
+IUSE="agent +agent2 curl frontend gnutls ipv6 java ldap libxml2 mysql odbc openipmi +openssl oracle +pcre2 +postgres proxy server snmp sqlite ssh static"
 REQUIRED_USE="|| ( agent agent2 frontend proxy server )
 	?? ( gnutls openssl )
 	proxy? ( ^^ ( mysql oracle postgres sqlite ) )
@@ -62,7 +67,8 @@ RDEPEND="${COMMON_DEPEND}
 	server? (
 		app-admin/webapp-config
 		dev-libs/libevent
-		dev-libs/libpcre
+		!pcre2? ( dev-libs/libpcre )
+		pcre2? ( dev-libs/libpcre2:= )
 		net-analyzer/fping[suid]
 	)
 	frontend? (
@@ -107,7 +113,7 @@ RESTRICT="test"
 PATCHES=(
 	"${FILESDIR}/${PN}-4.0.18-modulepathfix.patch"
 	"${FILESDIR}/${PN}-3.0.30-security-disable-PidFile.patch"
-	"${FILESDIR}/${PN}-5.4.12-system.sw.packages.patch"
+	"${FILESDIR}/${PN}-6.0.3-system.sw.packages.patch"
 )
 
 S=${WORKDIR}/${MY_P}
@@ -138,27 +144,37 @@ src_prepare() {
 }
 
 src_configure() {
-	econf \
-		"$(use_enable agent)" \
-		"$(use_enable agent2)" \
-		"$(use_enable ipv6)" \
-		"$(use_enable java)" \
-		"$(use_enable proxy)" \
-		"$(use_enable server)" \
-		"$(use_enable static)" \
-		"$(use_with curl libcurl)" \
-		"$(use_with gnutls)" \
-		"$(use_with ldap)" \
-		"$(use_with libxml2)" \
-		"$(use_with mysql)" \
-		"$(use_with odbc unixodbc)" \
-		"$(use_with openipmi openipmi)" \
-		"$(use_with openssl)" \
-		"$(use_with oracle)" \
-		"$(use_with postgres postgresql)" \
-		"$(use_with snmp net-snmp)" \
-		"$(use_with sqlite sqlite3)" \
+	local econf_args=(
+		"$(use_enable agent)"
+		"$(use_enable agent2)"
+		"$(use_enable ipv6)"
+		"$(use_enable java)"
+		"$(use_enable proxy)"
+		"$(use_enable server)"
+		"$(use_enable static)"
+		"$(use_with curl libcurl)"
+		"$(use_with gnutls)"
+		"$(use_with ldap)"
+		"$(use_with libxml2)"
+		"$(use_with mysql)"
+		"$(use_with odbc unixodbc)"
+		"$(use_with openipmi openipmi)"
+		"$(use_with openssl)"
+		"$(use_with oracle)"
+		"$(use_with postgres postgresql)"
+		"$(use_with snmp net-snmp)"
+		"$(use_with sqlite sqlite3)"
 		"$(use_with ssh ssh2)"
+	)
+
+	if use pcre2; then
+		econf_args+=( --with-libpcre2 )
+	else
+		# If pcre2 is not enabled, then use the old pcre library.
+		econf_args+=( --with-libpcre )
+	fi
+
+	econf ${econf_args[@]}
 }
 
 src_compile() {
@@ -336,6 +352,12 @@ pkg_postinst() {
 		elog "This will convert database data for use with Node ID"
 		elog "and also adds a local node."
 		elog
+
+		if ! use pcre2; then
+			ewarn "You are using zabbix with dev-libs/libpcre which is deprecated."
+			ewarn "Consider switching to dev-libs/libpcre2 (USE=pcre2) as soon as possible."
+			ewarn "See https://www.zabbix.com/documentation/6.0/en/manual/installation/upgrade_notes_600#pcre2-support"
+		fi
 	fi
 
 	if use proxy; then
