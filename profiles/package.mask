@@ -33,6 +33,11 @@
 
 #--- END OF EXAMPLES ---
 
+# William Hubbs <williamh@gentoo.org> (2022-06-10)
+# The sysvinit use flag is broken. If this is enabled and you are
+# depending on it your system will not boot. bug #850754
+=sys-apps/openrc-0.45
+
 # Michał Górny <mgorny@gentoo.org> (2022-06-08)
 # pyroute2 is pending version bump for over 1.5 years already.
 # The tests are restricted.  pulseaudio-dlna is the only revdep.
@@ -76,6 +81,7 @@ dev-python/mysql-connector-python
 # out all bugs before unmasking. Please see bug #848858 and its
 # blockers.
 =www-client/firefox-101.0-r10
+=www-client/firefox-101.0.1-r10
 
 # Michał Górny <mgorny@gentoo.org> (2022-06-02)
 # The current Gentoo version requires setup.py to exist which breaks
