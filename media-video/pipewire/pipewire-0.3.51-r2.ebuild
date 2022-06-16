@@ -19,7 +19,7 @@ else
 		SRC_URI="https://gitlab.freedesktop.org/${PN}/${PN}/-/archive/${PV}/${P}.tar.gz"
 	fi
 
-	KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc ~ppc64 ~riscv ~sparc ~x86"
+	KEYWORDS="amd64 ~arm ~arm64 ~loong ~ppc ~ppc64 ~riscv ~sparc x86"
 fi
 
 DESCRIPTION="Multimedia processing graphs"
@@ -144,7 +144,7 @@ src_prepare() {
 
 		$(use system-service && {
 			echo @pipewire - rtprio 95
-			echo @pipewire - priority -19
+			echo @pipewire - nice -19
 			echo @pipewire - memlock 4194304
 		})
 
