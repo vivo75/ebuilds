@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+GIT_COMMIT=1d7b5029c5ba36870d25c67524034d452b761d27
 
 inherit pax-utils toolchain-funcs
 
@@ -12,19 +13,15 @@ MY_P="LuaJIT-${MY_PV}"
 DESCRIPTION="Just-In-Time Compiler for the Lua programming language"
 HOMEPAGE="https://luajit.org/"
 SRC_URI="https://luajit.org/download/${MY_P}.tar.gz"
+SRC_URI="https://github.com/LuaJIT/LuaJIT/archive/${GIT_COMMIT}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 # this should probably be pkgmoved to 2.0 for sake of consistency.
-SLOT="2"
-KEYWORDS="arm64 -hppa -riscv -sparc"
+SLOT="2/${PV}"
+KEYWORDS="amd64 arm arm64 -hppa ppc -riscv -sparc x86 ~amd64-linux ~x86-linux"
 IUSE="lua52compat static-libs"
 
-PATCHES=(
-	"${FILESDIR}/${PN}-2-ldconfig.patch"
-	"${FILESDIR}/CVE-2020-15890.patch"
-)
-
-S="${WORKDIR}/${MY_P}"
+S="${WORKDIR}/LuaJIT-${GIT_COMMIT}"
 
 _emake() {
 	emake \
@@ -56,7 +53,7 @@ src_compile() {
 
 src_install() {
 	_emake install
-
+dosym luajit-2.1.0-beta3 /usr/bin/luajit
 	pax-mark m "${ED}/usr/bin/luajit-${MY_PV}"
 
 	HTML_DOCS="doc/." einstalldocs
