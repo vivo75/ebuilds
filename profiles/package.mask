@@ -33,14 +33,16 @@
 
 #--- END OF EXAMPLES ---
 
-# Sam James <sam@gentoo.org> (2022-06-29)
-# Pre-emptively mask broken upstream versions.
-# 1. openssl 1.1.1o fails tests (https://github.com/openssl/openssl/issues/18619)
-# 2. openssl 3.0.4 has a buffer overflow w/ AVX512 (https://github.com/openssl/openssl/issues/18625)
-# Gentoo isn't vulnerable to the original CVE which caused these releases
-# (CVE-2022-2068) as we have our own rehash script.
-=dev-libs/openssl-1.1.1p
-=dev-libs/openssl-3.0.4
+# Ulrich Müller <ulm@gentoo.org> (2022-06-30)
+# Pretest versions, masked for testing.
+~app-editors/emacs-28.1.90
+~app-editors/emacs-28.1.91
+~app-editors/emacs-28.1.92
+
+# Marek Szuba <marecki@gentoo.org> (2022-06-30)
+# A GNOME 2-era library with no consumers left in the tree, marked
+# as deprecated since March 2022. Removal in 30 days (Bug #855299).
+gnome-extra/gtkhtml
 
 # Piotr Karbowski <slashbeast@gentoo.org> (2022-06-26)
 # Abandoned upstream, depends on API that no longer exists.
