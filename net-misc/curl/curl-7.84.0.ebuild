@@ -96,8 +96,6 @@ MULTILIB_CHOST_TOOLS=(
 PATCHES=(
 	"${FILESDIR}"/${PN}-7.30.0-prefix.patch
 	"${FILESDIR}"/${PN}-respect-cflags-3.patch
-	# Bug 842780, fixed upstream, drop on next version bump
-	"${FILESDIR}"/${P}-http2.patch
 )
 
 src_prepare() {
