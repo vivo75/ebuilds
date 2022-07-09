@@ -68,6 +68,11 @@ RDEPEND="${DEPEND}
 
 DOCS=( {NEWS,README}.rst )
 
+PATCHES=(
+	"${FILESDIR}"/${PN}-0.4.10-config-disable-sound-server-parts.patch # defer enabling sound server parts to media-video/pipewire
+	"${FILESDIR}"/${P}-alsa-lua-crash.patch
+)
+
 src_configure() {
 	local emesonargs=(
 		-Ddoc=disabled # Ebuild not wired up yet (Sphinx, Doxygen?)
