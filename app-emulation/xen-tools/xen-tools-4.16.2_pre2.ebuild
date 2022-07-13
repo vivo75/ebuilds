@@ -23,7 +23,7 @@ else
 	EDK2_BROTLI_COMMIT="666c3280cc11dc433c303d79a83d4ffbdd12cc8d"
 	IPXE_COMMIT="3c040ad387099483102708bb1839110bc788cefb"
 
-	XEN_PRE_PATCHSET_NUM=0
+	XEN_PRE_PATCHSET_NUM=1
 	XEN_GENTOO_PATCHSET_NUM=1
 	XEN_PRE_VERSION_BASE=4.16.1
 
@@ -429,7 +429,16 @@ src_compile() {
 		local -x NO_WERROR=1
 	fi
 
-	emake CC="$(tc-getCC)" LD="$(tc-getLD)" AR="$(tc-getAR)" RANLIB="$(tc-getRANLIB)" build-tools ${myopt}
+	emake \
+		HOSTCC="$(tc-getBUILD_CC)" \
+		HOSTCXX="$(tc-getBUILD_CXX)" \
+		CC="$(tc-getCC)" \
+		CXX="$(tc-getCXX)" \
+		LD="$(tc-getLD)" \
+		AR="$(tc-getAR)" \
+		OBJDUMP="$(tc-getOBJDUMP)" \
+		RANLIB="$(tc-getRANLIB)" \
+		build-tools ${myopt}
 
 	if use doc; then
 		emake -C docs build
