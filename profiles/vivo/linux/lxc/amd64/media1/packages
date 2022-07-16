@@ -9,7 +9,6 @@ app-editors/gvim
 app-misc/screen
 app-office/libreoffice
 app-portage/eix
-app-portage/gentoolkit
 app-portage/layman
 app-shells/tcsh
 app-text/aspell

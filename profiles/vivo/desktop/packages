@@ -33,7 +33,6 @@ app-misc/symlinks
 app-mobilephone/heimdall
 app-office/libreoffice
 app-portage/eix
-app-portage/gentoolkit
 app-portage/gentoopm
 app-portage/layman
 app-portage/repoman
