@@ -5,7 +5,7 @@ EAPI=7
 
 LUA_COMPAT=( lua5-{1..4} luajit )
 
-PYTHON_COMPAT=( python3_{7,8,9} )
+PYTHON_COMPAT=( python3_7 python3_8 python3_9 python3_10 )
 PYTHON_REQ_USE="threads(+)"
 
 USE_PHP="php7-2 php7-3 php7-4"

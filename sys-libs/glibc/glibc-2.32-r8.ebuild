@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{7,8,9} )
+PYTHON_COMPAT=( python3_7 python3_8 python3_9 python3_10 )
 TMPFILES_OPTIONAL=1
 
 inherit python-any-r1 prefix toolchain-funcs flag-o-matic gnuconfig \

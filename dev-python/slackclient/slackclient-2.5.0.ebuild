@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{7..9} )
+PYTHON_COMPAT=( python3_7 python3_8 python3_9 python3_10 )
 inherit distutils-r1
 
 DESCRIPTION="Client for Slack supporting the Slack Web and Real Time Messaging API"

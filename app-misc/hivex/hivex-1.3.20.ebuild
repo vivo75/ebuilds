@@ -6,7 +6,7 @@ EAPI=7
 USE_RUBY="ruby25 ruby26 ruby27"
 RUBY_OPTIONAL=yes
 
-PYTHON_COMPAT=( python3_{7,8,9} )
+PYTHON_COMPAT=( python3_7 python3_8 python3_9 python3_10 )
 
 inherit perl-module ruby-ng python-single-r1 strip-linguas
 

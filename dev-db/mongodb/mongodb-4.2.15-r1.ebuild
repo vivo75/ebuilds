@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{8..9} )
+PYTHON_COMPAT=( python3_8 python3_9 python3_10 )
 
 SCONS_MIN_VERSION="2.5.0"
 CHECKREQS_DISK_BUILD="2400M"

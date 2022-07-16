@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{8..9} )
+PYTHON_COMPAT=( python3_8 python3_9 python3_10 )
 inherit distutils-r1
 
 DESCRIPTION="Distfile Patching Support for Gentoo Linux (tools)"

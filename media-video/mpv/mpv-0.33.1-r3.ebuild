@@ -4,7 +4,7 @@
 EAPI=7
 
 LUA_COMPAT=( lua5-{1..2} luajit )
-PYTHON_COMPAT=( python3_{7..9} )
+PYTHON_COMPAT=( python3_7 python3_8 python3_9 python3_10 )
 PYTHON_REQ_USE='threads(+)'
 
 WAF_PV=2.0.9

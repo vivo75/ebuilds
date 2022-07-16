@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_USE_SETUPTOOLS=rdepend
-PYTHON_COMPAT=( python3_{7,8,9} )
+PYTHON_COMPAT=( python3_7 python3_8 python3_9 python3_10 )
 PYTHON_REQ_USE="ssl(+)"
 
 inherit bash-completion-r1 distutils-r1
