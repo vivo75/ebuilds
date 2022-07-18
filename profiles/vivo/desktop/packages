@@ -35,7 +35,6 @@ app-office/libreoffice
 app-portage/eix
 app-portage/gentoopm
 app-portage/layman
-app-portage/repoman
 app-text/catdoc
 app-text/flpsed
 app-text/master-pdf-editor
