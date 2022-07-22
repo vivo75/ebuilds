@@ -17,7 +17,7 @@ PHP_EXT_OPTIONAL_USE="php"
 USE_RUBY="ruby26 ruby27 ruby30"
 RUBY_OPTIONAL="yes"
 
-inherit java-pkg-opt-2 lua mono-env multibuild php-ext-source-r3 python-r1 ruby-ng
+inherit autotools java-pkg-opt-2 lua mono-env multibuild php-ext-source-r3 python-r1 ruby-ng
 
 DESCRIPTION="SWIG and JNI bindings for Xapian"
 HOMEPAGE="https://www.xapian.org/"
@@ -25,14 +25,14 @@ SRC_URI="https://oligarchy.co.uk/xapian/${PV}/${P}.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha amd64 arm ~hppa ~ia64 ~mips ~ppc ~ppc64 sparc x86"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86"
 IUSE="java lua mono perl php python ruby tcl"
 REQUIRED_USE="|| ( java lua mono perl php python ruby tcl )
 	lua? ( ${LUA_REQUIRED_USE} )
 	python? ( ${PYTHON_REQUIRED_USE} )
 	ruby? ( || ( $(ruby_get_use_targets) ) )"
 
-COMMONDEPEND=">=dev-libs/xapian-1.4.19
+COMMONDEPEND=">=dev-libs/xapian-1.4.20
 	lua? ( ${LUA_DEPS} )
 	perl? ( dev-lang/perl:= )
 	php? ( dev-lang/php:=[-threads] )
@@ -45,11 +45,15 @@ COMMONDEPEND=">=dev-libs/xapian-1.4.19
 	mono? ( dev-lang/mono )"
 DEPEND="${COMMONDEPEND}
 	virtual/pkgconfig
-	java? ( >=virtual/jdk-1.6 )"
+	java? ( >=virtual/jdk-1.8:* )"
 RDEPEND="${COMMONDEPEND}
-	java? ( >=virtual/jre-1.6 )"
+	java? ( >=virtual/jre-1.8:* )"
 
 S="${WORKDIR}/${P}"
+
+PATCHES=(
+	"${FILESDIR}"/${P}-slibtool.patch # 793428
+)
 
 has_basic_bindings() {
 	# Update this list if new bindings are added that are not built
@@ -95,6 +99,10 @@ src_unpack() {
 }
 
 src_prepare() {
+	default
+
+	eautoreconf
+
 	use java && java-pkg-opt-2_src_prepare
 
 	# https://trac.xapian.org/ticket/702
@@ -115,8 +123,6 @@ src_prepare() {
 	if use ruby; then
 		ruby_copy_sources
 	fi
-
-	eapply_user
 }
 
 src_configure() {
