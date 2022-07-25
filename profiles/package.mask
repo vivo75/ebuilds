@@ -33,6 +33,11 @@
 
 #--- END OF EXAMPLES ---
 
+# Andreas Sturmlechner <asturm@gentoo.org> (2022-07-25)
+# Merged into kde-apps/kalarm since 22.04.3, no other revdeps, obsolete.
+# Masked for removal on 2022-08-08.
+kde-apps/kalarmcal
+
 # Michał Górny <mgorny@gentoo.org> (2022-07-25)
 # aioredis has been integrated in >=dev-python/redis-py-4.2.0.
 # No revdeps.
@@ -507,22 +512,6 @@ dev-util/rebar-bin
 # A GNOME 2-era library with no consumers left in the tree, marked
 # as deprecated since March 2022. Removal in 30 days (Bug #855299).
 gnome-extra/gtkhtml
-
-# Piotr Karbowski <slashbeast@gentoo.org> (2022-06-26)
-# Abandoned upstream, depends on API that no longer exists.
-# Removal on 2022-07-26.
-dev-python/jikanpy
-
-# Marc Schiffbauer <mschiff@gentoo.org> (2022-06-22)
-# Deprecated package. Removal in 30 days.
-# see bug #843746
-sys-power/tuxedo-cc-wmi
-
-# Sam James <sam@gentoo.org> (2022-06-21)
-# Obsolete, no reverse dependencies, does not run test suite, and doesn't
-# support Python 3.10+. Use app-crypt/gpgme[python] instead.
-# Bugs #845807, #798372, #748531. Removal on 2022-07-21.
-dev-python/pygpgme
 
 # Sam James <sam@gentoo.org> (2022-05-28)
 # GCC 9 and older no longer receive upstream support or fixes for
