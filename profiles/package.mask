@@ -33,6 +33,27 @@
 
 #--- END OF EXAMPLES ---
 
+# Michał Górny <mgorny@gentoo.org> (2022-07-25)
+# aioredis has been integrated in >=dev-python/redis-py-4.2.0.
+# No revdeps.
+# Removal on 2022-08-24.  Bug #860840.
+dev-python/aioredis
+
+# Jack Todaro <solpeth@posteo.org> (2022-07-24)
+# Last-rite for removal in 30 days. Has no reverse dependencies
+# and is unmaintained upstream.
+dev-haskell/bytestring-handle
+dev-haskell/chaselev-deque
+
+# William Hubbs <williamh@gentoo.org> (2022-07-24)
+# **NOTE:** Golint is deprecated and frozen
+# according to [this issue](https://github.com/golang/go/issues/38968).
+# There's no drop-in replacement for it, but tools such as
+# [Staticcheck](https://staticcheck.io/) # and `go vet` should be used instead.
+# Bug #844412
+# Removal: 2022-08-23
+dev-go/golint
+
 # Sam James <sam@gentoo.org> (2022-07-22)
 # Monolithic mask for dev-haskell/* packages which have no reverse dependencies,
 # are broken, or severely out of date. The aim is to have the Haskell overlay
@@ -179,7 +200,6 @@ dev-haskell/idna
 dev-haskell/inspection-testing
 dev-haskell/integer-roots
 dev-haskell/json
-dev-haskell/keys
 dev-haskell/language-bash
 dev-haskell/language-css
 dev-haskell/language-dot
@@ -239,7 +259,6 @@ dev-haskell/persistent-postgresql
 dev-haskell/persistent-qq
 dev-haskell/pid1
 dev-haskell/pipes
-dev-haskell/pointed
 dev-haskell/postgresql-libpq
 dev-haskell/postgresql-simple
 dev-haskell/pqueue
@@ -299,7 +318,6 @@ dev-haskell/url
 dev-haskell/uuagc
 dev-haskell/uuagc-cabal
 dev-haskell/uulib
-dev-haskell/vector-instances
 dev-haskell/vector-space
 dev-haskell/wai-conduit
 dev-haskell/wai-test
@@ -494,31 +512,6 @@ gnome-extra/gtkhtml
 # Abandoned upstream, depends on API that no longer exists.
 # Removal on 2022-07-26.
 dev-python/jikanpy
-
-# Hans de Graaff <graaff@gentoo.org> (2022-06-25)
-# Obsolete slot. Use a newer slot instead.
-# Removal in 30 days.
-dev-ruby/hashie:3
-
-# Hans de Graaff <graaff@gentoo.org> (2022-06-25)
-# Obsolete slot. Use a newer slot instead.
-# Removal in 30 days.
-dev-ruby/marcel:0
-
-# Hans de Graaff <graaff@gentoo.org> (2022-06-25)
-# Obsolete slot. Use a newer slot instead.
-# Removal in 30 days.
-dev-ruby/paramesan:0
-
-# Hans de Graaff <graaff@gentoo.org> (2022-06-25)
-# Obsolete slot. Use a newer slot instead.
-# Removal in 30 days.
-dev-ruby/paramesan:0
-
-# Hans de Graaff <graaff@gentoo.org> (2022-06-24)
-# Obsolete slot. Use a newer slot instead.
-# Removal in 30 days.
-dev-ruby/rspec-rails:3
 
 # Marc Schiffbauer <mschiff@gentoo.org> (2022-06-22)
 # Deprecated package. Removal in 30 days.
