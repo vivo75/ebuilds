@@ -3,6 +3,10 @@
 
 EAPI=7
 
+# There's no standard way of versioning the point releases upstream
+# make anyway, so while this was added for RC versions, it's fine
+# in general.
+QA_PKGCONFIG_VERSION=$(ver_cut 1-2)
 VERIFY_SIG_OPENPGP_KEY_PATH="${BROOT}"/usr/share/openpgp-keys/chetramey.asc
 inherit flag-o-matic multilib multilib-minimal preserve-libs toolchain-funcs usr-ldscript verify-sig
 
@@ -36,7 +40,7 @@ patches() {
 }
 
 DESCRIPTION="Another cute console display library"
-HOMEPAGE="https://tiswww.case.edu/php/chet/readline/rltop.html"
+HOMEPAGE="https://tiswww.case.edu/php/chet/readline/rltop.html https://git.savannah.gnu.org/cgit/readline.git"
 
 if [[ ${PV} == 9999 ]] ; then
 	EGIT_REPO_URI="https://git.savannah.gnu.org/git/readline.git"
