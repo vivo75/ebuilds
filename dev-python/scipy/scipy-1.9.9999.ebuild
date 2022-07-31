@@ -44,16 +44,20 @@ fi
 
 LICENSE="BSD LGPL-2"
 SLOT="0"
-IUSE="doc +sparse"
+IUSE="doc"
 
+# umfpack is technically optional but it's preferred to have it available.
 DEPEND="
 	>=dev-python/numpy-1.18.5[lapack,${PYTHON_USEDEP}]
-	sci-libs/arpack:0=
+	sci-libs/arpack:=
+	sci-libs/umfpack
 	virtual/cblas
 	>=virtual/lapack-3.8
-	sparse? ( sci-libs/umfpack:0= )"
-RDEPEND="${DEPEND}
-	dev-python/pillow[${PYTHON_USEDEP}]"
+"
+RDEPEND="
+	${DEPEND}
+	dev-python/pillow[${PYTHON_USEDEP}]
+"
 # TODO: restore pythran optionality?
 BDEPEND="
 	dev-lang/swig
@@ -81,4 +85,12 @@ python_test() {
 	cd "${T}" || die
 
 	epytest -n "$(makeopts_jobs)" --pyargs scipy
+}
+
+python_install_all() {
+	use doc && \
+		local DOCS=( "${DISTDIR}"/${PN}-ref-${DOC_PV}.pdf ) \
+		local HTML_DOCS=( "${WORKDIR}"/html/. )
+
+	distutils-r1_python_install_all
 }
