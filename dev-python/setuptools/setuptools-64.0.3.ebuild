@@ -4,6 +4,8 @@
 # please keep this ebuild at EAPI 7 -- sys-apps/portage dep
 EAPI=7
 
+# please bump dev-python/ensurepip-wheels along with this package!
+
 DISTUTILS_USE_PEP517=standalone
 PYTHON_TESTED=( python3_{8..11} pypy3 )
 PYTHON_COMPAT=( "${PYTHON_TESTED[@]}" )
@@ -22,7 +24,7 @@ SRC_URI="
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~loong ~m68k ~mips ppc ppc64 ~riscv ~s390 sparc x86 ~arm64-macos ~x64-macos ~x64-solaris"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~arm64-macos ~x64-macos ~x64-solaris"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
@@ -104,7 +106,9 @@ python_test() {
 		# TODO: see if PRE_BUILT_SETUPTOOLS_* helps
 		setuptools/tests/config/test_apply_pyprojecttoml.py::test_apply_pyproject_equivalent_to_setupcfg
 		setuptools/tests/integration/test_pip_install_sdist.py::test_install_sdist
+		setuptools/tests/test_build_meta.py::test_legacy_editable_install
 		setuptools/tests/test_distutils_adoption.py
+		setuptools/tests/test_editable_install.py
 		setuptools/tests/test_setuptools.py::test_its_own_wheel_does_not_contain_tests
 		setuptools/tests/test_virtualenv.py::test_clean_env_install
 		setuptools/tests/test_virtualenv.py::test_no_missing_dependencies
