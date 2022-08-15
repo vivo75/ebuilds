@@ -50,6 +50,8 @@ src_configure() {
 	# gcc-9 with -flto leads to link failures: #663518 (see also #863899)
 	# https://gcc.gnu.org/PR91186
 	filter-lto
+	# ... and strict aliasing warnings, bug #863899
+	append-flags -fno-strict-aliasing
 
 	econf \
 		INIT_D_PATH="${EPREFIX}/etc/init.d" \
