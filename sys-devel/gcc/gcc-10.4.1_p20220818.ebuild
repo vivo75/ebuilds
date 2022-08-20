@@ -35,16 +35,14 @@ inherit toolchain
 EGIT_BRANCH=releases/gcc-$(ver_cut 1)
 
 # Don't keyword live ebuilds
-if ! tc_is_live && [[ -z ${TOOLCHAIN_USE_GIT_PATCHES} ]] ; then
-	KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~m68k ~mips ppc ppc64 ~riscv ~s390 sparc x86"
-fi
+#if ! tc_is_live && [[ -z ${TOOLCHAIN_USE_GIT_PATCHES} ]] ; then
+#	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86"
+#fi
 
 RDEPEND=""
 BDEPEND="${CATEGORY}/binutils"
 
 src_prepare() {
-	eapply "${FILESDIR}"/${P}-glibc-2.36.patch
-
 	local p upstreamed_patches=(
 		# add them here
 	)
