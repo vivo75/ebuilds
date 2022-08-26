@@ -1,7 +1,7 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="7"
+EAPI="8"
 
 inherit desktop optfeature systemd xdg-utils
 
@@ -21,14 +21,10 @@ RDEPEND="
 	media-libs/fontconfig:1.0
 	media-libs/freetype:2
 	media-libs/glu
-	media-libs/mesa[X(+)]
 	sys-auth/polkit
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
 	x11-libs/gtk+:2
-	x11-libs/gtkglext
-	x11-libs/libICE
-	x11-libs/libSM
 	x11-libs/libX11
 	x11-libs/libxcb
 	x11-libs/libXdamage
@@ -36,10 +32,8 @@ RDEPEND="
 	x11-libs/libXfixes
 	x11-libs/libXi
 	x11-libs/libxkbfile
-	x11-libs/libXmu
 	x11-libs/libXrandr
 	x11-libs/libXrender
-	x11-libs/libXt
 	x11-libs/libXtst
 	x11-libs/pango
 "
@@ -55,9 +49,6 @@ src_install() {
 	exeinto ${dst}
 	doexe ${PN}
 
-	# bug 706344
-	patchelf --remove-needed libpangox-1.0.so.0 "${ED}${dst}/${PN}" || die
-
 	dodir /opt/bin
 	dosym "${dst}/${PN}" "/opt/bin/${PN}"
 
@@ -65,14 +56,12 @@ src_install() {
 	systemd_newunit "${FILESDIR}/anydesk-4.0.1.service" anydesk.service
 
 	insinto /usr/share/polkit-1/actions
-	doins polkit-1/com.philandro.anydesk.policy
+	doins polkit-1/com.anydesk.anydesk.policy
 
 	insinto /usr/share
 	doins -r icons
 
 	domenu "${FILESDIR}/anydesk.desktop"
-
-	keepdir "/etc/${PN}"
 
 	dodoc copyright README
 }
