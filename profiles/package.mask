@@ -89,11 +89,6 @@ dev-ruby/aws-sdk-core
 dev-ruby/aws-sdk-resources
 dev-ruby/travis
 
-# Matthew Smith <matthew@gentoo.org> (2022-08-26)
-# Unmaintained upstream. Superseded by modern GTK.
-# Bug #698950, removal in 30 days.
-x11-libs/gtkglext
-
 # Jaco Kroon <jaco@uls.co.za> (2022-08-22)
 # Superceded by bgpq4 (already in tree).  Non-co-operative upstream.  Removal
 # in 30 days.  Open bugs, already fixed in bgpq4.  Please convert your usage to
@@ -418,7 +413,7 @@ sys-devel/automake:1.15
 # not use this program yet if you seriously need anonymity, privacy,
 # security, or stability." Feel free to unmask if this is not a
 # necessity.
-net-p2p/arti
+<net-p2p/arti-1.0.0
 
 # Stephan Hartmann <sultan@gentoo.org> (2022-08-20)
 # Dev channel releases are only for people who
