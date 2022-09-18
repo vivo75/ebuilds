@@ -25,7 +25,7 @@ else
 	S="${WORKDIR}/${P%_rc?}"
 
 	if [[ ${PV} != *_rc* ]]; then
-		KEYWORDS="amd64 arm64 ~ppc64 ~riscv"
+		KEYWORDS="amd64 arm64 ppc64 ~riscv"
 	fi
 fi
 
@@ -75,7 +75,6 @@ RDEPEND="${DEPEND}
 	rootfs? (
 		app-arch/cpio
 		app-misc/pax-utils
-		!<sys-kernel/genkernel-3.5.1.1
 	)
 	test-suite? (
 		app-shells/ksh
