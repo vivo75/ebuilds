@@ -10,7 +10,8 @@ inherit flag-o-matic systemd autotools
 MY_PV=${PV/_rc/RC}
 DESCRIPTION="The PHP language runtime engine"
 HOMEPAGE="https://www.php.net/"
-SRC_URI="https://www.php.net/distributions/${P}.tar.xz"
+#SRC_URI="https://www.php.net/distributions/${P}.tar.xz"
+SRC_URI="https://downloads.php.net/~pierrick/php-${MY_PV}.tar.xz"
 
 LICENSE="PHP-3.01
 	BSD
@@ -21,7 +22,7 @@ LICENSE="PHP-3.01
 	unicode? ( BSD-2 LGPL-2.1 )"
 
 SLOT="$(ver_cut 1-2)"
-KEYWORDS="~alpha amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos"
 
 S="${WORKDIR}/${PN}-${MY_PV}"
 
@@ -79,7 +80,7 @@ RESTRICT="!test? ( test )"
 COMMON_DEPEND="
 	>=app-eselect/eselect-php-0.9.7[apache2?,fpm?]
 	>=dev-libs/libpcre2-10.30[jit?,unicode]
-	fpm? ( acl? ( sys-apps/acl ) apparmor? ( sys-libs/libapparmor ) )
+	fpm? ( acl? ( sys-apps/acl ) apparmor? ( sys-libs/libapparmor ) selinux? ( sys-libs/libselinux ) )
 	apache2? ( www-servers/apache[apache2_modules_unixd(+),threads=] )
 	argon2? ( app-crypt/argon2:= )
 	berkdb? ( || (	sys-libs/db:5.3 sys-libs/db:4.8 ) )
@@ -290,6 +291,7 @@ src_configure() {
 		$(use_enable opcache)
 		$(use_with postgres pgsql "${EPREFIX}/usr")
 		$(use_enable posix)
+		$(use_with selinux fpm-selinux)
 		$(use_with spell pspell "${EPREFIX}/usr")
 		$(use_enable simplexml)
 		$(use_enable sharedmem shmop)
@@ -358,7 +360,7 @@ src_configure() {
 	fi
 
 	# MySQL support
-	our_conf+=( $(use_with mysqli mysqli "mysqlnd") )
+	our_conf+=( $(use_with mysqli) )
 
 	local mysqlsock="${EPREFIX}/var/run/mysqld/mysqld.sock"
 	if use mysql || use mysqli ; then
