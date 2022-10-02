@@ -12,14 +12,13 @@ PVM_S=$(ver_rs 1-2 "")
 
 # Use https://gitweb.gentoo.org/proj/codec/ghostscript-gpl-patches.git/ for patches
 # See 'index' branch for README
-MY_PATCHSET="ghostscript-gpl-9.56.1-patchset-01.tar.xz"
+MY_PATCHSET="ghostscript-gpl-10.0-patches.tar.xz"
 
 DESCRIPTION="Interpreter for the PostScript language and PDF"
 HOMEPAGE="https://ghostscript.com/ https://git.ghostscript.com/?p=ghostpdl.git;a=summary"
 SRC_URI="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs${PVM_S}/${MY_P}.tar.xz"
 if [[ -n "${MY_PATCHSET}" ]] ; then
 	SRC_URI+=" https://dev.gentoo.org/~sam/distfiles/${CATEGORY}/${PN}/${MY_PATCHSET}"
-	SRC_URI+=" https://dev.gentoo.org/~whissi/dist/ghostscript-gpl/${MY_PATCHSET}"
 fi
 
 LICENSE="AGPL-3 CPL-1.0"
@@ -50,7 +49,7 @@ DEPEND="app-text/libpaper:=
 BDEPEND="virtual/pkgconfig"
 # bug #844115 for newer poppler-data dep
 RDEPEND="${DEPEND}
-	>=app-text/poppler-data-0.4.11-r1
+	>=app-text/poppler-data-0.4.11-r2
 	>=media-fonts/urw-fonts-2.4.9
 	l10n_ja? ( media-fonts/kochi-substitute )
 	l10n_ko? ( media-fonts/baekmuk-fonts )
@@ -60,17 +59,17 @@ RDEPEND="${DEPEND}
 S="${WORKDIR}/${MY_P}"
 
 src_prepare() {
-	if [[ -n "${MY_PATCHSET}" ]] ; then
+	if [[ -n ${MY_PATCHSET} ]] ; then
 		# apply various patches, many borrowed from Fedora
 		# https://src.fedoraproject.org/rpms/ghostscript
 		# and Debian
 		# https://salsa.debian.org/printing-team/ghostscript/-/tree/debian/latest/debian/patches
-		eapply "${WORKDIR}/patches/"*.patch
+		eapply "${WORKDIR}"/${MY_PATCHSET%%.tar*}
 	fi
 
 	default
 
-	# remove internal copies of various libraries
+	# Remove internal copies of various libraries
 	rm -r cups/libs || die
 	rm -r freetype || die
 	rm -r jbig2dec || die
@@ -80,7 +79,7 @@ src_prepare() {
 	rm -r tiff || die
 	rm -r zlib || die
 	rm -r openjpeg || die
-	# remove internal CMaps (CMaps from poppler-data are used instead)
+	# Remove internal CMaps (CMaps from poppler-data are used instead)
 	rm -r Resource/CMap || die
 
 	if ! use gtk ; then
@@ -99,7 +98,7 @@ src_prepare() {
 		-e 's|-DOPJ_STATIC ||' \
 		-i base/lib.mak || die
 
-	# search path fix
+	# Search path fix
 	# put LDFLAGS after BINDIR, bug #383447
 	sed -e "s:\$\(gsdatadir\)/lib:@datarootdir@/ghostscript/${PV}/$(get_libdir):" \
 		-e "s:exdir=.*:exdir=@datarootdir@/doc/${PF}/examples:" \
@@ -108,7 +107,7 @@ src_prepare() {
 		-e 's:-L$(BINDIR):& $(LDFLAGS):g' \
 		-i Makefile.in base/*.mak || die "sed failed"
 
-	# remove incorrect symlink, bug 590384
+	# Remove incorrect symlink, bug 590384
 	rm ijs/ltmain.sh || die
 	eautoreconf
 
@@ -170,8 +169,8 @@ src_install() {
 	cd "${S}/ijs" || die
 	emake DESTDIR="${D}" install
 
-	# install the CMaps from poppler-data properly, bug #409361
-	dosym ../../../poppler/cMaps "/usr/share/ghostscript/${PV}/Resource/CMap"
+	# Install the CMaps from poppler-data properly, bug #409361
+	dosym -r /usr/share/poppler/cMaps /usr/share/ghostscript/${PV}/Resource/CMap
 
 	if ! use static-libs; then
 		find "${ED}" -name '*.la' -delete || die
