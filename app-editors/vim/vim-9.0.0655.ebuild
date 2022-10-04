@@ -11,7 +11,7 @@ PYTHON_COMPAT=( python3_{8..11} )
 PYTHON_REQ_USE="threads(+)"
 USE_RUBY="ruby27 ruby30 ruby31"
 
-inherit vim-doc flag-o-matic bash-completion-r1 lua-single python-single-r1 ruby-single desktop xdg-utils
+inherit vim-doc flag-o-matic bash-completion-r1 lua-single python-single-r1 ruby-single toolchain-funcs desktop xdg-utils
 
 if [[ ${PV} == 9999* ]] ; then
 	inherit git-r3
@@ -19,7 +19,7 @@ if [[ ${PV} == 9999* ]] ; then
 else
 	SRC_URI="https://github.com/vim/vim/archive/v${PV}.tar.gz -> ${P}.tar.gz
 		https://gitweb.gentoo.org/proj/vim-patches.git/snapshot/vim-patches-vim-9.0.0049-patches.tar.gz"
-	KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~loong ~m68k ~mips ppc ppc64 ~riscv ~s390 sparc x86 ~x64-cygwin ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
+	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~x64-cygwin ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
 fi
 
 DESCRIPTION="Vim, an improved vi-style text editor"
@@ -79,7 +79,6 @@ src_prepare() {
 	if [[ ${PV} != 9999* ]] ; then
 		# Gentoo patches to fix runtime issues, cross-compile errors, etc
 		eapply "${WORKDIR}"/vim-patches-vim-9.0.0049-patches
-		eapply "${FILESDIR}"/vim-9.0-fix-create-timer-for-cros-compiling.patch
 	fi
 
 	# Fixup a script to use awk instead of nawk
@@ -225,6 +224,10 @@ src_configure() {
 		fi
 
 		if use lua; then
+			# -DLUA_COMPAT_OPENLIB=1 is required to enable the
+			# deprecated (in 5.1) luaL_openlib API (#874690)
+			use lua_single_target_lua5-1 && append-cppflags -DLUA_COMPAT_OPENLIB=1
+
 			myconf+=(
 				--enable-luainterp
 				$(use_with lua_single_target_luajit luajit)
