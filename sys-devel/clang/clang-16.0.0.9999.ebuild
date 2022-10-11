@@ -278,8 +278,6 @@ multilib_src_configure() {
 		-DPython3_EXECUTABLE="${PYTHON}"
 	)
 	use test && mycmakeargs+=(
-		-DLLVM_MAIN_SRC_DIR="${WORKDIR}/llvm"
-		-DLLVM_EXTERNAL_LIT="${BUILD_DIR}/bin/llvm-lit"
 		-DLLVM_LIT_ARGS="$(get_lit_flags)"
 	)
 
