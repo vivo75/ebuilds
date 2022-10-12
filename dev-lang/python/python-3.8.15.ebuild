@@ -4,7 +4,7 @@
 EAPI="7"
 WANT_LIBTOOL="none"
 
-inherit autotools check-reqs flag-o-matic multiprocessing pax-utils
+inherit autotools flag-o-matic multiprocessing pax-utils
 inherit python-utils-r1 toolchain-funcs verify-sig
 
 MY_PV=${PV/_rc/rc}
@@ -28,10 +28,10 @@ S="${WORKDIR}/${MY_P}"
 
 LICENSE="PSF-2"
 SLOT="${PYVER}"
-KEYWORDS="~alpha ~amd64 arm arm64 hppa ~ia64 ~loong ~m68k ~mips ppc ppc64 ~riscv ~s390 sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86"
 IUSE="
 	bluetooth build +ensurepip examples gdbm hardened lto +ncurses pgo
-	+readline +sqlite +ssl test tk +xml
+	+readline +sqlite +ssl test tk wininst +xml
 "
 RESTRICT="!test? ( test )"
 
@@ -43,7 +43,7 @@ RESTRICT="!test? ( test )"
 RDEPEND="
 	app-arch/bzip2:=
 	app-arch/xz-utils:=
-	dev-lang/python-exec[python_targets_python3_9(-)]
+	dev-lang/python-exec[python_targets_python3_8(-)]
 	dev-libs/libffi:=
 	sys-apps/util-linux:=
 	>=sys-libs/zlib-1.1.3:=
@@ -82,18 +82,7 @@ RDEPEND+="
 
 VERIFY_SIG_OPENPGP_KEY_PATH=${BROOT}/usr/share/openpgp-keys/python.org.asc
 
-# large file tests involve a 2.5G file being copied (duplicated)
-CHECKREQS_DISK_BUILD=5500M
-
 QA_PKGCONFIG_VERSION=${PYVER}
-
-pkg_pretend() {
-	use test && check-reqs_pkg_pretend
-}
-
-pkg_setup() {
-	use test && check-reqs_pkg_setup
-}
 
 src_unpack() {
 	if use verify-sig; then
@@ -151,6 +140,7 @@ src_configure() {
 	fi
 
 	append-flags -fwrapv
+
 	filter-flags -malign-double
 
 	# https://bugs.gentoo.org/700012
@@ -172,34 +162,6 @@ src_configure() {
 		dbmliborder+="${dbmliborder:+:}gdbm"
 	fi
 
-	if use pgo; then
-		local profile_task_flags=(
-			-m test
-			"-j$(makeopts_jobs)"
-			--pgo-extended
-			-x test_gdb
-			-u-network
-
-			# All of these seem to occasionally hang for PGO inconsistently
-			# They'll even hang here but be fine in src_test sometimes.
-			# bug #828535 (and related: bug #788022)
-			-x test_asyncio
-			-x test_httpservers
-			-x test_logging
-			-x test_multiprocessing_fork
-			-x test_socket
-			-x test_xmlrpc
-		)
-
-		if has_version "app-arch/rpm" ; then
-			# Avoid sandbox failure (attempts to write to /var/lib/rpm)
-			profile_task_flags+=(
-				-x test_distutils
-			)
-		fi
-		local -x PROFILE_TASK="${profile_task_flags[*]}"
-	fi
-
 	local myeconfargs=(
 		# glibc-2.30 removes it; since we can't cleanly force-rebuild
 		# Python on glibc upgrade, remove it proactively to give
@@ -218,9 +180,6 @@ src_configure() {
 		--with-system-expat
 		--with-system-ffi
 		--with-wheel-pkg-dir="${EPREFIX}"/usr/lib/python/ensurepip
-
-		$(use_with lto)
-		$(use_enable pgo optimizations)
 	)
 
 	# disable implicit optimization/debugging flags
@@ -296,25 +255,9 @@ src_compile() {
 	# https://bugs.gentoo.org/823728
 	export SETUPTOOLS_USE_DISTUTILS=stdlib
 
-	# Save PYTHONDONTWRITEBYTECODE so that 'has_version' doesn't
-	# end up writing bytecode & violating sandbox.
-	# bug #831897
-	local -x _PYTHONDONTWRITEBYTECODE=${PYTHONDONTWRITEBYTECODE}
-
-	if use pgo ; then
-		# bug 660358
-		local -x COLUMNS=80
-		local -x PYTHONDONTWRITEBYTECODE=
-
-		addpredict /usr/lib/python3.9/site-packages
-	fi
-
 	# also need to clear the flags explicitly here or they end up
 	# in _sysconfigdata*
 	emake CPPFLAGS= CFLAGS= LDFLAGS=
-
-	# Restore saved value from above.
-	local -x PYTHONDONTWRITEBYTECODE=${_PYTHONDONTWRITEBYTECODE}
 
 	# Work around bug 329499. See also bug 413751 and 457194.
 	if has_version dev-libs/libffi[pax-kernel]; then
@@ -396,6 +339,9 @@ src_install() {
 	if ! use tk; then
 		rm -r "${ED}/usr/bin/idle${PYVER}" || die
 		rm -r "${libdir}/"{idlelib,tkinter,test/test_tk*} || die
+	fi
+	if ! use wininst; then
+		rm "${libdir}/distutils/command/"wininst-*.exe || die
 	fi
 
 	dodoc Misc/{ACKS,HISTORY,NEWS}
