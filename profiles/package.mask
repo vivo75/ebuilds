@@ -43,6 +43,7 @@ net-im/empathy
 # Upstream has withdrawn these releases because of a (yet unexplained)
 # "significant regression".
 # See https://mta.openssl.org/pipermail/openssl-announce/2022-October/000237.html.
+# and https://github.com/openssl/openssl/issues/19389.
 =dev-libs/openssl-1.1.1r
 =dev-libs/openssl-3.0.6
 
@@ -245,12 +246,6 @@ media-sound/pulseaudio-modules-bt
 # in 30 days. #870355
 x11-themes/e-flat-theme
 
-# Joonas Niilola <juippis@gentoo.org> (2022-09-15)
-# Upstream split this font into separate packages: media-fonts/
-# source-code-pro, source-sans, source-serif. The current non-split
-# version is broken. Removal in 30 days. #865103
-media-fonts/source-pro
-
 # Mike Gilbert <floppym@gentoo.org> (2022-09-12)
 # repoman is no longer maintained and has been removed from the portage
 # git repository. Please use dev-util/pkgcheck and dev-util/pkgdev instead.
@@ -279,12 +274,6 @@ net-nds/nsscache
 # Tests fail and doesn't work on newer python targets.
 # Removal: 2022-10-10.  Bug #869512.
 dev-python/python-etcd
-
-# Arthur Zamarin <arthurzam@gentoo.org> (2022-09-10)
-# Python 3.8 only package, with capped old dependencies, and open
-# bugs and issues.
-# Removal: 2022-10-10.  Bugs #869506, #695090, #792219, #809272.
-net-misc/electrum-ltc
 
 # Arthur Zamarin <arthurzam@gentoo.org> (2022-09-10)
 # Upstream repository archived. Python 3.8 only, with issues for
@@ -542,6 +531,7 @@ sci-geosciences/geocode-glib:2
 >=sys-libs/libosinfo-1.10.0-r1
 >=www-client/epiphany-43
 >=x11-wm/mutter-43
+>=dev-util/gnome-builder-43.2
 
 # Thomas Deutschmann <whissi@gentoo.org> (2021-09-07)
 # Masked while being tested and reverse deps aren't fully compatible
