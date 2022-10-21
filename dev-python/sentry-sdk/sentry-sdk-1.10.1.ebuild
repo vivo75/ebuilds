@@ -22,7 +22,7 @@ S="${WORKDIR}/sentry-python-${PV}"
 
 LICENSE="PSF-2"
 SLOT="0"
-KEYWORDS="amd64 arm arm64 ~ppc ~ppc64 ~riscv ~sparc x86"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~riscv ~sparc ~x86"
 
 RDEPEND="
 	dev-python/urllib3[${PYTHON_USEDEP}]
@@ -66,6 +66,8 @@ EPYTEST_IGNORE=(
 	tests/integrations/bottle
 	# requires python-multipart (TODO: package it)
 	tests/integrations/starlette
+	# TODO
+	tests/integrations/tornado
 )
 
 EPYTEST_DESELECT=(
@@ -90,4 +92,5 @@ EPYTEST_DESELECT=(
 	# TODO
 	tests/integrations/wsgi/test_wsgi.py::test_auto_session_tracking_with_aggregates
 	tests/integrations/wsgi/test_wsgi.py::test_profile_sent_when_profiling_enabled
+	tests/test_profiler.py::test_sample_buffer
 )
