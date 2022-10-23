@@ -12,7 +12,7 @@ HOMEPAGE="https://libcxx.llvm.org/"
 
 LICENSE="Apache-2.0-with-LLVM-exceptions || ( UoI-NCSA MIT )"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~sparc ~x86 ~x64-macos"
+KEYWORDS=""
 IUSE="+clang +libcxxabi static-libs test"
 REQUIRED_USE="test? ( clang )"
 RESTRICT="!test? ( test )"
@@ -23,14 +23,13 @@ RDEPEND="
 	)
 	!libcxxabi? ( >=sys-devel/gcc-4.7:=[cxx] )
 "
-LLVM_MAX_SLOT=${PV%%.*}
 DEPEND="
 	${RDEPEND}
-	sys-devel/llvm:${LLVM_MAX_SLOT}
+	sys-devel/llvm:${LLVM_MAJOR}
 "
 BDEPEND="
 	clang? (
-		sys-devel/clang:${LLVM_MAX_SLOT}
+		sys-devel/clang:${LLVM_MAJOR}
 	)
 	!test? (
 		${PYTHON_DEPS}
@@ -55,7 +54,7 @@ pkg_setup() {
 	# bootstrap-prefix to set the appropriate path vars to LLVM instead
 	# of using llvm_pkg_setup.
 	if [[ ${CHOST} != *-darwin* ]] || has_version dev-lang/llvm; then
-		llvm_pkg_setup
+		LLVM_MAX_SLOT=${LLVM_MAJOR} llvm_pkg_setup
 	fi
 	python-any-r1_pkg_setup
 
@@ -202,12 +201,4 @@ gen_shared_ldscript() {
 	)
 
 	gen_ldscript "${deps[*]}" > lib/libc++.so || die
-}
-
-pkg_postinst() {
-	elog "This package (${PN}) is mainly intended as a replacement for the C++"
-	elog "standard library when using clang."
-	elog "To use it, instead of libstdc++, use:"
-	elog "    clang++ -stdlib=libc++"
-	elog "to compile your C++ programs."
 }

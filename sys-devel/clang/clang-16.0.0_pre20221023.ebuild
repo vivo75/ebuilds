@@ -52,10 +52,9 @@ LLVM_COMPONENTS=(
 LLVM_MANPAGES=1
 LLVM_TEST_COMPONENTS=(
 	llvm/lib/Testing/Support
-	llvm/utils/{lit,llvm-lit,unittest}
-	llvm/utils/{UpdateTestChecks,update_cc_test_checks.py}
+	llvm/utils
 )
-LLVM_PATCHSET=9999-r4
+LLVM_PATCHSET=${PV}
 LLVM_USE_TARGETS=llvm
 llvm.org_set_globals
 
@@ -256,7 +255,6 @@ multilib_src_configure() {
 		-DLLVM_DISTRIBUTION_COMPONENTS=$(get_distribution_components)
 
 		-DLLVM_TARGETS_TO_BUILD="${LLVM_TARGETS// /;}"
-		-DLLVM_BUILD_TESTS=$(usex test)
 
 		# these are not propagated reliably, so redefine them
 		-DLLVM_ENABLE_EH=ON
@@ -278,6 +276,7 @@ multilib_src_configure() {
 		-DPython3_EXECUTABLE="${PYTHON}"
 	)
 	use test && mycmakeargs+=(
+		-DLLVM_BUILD_TESTS=ON
 		-DLLVM_LIT_ARGS="$(get_lit_flags)"
 	)
 
