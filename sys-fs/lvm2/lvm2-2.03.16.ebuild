@@ -69,6 +69,7 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-2.03.14-r1-fopen-to-freopen.patch
 	"${FILESDIR}"/${PN}-2.03.14-r1-mallinfo.patch
 	"${FILESDIR}"/${PN}-2.03.14-freopen_n2.patch
+	"${FILESDIR}"/${PN}-2.03.16-readelf.patch
 )
 
 pkg_setup() {
@@ -162,6 +163,7 @@ src_configure() {
 		myeconfargs+=( --with-thin=none --with-cache=none )
 	fi
 
+	export READELF="$(tc-getREADELF)"
 	myeconfargs+=(
 		$(use_enable readline)
 		$(use_enable selinux)
@@ -184,6 +186,7 @@ src_configure() {
 		$(use_enable systemd notify-dbus)
 		--with-systemdsystemunitdir="$(systemd_get_systemunitdir)"
 		CLDFLAGS="${LDFLAGS}"
+		READELF="${READELF}"
 	)
 	# Hard-wire this to bash as some shells (dash) don't know
 	# "-o pipefail" #682404
@@ -198,6 +201,8 @@ src_compile() {
 
 	if use device-mapper-only ; then
 		emake V=1 device-mapper
+		# https://bugs.gentoo.org/878131
+		emake -C libdm/dm-tools V=1 device-mapper
 	else
 		emake V=1
 		emake V=1 CC="$(tc-getCC)" -C scripts #lvm2_activation_generator_systemd_red_hat
