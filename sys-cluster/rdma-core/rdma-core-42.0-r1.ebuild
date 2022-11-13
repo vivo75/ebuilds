@@ -82,7 +82,8 @@ src_configure() {
 src_install() {
 	cmake_src_install
 
-	udev_dorules "${ED}"/usr/share/doc/${PF}/70-persistent-ipoib.rules
+	udev_dorules "${ED}"/etc/udev/rules.d/70-persistent-ipoib.rules
+	rm -r "${ED}"/etc/{udev,init.d} || die
 
 	if use neigh; then
 		newinitd "${FILESDIR}"/ibacm.init ibacm
