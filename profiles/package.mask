@@ -33,6 +33,14 @@
 
 #--- END OF EXAMPLES ---
 
+# Matt Turner <mattst88@gentoo.org> (2022-11-14)
+# Unmaintained in Gentoo since at least the transition to git. Last release in
+# 2014. Depends on x11-libs/gtk+:2 and gnome-base/gconf. Fails to build with
+# (1) clang-16, (2) with LTO, (3) with -fno-common.
+# Bugs #812137, #864763, #871405, #873886
+# Removal on 2022-12-14
+x11-misc/xnee
+
 # Jonas Stein <jstein@gentoo.org> (2022-11-13)
 # Dead upstream
 # Removal after 2023-01-01.  Bug #881249.
@@ -337,12 +345,6 @@ virtual/httpd-php:8.2
 # John Helmert III <ajak@gentoo.org> (2022-09-18)
 # Unfixed root privilege escalation, bug #631552
 sys-cluster/slurm
-
-# Mike Gilbert <floppym@gentoo.org> (2022-09-12)
-# repoman is no longer maintained and has been removed from the portage
-# git repository. Please use dev-util/pkgcheck and dev-util/pkgdev instead.
-# Removal on 2022-11-11. Bug #835013.
-app-portage/repoman
 
 # Matthias Schwarzott <zzam@gentoo.org> (2022-09-08)
 # Breaks kernel builds with BTF enabled.
