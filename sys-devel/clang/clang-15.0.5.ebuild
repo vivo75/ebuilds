@@ -15,7 +15,7 @@ HOMEPAGE="https://llvm.org/"
 
 LICENSE="Apache-2.0-with-LLVM-exceptions UoI-NCSA MIT"
 SLOT="${LLVM_MAJOR}/${LLVM_SOABI}"
-KEYWORDS=""
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~riscv ~sparc ~x86 ~amd64-linux ~x64-macos"
 IUSE="debug doc +extra +pie +static-analyzer test xml"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 RESTRICT="!test? ( test )"
@@ -30,7 +30,6 @@ RDEPEND="
 	${PYTHON_DEPS}
 	${DEPEND}
 	>=sys-devel/clang-common-${PV}
-	~sys-devel/clang-runtime-${PV}
 "
 BDEPEND="
 	${PYTHON_DEPS}
@@ -43,6 +42,7 @@ BDEPEND="
 "
 PDEPEND="
 	sys-devel/clang-toolchain-symlinks:${LLVM_MAJOR}
+	~sys-devel/clang-runtime-${PV}
 "
 
 LLVM_COMPONENTS=(
@@ -52,9 +52,10 @@ LLVM_COMPONENTS=(
 LLVM_MANPAGES=1
 LLVM_TEST_COMPONENTS=(
 	llvm/lib/Testing/Support
-	llvm/utils
+	llvm/utils/{lit,llvm-lit,unittest}
+	llvm/utils/{UpdateTestChecks,update_cc_test_checks.py}
 )
-LLVM_PATCHSET=9999-r4
+LLVM_PATCHSET=${PV/_/-}
 LLVM_USE_TARGETS=llvm
 llvm.org_set_globals
 
@@ -192,6 +193,7 @@ get_distribution_components() {
 			clang-format
 			clang-offload-bundler
 			clang-offload-packager
+			clang-offload-wrapper
 			clang-refactor
 			clang-repl
 			clang-rename
@@ -206,7 +208,6 @@ get_distribution_components() {
 				clang-apply-replacements
 				clang-change-namespace
 				clang-doc
-				clang-include-cleaner
 				clang-include-fixer
 				clang-move
 				clang-pseudo
@@ -256,6 +257,7 @@ multilib_src_configure() {
 		-DLLVM_DISTRIBUTION_COMPONENTS=$(get_distribution_components)
 
 		-DLLVM_TARGETS_TO_BUILD="${LLVM_TARGETS// /;}"
+		-DLLVM_BUILD_TESTS=$(usex test)
 
 		# these are not propagated reliably, so redefine them
 		-DLLVM_ENABLE_EH=ON
@@ -277,7 +279,8 @@ multilib_src_configure() {
 		-DPython3_EXECUTABLE="${PYTHON}"
 	)
 	use test && mycmakeargs+=(
-		-DLLVM_BUILD_TESTS=ON
+		-DLLVM_MAIN_SRC_DIR="${WORKDIR}/llvm"
+		-DLLVM_EXTERNAL_LIT="${BUILD_DIR}/bin/llvm-lit"
 		-DLLVM_LIT_ARGS="$(get_lit_flags)"
 	)
 

@@ -11,14 +11,13 @@ HOMEPAGE="https://llvm.org/"
 
 LICENSE="Apache-2.0-with-LLVM-exceptions UoI-NCSA"
 SLOT="${LLVM_MAJOR}/${LLVM_SOABI}"
-KEYWORDS=""
-IUSE="debug test zstd"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~riscv ~x86"
+IUSE="debug test"
 RESTRICT="!test? ( test )"
 
 DEPEND="
-	~sys-devel/llvm-${PV}[zstd=]
+	~sys-devel/llvm-${PV}
 	sys-libs/zlib:=
-	zstd? ( app-arch/zstd:= )
 "
 RDEPEND="
 	${DEPEND}
@@ -31,7 +30,7 @@ BDEPEND="
 	)
 "
 PDEPEND="
-	>=sys-devel/lld-toolchain-symlinks-16-r2:${LLVM_MAJOR}
+	>=sys-devel/lld-toolchain-symlinks-15-r2:${LLVM_MAJOR}
 "
 
 LLVM_COMPONENTS=( lld cmake libunwind/include/mach-o )
@@ -68,8 +67,10 @@ src_configure() {
 		-DCMAKE_INSTALL_PREFIX="${EPREFIX}/usr/lib/llvm/${LLVM_MAJOR}"
 		-DBUILD_SHARED_LIBS=ON
 		-DLLVM_INCLUDE_TESTS=$(usex test)
+		-DLLVM_MAIN_SRC_DIR="${WORKDIR}/llvm"
 	)
 	use test && mycmakeargs+=(
+		-DLLVM_BUILD_TESTS=ON
 		-DLLVM_EXTERNAL_LIT="${EPREFIX}/usr/bin/lit"
 		-DLLVM_LIT_ARGS="$(get_lit_flags)"
 		-DPython3_EXECUTABLE="${PYTHON}"

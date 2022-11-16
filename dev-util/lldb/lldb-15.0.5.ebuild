@@ -11,7 +11,7 @@ HOMEPAGE="https://llvm.org/"
 
 LICENSE="Apache-2.0-with-LLVM-exceptions UoI-NCSA"
 SLOT="0/${LLVM_SOABI}"
-KEYWORDS=""
+KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 IUSE="debug +libedit lzma ncurses +python test +xml"
 RESTRICT="test"
 REQUIRED_USE=${PYTHON_REQUIRED_USE}
@@ -51,8 +51,8 @@ BDEPEND="
 	)
 "
 
-LLVM_COMPONENTS=( lldb cmake llvm/utils )
-LLVM_TEST_COMPONENTS=( llvm/lib/Testing/Support )
+LLVM_COMPONENTS=( lldb cmake )
+LLVM_TEST_COMPONENTS=( llvm/lib/Testing/Support llvm/utils/unittest )
 llvm.org_set_globals
 
 pkg_setup() {
@@ -89,10 +89,11 @@ src_configure() {
 
 		-DLLDB_EXTERNAL_CLANG_RESOURCE_DIR="${BROOT}/usr/lib/clang/${LLVM_VERSION}"
 
-		-DLLVM_MAIN_SRC_DIR="${WORKDIR}/llvm"
 		-DPython3_EXECUTABLE="${PYTHON}"
 	)
 	use test && mycmakeargs+=(
+		-DLLVM_BUILD_TESTS=$(usex test)
+		-DLLVM_MAIN_SRC_DIR="${WORKDIR}/llvm"
 		-DLLVM_EXTERNAL_LIT="${EPREFIX}/usr/bin/lit"
 		-DLLVM_LIT_ARGS="$(get_lit_flags)"
 	)

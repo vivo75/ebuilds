@@ -11,7 +11,7 @@ HOMEPAGE="https://llvm.org/"
 
 LICENSE="Apache-2.0-with-LLVM-exceptions || ( UoI-NCSA MIT )"
 SLOT="${LLVM_VERSION}"
-KEYWORDS=""
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86 ~amd64-linux ~ppc-macos ~x64-macos"
 IUSE="+abi_x86_32 abi_x86_64 +clang debug test"
 # base targets
 IUSE+=" +libfuzzer +memprof +orc +profile +xray"
@@ -55,7 +55,7 @@ BDEPEND="
 
 LLVM_COMPONENTS=( compiler-rt cmake llvm/cmake )
 LLVM_TEST_COMPONENTS=( llvm/lib/Testing/Support llvm/utils/unittest )
-LLVM_PATCHSET=9999-1
+LLVM_PATCHSET=${PV/_/-}
 llvm.org_set_globals
 
 python_check_deps() {
@@ -153,6 +153,7 @@ src_configure() {
 
 	if use test; then
 		mycmakeargs+=(
+			-DLLVM_MAIN_SRC_DIR="${WORKDIR}/llvm"
 			-DLLVM_EXTERNAL_LIT="${EPREFIX}/usr/bin/lit"
 			-DLLVM_LIT_ARGS="$(get_lit_flags)"
 

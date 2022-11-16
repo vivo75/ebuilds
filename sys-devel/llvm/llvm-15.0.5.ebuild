@@ -18,7 +18,7 @@ HOMEPAGE="https://llvm.org/"
 
 LICENSE="Apache-2.0-with-LLVM-exceptions UoI-NCSA BSD public-domain rc"
 SLOT="${LLVM_MAJOR}/${LLVM_SOABI}"
-KEYWORDS=""
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~riscv ~sparc ~x86 ~amd64-linux ~ppc-macos ~x64-macos"
 IUSE="
 	+binutils-plugin debug doc exegesis libedit +libffi ncurses test xar
 	xml z3 zstd
@@ -70,6 +70,7 @@ PDEPEND="
 
 LLVM_COMPONENTS=( llvm cmake third-party )
 LLVM_MANPAGES=1
+LLVM_PATCHSET=${PV/_/-}
 LLVM_USE_TARGETS=provide
 llvm.org_set_globals
 
@@ -236,7 +237,6 @@ get_distribution_components() {
 			llvm-cxxdump
 			llvm-cxxfilt
 			llvm-cxxmap
-			llvm-debuginfo-analyzer
 			llvm-debuginfod
 			llvm-debuginfod-find
 			llvm-diff
@@ -277,7 +277,6 @@ get_distribution_components() {
 			llvm-readobj
 			llvm-reduce
 			llvm-remark-size-diff
-			llvm-remarkutil
 			llvm-rtdyld
 			llvm-sim
 			llvm-size
@@ -355,6 +354,8 @@ multilib_src_configure() {
 		-DLLVM_ENABLE_LIBXML2=$(usex xml)
 		-DLLVM_ENABLE_ASSERTIONS=$(usex debug)
 		-DLLVM_ENABLE_LIBPFM=$(usex exegesis)
+		-DLLVM_ENABLE_EH=ON
+		-DLLVM_ENABLE_RTTI=ON
 		-DLLVM_ENABLE_Z3_SOLVER=$(usex z3)
 		-DLLVM_ENABLE_ZSTD=$(usex zstd)
 
@@ -371,24 +372,23 @@ multilib_src_configure() {
 		-DOCAMLFIND=NO
 	)
 
-	local suffix=
-	if [[ -n ${EGIT_VERSION} && ${EGIT_BRANCH} != release/* ]]; then
-		# the ABI of the main branch is not stable, so let's include
-		# the commit id in the SOVERSION to contain the breakage
-		suffix+="git${EGIT_VERSION::8}"
-	fi
 	if [[ $(tc-get-cxx-stdlib) == libc++ ]]; then
 		# Smart hack: alter version suffix -> SOVERSION when linking
 		# against libc++. This way we won't end up mixing LLVM libc++
 		# libraries with libstdc++ clang, and the other way around.
-		suffix+="+libcxx"
 		mycmakeargs+=(
+			-DLLVM_VERSION_SUFFIX="libcxx"
 			-DLLVM_ENABLE_LIBCXX=ON
 		)
 	fi
-	mycmakeargs+=(
-		-DLLVM_VERSION_SUFFIX="${suffix}"
-	)
+
+#	Note: go bindings have no CMake rules at the moment
+#	but let's kill the check in case they are introduced
+#	if ! multilib_is_native_abi || ! use go; then
+		mycmakeargs+=(
+			-DGO_EXECUTABLE=GO_EXECUTABLE-NOTFOUND
+		)
+#	fi
 
 	use test && mycmakeargs+=(
 		-DLLVM_LIT_ARGS="$(get_lit_flags)"
