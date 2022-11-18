@@ -33,6 +33,46 @@
 
 #--- END OF EXAMPLES ---
 
+# Michał Górny <mgorny@gentoo.org> (2022-11-17)
+# Rarely used package with very high maintenance cost.  Hacky, requires
+# explicit support code for every architecture, effectively preventing
+# it from being keyworded on some of the Gentoo architectures.  The test
+# suite is problematic.  The current release blocks dev-python/greenlet
+# upgrade, the new release fails many tests again.
+# Removal on 2022-12-17.  Bug #879011.
+dev-python/gevent
+dev-python/geventhttpclient
+
+# Michał Górny <mgorny@gentoo.org> (2022-11-17)
+# Requires dev-python/gevent that is going to be masked for removal.
+# net-misc/x2goclient remains as a replacement.
+# Removal on 2022-12-17.  Bug #879011.
+net-misc/pyhoca-cli
+net-misc/pyhoca-gui
+net-misc/python-x2go
+
+# Matthew Smith <matthew@gentoo.org> (2022-11-17)
+# libnet:1.0's remaining rdeps. Dead upstreams.
+# Removal on 2022-12-17. Bug #881677
+net-libs/libnet:1.0
+net-analyzer/angst
+net-analyzer/egressor
+net-analyzer/thcrut
+net-dns/dnshijacker
+net-misc/selfdhcp
+
+# Michał Górny <mgorny@gentoo.org> (2022-11-17)
+# No maintainer.  No upstream activity since 2020.  Multiple bugs
+# reported.
+# Removal on 2022-12-17.  Bug #881673.
+app-admin/prelude-manager
+dev-libs/libprelude
+dev-libs/libpreludedb
+net-analyzer/prelude-correlator
+net-analyzer/prelude-lml-rules
+net-analyzer/prelude-lml
+www-apps/prewikka
+
 # Michał Górny <mgorny@gentoo.org> (2022-11-15)
 # Test-restricted since its introduction in 2016.  Not receiving package
 # maintainer's attention.  No revdeps left.
@@ -245,14 +285,6 @@ dev-python/nose_warnings_filters
 # <OpenSSL-1.1.1 are EOL and contain known vulnerabilities. Users should
 # migrate to a newer branch.
 <dev-libs/openssl-1.1.1
-
-# Joshua Kinard <kumba@gentoo.org> (2022-10-13)
-# Difficult-to-resolve build issues on modern toolchains,
-# not publicly maintained, developer contact is difficult,
-# and project website has SSL certificate issues.
-# Bug #838109.
-# Removal on 2022-11-13
-net-misc/spread
 
 # Sam James <sam@gentoo.org> (2022-10-12)
 # Upstream has withdrawn these releases because of a (yet unexplained)
