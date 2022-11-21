@@ -33,6 +33,18 @@
 
 #--- END OF EXAMPLES ---
 
+# Ionen Wolkens <ionen@gentoo.org> (2022-11-21)
+# Was added only for dev-python/pytest-bdd which no longer needs it.
+# If using, migrate to stdlib glob which supports `**` since python-3.5.
+# Removal: 2022-12-21.
+dev-python/glob2
+
+# David Seifert <soap@gentoo.org> (2022-11-21)
+# Release more than 30 years (!) old, K&R C, full of implicit function
+# declarations, EAPI 6, problematic license. Bug #729536, #854879, #870736.
+# Removal on 2022-12-21.
+app-text/agrep
+
 # Michał Górny <mgorny@gentoo.org> (2022-11-19)
 # Fails to build.  Last bumped in 2017.  Library with no revdeps.
 # Removal on 2022-12-19.  Bug #630396.
@@ -77,13 +89,8 @@ sys-apps/intel-performance-counter-monitor
 #
 # media-sound/retrovol: bug #624136, last bumped in 2013, homepage dead
 # media-sound/umix: bug #726076, last release in 2003 (!)
-# media-libs/libvisual*: bug #840514, last bumped in 2006
 #
 # Removal on 2022-12-19.
-media-libs/libvisual
-media-plugins/gst-plugins-libvisual
-media-plugins/libvisual-plugins
-media-plugins/libvisual-projectm
 media-sound/retrovol
 media-sound/umix
 
@@ -133,7 +140,6 @@ dev-python/tvdb_api
 dev-python/webassets
 dev-python/ws4py
 dev-util/comparator
-dev-util/kdevelop-python
 dev-util/rosinstall_generator
 games-util/pyfa
 mate-extra/caja-hide
