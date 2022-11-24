@@ -33,6 +33,17 @@
 
 #--- END OF EXAMPLES ---
 
+# John Helmert III <ajak@gentoo.org> (2022-11-24)
+# Binary package several releases behind the source-based package,
+# multiple vulnerabilities, unmaintained for several years. Removal in
+# 30 days. Bugs #849389, #882783.
+dev-db/percona-xtrabackup-bin
+
+# John Helmert III <ajak@gentoo.org> (2022-11-24)
+# Compatibility issues with openssl-1.1*, numerous build issues, version
+# in tree is EOL upstream. Removal in 30 days. Bug #882759.
+net-misc/cfengine
+
 # Pascal Jäger <pascal.jaeger@leimstift.de> (2022-11-24)
 # No maintainer, last release in 1994. Fails to build
 # with clang-16. Runtime crash in certain conditions.
@@ -46,12 +57,6 @@ net-mail/metamail
 # dev-libs/opencl-icd-loader is a good replacement.
 # Removal on 2022-12-23.  Bug #733018.
 dev-libs/ocl-icd
-
-# Michał Górny <mgorny@gentoo.org> (2022-11-23)
-# Unattended by maintainer since 2013.  Pending major version bump.
-# Build and test failures reported.
-# Removal on 2022-12-23.  Bug #870670.
-dev-lang/open-cobol
 
 # Michał Górny <mgorny@gentoo.org> (2022-11-23)
 # Packages with no maintainer and major issues reported.
@@ -118,7 +123,6 @@ dev-cpp/pstreams
 # app-misc/glimpse: bug #684096, last bumped in 2013
 # dev-db/cpp-driver: bug #685936, last bumped in 2019
 # dev-erlang/riakc: bug #722688, last bumped in 2016
-# dev-libs/xalan-c: bug #734190, last bumped in 2011
 # dev-util/stubgen: bug #839927, last bumped in 2011
 # media-gfx/xzgv: bug #831252, last bumped in 2009
 # net-dns/dnssec-check: bug #571350, last bumped in 2016
@@ -135,7 +139,6 @@ app-forensics/ovaldi
 app-misc/glimpse
 dev-db/cpp-driver
 dev-erlang/riakc
-dev-libs/xalan-c
 dev-util/stubgen
 media-gfx/xzgv
 net-dns/dnssec-check
