@@ -5,7 +5,7 @@ EAPI=8
 
 inherit pax-utils unpacker
 
-MY_P=pypy3-exe-${PV}-2
+MY_P=pypy3-exe-${PV}-1
 DESCRIPTION="PyPy3 executable (pre-built version)"
 HOMEPAGE="https://www.pypy.org/"
 SRC_URI="
