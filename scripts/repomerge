@@ -46,6 +46,7 @@ def make_known_path(path):
 __CATEGORIES = [
                'acct-group',
                'acct-user',
+               'app-alternatives',
                'app-containers',
                'app-emulation',
                'dev-qt',
