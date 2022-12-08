@@ -49,7 +49,6 @@ dev-db/postgresql
 dev-lang/php
 dev-libs/libusb-compat
 dev-libs/libxls
-dev-libs/ocl-icd
 dev-libs/vc
 dev-libs/weston
 dev-php/tcpdf
