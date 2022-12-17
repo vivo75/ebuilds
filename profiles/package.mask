@@ -33,6 +33,30 @@
 
 #--- END OF EXAMPLES ---
 
+# Michał Górny <mgorny@gentoo.org> (2022-12-17)
+# Merged into sys-apps/util-linux.
+# Removal on 2023-01-16.  Bug #867220.
+net-wireless/rfkill
+
+# Michał Górny <mgorny@gentoo.org> (2022-12-16)
+# Requires legacy gnome-base/gconf.  A number of other unresolved
+# issues.  Last release in 2014.
+# Removal on 2023-01-15.  Bug #873871.
+media-video/ogmrip
+media-video/shrip
+
+# Michał Górny <mgorny@gentoo.org> (2022-12-16)
+# Multiple build failures reported.  Last bumped in 2010.
+# Homepage gone.
+# Removal on 2023-01-15.  Bug #839723.
+net-firewall/nufw
+
+# Michał Górny <mgorny@gentoo.org> (2022-12-16)
+# Unmaintained.  Broken with >=net-nds/openldap-2.6.
+# Last release in 2009.
+# Removal on 2023-01-15.  Bug #835649.
+net-nds/adtool
+
 # Michał Górny <mgorny@gentoo.org> (2022-12-16)
 # The distfile was removed from Gentoo servers in 2021, and it is
 # unclear if we were allowed to host it in the first place.  Also,
@@ -415,7 +439,6 @@ dev-libs/ocl-icd
 # app-office/sc: bug #877051, last release in 2002
 # net-libs/ortp: bug #874003, last bumped in 2014
 # net-nntp/brag: revdep of app-text/uudeview
-# net-vpn/vtun: bug #875443, last bumped in 2012, last release in 2016
 # sys-apps/fakeroot-ng: bug #851543, last release in 2013
 # sys-apps/pmount-gui: bug #776397, last bumped in 2013, commit in 2019
 # www-apache/mod_common_redirect: bug #874660, bumped in 2010, repo gone
@@ -426,7 +449,6 @@ app-emulation/dlx
 app-office/sc
 net-libs/ortp
 net-nntp/brag
-net-vpn/vtun
 sys-apps/fakeroot-ng
 sys-apps/pmount-gui
 www-apache/mod_common_redirect
@@ -613,12 +635,6 @@ dev-python/pytest-html
 # Dead upstream
 # Removal after 2023-01-01.  Bug #881249.
 net-mail/vchkuser
-
-# Matthew Smith <matthew@gentoo.org> (2022-11-13)
-# Please update to Erlang/OTP 25. Removal in 30 days.
-# Bug #864543
-<dev-lang/erlang-25
-<net-misc/rabbitmq-server-3.11.0
 
 # Jaco Kroon <jaco@uls.co.za> (2022-11-05)
 # Some potentially breaking changes here, please check the UPGRADE.txt file.
