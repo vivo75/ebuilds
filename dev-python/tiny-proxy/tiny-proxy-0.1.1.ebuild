@@ -20,7 +20,7 @@ SRC_URI="
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 
 RDEPEND="
 	<dev-python/anyio-4.0.0[${PYTHON_USEDEP}]
@@ -28,6 +28,7 @@ RDEPEND="
 "
 BDEPEND="
 	test? (
+		>=dev-python/aiohttp-3.8.1[${PYTHON_USEDEP}]
 		>=dev-python/httpx-0.23.0[${PYTHON_USEDEP}]
 		>=dev-python/httpx-socks-0.7.4[${PYTHON_USEDEP}]
 		>=dev-python/pytest-asyncio-0.18.3[${PYTHON_USEDEP}]
