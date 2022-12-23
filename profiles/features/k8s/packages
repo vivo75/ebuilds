@@ -14,6 +14,8 @@ sys-cluster/kubeletctl
 sys-cluster/kube-proxy
 sys-cluster/kube-router
 sys-cluster/kube-scheduler
+sys-cluster/k3s
+sys-cluster/cilium-cli
 
 # globally useful packages
 app-crypt/certbot

@@ -1,6 +1,5 @@
 <net-fs/s3fs-9999 amd64
 <net-fs/samba-9999 amd64
-<net-p2p/go-ipfs-bin-9999 amd64
 <net-misc/rclone-9999 amd64
 
 # required by sys-libs/ldb-1.3.0::gentoo
