@@ -2,7 +2,7 @@
 <app-containers/containerd-9999 amd64
 <app-containers/cri-tools-9999 amd64
 <dev-db/etcd-9999 amd64
-<net-misc/cni-plugins-9999 amd64
+<app-containers/cni-plugins-9999 amd64
 <sys-apps/most-9999 amd64
 <sys-cluster/kubernetes-9999 amd64
 

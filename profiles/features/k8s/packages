@@ -3,7 +3,7 @@ app-crypt/cfssl
 app-containers/containerd
 app-containers/cri-tools
 dev-db/etcd
-net-misc/cni-plugins
+app-containers/cni-plugins
 sys-apps/most
 sys-cluster/kubeadm
 sys-cluster/kube-apiserver
