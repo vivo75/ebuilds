@@ -30,7 +30,6 @@ dev-python/podman-py
 dev-python/selenium
 dev-python/sqlalchemy
 dev-util/docker-distribution-pruner
-dev-util/docker-ls
 dev-util/pahole
 dev-util/pkgcheck
 dev-util/radare2

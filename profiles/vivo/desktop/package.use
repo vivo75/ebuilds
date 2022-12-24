@@ -95,8 +95,6 @@ dev-qt/qtwidgets -gles2
 dev-tcltk/expect-lite examples
 >=dev-util/cmake-3.8.1 server
 dev-util/cmake -qt5
-dev-util/nvidia-cuda-sdk -doc -examples
-dev-util/nvidia-cuda-sdk opencl
 dev-util/nvidia-cuda-toolkit debugger profiler
 dev-util/squashdelta lz4
 dev-util/squashmerge lz4
