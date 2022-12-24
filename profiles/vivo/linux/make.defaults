@@ -17,7 +17,7 @@ FEATURES="${FEATURES} -merge-sync"
 # Log eqawarn messages
 PORTAGE_ELOG_CLASSES="warn error log qa"
 # use xz compression for docs instead of bzip2
-PORTAGE_COMPRESS="xz"
+PORTAGE_COMPRESS="zstd"
 
 # Allow installation of any packages, regardless of LICENSE setting.
 ACCEPT_LICENSE="*"

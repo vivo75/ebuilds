@@ -1,0 +1,47 @@
+# we use default cron script
+sys-fs/zfs-auto-snapshot -minimal
+sys-fs/zfs python
+
+app-emulation/libvirt fuse libssh lxc numa pcap virt-network zfs
+app-misc/ca-certificates -cacert
+dev-db/mariadb -client-libs innodb-lz4 profiling rocksdb oqgraph
+dev-lang/python sqlite
+dev-libs/libpcre pcre16
+dev-libs/libxml2 icu lzma
+dev-libs/openssl rfc3779
+dev-vcs/git perl
+media-libs/gd png
+net-analyzer/fping suid
+net-analyzer/zabbix -frontend -server -sqlite curl libxml2 mysql ssh
+net-dns/bind -berkdb geoip idn json nslint python sit
+net-dns/ldns-utils dane ecdsa ssl
+net-firewall/iptables conntrack netlink nftables pcap
+net-firewall/nftables json modern_kernel python xtables
+net-firewall/xtables-addons -modules
+net-libs/ldns dane ecdsa ssl
+net-libs/libnftnl threads examples json xml
+net-libs/libpcap canusb dbus netlink
+net-misc/curl ssl
+net-misc/iputils arping caps filecaps clockdiff idn rarpd rdisc tracepath
+net-misc/openssh X509
+net-vpn/openvpn inotify lz4
+sys-apps/util-linux tty-helpers
+sys-fs/lvm2 -thin
+sys-fs/squashfs-tools lz4 lzma
+sys-libs/glibc nscd
+sys-libs/zlib minizip
+virtual/mysql -server
+
+# required by dev-python/scipy, sci-libs/scikit-learn
+dev-python/numpy lapack
+
+# required by net-fs/cifs-utils
+net-fs/samba json python
+sys-libs/ldb python
+sys-libs/talloc python
+sys-libs/tdb python
+sys-libs/tevent python
+
+# conflict with kubectl
+sys-cluster/k3s -kubectl-symlink
+

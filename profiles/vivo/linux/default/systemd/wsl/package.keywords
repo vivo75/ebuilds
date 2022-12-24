@@ -1,0 +1,59 @@
+<app-antivirus/clamav-unofficial-sigs-9999 amd64
+<app-forensics/lynis-9999 amd64
+<dev-go/go-crypto-9999 amd64
+<dev-go/go-net-9999 amd64
+<dev-go/go-text-9999 amd64
+<dev-lang/tcc-9999 amd64
+<net-analyzer/zabbix-5
+<net-misc/netpipe-9999 amd64
+<net-vpn/openvpn-9999 amd64
+<sys-block/megamgr-9999 amd64
+<sys-block/megarc-9999 amd64
+<sys-block/thin-provisioning-tools-9999 amd64
+<dev-util/lttng-tools-9999 amd64
+<dev-util/lttng-ust-9999 amd64
+<sys-fs/lvm2-9999 amd64
+<sys-fs/zfs-9999 amd64
+<app-containers/cri-o-9999 amd64
+<app-containers/snapd-9999 amd64
+<dev-util/radare2-9999 amd64
+<net-analyzer/nikto-9999 amd64
+<net-analyzer/nmapsi-9999 amd64
+<app-admin/sops-9999 amd64
+
+<sys-apps/lm-sensors-3.7 amd64
+<app-containers/lxc-4 amd64
+<dev-python/python3-lxc-4 amd64
+<app-containers/lxd-4 amd64
+<dev-db/mariadb-10.5 amd64
+<sys-block/nbd-3.999 amd64
+<sys-apps/iproute2-5.5 amd64
+<net-firewall/ipset-8 amd64
+<app-admin/ansible-2.10 amd64
+<net-analyzer/fail2ban-0.11 amd64
+<app-admin/sudo-1.9 amd64
+<net-misc/iputils-9999 amd64
+<app-crypt/certbot-apache-1.9999 amd64
+<sys-apps/rng-tools-6.9999 amd64
+<app-arch/zstd-1.5 amd64
+<net-misc/wget-2 amd64
+<sys-apps/file-6 amd64
+<sys-apps/diffutils-4 amd64
+<sys-apps/findutils-5 amd64
+
+# backup
+<sys-fs/zfs-auto-snapshot-9999 amd64
+
+# octave
+<dev-python/octave_kernel-9999 amd64
+<app-portage/g-octave-9999 amd64
+<dev-python/metakernel-9999 amd64
+
+# editing
+<app-editors/typora-9999 amd64
+
+# kube
+<sys-cluster/kubeletctl-9999 amd64
+<sys-cluster/cilium-cli-9999 amd64
+<sys-cluster/kube-router-9999 amd64
+
