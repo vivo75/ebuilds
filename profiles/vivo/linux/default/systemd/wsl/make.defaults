@@ -1,7 +1,7 @@
 # Windows 11 require recent CPU, take advantage of that
-CFLAGS="-O3 -pipe -march=skylake -frecord-gcc-switches -fdiagnostics-color=never"
-CXXFLAGS="-O3 -pipe -march=skylake -frecord-gcc-switches -fdiagnostics-color=never"
-FCFLAGS="-O3 -pipe -march=skylake"
-FFLAGS="-O3 -pipe -march=skylake"
+CFLAGS="-O3 -pipe -march=ivybridge -mtune=skylake -frecord-gcc-switches -fdiagnostics-color=never -mavx -mavx2 -mfma"
+CXXFLAGS="-O3 -pipe -march=ivybridge -mtune=skylake -frecord-gcc-switches -fdiagnostics-color=never -mavx -mavx2 -mfma"
+FCFLAGS="-O3 -pipe -march=ivybridge -mtune=skylake"
+FFLAGS="-O3 -pipe -march=ivybridge -mtune=skylake"
 
 LLVM_TARGETS="BPF NVPTX WebAssembly X86"
