@@ -33,6 +33,30 @@
 
 #--- END OF EXAMPLES ---
 
+# Michał Górny <mgorny@gentoo.org> (2022-12-25)
+# Broken with pytest-7.2.  Repository archived upstream.  No reverse
+# dependencies.
+# Removal on 2023-01-24.  Bug #888219.
+dev-python/pytest-toolbox
+
+# Michał Górny <mgorny@gentoo.org> (2022-12-25)
+# The project did not catch, with hardly any data submissions.
+# Removal on 2023-01-24.  Bug #843344.
+app-portage/gander
+
+# Michał Górny <mgorny@gentoo.org> (2022-12-25)
+# make.conf writing is broken and package.use support incomplete.
+# Last release in 2013.  Attempted unsuccessfully fixing it in 2017.
+# Use an editor instead.
+# Removal on 2023-01-24.  Bug #888423.
+app-portage/flaggie
+
+# Hans de Graaff <graaff@gentoo.org> (2022-12-25)
+# Last release in 2018. Poor quality C extension code. Package
+# consistently segfaults on it tests with the latest ruby versions.
+# No reverse dependencies. Removal in 30 days.
+dev-ruby/hiredis
+
 # Ionen Wolkens <ionen@gentoo.org> (2022-12-24)
 # Upstream dropped wxGTK support in >=games-emulation/pcsx2-1.7.3773,
 # and it now always requires Qt6. Masked given Qt6 is also masked in
@@ -505,12 +529,6 @@ ros-meta/vision_opencv
 ros-meta/vision_visp
 ros-meta/visualization_tutorials
 ros-meta/viz
-
-# Michał Górny <mgorny@gentoo.org> (2022-12-23)
-# Does not build against current MySQL libraries.  Last release in 2012.
-# No reverse dependencies.
-# Removal on 2023-01-22.  Bug #692562.
-dev-tcltk/mysqltcl
 
 # Michał Górny <mgorny@gentoo.org> (2022-12-23)
 # Packages that still use dev-python/nose and have no revdeps.
