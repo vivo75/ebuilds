@@ -8,7 +8,7 @@ CPU_FLAGS_X86="aes avx f16c mmx mmxext pclmul popcnt sse sse2 sse3 sse4_1 sse4_2
 CMAKE_MAKEFILE_GENERATOR="ninja"
 
 # Define the default portage feature set.
-FEATURES="distlocks parallel-fetch collision-protect sign test-fail-continue userpriv usersandbox"
+FEATURES="distlocks parallel-fetch sign test-fail-continue userpriv usersandbox"
 FEATURES="${FEATURES} compress-build-logs ebuild-locks fail-clean multilib-strict"
 FEATURES="${FEATURES} split-elog split-log splitdebug compressdebug"
 FEATURES="${FEATURES} unknown-features-warn unmerge-logs noinfo usersync xattr"
