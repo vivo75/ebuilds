@@ -1,8 +1,9 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 PYTHON_COMPAT=( python3_{8,9,10} )
+DISTUTILS_USE_PEP517=setuptools
 inherit distutils-r1
 
 DESCRIPTION="Python command line interface to gitlab API"
@@ -20,13 +21,15 @@ LICENSE="LGPL-3"
 SLOT="0"
 
 BDEPEND="test? (
-		dev-python/httmock[${PYTHON_USEDEP}]
-		dev-python/mock[${PYTHON_USEDEP}]
+		dev-python/coverage[${PYTHON_USEDEP}]
+		>=dev-python/pytest-console-scripts-1.3.1[${PYTHON_USEDEP}]
+		dev-python/pytest-cov[${PYTHON_USEDEP}]
+		>=dev-python/pyyaml-5.2[${PYTHON_USEDEP}]
 		dev-python/responses[${PYTHON_USEDEP}]
-	)"
+		)"
 
-RDEPEND=">=dev-python/requests-2.25.1[${PYTHON_USEDEP}]
-	>=dev-python/requests-toolbelt-0.9.1[${PYTHON_USEDEP}]"
+RDEPEND=">=dev-python/requests-2.28.1[${PYTHON_USEDEP}]
+	>=dev-python/requests-toolbelt-0.10.0[${PYTHON_USEDEP}]"
 
 distutils_enable_tests pytest
 
