@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -38,7 +38,8 @@ RDEPEND="
 	nautilus? ( dev-python/nautilus-python )
 	webengine? ( dev-qt/qtwebengine:5[widgets] )
 "
-DEPEND="${RDEPEND}
+DEPEND="
+	${R_DEPEND}
 	dev-qt/qtconcurrent:5
 	dev-qt/qtxml:5
 	|| ( gnome-base/librsvg media-gfx/inkscape )
@@ -57,6 +58,11 @@ BDEPEND="
 	dev-qt/linguist-tools:5
 	dolphin? ( kde-frameworks/extra-cmake-modules )
 "
+
+PATCHES=(
+	# https://github.com/nextcloud/desktop/pull/5309
+	"${FILESDIR}"/${PN}-3.6.4-drop-dependency-on-Qt-Quick-Controls-1.patch
+)
 
 src_prepare() {
 	# Keep tests in ${T}
