@@ -14,7 +14,7 @@ SRC_URI="https://linuxcontainers.org/downloads/lxd/${P}.tar.gz
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64 ~x86"
+KEYWORDS="amd64 ~arm64 ~x86"
 IUSE="apparmor nls"
 
 DEPEND="acct-group/lxd
@@ -83,7 +83,8 @@ RESTRICT="test"
 GOPATH="${S}/_dist"
 
 PATCHES=( "${DISTDIR}"/lxd-5.0.2-move-shellcheck-version-call-into-static-analysis.patch
-	"${DISTDIR}"/lxd-5.8-add-tcp-keepalives-to-exec-channels.patch )
+	"${DISTDIR}"/lxd-5.8-add-tcp-keepalives-to-exec-channels.patch
+	"${FILESDIR}"/lxd-5.0.2-fix-btrfs-driver-to-support-btrfs-6.0.patch )
 
 src_unpack() {
 	if use verify-sig; then
